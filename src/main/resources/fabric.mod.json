@@ -1,35 +1,41 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "zoomify",
   "version": "${version}",
-  "name": "The name of the mod",
-  "description": "Describe your mod here",
+  "name": "Zoomify",
+  "description": "A zoom mod with infinite customizability.",
   "authors": [
-    "Your name"
+    "isXander"
   ],
   "contact": {
-    "homepage": "https://example.com",
-    "issues": "https://github.com/example/example/issues",
-    "sources": "https://github.com/example/example"
+    "homepage": "https://isxander.dev",
+    "issues": "https://github.com/isXander/Zoomify/issues",
+    "sources": "https://github.com/isXander/Zoomify"
   },
-  "license": "The Unlicense",
-  "icon": "assets/modid/icon.png",
-  "environment": "*",
+  "icon": "assets/zoomify/zoomify.png",
+  "license": "GPLv3",
+  "environment": "client",
   "entrypoints": {
-    "main": [
+    "client": [
       {
         "adapter": "kotlin",
-        "value": "com.author.modid.ModName"
+        "value": "dev.isxander.zoomify.Zoomify"
+      }
+    ],
+    "modmenu": [
+      {
+        "adapter": "kotlin",
+        "value": "dev.isxander.zoomify.integrations.ModMenuIntegration"
       }
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "zoomify.mixins.json"
   ],
   "depends": {
     "fabric": "*",
     "fabricloader": ">=0.12.0",
-    "fabric-language-kotlin": ">=1.7.0+kotlin.1.6.0",
+    "fabric-language-kotlin": ">=1.7.1+kotlin.1.6.10",
     "minecraft": "1.18.x",
     "java": ">=17"
   }

@@ -1,15 +1,23 @@
 plugins {
     val kotlinVersion: String by System.getProperties()
 
+    java
     kotlin("jvm") version kotlinVersion
-    id("fabric-loom") version "0.10.+"
+    id("fabric-loom") version "0.11.+"
 }
 
-group = "com.example"
+group = "dev.isxander"
 version = "1.0"
 
 repositories {
     mavenCentral()
+    maven("https://repo.sk1er.club/repository/maven-public")
+    maven("https://maven.terraformersmc.com/releases")
+}
+
+fun DependencyHandlerScope.includeModImplementation(dependency: Any) {
+    include(dependency)
+    modImplementation(dependency)
 }
 
 dependencies {
@@ -27,6 +35,9 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
+
+    includeModImplementation("gg.essential:vigilance-1.18-fabric:+")
+    modImplementation("com.terraformersmc:modmenu:3.0.+")
 }
 
 kotlin {

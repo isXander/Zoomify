@@ -1,0 +1,24 @@
+{
+  "zoomify.key.zoom": "Zooom",
+  "zoomify.key.category": "Zoomify",
+
+  "zoomify.gui.category.main": "Behaviour",
+  "zoomify.gui.initialZoom.name": "Initial Zoom",
+  "zoomify.gui.initialZoom.description": "The zoom level when you first zoomify.",
+  "zoomify.gui.zoomSpeed.name": "Zoom Speed",
+  "zoomify.gui.zoomSpeed.description": "Speed at which the zoom animation will occur.",
+  "zoomify.gui.zoomTransition.name": "Zoom Transition",
+  "zoomify.gui.zoomTransition.description": "The transition type used when zooming.",
+
+  "zoomify.transition.instant": "Instant",
+  "zoomify.transition.linear": "Linear",
+  "zoomify.transition.ease_in_sine": "Ease In Sine",
+  "zoomify.transition.ease_out_sine": "Ease Out Sine",
+  "zoomify.transition.ease_in_out_sine": "Ease In Out Sine",
+  "zoomify.transition.ease_in_quad": "Ease In Quad",
+  "zoomify.transition.ease_out_quad": "Ease Out Quad",
+  "zoomify.transition.ease_in_out_quad": "Ease In Out Quad",
+  "zoomify.transition.ease_in_cubic": "Ease In Cubic",
+  "zoomify.transition.ease_out_cubic": "Ease Out Cubic",
+  "zoomify.transition.ease_in_out_cubic": "Ease In Out Cubic"
+}
