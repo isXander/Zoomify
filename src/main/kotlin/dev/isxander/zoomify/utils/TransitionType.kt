@@ -8,7 +8,7 @@ import kotlin.math.sin
 enum class TransitionType(val translationKey: String) : Transition {
     INSTANT("zoomify.transition.instant") {
         override fun apply(t: Double) =
-            1.0
+            throw UnsupportedOperationException("TransitionType.INSTANT does not support apply()")
     },
     LINEAR("zoomify.transition.linear") {
         override fun apply(t: Double) =

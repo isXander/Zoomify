@@ -13,11 +13,17 @@ repositories {
     mavenCentral()
     maven("https://repo.sk1er.club/repository/maven-public")
     maven("https://maven.terraformersmc.com/releases")
+    maven("https://jitpack.io")
 }
 
 fun DependencyHandlerScope.includeModImplementation(dependency: Any) {
     include(dependency)
     modImplementation(dependency)
+}
+
+fun DependencyHandlerScope.includeImplementation(dependency: Any) {
+    include(dependency)
+    implementation(dependency)
 }
 
 dependencies {
@@ -38,12 +44,14 @@ dependencies {
 
     includeModImplementation("gg.essential:vigilance-1.18-fabric:+")
     modImplementation("com.terraformersmc:modmenu:3.0.+")
+
+    includeImplementation("com.github.llamalad7:mixinextras:0.0.+")
+    annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
 }
 
-kotlin {
-    jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(17))
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks {

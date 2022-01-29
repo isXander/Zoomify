@@ -1,37 +1,50 @@
 package dev.isxander.zoomify
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap
+import dev.isxander.zoomify.config.ZoomKeyBehaviour
 import dev.isxander.zoomify.config.ZoomifySettings
-import dev.isxander.zoomify.utils.TransitionType
-import dev.isxander.zoomify.utils.getPercent
-import dev.isxander.zoomify.utils.lerp
+import dev.isxander.zoomify.utils.mc
+import dev.isxander.zoomify.zoom.SingleZoomHelper
+import dev.isxander.zoomify.zoom.TieredZoomHelper
 import gg.essential.vigilance.Vigilance
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
-import net.minecraft.util.math.MathHelper
 
 object Zoomify : ClientModInitializer {
-    val zoomKey = KeyBinding("zoomify.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.category")
-    private var lastZoomMultiplier = 0.0
+    val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
+    var zooming = false
+
+    private val normalZoomHelper = SingleZoomHelper({ ZoomifySettings.initialZoom.toDouble() }, { ZoomifySettings.zoomSpeed.toDouble() }, { ZoomifySettings.zoomTransition })
+    private val scrollZoomHelper = TieredZoomHelper({ ZoomifySettings.scrollZoomSpeed.toDouble() }, { ZoomifySettings.scrollZoomTransition }, { 6 }, { ZoomifySettings.maxScrollZoom * 5.0 })
     private var scrollSteps = 0
 
     override fun onInitializeClient() {
+        MixinExtrasBootstrap.init()
+
         Vigilance.initialize()
         ZoomifySettings.preload()
 
         KeyBindingHelper.registerKeyBinding(zoomKey)
+
+        ClientTickEvents.END_CLIENT_TICK.register {
+            if (zoomKey.wasPressed() && ZoomifySettings.zoomKeyBehaviour == ZoomKeyBehaviour.TOGGLE) {
+                zooming = !zooming
+            }
+        }
     }
 
     @JvmStatic
     fun getZoomDivisor(tickDelta: Float = 1f): Double {
-        if (!zoomKey.isPressed) scrollSteps = 0
+        if (ZoomifySettings.zoomKeyBehaviour == ZoomKeyBehaviour.HOLD)
+            zooming = zoomKey.isPressed
 
-        val scrollAmt = TransitionType.EASE_OUT_QUAD.apply(getPercent(scrollSteps.toDouble(), 0.0, 6.0)) * (2 * ZoomifySettings.scrollAmount)
-        val targetZoom = if (zoomKey.isPressed) 1.0 + scrollAmt else 0.0
-        lastZoomMultiplier = lerp(lastZoomMultiplier, targetZoom, tickDelta * (ZoomifySettings.zoomSpeed.toDouble() / 50.0))
+        if (!zooming) scrollSteps = 0
 
-        return lerp(1.0, ZoomifySettings.initialZoom.toDouble(), ZoomifySettings.zoomTransition.apply(lastZoomMultiplier))
+        return normalZoomHelper.getZoomDivisor(SingleZoomHelper.SingleZoomParams(zooming, tickDelta)) +
+                scrollZoomHelper.getZoomDivisor(TieredZoomHelper.TieredZoomParams(scrollSteps, tickDelta))
     }
 
     @JvmStatic
