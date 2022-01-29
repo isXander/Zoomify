@@ -27,7 +27,7 @@ object Zoomify : ClientModInitializer {
     fun getZoomDivisor(tickDelta: Float = 1f): Double {
         if (!zoomKey.isPressed) scrollSteps = 0
 
-        val scrollAmt = TransitionType.EASE_OUT_QUAD.apply(getPercent(scrollSteps.toDouble(), 0.0, 6.0)) * 1.5
+        val scrollAmt = TransitionType.EASE_OUT_QUAD.apply(getPercent(scrollSteps.toDouble(), 0.0, 6.0)) * (2 * ZoomifySettings.scrollAmount)
         val targetZoom = if (zoomKey.isPressed) 1.0 + scrollAmt else 0.0
         lastZoomMultiplier = lerp(lastZoomMultiplier, targetZoom, tickDelta * (ZoomifySettings.zoomSpeed.toDouble() / 50.0))
 
