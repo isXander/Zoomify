@@ -8,7 +8,6 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
         get() = _initialZoom()
 
     private var prevZoomDivisor = 0.0
-    private var ticks = 0.0
 
     override fun getZoomDivisor(params: SingleZoomParams): Double {
         val zooming = params.zooming
@@ -22,11 +21,10 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
             prevZoomDivisor += zoomSpeed / 20 * tickDelta
             prevZoomDivisor = prevZoomDivisor.coerceAtMost(targetZoom)
         } else if (targetZoom < prevZoomDivisor) {
-            prevZoomDivisor -= tickDelta * (zoomSpeed / 20)
+            prevZoomDivisor -= zoomSpeed / 20 * tickDelta
             prevZoomDivisor = prevZoomDivisor.coerceAtLeast(targetZoom)
         }
 
-        ticks++
         return lerp(1.0, initialZoom, transition.takeUnless { it == TransitionType.INSTANT }?.apply(prevZoomDivisor) ?: prevZoomDivisor)
     }
 

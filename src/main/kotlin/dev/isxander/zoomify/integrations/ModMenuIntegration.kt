@@ -6,6 +6,6 @@ import dev.isxander.zoomify.config.ZoomifySettings
 
 object ModMenuIntegration : ModMenuApi {
     override fun getModConfigScreenFactory(): ConfigScreenFactory<*> = ConfigScreenFactory { parent ->
-        ZoomifySettings.gui() ?: parent
+        ZoomifySettings.clothGui(parent)
     }
 }

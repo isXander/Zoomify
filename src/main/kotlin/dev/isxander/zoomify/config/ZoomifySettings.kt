@@ -1,61 +1,87 @@
 package dev.isxander.zoomify.config
 
+import dev.isxander.settxi.Setting
+import dev.isxander.settxi.impl.boolean
+import dev.isxander.settxi.impl.int
+import dev.isxander.settxi.impl.option
+import dev.isxander.zoomify.utils.SettxiGuiWrapper
 import dev.isxander.zoomify.utils.TransitionType
-import dev.isxander.zoomify.utils.formatEnum
 import dev.isxander.zoomify.utils.mc
-import gg.essential.vigilance.Vigilant
+import net.minecraft.text.TranslatableText
 import java.io.File
 
-object ZoomifySettings : Vigilant(File(mc.runDirectory, "config/zoomify.toml"), "Zoomify") {
-    var initialZoom = 4f
+object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"), File(mc.runDirectory, "config/zoomify.json")) {
+    override val settings = mutableListOf<Setting<*>>()
 
-    var maxScrollZoom = 0.75f
-    private var _scrollZoomTransition = TransitionType.LINEAR.ordinal
+    var initialZoom by int(4) {
+        name = "zoomify.gui.initialZoom.name"
+        description = "zoomify.gui.initialZoom.description"
+        category = "zoomify.gui.category.behaviour"
+        range = 1..10
+    }
+
+    var maxScrollZoom by int(75) {
+        name = "zoomify.gui.maxScrollZoom.name"
+        description = "zoomify.gui.maxScrollZoom.description"
+        category = "zoomify.gui.category.behaviour"
+        range = 1..100
+    }
+
+    var _scrollZoomTransition by option(TransitionType.values().toOptionContainer { it.translationKey }.options[0]) {
+        name = "zoomify.gui.scrollZoomTransition.name"
+        description = "zoomify.gui.scrollZoomTransition.description"
+        category = "zoomify.gui.category.scrolling"
+    }
     var scrollZoomTransition: TransitionType
-        get() = TransitionType.values()[this._scrollZoomTransition]
+        get() = TransitionType.values()[this._scrollZoomTransition.ordinal]
         set(value) {
-            this._scrollZoomTransition = value.ordinal
+            this._scrollZoomTransition = _scrollZoomTransition.container.options[value.ordinal]
         }
-    var scrollZoomSpeed = 0.5f
 
-    var zoomSpeed = 0.5f
-    private var _zoomTransition = TransitionType.LINEAR.ordinal
+    var scrollZoomSpeed by int(50) {
+        name = "zoomify.gui.scrollZoomSpeed.name"
+        description = "zoomify.gui.scrollZoomSpeed.description"
+        category = "zoomify.gui.category.scrolling"
+        range = 1..100
+    }
+
+    var zoomSpeed by int(50) {
+        name = "zoomify.gui.zoomSpeed.name"
+        description = "zoomify.gui.zoomSpeed.description"
+        category = "zoomify.gui.category.behaviour"
+        range = 1..100
+    }
+
+    var _zoomTransition by option(TransitionType.values().toOptionContainer { it.translationKey }.options[0]) {
+        name = "zoomify.gui.zoomTransition.name"
+        description = "zoomify.gui.zoomTransition.description"
+        category = "zoomify.gui.category.behaviour"
+    }
     var zoomTransition: TransitionType
-        get() = TransitionType.values()[this._zoomTransition]
+        get() = TransitionType.values()[this._zoomTransition.ordinal]
         set(value) {
-            this._zoomTransition = value.ordinal
+            this._zoomTransition = _zoomTransition.container.options[value.ordinal]
         }
 
 
-    private var _zoomKeyBehaviour = ZoomKeyBehaviour.HOLD.ordinal
+    var _zoomKeyBehaviour by option(ZoomKeyBehaviour.values().toOptionContainer { it.translationKey }.options[0]) {
+        name = "zoomify.gui.zoomKeyBehaviour.name"
+        description = "zoomify.gui.zoomKeyBehaviour.description"
+        category = "zoomify.gui.category.controls"
+    }
     var zoomKeyBehaviour: ZoomKeyBehaviour
-        get() = ZoomKeyBehaviour.values()[this._zoomKeyBehaviour]
+        get() = ZoomKeyBehaviour.values()[this._zoomKeyBehaviour.ordinal]
         set(value) {
-            this._zoomKeyBehaviour = value.ordinal
+            this._zoomKeyBehaviour = _zoomKeyBehaviour.container.options[value.ordinal]
         }
 
-    var cinematicCam = false
+    var cinematicCam by boolean(false) {
+        name = "zoomify.gui.cinematicCam.name"
+        description = "zoomify.gui.cinematicCam.description"
+        category = "zoomify.gui.category.controls"
+    }
 
     init {
-        category("zoomify.gui.category.behaviour") {
-            decimalSlider(::initialZoom, "zoomify.gui.initialZoom.name", "zoomify.gui.initialZoom.description", min = 1f, max = 10f)
-            percentSlider(::zoomSpeed, "zoomify.gui.zoomSpeed.name", "zoomify.gui.zoomSpeed.description")
-            selector(::_zoomTransition, "zoomify.gui.zoomTransition.name", "zoomify.gui.zoomTransition.description", TransitionType.values().map { it.translationKey })
-
-            subcategory("zoomify.gui.subcategory.scrolling") {
-                percentSlider(::maxScrollZoom, "zoomify.gui.maxScrollZoom.name", "zoomify.gui.maxScrollZoom.description")
-                percentSlider(::scrollZoomSpeed, "zoomify.gui.scrollZoomSpeed.name", "zoomify.gui.scrollZoomSpeed.description")
-                selector(::_scrollZoomTransition, "zoomify.gui.scrollZoomTransition.name", "zoomify.gui.scrollZoomTransition.description", TransitionType.values().map { it.translationKey })
-            }
-        }
-
-        category("zoomify.gui.category.controls") {
-            selector(::_zoomKeyBehaviour, "zoomify.gui.zoomKeyBehaviour.name", "zoomify.gui.zoomKeyBehaviour.description", ZoomKeyBehaviour.values().map { it.translationKey })
-            switch(::cinematicCam, "zoomify.gui.cinematicCam.name", "zoomify.gui.cinematicCam.description")
-        }
-
-        initialize()
-
-        hidePropertyIf(::zoomSpeed) { zoomTransition == TransitionType.INSTANT }
+        load()
     }
 }

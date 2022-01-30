@@ -7,23 +7,18 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "1.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
     maven("https://repo.sk1er.club/repository/maven-public")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
+    maven("https://maven.shedaniel.me/")
 }
 
-fun DependencyHandlerScope.includeModImplementation(dependency: Any) {
-    include(dependency)
-    modImplementation(dependency)
-}
-
-fun DependencyHandlerScope.includeImplementation(dependency: Any) {
-    include(dependency)
-    implementation(dependency)
+fun DependencyHandlerScope.includeImplementation(dependency: String, action: Action<ExternalModuleDependency> = Action {}): Dependency? {
+    return implementation(include(dependency, action))
 }
 
 dependencies {
@@ -42,19 +37,27 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
 
-    includeModImplementation("gg.essential:vigilance-1.18-fabric:+")
+    modApi("me.shedaniel.cloth:cloth-config-fabric:6.1.+") {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
+    includeImplementation("dev.isxander:settxi:2.1.0")
     modImplementation("com.terraformersmc:modmenu:3.0.+")
 
     includeImplementation("com.github.llamalad7:mixinextras:0.0.+")
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-}
-
 tasks {
+    withType<JavaCompile> {
+        options.release.set(17)
+    }
+
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+
     processResources {
         inputs.property("version", project.version)
         filesMatching("fabric.mod.json") {
