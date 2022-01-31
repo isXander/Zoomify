@@ -1,0 +1,47 @@
+{
+  "zoomify.key.zoom": "Suum",
+  "zoomify.key.gui": "Ava liides",
+  "zoomify.key.category": "Zoomify",
+
+
+  "zoomify.gui.title": "Zoomify",
+
+  "zoomify.gui.category.behaviour": "Käitumine",
+  "zoomify.gui.initialZoom.name": "Esialgne suum",
+  "zoomify.gui.initialZoom.description": "Suumitase esialgsel zoomify-misel.",
+  "zoomify.gui.zoomSpeed.name": "Suumi kiirus",
+  "zoomify.gui.zoomSpeed.description": "Suumi animatsiooni esituskiirus.",
+  "zoomify.gui.zoomTransition.name": "Suumi üleminek",
+  "zoomify.gui.zoomTransition.description": "Suumimisel kasutatav üleminekutüüp.",
+
+  "zoomify.gui.category.scrolling": "Kerimine",
+  "zoomify.gui.maxScrollZoom.name": "Maksimaalne kerimissuum",
+  "zoomify.gui.maxScrollZoom.description": "Maksimaalne suumitase, mida saab kerides saavutada.",
+  "zoomify.gui.scrollZoomSpeed.name": "Kerimissuumi kiirus",
+  "zoomify.gui.scrollZoomSpeed.description": "Suumi kerimise animatsiooni esituskiirus.",
+  "zoomify.gui.scrollZoomTransition.name": "Kerimissuumi üleminek",
+  "zoomify.gui.scrollZoomTransition.description": "Suumimise kerimisel kasutatav üleminekutüüp.",
+
+  "zoomify.gui.category.controls": "Juhtnupud",
+  "zoomify.gui.zoomKeyBehaviour.name": "Suumiklahvi käitumine",
+  "zoomify.gui.zoomKeyBehaviour.description": "Suumiklahvi käitumise valik.",
+  "zoomify.gui.cinematicCam.name": "Kinemaatiline kaamera",
+  "zoomify.gui.cinematicCam.description": "Muuda kaamera suumimise ajal sujuvalt liikuma.",
+
+
+  "zoomify.transition.instant": "Kohene",
+  "zoomify.transition.linear": "Lineaarne",
+  "zoomify.transition.ease_in_sine": "Sujuvalt sisse siinus",
+  "zoomify.transition.ease_out_sine": "Sujuvalt välja siinus",
+  "zoomify.transition.ease_in_out_sine": "Sujuvalt sisse-välja siinus",
+  "zoomify.transition.ease_in_quad": "Sujuvalt sisse nelinurk",
+  "zoomify.transition.ease_out_quad": "Sujuvalt välja nelinurk",
+  "zoomify.transition.ease_in_out_quad": "Sujuvalt sisse-välja nelinurk",
+  "zoomify.transition.ease_in_cubic": "Sujuvalt sisse kuubik",
+  "zoomify.transition.ease_out_cubic": "Sujuvalt välja kuubik",
+  "zoomify.transition.ease_in_out_cubic": "Sujuvalt sisse-välja kuubik",
+
+
+  "zoomify.zoom_key_behaviour.hold": "Hoia",
+  "zoomify.zoom_key_behaviour.toggle": "Lülita"
+}
