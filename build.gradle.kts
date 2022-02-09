@@ -37,7 +37,7 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:6.1.+") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:6.2.+") {
         exclude(group = "net.fabricmc.fabric-api")
     }
     includeImplementation("dev.isxander:settxi:2.1.0")
