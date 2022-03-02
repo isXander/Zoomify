@@ -41,7 +41,7 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
     includeImplementation("dev.isxander:settxi:2.1.0")
-    modImplementation("com.terraformersmc:modmenu:3.0.+")
+    modImplementation("com.terraformersmc:modmenu:3.1.+")
 
     includeImplementation("com.github.llamalad7:mixinextras:0.0.+")
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
