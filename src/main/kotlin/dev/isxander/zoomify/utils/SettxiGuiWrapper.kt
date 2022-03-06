@@ -29,6 +29,9 @@ abstract class SettxiGuiWrapper(val title: Text, val file: File) : ConfigProcess
     }
 
     fun save() {
+        if (!file.exists())
+            file.createNewFile()
+
         file.writeText(Json.encodeToString(settings.asJson()))
     }
 

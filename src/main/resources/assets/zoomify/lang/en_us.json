@@ -40,6 +40,9 @@
   "zoomify.transition.ease_in_cubic": "Ease In Cubic",
   "zoomify.transition.ease_out_cubic": "Ease Out Cubic",
   "zoomify.transition.ease_in_out_cubic": "Ease In Out Cubic",
+  "zoomify.transition.ease_in_exp": "Ease In Exponential",
+  "zoomify.transition.ease_out_exp": "Ease Out Exponential",
+  "zoomify.transition.ease_in_out_exp": "Ease In Out Exponential",
 
 
   "zoomify.zoom_key_behaviour.hold": "Hold",

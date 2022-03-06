@@ -40,6 +40,9 @@
   "zoomify.transition.ease_in_cubic": "Sujuvalt sisse kuubik",
   "zoomify.transition.ease_out_cubic": "Sujuvalt välja kuubik",
   "zoomify.transition.ease_in_out_cubic": "Sujuvalt sisse-välja kuubik",
+  "zoomify.transition.ease_in_exp": "Sujuvalt eksponentsiaalselt",
+  "zoomify.transition.ease_out_exp": "Sujuvalt eksponentsiaalne",
+  "zoomify.transition.ease_in_out_exp": "Sujuvalt sisse-välja eksponentsiaalselt",
 
 
   "zoomify.zoom_key_behaviour.hold": "Hoia",

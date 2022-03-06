@@ -55,6 +55,24 @@ enum class TransitionType(val translationKey: String) : Transition {
                 4 * t * t * t
             else
                 1 - (-2 * t + 2).pow(3) / 2
+    },
+    EASE_IN_EXP("zoomify.transition.ease_in_exp") {
+        override fun apply(t: Double): Double =
+            if (t == 0.0) 0.0 else 2.0.pow(10 * t - 10)
+    },
+    EASE_OUT_EXP("zoomify.transition.ease_out_exp") {
+        override fun apply(t: Double): Double =
+            if (t == 1.0) 1.0 else 1.0 - 2.0.pow(-10.0 * t)
+    },
+    EASE_IN_OUT_EXP("zoomify.transition.ease_in_out_exp") {
+        override fun apply(t: Double): Double =
+            if (t == 0.0)
+                0.0
+        else if (t == 1.0)
+                1.0
+        else if (t < 0.5)
+            2.0.pow(20.0 * t - 10.0) / 2.0
+        else (2.0 - 2.0.pow(-20.0 * t + 10.0)) / 2
     }
 }
 
