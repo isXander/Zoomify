@@ -38,6 +38,12 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
             this._scrollZoomTransition = _scrollZoomTransition.container.options[value.ordinal]
         }
 
+    var scrollZoomOppositeTransitionOut by boolean(true) {
+        name = "zoomify.gui.scrollZoomOppositeTransitionOut.name"
+        description = "zoomify.gui.scrollZoomOppositeTransitionOut.description"
+        category = "zoomify.gui.category.scrolling"
+    }
+
     var scrollZoomSpeed by int(50) {
         name = "zoomify.gui.scrollZoomSpeed.name"
         description = "zoomify.gui.scrollZoomSpeed.description"
@@ -63,6 +69,11 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
             this._zoomTransition = _zoomTransition.container.options[value.ordinal]
         }
 
+    var zoomOppositeTransitionOut by boolean(true) {
+        name = "zoomify.gui.zoomOppositeTransitionOut.name"
+        description = "zoomify.gui.zoomOppositeTransitionOut.description"
+        category = "zoomify.gui.category.behaviour"
+    }
 
     var _zoomKeyBehaviour by option(ZoomKeyBehaviour.values().toOptionContainer { it.translationKey }.options[0]) {
         name = "zoomify.gui.zoomKeyBehaviour.name"

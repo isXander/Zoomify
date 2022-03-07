@@ -1,5 +1,6 @@
 package dev.isxander.zoomify.zoom
 
+import dev.isxander.zoomify.config.ZoomifySettings
 import dev.isxander.zoomify.utils.TransitionType
 import dev.isxander.zoomify.utils.lerp
 
@@ -17,6 +18,7 @@ open class TieredZoomHelper(zoomSpeed: () -> Double, transition: () -> Transitio
         val tickDelta = params.tickDelta
 
         val targetZoom = tier.toDouble() / maxTiers
+        var actualTransition = transition
 
         if (transition == TransitionType.INSTANT) {
             prevZoomDivisor = targetZoom
@@ -26,9 +28,12 @@ open class TieredZoomHelper(zoomSpeed: () -> Double, transition: () -> Transitio
         } else if (targetZoom < prevZoomDivisor) {
             prevZoomDivisor -= tickDelta * (zoomSpeed / 20)
             prevZoomDivisor = prevZoomDivisor.coerceAtLeast(targetZoom)
+
+            if (ZoomifySettings.scrollZoomOppositeTransitionOut)
+                actualTransition = actualTransition.opposite()
         }
 
-        return lerp(0.0, maxZoom, transition.takeUnless { it == TransitionType.INSTANT }?.apply(prevZoomDivisor) ?: prevZoomDivisor)
+        return lerp(0.0, maxZoom, actualTransition.takeUnless { it == TransitionType.INSTANT }?.apply(prevZoomDivisor) ?: prevZoomDivisor)
     }
 
     data class TieredZoomParams(val tier: Int, val tickDelta: Float) : ZoomParams()

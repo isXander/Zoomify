@@ -22,6 +22,9 @@
         "value": "dev.isxander.zoomify.Zoomify"
       }
     ],
+    "preInit": [
+      "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
+    ],
     "modmenu": [
       {
         "adapter": "kotlin",

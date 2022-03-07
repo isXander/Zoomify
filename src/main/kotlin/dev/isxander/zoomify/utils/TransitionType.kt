@@ -73,6 +73,23 @@ enum class TransitionType(val translationKey: String) : Transition {
         else if (t < 0.5)
             2.0.pow(20.0 * t - 10.0) / 2.0
         else (2.0 - 2.0.pow(-20.0 * t + 10.0)) / 2
+    };
+
+    fun opposite(): TransitionType = when (this) {
+        INSTANT -> INSTANT
+        LINEAR -> LINEAR
+        EASE_IN_SINE -> EASE_OUT_SINE
+        EASE_OUT_SINE -> EASE_IN_SINE
+        EASE_IN_OUT_SINE -> EASE_IN_OUT_SINE
+        EASE_IN_QUAD -> EASE_OUT_QUAD
+        EASE_OUT_QUAD -> EASE_IN_QUAD
+        EASE_IN_OUT_QUAD -> EASE_IN_OUT_QUAD
+        EASE_IN_CUBIC -> EASE_OUT_CUBIC
+        EASE_OUT_CUBIC -> EASE_IN_CUBIC
+        EASE_IN_OUT_CUBIC -> EASE_IN_OUT_CUBIC
+        EASE_IN_EXP -> EASE_OUT_EXP
+        EASE_OUT_EXP -> EASE_IN_EXP
+        EASE_IN_OUT_EXP -> EASE_IN_OUT_EXP
     }
 }
 

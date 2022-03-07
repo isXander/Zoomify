@@ -13,6 +13,8 @@
   "zoomify.gui.zoomSpeed.description": "Speed at which the zoom animation will occur.",
   "zoomify.gui.zoomTransition.name": "Zoom Transition",
   "zoomify.gui.zoomTransition.description": "The transition type used when zooming.",
+  "zoomify.gui.zoomOppositeTransitionOut.name": "Opposite Transition Out",
+  "zoomify.gui.zoomOppositeTransitionOut.description": "Inverts the transition type when zooming out.",
 
   "zoomify.gui.category.scrolling": "Scrolling",
   "zoomify.gui.maxScrollZoom.name": "Max Scroll Zoom",
@@ -21,6 +23,8 @@
   "zoomify.gui.scrollZoomSpeed.description": "Speed at which the scroll zoom animation will occur.",
   "zoomify.gui.scrollZoomTransition.name": "Scroll Zoom Transition",
   "zoomify.gui.scrollZoomTransition.description": "The transition type used when scrolling to zoom.",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.name": "Opposite Transition Out",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.description": "Inverts the transition type when zooming out.",
 
   "zoomify.gui.category.controls": "Controls",
   "zoomify.gui.zoomKeyBehaviour.name": "Zoom Key Behaviour",
