@@ -20,7 +20,7 @@ public class MouseMixin {
             cancellable = true
     )
     private void onMouseScroll(CallbackInfo ci) {
-        if (Zoomify.INSTANCE.getZoomKey().isPressed() && eventDeltaWheel != 0) {
+        if (Zoomify.INSTANCE.getZooming() && eventDeltaWheel != 0) {
             Zoomify.mouseZoom(eventDeltaWheel);
             ci.cancel();
         }
