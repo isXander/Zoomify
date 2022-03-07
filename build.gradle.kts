@@ -37,11 +37,11 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:6.1.+") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:6.+") {
         exclude(group = "net.fabricmc.fabric-api")
     }
     includeImplementation("dev.isxander:settxi:2.1.0")
-    modImplementation("com.terraformersmc:modmenu:3.0.+")
+    modImplementation("com.terraformersmc:modmenu:3.+")
 
     includeImplementation("com.github.llamalad7:mixinextras:0.0.+")
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
