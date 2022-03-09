@@ -1,4 +1,4 @@
-package dev.isxander.zoomify.metrics
+package dev.isxander.zoomify.api.metrics
 
 import com.mojang.authlib.minecraft.UserApiService
 import dev.isxander.zoomify.Zoomify

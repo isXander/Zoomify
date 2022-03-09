@@ -3,11 +3,12 @@ plugins {
 
     java
     kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     id("fabric-loom") version "0.11.+"
 }
 
 group = "dev.isxander"
-version = "1.3.1"
+version = "1.4.0"
 
 repositories {
     mavenCentral()
@@ -40,10 +41,13 @@ dependencies {
     modApi("me.shedaniel.cloth:cloth-config-fabric:6.+") {
         exclude(group = "net.fabricmc.fabric-api")
     }
-    includeImplementation("dev.isxander:settxi:2.1.0")
+
+    include(implementation("dev.isxander:settxi:2.1.0")!!)
+    include(implementation("org.bundleproject:libversion:0.0.3")!!)
+
     modImplementation("com.terraformersmc:modmenu:3.+")
 
-    includeImplementation("com.github.llamalad7:mixinextras:0.0.+")
+    include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
 }
 

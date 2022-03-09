@@ -50,5 +50,8 @@
 
 
   "zoomify.zoom_key_behaviour.hold": "Hold",
-  "zoomify.zoom_key_behaviour.toggle": "Toggle"
+  "zoomify.zoom_key_behaviour.toggle": "Toggle",
+
+
+  "zoomify.update.available": "Zoomify %s is available for download: "
 }

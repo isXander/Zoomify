@@ -2,7 +2,8 @@ package dev.isxander.zoomify
 
 import dev.isxander.zoomify.config.ZoomKeyBehaviour
 import dev.isxander.zoomify.config.ZoomifySettings
-import dev.isxander.zoomify.metrics.UniqueUsersMetric
+import dev.isxander.zoomify.api.metrics.UniqueUsersMetric
+import dev.isxander.zoomify.api.updater.ZoomifyUpdateChecker
 import dev.isxander.zoomify.utils.mc
 import dev.isxander.zoomify.zoom.SingleZoomHelper
 import dev.isxander.zoomify.zoom.TieredZoomHelper
@@ -10,12 +11,21 @@ import kotlinx.coroutines.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
+import net.minecraft.network.MessageType
+import net.minecraft.text.ClickEvent
+import net.minecraft.text.LiteralText
+import net.minecraft.text.TranslatableText
+import net.minecraft.util.Formatting
+import org.bundleproject.libversion.Version
+import java.util.*
 
 object Zoomify : ClientModInitializer {
-    val VERSION = FabricLoader.getInstance().getModContainer("zoomify").get().metadata.version
+    val VERSION = Version.of(FabricLoader.getInstance().getModContainer("zoomify").get().metadata.version.friendlyString)
+    var latestVersion: Version? = null
 
     val guiKey = KeyBinding("zoomify.key.gui", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_F8, "zoomify.key.category")
 
@@ -42,10 +52,22 @@ object Zoomify : ClientModInitializer {
             }
         }
 
+        ClientLoginConnectionEvents.INIT.register { handler, client ->
+            if (latestVersion != null) {
+                val versionString = latestVersion.toString()
+                val updateUrl = "https://modrinth.com/mod/zoomify/version/$versionString"
+                val text = TranslatableText("zoomify.update.available", versionString).formatted(Formatting.RED).append(LiteralText(updateUrl).formatted(Formatting.UNDERLINE, Formatting.BLUE).styled { it.withClickEvent(ClickEvent(ClickEvent.Action.OPEN_URL, updateUrl)) })
+
+                client.inGameHud.addChatMessage(MessageType.CHAT, text, UUID.randomUUID())
+                latestVersion = null
+            }
+        }
+
         Thread {
             UniqueUsersMetric.putApi()
+            latestVersion = ZoomifyUpdateChecker.getLatestVersion()?.takeIf { it > VERSION }
         }.apply {
-            name = "zoomify-metrics"
+            name = "zoomify-concurrent"
             start()
         }
     }
