@@ -22,7 +22,7 @@
         "value": "dev.isxander.zoomify.Zoomify"
       }
     ],
-    "preInit": [
+    "preLaunch": [
       "com.llamalad7.mixinextras.MixinExtrasBootstrap::init"
     ],
     "modmenu": [
