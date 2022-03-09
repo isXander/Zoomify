@@ -1,10 +1,10 @@
 package dev.isxander.zoomify.config
 
 import dev.isxander.settxi.Setting
+import dev.isxander.settxi.clothconfig.SettxiGuiWrapper
 import dev.isxander.settxi.impl.boolean
 import dev.isxander.settxi.impl.int
 import dev.isxander.settxi.impl.option
-import dev.isxander.zoomify.utils.SettxiGuiWrapper
 import dev.isxander.zoomify.utils.TransitionType
 import dev.isxander.zoomify.utils.mc
 import net.minecraft.text.TranslatableText

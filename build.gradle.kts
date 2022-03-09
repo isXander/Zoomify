@@ -16,6 +16,7 @@ repositories {
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
     maven("https://maven.shedaniel.me/")
+    maven("https://repo.woverflow.cc/")
 }
 
 fun DependencyHandlerScope.includeImplementation(dependency: String, action: Action<ExternalModuleDependency> = Action {}): Dependency? {
@@ -43,6 +44,8 @@ dependencies {
     }
 
     include(implementation("dev.isxander:settxi:2.1.0")!!)
+    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.1:fabric-1.18.2")!!)
+
     include(implementation("org.bundleproject:libversion:0.0.3")!!)
 
     modImplementation("com.terraformersmc:modmenu:3.+")
