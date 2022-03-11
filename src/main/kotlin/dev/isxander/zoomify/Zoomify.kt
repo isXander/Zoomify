@@ -79,8 +79,8 @@ object Zoomify : ClientModInitializer {
 
         if (!zooming) scrollSteps = 0
 
-        return normalZoomHelper.getZoomDivisor(SingleZoomHelper.SingleZoomParams(zooming, tickDelta)) +
-                scrollZoomHelper.getZoomDivisor(TieredZoomHelper.TieredZoomParams(scrollSteps, tickDelta))
+        return (normalZoomHelper.getZoomDivisor(SingleZoomHelper.SingleZoomParams(zooming, tickDelta)) +
+                scrollZoomHelper.getZoomDivisor(TieredZoomHelper.TieredZoomParams(scrollSteps, tickDelta))).coerceAtLeast(1.0)
     }
 
     @JvmStatic
@@ -90,6 +90,6 @@ object Zoomify : ClientModInitializer {
         } else if (mouseDelta < 0) {
             scrollSteps--
         }
-        scrollSteps = scrollSteps.coerceIn(0..6)
+        scrollSteps = scrollSteps.coerceIn(-2..6)
     }
 }
