@@ -43,7 +43,7 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
-    include(implementation("dev.isxander:settxi:2.1.0")!!)
+    include(implementation("dev.isxander:settxi:2.1.1")!!)
     include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.1:fabric-1.18.2")!!)
 
     include(implementation("org.bundleproject:libversion:0.0.3")!!)
