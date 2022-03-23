@@ -29,6 +29,8 @@
   "zoomify.gui.category.controls": "Juhtnupud",
   "zoomify.gui.zoomKeyBehaviour.name": "Suumiklahvi käitumine",
   "zoomify.gui.zoomKeyBehaviour.description": "Suumiklahvi käitumise valik.",
+  "zoomify.gui.relativeSensitivity.name": "Suhteline tundlikkus",
+  "zoomify.gui.relativeSensitivity.description": "Vähendab tundlikkust sõltuvalt suumitasemest.",
   "zoomify.gui.cinematicCam.name": "Kinemaatiline kaamera",
   "zoomify.gui.cinematicCam.description": "Muuda kaamera suumimise ajal sujuvalt liikuma.",
 

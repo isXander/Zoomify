@@ -86,6 +86,12 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
             this._zoomKeyBehaviour = _zoomKeyBehaviour.container.options[value.ordinal]
         }
 
+    var relativeSensitivity by boolean(false) {
+        name = "zoomify.gui.relativeSensitivity.name"
+        description = "zoomify.gui.relativeSensitivity.description"
+        category = "zoomify.gui.category.controls"
+    }
+
     var cinematicCam by boolean(false) {
         name = "zoomify.gui.cinematicCam.name"
         description = "zoomify.gui.cinematicCam.description"

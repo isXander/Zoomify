@@ -36,6 +36,9 @@ object Zoomify : ClientModInitializer {
     private val scrollZoomHelper = TieredZoomHelper({ ZoomifySettings.scrollZoomSpeed.toDouble() / 100.0 }, { ZoomifySettings.scrollZoomTransition }, { 6 }, { ZoomifySettings.maxScrollZoom / 100.0 * 5.0 })
     private var scrollSteps = 0
 
+    var previousZoomDivisor = 1.0
+        private set
+
     override fun onInitializeClient() {
         ZoomifySettings.load()
 
@@ -79,8 +82,10 @@ object Zoomify : ClientModInitializer {
 
         if (!zooming) scrollSteps = 0
 
-        return (normalZoomHelper.getZoomDivisor(SingleZoomHelper.SingleZoomParams(zooming, tickDelta)) +
+        previousZoomDivisor = (normalZoomHelper.getZoomDivisor(SingleZoomHelper.SingleZoomParams(zooming, tickDelta)) +
                 scrollZoomHelper.getZoomDivisor(TieredZoomHelper.TieredZoomParams(scrollSteps, tickDelta))).coerceAtLeast(1.0)
+
+        return previousZoomDivisor
     }
 
     @JvmStatic
