@@ -20,10 +20,40 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
         range = 1..10
     }
 
+    var zoomSpeed by int(50) {
+        name = "zoomify.gui.zoomSpeed.name"
+        description = "zoomify.gui.zoomSpeed.description"
+        category = "zoomify.gui.category.behaviour"
+        range = 1..150
+    }
+
+    var _zoomTransition by option(TransitionType.values().toOptionContainer { it.translationKey }.options[0]) {
+        name = "zoomify.gui.zoomTransition.name"
+        description = "zoomify.gui.zoomTransition.description"
+        category = "zoomify.gui.category.behaviour"
+    }
+    var zoomTransition: TransitionType
+        get() = TransitionType.values()[this._zoomTransition.ordinal]
+        set(value) {
+            this._zoomTransition = _zoomTransition.container.options[value.ordinal]
+        }
+
+    var zoomOppositeTransitionOut by boolean(true) {
+        name = "zoomify.gui.zoomOppositeTransitionOut.name"
+        description = "zoomify.gui.zoomOppositeTransitionOut.description"
+        category = "zoomify.gui.category.behaviour"
+    }
+
+    var scrollZoom by boolean(true) {
+        name = "zoomify.gui.scrollZoom.name"
+        description = "zoomify.gui.maxScrollZoom.description"
+        category = "zoomify.gui.category.scrolling"
+    }
+
     var maxScrollZoom by int(75) {
         name = "zoomify.gui.maxScrollZoom.name"
         description = "zoomify.gui.maxScrollZoom.description"
-        category = "zoomify.gui.category.behaviour"
+        category = "zoomify.gui.category.scrolling"
         range = 1..100
     }
 
@@ -48,31 +78,7 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
         name = "zoomify.gui.scrollZoomSpeed.name"
         description = "zoomify.gui.scrollZoomSpeed.description"
         category = "zoomify.gui.category.scrolling"
-        range = 1..100
-    }
-
-    var zoomSpeed by int(50) {
-        name = "zoomify.gui.zoomSpeed.name"
-        description = "zoomify.gui.zoomSpeed.description"
-        category = "zoomify.gui.category.behaviour"
-        range = 1..100
-    }
-
-    var _zoomTransition by option(TransitionType.values().toOptionContainer { it.translationKey }.options[0]) {
-        name = "zoomify.gui.zoomTransition.name"
-        description = "zoomify.gui.zoomTransition.description"
-        category = "zoomify.gui.category.behaviour"
-    }
-    var zoomTransition: TransitionType
-        get() = TransitionType.values()[this._zoomTransition.ordinal]
-        set(value) {
-            this._zoomTransition = _zoomTransition.container.options[value.ordinal]
-        }
-
-    var zoomOppositeTransitionOut by boolean(true) {
-        name = "zoomify.gui.zoomOppositeTransitionOut.name"
-        description = "zoomify.gui.zoomOppositeTransitionOut.description"
-        category = "zoomify.gui.category.behaviour"
+        range = 1..150
     }
 
     var _zoomKeyBehaviour by option(ZoomKeyBehaviour.values().toOptionContainer { it.translationKey }.options[0]) {

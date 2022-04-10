@@ -17,6 +17,8 @@
   "zoomify.gui.zoomOppositeTransitionOut.description": "Pöörab väljasuumimisel üleminekutüübi ümber.",
 
   "zoomify.gui.category.scrolling": "Kerimine",
+  "zoomify.gui.scrollZoom.name": "Luba kerimissuum",
+  "zoomify.gui.scrollZoom.description": "Võimaldab kerimisrattaga rohkem sisse ja välja suumida.",
   "zoomify.gui.maxScrollZoom.name": "Maksimaalne kerimissuum",
   "zoomify.gui.maxScrollZoom.description": "Maksimaalne suumitase, mida saab kerides saavutada.",
   "zoomify.gui.scrollZoomSpeed.name": "Kerimissuumi kiirus",

@@ -17,6 +17,8 @@
   "zoomify.gui.zoomOppositeTransitionOut.description": "Inverts the transition type when zooming out.",
 
   "zoomify.gui.category.scrolling": "Scrolling",
+  "zoomify.gui.scrollZoom.name": "Enable Scroll Zoom",
+  "zoomify.gui.scrollZoom.description": "Allow you to zoom in and out more with scroll wheel.",
   "zoomify.gui.maxScrollZoom.name": "Max Scroll Zoom",
   "zoomify.gui.maxScrollZoom.description": "The maximum zoom level that can be achieved when scrolling.",
   "zoomify.gui.scrollZoomSpeed.name": "Scroll Zoom Speed",
