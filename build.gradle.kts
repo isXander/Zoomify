@@ -19,10 +19,6 @@ repositories {
     maven("https://repo.woverflow.cc/")
 }
 
-fun DependencyHandlerScope.includeImplementation(dependency: String, action: Action<ExternalModuleDependency> = Action {}): Dependency? {
-    return implementation(include(dependency, action))
-}
-
 dependencies {
     val kotlinVersion: String by System.getProperties()
     val minecraftVersion: String by project
