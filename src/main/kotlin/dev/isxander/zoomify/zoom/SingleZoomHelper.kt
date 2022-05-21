@@ -20,10 +20,10 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
         if (transition == TransitionType.INSTANT) {
             interpolation = targetZoom
         } else if (targetZoom > interpolation) {
-            interpolation += zoomSpeed / 20 * tickDelta
+            interpolation += zoomSpeed / 20 * 0.05 + tickDelta
             interpolation = interpolation.coerceAtMost(targetZoom)
         } else if (targetZoom < interpolation) {
-            interpolation -= zoomSpeed / 20 * tickDelta
+            interpolation -= zoomSpeed / 20 * 0.05 + tickDelta
             interpolation = interpolation.coerceAtLeast(targetZoom)
 
             if (ZoomifySettings.zoomOppositeTransitionOut)
