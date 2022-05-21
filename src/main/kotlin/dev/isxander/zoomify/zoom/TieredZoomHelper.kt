@@ -23,10 +23,10 @@ open class TieredZoomHelper(zoomSpeed: () -> Double, transition: () -> Transitio
         if (transition == TransitionType.INSTANT) {
             prevZoomDivisor = targetZoom
         } else if (targetZoom > prevZoomDivisor) {
-            prevZoomDivisor += tickDelta * (zoomSpeed / 20)
+            prevZoomDivisor += zoomSpeed / 20 * tickDelta
             prevZoomDivisor = prevZoomDivisor.coerceAtMost(targetZoom)
         } else if (targetZoom < prevZoomDivisor) {
-            prevZoomDivisor -= tickDelta * (zoomSpeed / 20)
+            prevZoomDivisor -= zoomSpeed / 20 * tickDelta
             prevZoomDivisor = prevZoomDivisor.coerceAtLeast(targetZoom)
 
             if (ZoomifySettings.scrollZoomOppositeTransitionOut)
