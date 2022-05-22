@@ -1,0 +1,61 @@
+{
+  "zoomify.key.zoom": "Приблизить",
+  "zoomify.key.gui": "Открыть настройки",
+  "zoomify.key.category": "Zoomify",
+
+
+  "zoomify.gui.title": "Zoomify",
+
+  "zoomify.gui.category.behaviour": "Поведение",
+  "zoomify.gui.initialZoom.name": "Начальное приближение",
+  "zoomify.gui.initialZoom.description": "Уровень приближения при нажатии на кнопку приближения.",
+  "zoomify.gui.zoomSpeed.name": "Скорость приближения",
+  "zoomify.gui.zoomSpeed.description": "Скорость, с которой пройдёт анимация зума.",
+  "zoomify.gui.zoomTransition.name": "Переход в приближении",
+  "zoomify.gui.zoomTransition.description": "Тип перехода при приближении.",
+  "zoomify.gui.zoomOppositeTransitionOut.name": "Инверсия перехода в отдалении",
+  "zoomify.gui.zoomOppositeTransitionOut.description": "Инвертирует тип перехода при выходе из зума.",
+
+  "zoomify.gui.category.scrolling": "Прокрутка",
+  "zoomify.gui.scrollZoom.name": "Включить прокрутку в приближении",
+  "zoomify.gui.scrollZoom.description": "Позволяет приближать и отдалять зум колесиком мыши.",
+  "zoomify.gui.maxScrollZoom.name": "Максимальное приближение/отдаления при прокрутке",
+  "zoomify.gui.maxScrollZoom.description": "Максимальный уровень приближения/отдаление, который можно достигнуть прокруткой.",
+  "zoomify.gui.scrollZoomSpeed.name": "Скорость прокрутки в приближении",
+  "zoomify.gui.scrollZoomSpeed.description": "Скорость, с которой пройдёт анимация прокрутки в зуме.",
+  "zoomify.gui.scrollZoomTransition.name": "Переход прокрутки в приближении",
+  "zoomify.gui.scrollZoomTransition.description": "Тип перехода при прокрутки в зуме.",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.name": "Opposite Transition Out",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.description": "Инвертирует тип перехода при отдалении при прокрутки и зуме.",
+
+  "zoomify.gui.category.controls": "Управление",
+  "zoomify.gui.zoomKeyBehaviour.name": "Поведение кнопки приближения",
+  "zoomify.gui.zoomKeyBehaviour.description": "На какое действие с кнопкой зум будет реагировать.",
+  "zoomify.gui.relativeSensitivity.name": "Relative Sensitivity Относительная чувствительность",
+  "zoomify.gui.relativeSensitivity.description": "Уменьшает чувствительность в зависимости от уровня приближения.",
+  "zoomify.gui.cinematicCam.name": "Кинематографическая камера",
+  "zoomify.gui.cinematicCam.description": "В зуме камера будет двигаться плавнее.",
+
+
+  "zoomify.transition.instant": "Моментальный",
+  "zoomify.transition.linear": "Линейный",
+  "zoomify.transition.ease_in_sine": "Возрастание по синусу",
+  "zoomify.transition.ease_out_sine": "Замедление по синусу",
+  "zoomify.transition.ease_in_out_sine": "Возрастание и замедление по синусу",
+  "zoomify.transition.ease_in_quad": "Возрастание по четвертной",
+  "zoomify.transition.ease_out_quad": "Замедление по четвертной",
+  "zoomify.transition.ease_in_out_quad": "Возрастание и замедление по четвертной",
+  "zoomify.transition.ease_in_cubic": "Возрастание по кубу",
+  "zoomify.transition.ease_out_cubic": "Замедление по кубу",
+  "zoomify.transition.ease_in_out_cubic": "Возрастание и замедление по кубу",
+  "zoomify.transition.ease_in_exp": "Возрастание по экспоненте",
+  "zoomify.transition.ease_out_exp": "Замедление по экспоненте",
+  "zoomify.transition.ease_in_out_exp": "озрастание и замедление по экспоненте",
+
+
+  "zoomify.zoom_key_behaviour.hold": "Удерживание",
+  "zoomify.zoom_key_behaviour.toggle": "Нажатие",
+
+
+  "zoomify.update.available": "Zoomify %s is available for download: "
+}
