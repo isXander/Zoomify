@@ -25,13 +25,13 @@
   "zoomify.gui.scrollZoomSpeed.description": "Скорость, с которой пройдёт анимация прокрутки в зуме.",
   "zoomify.gui.scrollZoomTransition.name": "Переход прокрутки в приближении",
   "zoomify.gui.scrollZoomTransition.description": "Тип перехода при прокрутки в зуме.",
-  "zoomify.gui.scrollZoomOppositeTransitionOut.name": "Opposite Transition Out",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.name": "Инверсия перехода в отдалении",
   "zoomify.gui.scrollZoomOppositeTransitionOut.description": "Инвертирует тип перехода при отдалении при прокрутки и зуме.",
 
   "zoomify.gui.category.controls": "Управление",
   "zoomify.gui.zoomKeyBehaviour.name": "Поведение кнопки приближения",
   "zoomify.gui.zoomKeyBehaviour.description": "На какое действие с кнопкой зум будет реагировать.",
-  "zoomify.gui.relativeSensitivity.name": "Relative Sensitivity Относительная чувствительность",
+  "zoomify.gui.relativeSensitivity.name": "Относительная чувствительность",
   "zoomify.gui.relativeSensitivity.description": "Уменьшает чувствительность в зависимости от уровня приближения.",
   "zoomify.gui.cinematicCam.name": "Кинематографическая камера",
   "zoomify.gui.cinematicCam.description": "В зуме камера будет двигаться плавнее.",
@@ -57,5 +57,5 @@
   "zoomify.zoom_key_behaviour.toggle": "Нажатие",
 
 
-  "zoomify.update.available": "Zoomify %s is available for download: "
+  "zoomify.update.available": "Zoomify %s доступен для загрузки: "
 }
