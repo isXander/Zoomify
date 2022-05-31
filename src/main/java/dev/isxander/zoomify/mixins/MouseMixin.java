@@ -7,6 +7,7 @@ import dev.isxander.zoomify.utils.MathUtilsKt;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.Mouse;
 import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.SimpleOption;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,9 +43,13 @@ public class MouseMixin {
 
     @Redirect(
             method = "updateMouse",
-            at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;mouseSensitivity:D")
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/option/SimpleOption;getValue()Ljava/lang/Object;",
+                    ordinal = 0
+            )
     )
-    private double modifySensitivity(GameOptions options) {
-        return options.mouseSensitivity / (ZoomifySettings.INSTANCE.getRelativeSensitivity() ? Zoomify.INSTANCE.getPreviousZoomDivisor() : 1);
+    private Object modifySensitivity(SimpleOption<Double> instance) {
+        return instance.getValue() / (ZoomifySettings.INSTANCE.getRelativeSensitivity() ? Zoomify.INSTANCE.getPreviousZoomDivisor() : 1);
     }
 }

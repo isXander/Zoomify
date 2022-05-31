@@ -7,10 +7,10 @@ import dev.isxander.settxi.impl.int
 import dev.isxander.settxi.impl.option
 import dev.isxander.zoomify.utils.TransitionType
 import dev.isxander.zoomify.utils.mc
-import net.minecraft.text.TranslatableText
+import net.minecraft.text.Text
 import java.io.File
 
-object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"), File(mc.runDirectory, "config/zoomify.json")) {
+object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title"), File(mc.runDirectory, "config/zoomify.json")) {
     override val settings = mutableListOf<Setting<*>>()
 
     var initialZoom by int(4) {

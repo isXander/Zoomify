@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "1.6.0"
+version = "1.6.1"
 
 repositories {
     mavenCentral()
@@ -31,7 +31,6 @@ val minecraftVersion: String by project
 
 dependencies {
     val kotlinVersion: String by System.getProperties()
-    val yarnVersion: String by project
     val loaderVersion: String by project
     val fabricVersion: String by project
     val fabricKotlinVersion: String by project
@@ -39,19 +38,19 @@ dependencies {
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
 
     minecraft("com.mojang:minecraft:$minecraftVersion")
-    mappings("net.fabricmc:yarn:$yarnVersion:v2")
+    mappings("net.fabricmc:yarn:$minecraftVersion+build.+:v2")
     modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:6.+") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:7.+") {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
     include(implementation("dev.isxander:settxi:2.1.1")!!)
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.+:fabric-1.18.2")!!)
+    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.3:fabric-1.19-pre4")!!)
 
-    modImplementation("com.terraformersmc:modmenu:3.+")
+    modImplementation("com.terraformersmc:modmenu:4.+")
 
     include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
