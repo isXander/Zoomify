@@ -9,6 +9,7 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
         get() = _initialZoom()
 
     private var interpolation = 0.0
+    private var zoomingLastTick = false
 
     override fun getZoomDivisor(params: SingleZoomParams): Double {
         val zooming = params.zooming
@@ -20,17 +21,26 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
         if (transition == TransitionType.INSTANT) {
             interpolation = targetZoom
         } else if (targetZoom > interpolation) {
+            if (ZoomifySettings.zoomOppositeTransitionOut && !zoomingLastTick && transition.hasInverse()) {
+                interpolation = transition.inverse(transition.opposite().apply(interpolation))
+            }
+
             interpolation += zoomSpeed / 20 * tickDelta
             interpolation = interpolation.coerceAtMost(targetZoom)
         } else if (targetZoom < interpolation) {
+            if (ZoomifySettings.zoomOppositeTransitionOut) {
+                actualTransition = actualTransition.opposite()
+                if (zoomingLastTick && actualTransition.hasInverse()) {
+                    // find what the interpolation would be in the opposite transition
+                    interpolation = actualTransition.inverse(transition.apply(interpolation))
+                }
+            }
+
             interpolation -= zoomSpeed / 20 * tickDelta
             interpolation = interpolation.coerceAtLeast(targetZoom)
-
-            if (ZoomifySettings.zoomOppositeTransitionOut)
-                actualTransition = actualTransition.opposite()
         }
 
-        return lerp(1.0, initialZoom, actualTransition.takeUnless { it == TransitionType.INSTANT }?.apply(interpolation) ?: interpolation)
+        return lerp(1.0, initialZoom, actualTransition.takeUnless { it == TransitionType.INSTANT }?.apply(interpolation) ?: interpolation).also { zoomingLastTick = zooming }
     }
 
     data class SingleZoomParams(val zooming: Boolean, val tickDelta: Float) : ZoomParams()
