@@ -20,6 +20,7 @@ version = "1.6.1"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://repo.sk1er.club/repository/maven-public")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
@@ -47,8 +48,8 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
-    include(implementation("dev.isxander:settxi:2.1.1")!!)
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.3:fabric-1.19-pre4")!!)
+    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.3.0")!!)
+    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.5:fabric-1.19-rc2")!!)
 
     modImplementation("com.terraformersmc:modmenu:4.+")
 

@@ -11,7 +11,9 @@ open class TieredZoomHelper(zoomSpeed: () -> Double, transition: () -> Transitio
     val maxZoom: Double
         get() = _maxZoom()
 
-    private var prevZoomDivisor = 0.0
+    private var interpolation = 0.0
+
+    private var lastTier = 0
 
     override fun getZoomDivisor(params: TieredZoomParams): Double {
         val tier = params.tier
@@ -19,21 +21,33 @@ open class TieredZoomHelper(zoomSpeed: () -> Double, transition: () -> Transitio
 
         val targetZoom = tier.toDouble() / maxTiers
         var actualTransition = transition
+        val zoomingInLastTick = tier > lastTier
 
         if (transition == TransitionType.INSTANT) {
-            prevZoomDivisor = targetZoom
-        } else if (targetZoom > prevZoomDivisor) {
-            prevZoomDivisor += zoomSpeed / 20 * tickDelta
-            prevZoomDivisor = prevZoomDivisor.coerceAtMost(targetZoom)
-        } else if (targetZoom < prevZoomDivisor) {
-            prevZoomDivisor -= zoomSpeed / 20 * tickDelta
-            prevZoomDivisor = prevZoomDivisor.coerceAtLeast(targetZoom)
+            interpolation = targetZoom
+        } else if (targetZoom > interpolation) {
+            if (ZoomifySettings.scrollZoomOppositeTransitionOut && !zoomingInLastTick && transition.hasInverse()) {
+                interpolation = transition.inverse(transition.opposite().apply(interpolation))
+            }
 
-            if (ZoomifySettings.scrollZoomOppositeTransitionOut)
+            interpolation += zoomSpeed / 20 * tickDelta
+            interpolation = interpolation.coerceAtMost(targetZoom)
+        } else if (targetZoom < interpolation) {
+            if (ZoomifySettings.scrollZoomOppositeTransitionOut) {
                 actualTransition = actualTransition.opposite()
+                if (zoomingInLastTick && actualTransition.hasInverse()) {
+                    // find what the interpolation would be in the opposite transition
+                    interpolation = actualTransition.inverse(transition.apply(interpolation))
+                }
+            }
+
+            interpolation -= zoomSpeed / 20 * tickDelta
+            interpolation = interpolation.coerceAtLeast(targetZoom)
         }
 
-        return lerp(0.0, maxZoom, actualTransition.takeUnless { it == TransitionType.INSTANT }?.apply(prevZoomDivisor) ?: prevZoomDivisor)
+        return lerp(0.0, maxZoom, actualTransition.takeUnless { it == TransitionType.INSTANT }?.apply(interpolation) ?: interpolation).also {
+            lastTier = tier
+        }
     }
 
     data class TieredZoomParams(val tier: Int, val tickDelta: Float) : ZoomParams()

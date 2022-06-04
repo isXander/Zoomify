@@ -41,7 +41,7 @@ public class MouseMixin {
         return original || (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCam());
     }
 
-    @Redirect(
+    @ModifyExpressionValue(
             method = "updateMouse",
             at = @At(
                     value = "INVOKE",
@@ -49,7 +49,8 @@ public class MouseMixin {
                     ordinal = 0
             )
     )
-    private Object modifySensitivity(SimpleOption<Double> instance) {
-        return instance.getValue() / (ZoomifySettings.INSTANCE.getRelativeSensitivity() ? Zoomify.INSTANCE.getPreviousZoomDivisor() : 1);
+    private Object modifySensitivity(Object genericValue) {
+        double value = (Double) genericValue;
+        return value / (ZoomifySettings.INSTANCE.getRelativeSensitivity() ? Zoomify.INSTANCE.getPreviousZoomDivisor() : 1);
     }
 }

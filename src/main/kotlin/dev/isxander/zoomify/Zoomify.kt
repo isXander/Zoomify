@@ -11,15 +11,18 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
+import org.slf4j.LoggerFactory
 
 object Zoomify : ClientModInitializer {
+    val LOGGER = LoggerFactory.getLogger("Zoomify")
+
     val guiKey = KeyBinding("zoomify.key.gui", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_F8, "zoomify.key.category")
     val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
 
     var zooming = false
 
     private val normalZoomHelper = SingleZoomHelper({ ZoomifySettings.initialZoom.toDouble() }, { ZoomifySettings.zoomSpeed.toDouble() / 100.0 }, { ZoomifySettings.zoomTransition })
-    private val scrollZoomHelper = TieredZoomHelper({ ZoomifySettings.scrollZoomSpeed.toDouble() / 100.0 }, { ZoomifySettings.scrollZoomTransition }, { 6 }, { ZoomifySettings.maxScrollZoom / 100.0 * 5.0 })
+    private val scrollZoomHelper = TieredZoomHelper({ ZoomifySettings.scrollZoomSpeed.toDouble() / 100.0 }, { ZoomifySettings.scrollZoomTransition }, { 10 }, { ZoomifySettings.maxScrollZoom / 100.0 * 5.0 })
     private var scrollSteps = 0
 
     var previousZoomDivisor = 1.0
@@ -62,6 +65,6 @@ object Zoomify : ClientModInitializer {
         } else if (mouseDelta < 0) {
             scrollSteps--
         }
-        scrollSteps = scrollSteps.coerceIn(-2..6)
+        scrollSteps = scrollSteps.coerceIn(-2..10)
     }
 }
