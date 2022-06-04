@@ -2,19 +2,20 @@ package dev.isxander.zoomify.zoom
 
 import dev.isxander.zoomify.config.ZoomifySettings
 import dev.isxander.zoomify.utils.TransitionType
-import dev.isxander.zoomify.utils.lerp
+import net.minecraft.util.math.MathHelper
 
-open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: () -> Double, transition: () -> TransitionType) : ZoomHelper<SingleZoomHelper.SingleZoomParams>(zoomSpeed, transition) {
+class SingleZoomHelper(
+    private val _initialZoom: () -> Double,
+    zoomSpeed: () -> Double,
+    transition: () -> TransitionType
+) : ZoomHelper(zoomSpeed, transition) {
     val initialZoom: Double
         get() = _initialZoom()
 
     private var interpolation = 0.0
     private var zoomingLastTick = false
 
-    override fun getZoomDivisor(params: SingleZoomParams): Double {
-        val zooming = params.zooming
-        val tickDelta = params.tickDelta
-
+    fun getZoomDivisor(zooming: Boolean, tickDelta: Float): Double {
         val targetZoom = if (zooming) 1.0 else 0.0
         var actualTransition = transition
 
@@ -31,7 +32,6 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
             if (ZoomifySettings.zoomOppositeTransitionOut) {
                 actualTransition = actualTransition.opposite()
                 if (zoomingLastTick && actualTransition.hasInverse()) {
-                    // find what the interpolation would be in the opposite transition
                     interpolation = actualTransition.inverse(transition.apply(interpolation))
                 }
             }
@@ -40,8 +40,10 @@ open class SingleZoomHelper(private val _initialZoom: () -> Double, zoomSpeed: (
             interpolation = interpolation.coerceAtLeast(targetZoom)
         }
 
-        return lerp(1.0, initialZoom, actualTransition.takeUnless { it == TransitionType.INSTANT }?.apply(interpolation) ?: interpolation).also { zoomingLastTick = zooming }
+        return MathHelper.lerp(
+            actualTransition.apply(interpolation),
+            1.0,
+            initialZoom
+        ).also { zoomingLastTick = zooming }
     }
-
-    data class SingleZoomParams(val zooming: Boolean, val tickDelta: Float) : ZoomParams()
 }

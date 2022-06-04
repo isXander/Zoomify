@@ -13,6 +13,8 @@ plugins {
     id("com.modrinth.minotaur") version "2.+"
     id("com.matthewprenger.cursegradle") version "1.+"
     id("com.github.breadmoirai.github-release") version "2.+"
+
+    id("io.github.p03w.machete") version "1.+"
 }
 
 group = "dev.isxander"
@@ -49,7 +51,7 @@ dependencies {
     }
 
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.3.0")!!)
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.5:fabric-1.19-rc2")!!)
+    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.6:fabric-1.19-rc2")!!)
 
     modImplementation("com.terraformersmc:modmenu:4.+")
 
@@ -146,7 +148,7 @@ githubRelease {
     owner(split[0])
     repo(split[1])
     tagName("${project.version}")
-    targetCommitish("1.18")
+    targetCommitish("1.19")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
 }

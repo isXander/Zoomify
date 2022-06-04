@@ -44,6 +44,6 @@
     "cloth-config": "7.x.x"
   },
   "suggests": {
-    "modmenu": ">=3.0.0"
+    "modmenu": ">=4.0.0"
   }
 }

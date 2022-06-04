@@ -5,14 +5,11 @@ import kotlin.math.*
 enum class TransitionType(val translationKey: String) : Transition {
     INSTANT("zoomify.transition.instant") {
         override fun apply(t: Double) =
-            throw UnsupportedOperationException("TransitionType.INSTANT does not support apply()")
+            t
     },
     LINEAR("zoomify.transition.linear") {
         override fun apply(t: Double) =
             t
-
-        override fun inverse(x: Double) =
-            x
     },
     EASE_IN_SINE("zoomify.transition.ease_in_sine") {
         override fun apply(t: Double): Double =

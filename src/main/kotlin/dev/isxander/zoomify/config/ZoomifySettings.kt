@@ -8,11 +8,10 @@ import dev.isxander.settxi.impl.int
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.utils.TransitionType
-import dev.isxander.zoomify.utils.mc
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.text.Text
-import java.io.File
 
-object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title"), File(mc.runDirectory, "config/zoomify.json")) {
+object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title"), FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
     override val settings = mutableListOf<Setting<*>>()
 
     private var needsSaving = false

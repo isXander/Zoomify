@@ -8,7 +8,7 @@
 
   "zoomify.gui.category.behaviour": "Behaviour",
   "zoomify.gui.initialZoom.name": "Initial Zoom",
-  "zoomify.gui.initialZoom.description": "The zoom level when you first zoomify.",
+  "zoomify.gui.initialZoom.description": "The zoom level when you first press the keybind.",
   "zoomify.gui.zoomSpeed.name": "Zoom Speed",
   "zoomify.gui.zoomSpeed.description": "Speed at which the zoom animation will occur.",
   "zoomify.gui.zoomTransition.name": "Zoom Transition",

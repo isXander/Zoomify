@@ -2,13 +2,11 @@ package dev.isxander.zoomify
 
 import dev.isxander.zoomify.config.ZoomKeyBehaviour
 import dev.isxander.zoomify.config.ZoomifySettings
-import dev.isxander.zoomify.utils.mc
 import dev.isxander.zoomify.zoom.SingleZoomHelper
 import dev.isxander.zoomify.zoom.TieredZoomHelper
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
-import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import org.slf4j.LoggerFactory
@@ -34,7 +32,7 @@ object Zoomify : ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(zoomKey)
         KeyBindingHelper.registerKeyBinding(guiKey)
 
-        ClientTickEvents.END_CLIENT_TICK.register {
+        ClientTickEvents.END_CLIENT_TICK.register { mc ->
             if (zoomKey.wasPressed() && ZoomifySettings.zoomKeyBehaviour == ZoomKeyBehaviour.TOGGLE) {
                 zooming = !zooming
             }
@@ -52,8 +50,8 @@ object Zoomify : ClientModInitializer {
 
         if (!zooming) scrollSteps = 0
 
-        previousZoomDivisor = (normalZoomHelper.getZoomDivisor(SingleZoomHelper.SingleZoomParams(zooming, tickDelta)) +
-                scrollZoomHelper.getZoomDivisor(TieredZoomHelper.TieredZoomParams(scrollSteps, tickDelta))).coerceAtLeast(1.0)
+        previousZoomDivisor = (normalZoomHelper.getZoomDivisor(zooming, tickDelta) +
+                scrollZoomHelper.getZoomDivisor(scrollSteps, tickDelta)).coerceAtLeast(1.0)
 
         return previousZoomDivisor
     }
