@@ -7,5 +7,3 @@ import org.slf4j.LoggerFactory
 val mc: MinecraftClient
     get() = MinecraftClient.getInstance()
 
-val logger: Logger
-    get() = LoggerFactory.getLogger("Zoomify")
