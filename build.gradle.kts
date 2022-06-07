@@ -18,7 +18,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "1.6.1"
+version = "1.6.2"
 
 repositories {
     mavenCentral()
@@ -50,6 +50,7 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
+    include(implementation("dev.isxander.settxi:settxi-core:2.3.0")!!)
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.3.0")!!)
     include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.6:fabric-1.19")!!)
 
