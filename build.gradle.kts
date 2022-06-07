@@ -51,7 +51,7 @@ dependencies {
     }
 
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.3.0")!!)
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.6:fabric-1.19-rc2")!!)
+    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.6:fabric-1.19")!!)
 
     modImplementation("com.terraformersmc:modmenu:4.+")
 
@@ -123,6 +123,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             releaseType = "release"
             addGameVersion(minecraftVersion)
             addGameVersion("Fabric")
+            addGameVersion("Quilt")
             addGameVersion("Java 17")
 
             relations(closureOf<com.matthewprenger.cursegradle.CurseRelation> {
