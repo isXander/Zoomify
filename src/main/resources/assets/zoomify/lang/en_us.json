@@ -33,6 +33,8 @@
   "zoomify.gui.zoomKeyBehaviour.description": "The behaviour of the zoom key.",
   "zoomify.gui.relativeSensitivity.name": "Relative Sensitivity",
   "zoomify.gui.relativeSensitivity.description": "Scales the sensitivity down depending on the zoom level.",
+  "zoomify.gui.relativeSensitivityGradient.name": "Relative Sensitivity Gradient",
+  "zoomify.gui.relativeSensitivityGradient.description": "Controls the gradient of the sensitivity based on the zoom level.",
   "zoomify.gui.cinematicCam.name": "Cinematic Camera",
   "zoomify.gui.cinematicCam.description": "Make the camera move smoothly when zoomed.",
 

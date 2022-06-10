@@ -112,6 +112,13 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
         category = "zoomify.gui.category.controls"
     }
 
+    var relativeSensitivityAmount by int(100) {
+        name = "zoomify.gui.relativeSensitivityGradient.name"
+        description = "zoomify.gui.relativeSensitivityGradient.description"
+        category = "zoomify.gui.category.controls"
+        range = 1..200
+    }
+
     var cinematicCam by boolean(false) {
         name = "zoomify.gui.cinematicCam.name"
         description = "zoomify.gui.cinematicCam.description"

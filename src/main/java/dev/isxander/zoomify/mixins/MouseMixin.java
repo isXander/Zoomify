@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.isxander.zoomify.Zoomify;
 import dev.isxander.zoomify.config.ZoomifySettings;
 import net.minecraft.client.Mouse;
+import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,6 +45,6 @@ public class MouseMixin {
     )
     private Object modifySensitivity(Object genericValue) {
         double value = (Double) genericValue;
-        return value / (ZoomifySettings.INSTANCE.getRelativeSensitivity() ? Zoomify.INSTANCE.getPreviousZoomDivisor() : 1);
+        return value / (ZoomifySettings.INSTANCE.getRelativeSensitivity() ? MathHelper.lerp(ZoomifySettings.INSTANCE.getRelativeSensitivityAmount() / 100.0, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()) : 1);
     }
 }
