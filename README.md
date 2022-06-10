@@ -17,3 +17,4 @@ Zoomify aims to provide the easiest, most configurable and most sexy looking zoo
 ### Credits
 - [isXander](https://github.com/isXander) - Founder
 - [MoonTidez](https://github.com/MoonTidez) - Logo designer
+- [Madis0](https://github.com/Madis0) - Estonian Translator
