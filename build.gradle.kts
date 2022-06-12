@@ -1,5 +1,3 @@
-import com.modrinth.minotaur.dependencies.ModDependency
-
 plugins {
     val kotlinVersion: String by System.getProperties()
 
@@ -10,7 +8,7 @@ plugins {
     id("fabric-loom") version "0.12.+"
     id("io.github.juuxel.loom-quiltflower") version "1.7.+"
 
-    id("com.modrinth.minotaur") version "2.+"
+    id("com.modrinth.minotaur") version "2.3.+"
     id("com.matthewprenger.cursegradle") version "1.+"
     id("com.github.breadmoirai.github-release") version "2.+"
 
@@ -104,10 +102,10 @@ if (modrinthId.isNotEmpty()) {
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
-        dependencies.set(listOf(
-            ModDependency("9s6osm5g", "required"), // cloth-config
-            ModDependency("mOgUt4GM", "optional") // modmenu
-        ))
+        dependencies {
+            required.project("cloth-config")
+            required.project("modmenu")
+        }
     }
 }
 
