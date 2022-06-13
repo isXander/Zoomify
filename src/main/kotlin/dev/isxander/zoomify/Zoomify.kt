@@ -63,6 +63,6 @@ object Zoomify : ClientModInitializer {
         } else if (mouseDelta < 0) {
             scrollSteps--
         }
-        scrollSteps = scrollSteps.coerceIn(-2..10)
+        scrollSteps = scrollSteps.coerceIn(0..10)
     }
 }
