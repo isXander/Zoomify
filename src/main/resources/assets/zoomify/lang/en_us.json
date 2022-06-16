@@ -24,7 +24,7 @@
   "zoomify.gui.scrollZoomSpeed.name": "Scroll Zoom Speed",
   "zoomify.gui.scrollZoomSpeed.description": "Speed at which the scroll zoom animation will occur.",
   "zoomify.gui.smoothScrollZoom.name": "Smooth Transition",
-  "zoomify.gui.scrollZoomTransition.description": "Makes scrolling in and out smooth.",
+  "zoomify.gui.smoothScrollZoom.description": "Makes scrolling in and out smooth.",
 
   "zoomify.gui.category.controls": "Controls",
   "zoomify.gui.zoomKeyBehaviour.name": "Zoom Key Behaviour",

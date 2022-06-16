@@ -15,26 +15,6 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
     override val settings = mutableListOf<Setting<*>>()
 
     private var needsSaving = false
-    val transitionTypeMigrator: (PrimitiveType) -> PrimitiveType = { type ->
-        if (type.isString) {
-            Zoomify.LOGGER.info("Migrating transition type from string to int")
-            PrimitiveType.of(TransitionType.values().find { transition ->
-                transition.translationKey.lowercase().replace(Regex("\\W+"), "_")
-                    .trim { it == '_' || it.isWhitespace() } == type.string
-            }!!.ordinal).also { needsSaving = true }
-        } else type
-    }
-
-    val zoomKeyTypeMigrator: (PrimitiveType) -> PrimitiveType = { type ->
-        if (type.isString) {
-            Zoomify.LOGGER.info("Migrating transition type from string to int")
-            PrimitiveType.of(ZoomKeyBehaviour.values().find { keyBehaviour ->
-                keyBehaviour.translationKey.lowercase()
-                    .replace(Regex("\\W+"), "_")
-                    .trim { it == '_' || it.isWhitespace() } == type.string
-            }!!.ordinal).also { needsSaving = true }
-        } else type
-    }
 
     var initialZoom by int(4) {
         name = "zoomify.gui.initialZoom.name"
@@ -55,7 +35,15 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
         description = "zoomify.gui.zoomTransition.description"
         category = "zoomify.gui.category.behaviour"
         nameProvider = { it.translationKey }
-        migrator(transitionTypeMigrator)
+        migrator { type ->
+            if (type.isString) {
+                Zoomify.LOGGER.info("Migrating transition type from string to int")
+                PrimitiveType.of(TransitionType.values().find { transition ->
+                    transition.translationKey.lowercase().replace(Regex("\\W+"), "_")
+                        .trim { it == '_' || it.isWhitespace() } == type.string
+                }!!.ordinal).also { needsSaving = true }
+            } else type
+        }
     }
 
     var zoomOppositeTransitionOut by boolean(true) {
@@ -95,10 +83,19 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
         description = "zoomify.gui.zoomKeyBehaviour.description"
         category = "zoomify.gui.category.controls"
         nameProvider = { it.translationKey }
-        migrator(zoomKeyTypeMigrator)
+        migrator { type ->
+            if (type.isString) {
+                Zoomify.LOGGER.info("Migrating transition type from string to int")
+                PrimitiveType.of(ZoomKeyBehaviour.values().find { keyBehaviour ->
+                    keyBehaviour.translationKey.lowercase()
+                        .replace(Regex("\\W+"), "_")
+                        .trim { it == '_' || it.isWhitespace() } == type.string
+                }!!.ordinal).also { needsSaving = true }
+            } else type
+        }
     }
 
-    var relativeSensitivity by boolean(false) {
+    var relativeSensitivity by boolean(true) {
         name = "zoomify.gui.relativeSensitivity.name"
         description = "zoomify.gui.relativeSensitivity.description"
         category = "zoomify.gui.category.controls"
