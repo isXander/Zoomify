@@ -77,17 +77,9 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
         range = 1..200
     }
 
-    var scrollZoomTransition by enum(TransitionType.LINEAR) {
-        name = "zoomify.gui.scrollZoomTransition.name"
-        description = "zoomify.gui.scrollZoomTransition.description"
-        category = "zoomify.gui.category.scrolling"
-        nameProvider = { it.translationKey }
-        migrator(transitionTypeMigrator)
-    }
-
-    var scrollZoomOppositeTransitionOut by boolean(true) {
-        name = "zoomify.gui.scrollZoomOppositeTransitionOut.name"
-        description = "zoomify.gui.scrollZoomOppositeTransitionOut.description"
+    var smoothScrollZoom by boolean(true) {
+        name = "zoomify.gui.smoothScrollZoom.name"
+        description = "zoomify.gui.smoothScrollZoom.description"
         category = "zoomify.gui.category.scrolling"
     }
 

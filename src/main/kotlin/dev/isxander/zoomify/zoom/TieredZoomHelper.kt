@@ -1,55 +1,46 @@
 package dev.isxander.zoomify.zoom
 
+import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.ZoomifySettings
 import dev.isxander.zoomify.utils.TransitionType
 import net.minecraft.util.math.MathHelper
+import java.util.ArrayDeque
 
-class TieredZoomHelper(
-    zoomSpeed: () -> Double,
-    transition: () -> TransitionType,
-    private val _maxTiers: () -> Int,
-    private val _maxZoom: () -> Double
-) : ZoomHelper(zoomSpeed, transition) {
+class TieredZoomHelper {
+    val zoomSpeed: Double
+        get() = ZoomifySettings.scrollZoomSpeed / 100.0
+
     val maxTiers: Int
-        get() = _maxTiers()
+        get() = Zoomify.maxScrollTiers
 
     val maxZoom: Double
-        get() = _maxZoom()
+        get() = ZoomifySettings.maxScrollZoom / 100.0 * 5
 
     private var interpolation = 0.0
-
     private var lastTier = 0
 
+    private var resetting = false
+
     fun getZoomDivisor(tier: Int, tickDelta: Float): Double {
+        if (tier > lastTier)
+            resetting = false
+
         val targetZoom = tier.toDouble() / maxTiers
-        var actualTransition = transition
-        val zoomingInLastTick = tier > lastTier
 
-        if (transition == TransitionType.INSTANT) {
-            interpolation = targetZoom
-        } else if (targetZoom > interpolation) {
-            if (ZoomifySettings.scrollZoomOppositeTransitionOut && !zoomingInLastTick && transition.hasInverse()) {
-                interpolation = transition.inverse(transition.opposite().apply(interpolation))
-            }
-
-            interpolation += zoomSpeed / 20 * tickDelta
-            interpolation = interpolation.coerceAtMost(targetZoom)
-        } else if (targetZoom < interpolation) {
-            if (ZoomifySettings.scrollZoomOppositeTransitionOut) {
-                actualTransition = actualTransition.opposite()
-                if (zoomingInLastTick && actualTransition.hasInverse()) {
-                    interpolation = actualTransition.inverse(transition.apply(interpolation))
-                }
-            }
-
-            interpolation -= zoomSpeed / 20 * tickDelta
-            interpolation = interpolation.coerceAtLeast(targetZoom)
+        interpolation = if (ZoomifySettings.smoothScrollZoom) {
+            MathHelper.lerp(tickDelta * 0.25 * if (resetting) ZoomifySettings.zoomSpeed / 100.0 else zoomSpeed, interpolation, targetZoom)
+        } else {
+            targetZoom
         }
 
         return MathHelper.lerp(
-            actualTransition.apply(interpolation),
+            interpolation,
             0.0,
-            maxZoom,
+            maxZoom
         ).also { lastTier = tier }
+    }
+
+    fun resetTiers() {
+        resetting = true
     }
 }

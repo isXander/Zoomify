@@ -5,21 +5,22 @@ import dev.isxander.zoomify.utils.TransitionType
 import net.minecraft.util.math.MathHelper
 
 class SingleZoomHelper(
-    private val _initialZoom: () -> Double,
-    zoomSpeed: () -> Double,
-    transition: () -> TransitionType
-) : ZoomHelper(zoomSpeed, transition) {
-    val initialZoom: Double
-        get() = _initialZoom()
+    private val starting: Double = 1.0,
+) {
+    val zoomSpeed: Double
+        get() = ZoomifySettings.zoomSpeed / 100.0
 
-    private var interpolation = 0.0
+    var interpolation = 0.0
+        private set
+
     private var zoomingLastTick = false
 
     fun getZoomDivisor(zooming: Boolean, tickDelta: Float): Double {
         val targetZoom = if (zooming) 1.0 else 0.0
-        var actualTransition = transition
+        val transition = ZoomifySettings.zoomTransition
+        var actualTransition = ZoomifySettings.zoomTransition
 
-        if (transition == TransitionType.INSTANT) {
+        if (actualTransition == TransitionType.INSTANT) {
             interpolation = targetZoom
         } else if (targetZoom > interpolation) {
             if (ZoomifySettings.zoomOppositeTransitionOut && !zoomingLastTick && transition.hasInverse()) {
@@ -42,8 +43,8 @@ class SingleZoomHelper(
 
         return MathHelper.lerp(
             actualTransition.apply(interpolation),
-            1.0,
-            initialZoom
+            starting,
+            ZoomifySettings.initialZoom.toDouble()
         ).also { zoomingLastTick = zooming }
     }
 }

@@ -19,12 +19,14 @@ object Zoomify : ClientModInitializer {
 
     var zooming = false
 
-    private val normalZoomHelper = SingleZoomHelper({ ZoomifySettings.initialZoom.toDouble() }, { ZoomifySettings.zoomSpeed.toDouble() / 100.0 }, { ZoomifySettings.zoomTransition })
-    private val scrollZoomHelper = TieredZoomHelper({ ZoomifySettings.scrollZoomSpeed.toDouble() / 100.0 }, { ZoomifySettings.scrollZoomTransition }, { 10 }, { ZoomifySettings.maxScrollZoom / 100.0 * 5.0 })
+    private val normalZoomHelper = SingleZoomHelper()
+    private val scrollZoomHelper = TieredZoomHelper()
     private var scrollSteps = 0
 
     var previousZoomDivisor = 1.0
         private set
+
+    val maxScrollTiers = 20
 
     override fun onInitializeClient() {
         ZoomifySettings.load()
@@ -48,7 +50,10 @@ object Zoomify : ClientModInitializer {
         if (ZoomifySettings.zoomKeyBehaviour == ZoomKeyBehaviour.HOLD)
             zooming = zoomKey.isPressed
 
-        if (!zooming) scrollSteps = 0
+        if (!zooming) {
+            scrollSteps = 0
+            scrollZoomHelper.resetTiers()
+        }
 
         previousZoomDivisor = (normalZoomHelper.getZoomDivisor(zooming, tickDelta) +
                 scrollZoomHelper.getZoomDivisor(scrollSteps, tickDelta)).coerceAtLeast(1.0)
@@ -63,6 +68,6 @@ object Zoomify : ClientModInitializer {
         } else if (mouseDelta < 0) {
             scrollSteps--
         }
-        scrollSteps = scrollSteps.coerceIn(0..10)
+        scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
     }
 }
