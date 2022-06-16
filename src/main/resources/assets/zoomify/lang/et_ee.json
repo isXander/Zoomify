@@ -23,10 +23,8 @@
   "zoomify.gui.maxScrollZoom.description": "Maksimaalne suumitase, mida saab kerides saavutada.",
   "zoomify.gui.scrollZoomSpeed.name": "Kerimissuumi kiirus",
   "zoomify.gui.scrollZoomSpeed.description": "Suumi kerimise animatsiooni esituskiirus.",
-  "zoomify.gui.scrollZoomTransition.name": "Kerimissuumi üleminek",
-  "zoomify.gui.scrollZoomTransition.description": "Suumimise kerimisel kasutatav üleminekutüüp.",
-  "zoomify.gui.scrollZoomOppositeTransitionOut.name": "Vastupidine üleminek välja",
-  "zoomify.gui.scrollZoomOppositeTransitionOut.description": "Pöörab väljasuumimisel üleminekutüübi ümber.",
+  "zoomify.gui.smoothScrollZoom.name": "Sujuv üleminek",
+  "zoomify.gui.smoothScrollZoom.description": "Muudab sisse-välja kerimise sujuvaks.",
 
   "zoomify.gui.category.controls": "Juhtnupud",
   "zoomify.gui.zoomKeyBehaviour.name": "Suumiklahvi käitumine",
