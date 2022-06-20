@@ -54,7 +54,7 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
 
     var scrollZoom by boolean(true) {
         name = "zoomify.gui.scrollZoom.name"
-        description = "zoomify.gui.maxScrollZoom.description"
+        description = "zoomify.gui.scrollZoom.description"
         category = "zoomify.gui.category.scrolling"
     }
 
