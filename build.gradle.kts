@@ -9,8 +9,9 @@ plugins {
     id("io.github.juuxel.loom-quiltflower") version "1.7.+"
 
     id("com.modrinth.minotaur") version "2.3.+"
-    id("com.matthewprenger.cursegradle") version "1.+"
+    id("me.hypherionmc.cursegradle") version "2.+"
     id("com.github.breadmoirai.github-release") version "2.+"
+    `maven-publish`
 
     id("io.github.p03w.machete") version "1.+"
 }
@@ -25,7 +26,7 @@ repositories {
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
     maven("https://maven.shedaniel.me/")
-    maven("https://repo.woverflow.cc/")
+    maven("https://maven.isxander.dev/releases")
 }
 
 val minecraftVersion: String by project
@@ -56,6 +57,10 @@ dependencies {
 
     include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
+}
+
+java {
+    withSourcesJar()
 }
 
 tasks {
@@ -113,8 +118,8 @@ val curseforgeId: String by project
 if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
     curseforge {
         apiKey = findProperty("curseforge.token")
-        project(closureOf<com.matthewprenger.cursegradle.CurseProject> {
-            mainArtifact(tasks["remapJar"], closureOf<com.matthewprenger.cursegradle.CurseArtifact> {
+        project(closureOf<me.hypherionmc.cursegradle.CurseProject> {
+            mainArtifact(tasks["remapJar"], closureOf<me.hypherionmc.cursegradle.CurseArtifact> {
                 displayName = "${project.version}"
             })
 
@@ -125,7 +130,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             addGameVersion("Quilt")
             addGameVersion("Java 17")
 
-            relations(closureOf<com.matthewprenger.cursegradle.CurseRelation> {
+            relations(closureOf<me.hypherionmc.cursegradle.CurseRelation> {
                 requiredDependency("cloth-config")
                 optionalDependency("modmenu")
             })
@@ -134,7 +139,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             changelogType = "markdown"
         })
 
-        options(closureOf<com.matthewprenger.cursegradle.Options> {
+        options(closureOf<me.hypherionmc.cursegradle.Options> {
             forgeGradleIntegration = false
         })
     }
@@ -151,4 +156,26 @@ githubRelease {
     targetCommitish("1.19")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("zoomify") {
+            groupId = "dev.isxander"
+            artifactId = "zoomify"
+
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        if (hasProperty("xander-repo.username") && hasProperty("xander-repo.password")) {
+            maven("https://maven.isxander.dev/releases") {
+                credentials {
+                    username = findProperty("xander-repo.username")?.toString()
+                    password = findProperty("xander-repo.password")?.toString()
+                }
+            }
+        } else println("Cannot publish to https://maven.isxander.dev")
+    }
 }
