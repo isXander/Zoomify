@@ -108,8 +108,10 @@ if (modrinthId.isNotEmpty()) {
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
         dependencies {
+            required.project("fabric-api")
+            required.project("fabric-language-kotlin")
             required.project("cloth-config")
-            required.project("modmenu")
+            optional.project("modmenu")
         }
     }
 }
@@ -131,6 +133,8 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             addGameVersion("Java 17")
 
             relations(closureOf<me.hypherionmc.cursegradle.CurseRelation> {
+                requiredDependency("fabric-api")
+                requiredDependency("fabric-language-kotlin")
                 requiredDependency("cloth-config")
                 optionalDependency("modmenu")
             })
