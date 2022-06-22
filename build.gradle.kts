@@ -21,7 +21,6 @@ version = "1.7.1"
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://repo.sk1er.club/repository/maven-public")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
@@ -49,14 +48,18 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
-    include(implementation("dev.isxander.settxi:settxi-core:2.3.0")!!)
-    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.3.0")!!)
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.0.6:fabric-1.19")!!)
+    include(implementation("dev.isxander.settxi:settxi-core:2.4.0")!!)
+    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.4.0")!!)
+    include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:2.4.0:fabric-1.19")!!)
 
     modImplementation("com.terraformersmc:modmenu:4.+")
 
     include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
+}
+
+loom {
+    clientOnlyMinecraftJar()
 }
 
 java {

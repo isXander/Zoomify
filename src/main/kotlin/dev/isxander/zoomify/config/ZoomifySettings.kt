@@ -1,19 +1,18 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.Setting
-import dev.isxander.settxi.clothconfig.SettxiGuiWrapper
+import dev.isxander.settxi.gui.clothGui
 import dev.isxander.settxi.impl.boolean
 import dev.isxander.settxi.impl.enum
 import dev.isxander.settxi.impl.int
 import dev.isxander.settxi.serialization.PrimitiveType
+import dev.isxander.settxi.serialization.SettxiConfigKotlinx
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.utils.TransitionType
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
 
-object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title"), FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
-    override val settings = mutableListOf<Setting<*>>()
-
+object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
     private var needsSaving = false
 
     var initialZoom by int(4) {
@@ -115,10 +114,13 @@ object ZoomifySettings : SettxiGuiWrapper(Text.translatable("zoomify.gui.title")
     }
 
     init {
-        load()
+        import()
         if (needsSaving) {
-            save()
+            export()
             needsSaving = false
         }
     }
+
+    fun gui(parent: Screen? = null) =
+        clothGui(Text.translatable("zoomify.gui.title"), parent)
 }

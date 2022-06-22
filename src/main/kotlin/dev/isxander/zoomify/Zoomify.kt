@@ -29,7 +29,7 @@ object Zoomify : ClientModInitializer {
     val maxScrollTiers = 20
 
     override fun onInitializeClient() {
-        ZoomifySettings.load()
+        ZoomifySettings.import()
 
         KeyBindingHelper.registerKeyBinding(zoomKey)
         KeyBindingHelper.registerKeyBinding(guiKey)
@@ -40,7 +40,7 @@ object Zoomify : ClientModInitializer {
             }
 
             if (guiKey.wasPressed()) {
-                mc.setScreen(ZoomifySettings.clothGui(mc.currentScreen))
+                mc.setScreen(ZoomifySettings.gui(mc.currentScreen))
             }
         }
     }

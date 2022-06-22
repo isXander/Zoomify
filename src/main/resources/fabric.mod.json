@@ -41,7 +41,8 @@
     "fabric-language-kotlin": ">=1.8.0+kotlin.1.7.0",
     "minecraft": "1.19.x",
     "java": ">=17",
-    "cloth-config": "7.x.x"
+    "cloth-config": "7.x.x",
+    "settxi-gui-cloth-config": "2.x.x"
   },
   "suggests": {
     "modmenu": ">=4.0.0"
