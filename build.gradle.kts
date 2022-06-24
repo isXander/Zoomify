@@ -49,7 +49,7 @@ dependencies {
     }
 
     include(implementation("dev.isxander.settxi:settxi-core:2.4.0")!!)
-    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.4.0")!!)
+    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:2.5.0")!!)
     include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:2.4.0:fabric-1.19")!!)
 
     modImplementation("com.terraformersmc:modmenu:4.+")
