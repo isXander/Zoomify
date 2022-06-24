@@ -4,15 +4,11 @@ import dev.isxander.zoomify.config.ZoomifySettings
 import dev.isxander.zoomify.utils.TransitionType
 import net.minecraft.util.math.MathHelper
 
-class SingleZoomHelper(
-    private val starting: Double = 1.0,
-) {
-    val zoomSpeed: Double
+class SingleZoomHelper(private val starting: Double = 1.0) {
+    private val zoomSpeed: Double
         get() = ZoomifySettings.zoomSpeed / 100.0
 
-    var interpolation = 0.0
-        private set
-
+    private var interpolation = 0.0
     private var zoomingLastTick = false
 
     fun getZoomDivisor(zooming: Boolean, tickDelta: Float): Double {

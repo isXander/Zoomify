@@ -12,21 +12,21 @@ import net.minecraft.client.util.InputUtil
 import org.slf4j.LoggerFactory
 
 object Zoomify : ClientModInitializer {
-    val LOGGER = LoggerFactory.getLogger("Zoomify")
+    val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    val guiKey = KeyBinding("zoomify.key.gui", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_F8, "zoomify.key.category")
-    val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
+    private val guiKey = KeyBinding("zoomify.key.gui", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_F8, "zoomify.key.category")
+    private val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
 
     var zooming = false
 
     private val normalZoomHelper = SingleZoomHelper()
     private val scrollZoomHelper = TieredZoomHelper()
-    private var scrollSteps = 0
 
     var previousZoomDivisor = 1.0
         private set
 
-    val maxScrollTiers = 20
+    const val maxScrollTiers = 20
+    private var scrollSteps = 0
 
     override fun onInitializeClient() {
         ZoomifySettings.import()
@@ -35,11 +35,13 @@ object Zoomify : ClientModInitializer {
         KeyBindingHelper.registerKeyBinding(guiKey)
 
         ClientTickEvents.END_CLIENT_TICK.register { mc ->
-            if (zoomKey.wasPressed() && ZoomifySettings.zoomKeyBehaviour == ZoomKeyBehaviour.TOGGLE) {
-                zooming = !zooming
+            if (ZoomifySettings.zoomKeyBehaviour == ZoomKeyBehaviour.TOGGLE) {
+                while (zoomKey.wasPressed()) {
+                    zooming = !zooming
+                }
             }
 
-            if (guiKey.wasPressed()) {
+            while (guiKey.wasPressed()) {
                 mc.setScreen(ZoomifySettings.gui(mc.currentScreen))
             }
         }

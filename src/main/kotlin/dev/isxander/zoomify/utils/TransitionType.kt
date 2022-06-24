@@ -1,8 +1,9 @@
 package dev.isxander.zoomify.utils
 
+import dev.isxander.settxi.impl.SettingDisplayName
 import kotlin.math.*
 
-enum class TransitionType(val translationKey: String) : Transition {
+enum class TransitionType(override val displayName: String) : Transition, SettingDisplayName {
     INSTANT("zoomify.transition.instant") {
         override fun apply(t: Double) =
             t

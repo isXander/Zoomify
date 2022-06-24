@@ -33,12 +33,11 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         name = "zoomify.gui.zoomTransition.name"
         description = "zoomify.gui.zoomTransition.description"
         category = "zoomify.gui.category.behaviour"
-        nameProvider = { it.translationKey }
         migrator { type ->
             if (type.isString) {
                 Zoomify.LOGGER.info("Migrating transition type from string to int")
                 PrimitiveType.of(TransitionType.values().find { transition ->
-                    transition.translationKey.lowercase().replace(Regex("\\W+"), "_")
+                    transition.displayName.lowercase().replace(Regex("\\W+"), "_")
                         .trim { it == '_' || it.isWhitespace() } == type.string
                 }!!.ordinal).also { needsSaving = true }
             } else type
@@ -81,12 +80,11 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         name = "zoomify.gui.zoomKeyBehaviour.name"
         description = "zoomify.gui.zoomKeyBehaviour.description"
         category = "zoomify.gui.category.controls"
-        nameProvider = { it.translationKey }
         migrator { type ->
             if (type.isString) {
                 Zoomify.LOGGER.info("Migrating transition type from string to int")
                 PrimitiveType.of(ZoomKeyBehaviour.values().find { keyBehaviour ->
-                    keyBehaviour.translationKey.lowercase()
+                    keyBehaviour.displayName.lowercase()
                         .replace(Regex("\\W+"), "_")
                         .trim { it == '_' || it.isWhitespace() } == type.string
                 }!!.ordinal).also { needsSaving = true }

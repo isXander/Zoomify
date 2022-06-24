@@ -2,15 +2,13 @@ package dev.isxander.zoomify.zoom
 
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.ZoomifySettings
-import dev.isxander.zoomify.utils.TransitionType
 import net.minecraft.util.math.MathHelper
-import java.util.ArrayDeque
 
 class TieredZoomHelper {
-    val zoomSpeed: Double
+    private val zoomSpeed: Double
         get() = ZoomifySettings.scrollZoomSpeed / 100.0
 
-    val maxTiers: Int
+    private val maxTiers: Int
         get() = Zoomify.maxScrollTiers
 
     val maxZoom: Double
@@ -18,7 +16,6 @@ class TieredZoomHelper {
 
     private var interpolation = 0.0
     private var lastTier = 0
-
     private var resetting = false
 
     fun getZoomDivisor(tier: Int, tickDelta: Float): Double {
