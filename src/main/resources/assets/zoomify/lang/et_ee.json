@@ -54,7 +54,5 @@
 
 
   "zoomify.zoom_key_behaviour.hold": "Hoia",
-  "zoomify.zoom_key_behaviour.toggle": "Lülita",
-
-  "zoomify.update.available": "Zoomify %s on allalaadimiseks saadaval: "
+  "zoomify.zoom_key_behaviour.toggle": "Lülita"
 }

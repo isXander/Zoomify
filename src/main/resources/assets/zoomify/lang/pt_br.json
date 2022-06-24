@@ -54,8 +54,5 @@
 
 
   "zoomify.zoom_key_behaviour.hold": "Segurar",
-  "zoomify.zoom_key_behaviour.toggle": "Alternar",
-
-
-  "zoomify.update.available": "Zoomify %s está disponível para download: "
+  "zoomify.zoom_key_behaviour.toggle": "Alternar"
 }
