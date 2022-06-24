@@ -11,7 +11,7 @@ class TieredZoomHelper {
     private val maxTiers: Int
         get() = Zoomify.maxScrollTiers
 
-    val maxZoom: Double
+    private val maxZoom: Double
         get() = ZoomifySettings.maxScrollZoom / 100.0 * 5
 
     private var interpolation = 0.0
