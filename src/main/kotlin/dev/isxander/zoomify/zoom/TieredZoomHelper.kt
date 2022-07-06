@@ -11,8 +11,8 @@ class TieredZoomHelper {
     private val maxTiers: Int
         get() = Zoomify.maxScrollTiers
 
-    private val maxZoom: Double
-        get() = ZoomifySettings.maxScrollZoom / 100.0 * 5
+    private val zoomStepAmount: Double
+        get() = ZoomifySettings.scrollZoomAmount.toDouble()
 
     private var interpolation = 0.0
     private var lastTier = 0
@@ -33,7 +33,7 @@ class TieredZoomHelper {
         return MathHelper.lerp(
             interpolation,
             0.0,
-            maxZoom
+            zoomStepAmount * maxTiers
         ).also { lastTier = tier }
     }
 

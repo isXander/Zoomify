@@ -56,11 +56,11 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = "zoomify.gui.category.scrolling"
     }
 
-    var maxScrollZoom by int(75) {
-        name = "zoomify.gui.maxScrollZoom.name"
-        description = "zoomify.gui.maxScrollZoom.description"
+    var scrollZoomAmount by int(1) {
+        name = "zoomify.gui.scrollZoomAmount.name"
+        description = "zoomify.gui.scrollZoomAmount.description"
         category = "zoomify.gui.category.scrolling"
-        range = 1..200
+        range = 1..5
     }
 
     var smoothScrollZoom by boolean(true) {
