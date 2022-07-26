@@ -2,14 +2,12 @@
   "zoomify.key.zoom": "放大",
   "zoomify.key.gui": "打开设置GUI",
   "zoomify.key.category": "Zoomify",
-  
+
   "zoomify.gui.title": "Zoomify",
-  
+
   "zoomify.gui.category.behaviour": "行为",
   "zoomify.gui.initialZoom.name": "初始缩放",
   "zoomify.gui.initialZoom.description": "首次按下键绑定时的缩放级别.",
-  "zoomify.gui.zoomSpeed.name": "缩放速度",
-  "zoomify.gui.zoomSpeed.description": "缩放动画发生的速度.",
   "zoomify.gui.zoomTransition.name": "缩放过渡",
   "zoomify.gui.zoomTransition.description": "缩放时使用的过渡类型.",
   "zoomify.gui.zoomOppositeTransitionOut.name": "缩放反转",
@@ -18,10 +16,6 @@
   "zoomify.gui.category.scrolling": "滚动",
   "zoomify.gui.scrollZoom.name": "启用滚动缩放",
   "zoomify.gui.scrollZoom.description": "允许您使用滚轮放大或缩小一些.",
-  "zoomify.gui.maxScrollZoom.name": "最高滚动缩放量",
-  "zoomify.gui.maxScrollZoom.description": "滚动时可以达到的最大缩放级别.",
-  "zoomify.gui.scrollZoomSpeed.name": "滚动缩放速度",
-  "zoomify.gui.scrollZoomSpeed.description": "滚动缩放动画的播放速度.",
   "zoomify.gui.smoothScrollZoom.name": "平滑过渡",
   "zoomify.gui.smoothScrollZoom.description": "使滚入和滚出更平滑.",
 
@@ -29,12 +23,10 @@
   "zoomify.gui.zoomKeyBehaviour.name": "缩放键行为",
   "zoomify.gui.zoomKeyBehaviour.description": "按下缩放键时的行为.",
   "zoomify.gui.relativeSensitivity.name": "相对灵敏度",
-  "zoomify.gui.relativeSensitivity.description": "根据缩放级别降低灵敏度.",
-  "zoomify.gui.relativeSensitivityGradient.name": "相对敏感度梯度",
-  "zoomify.gui.relativeSensitivityGradient.description": "根据缩放级别控制灵敏度的梯度.",
+  "zoomify.gui.relativeSensitivity.description": "根据缩放级别控制灵敏度的梯度.",
   "zoomify.gui.cinematicCam.name": "电影摄像机",
   "zoomify.gui.cinematicCam.description": "使相机在缩放时平滑移动.",
-  
+
   "zoomify.transition.instant": "即时",
   "zoomify.transition.linear": "Linear",
   "zoomify.transition.ease_in_sine": "Ease In Sine",
@@ -49,8 +41,7 @@
   "zoomify.transition.ease_in_exp": "Ease In Exponential",
   "zoomify.transition.ease_out_exp": "Ease Out Exponential",
   "zoomify.transition.ease_in_out_exp": "Ease In Out Exponential",
-  
+
   "zoomify.zoom_key_behaviour.hold": "保持",
-  "zoomify.zoom_key_behaviour.toggle": "切换",
-  "zoomify.update.available": "Zoomify 最新版 %s 可以下载: "
+  "zoomify.zoom_key_behaviour.toggle": "切换"
 }

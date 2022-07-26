@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "1.7.1"
+version = "1.8.0"
 
 repositories {
     mavenCentral()
@@ -35,6 +35,7 @@ dependencies {
     val loaderVersion: String by project
     val fabricVersion: String by project
     val fabricKotlinVersion: String by project
+    val settxiVersion: String by project
 
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
 
@@ -48,7 +49,6 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
-    val settxiVersion = "2.5.0"
     include(implementation("dev.isxander.settxi:settxi-core:$settxiVersion")!!)
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:$settxiVersion")!!)
     include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:$settxiVersion:fabric-1.19")!!)

@@ -91,11 +91,11 @@ enum class TransitionType(override val displayName: String) : Transition, Settin
         override fun apply(t: Double): Double =
             if (t == 0.0)
                 0.0
-        else if (t == 1.0)
+            else if (t == 1.0)
                 1.0
-        else if (t < 0.5)
-            2.0.pow(20.0 * t - 10.0) / 2.0
-        else (2.0 - 2.0.pow(-20.0 * t + 10.0)) / 2
+            else if (t < 0.5)
+                2.0.pow(20.0 * t - 10.0) / 2.0
+            else (2.0 - 2.0.pow(-20.0 * t + 10.0)) / 2
     };
 
     fun opposite(): TransitionType = when (this) {

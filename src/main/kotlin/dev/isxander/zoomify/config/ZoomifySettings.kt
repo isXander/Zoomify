@@ -3,6 +3,7 @@ package dev.isxander.zoomify.config
 import dev.isxander.settxi.gui.clothGui
 import dev.isxander.settxi.impl.boolean
 import dev.isxander.settxi.impl.enum
+import dev.isxander.settxi.impl.float
 import dev.isxander.settxi.impl.int
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiConfigKotlinx
@@ -22,11 +23,18 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         range = 1..10
     }
 
-    var zoomSpeed by int(50) {
-        name = "zoomify.gui.zoomSpeed.name"
-        description = "zoomify.gui.zoomSpeed.description"
+    var zoomInTime by float(2f) {
+        name = "zoomify.gui.zoomInTime.name"
+        description = "zoomify.gui.zoomInTime.description"
         category = "zoomify.gui.category.behaviour"
-        range = 1..150
+        range = 0.1f..20f
+    }
+
+    var zoomOutTime by float(0.5f) {
+        name = "zoomify.gui.zoomOutTime.name"
+        description = "zoomify.gui.zoomOutTime.description"
+        category = "zoomify.gui.category.behaviour"
+        range = 0.1f..20f
     }
 
     var zoomTransition by enum(TransitionType.EASE_OUT_EXP) {
@@ -63,17 +71,11 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         range = 1..5
     }
 
-    var smoothScrollZoom by boolean(true) {
-        name = "zoomify.gui.smoothScrollZoom.name"
-        description = "zoomify.gui.smoothScrollZoom.description"
+    var scrollZoomSmoothness by int(0) {
+        name = "zoomify.gui.scrollZoomSmoothness.name"
+        description = "zoomify.gui.scrollZoomSmoothness.description"
         category = "zoomify.gui.category.scrolling"
-    }
-
-    var scrollZoomSpeed by int(50) {
-        name = "zoomify.gui.scrollZoomSpeed.name"
-        description = "zoomify.gui.scrollZoomSpeed.description"
-        category = "zoomify.gui.category.scrolling"
-        range = 1..150
+        range = 0..100
     }
 
     var zoomKeyBehaviour by enum(ZoomKeyBehaviour.HOLD) {
@@ -92,17 +94,17 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         }
     }
 
-    var relativeSensitivity by boolean(true) {
+    var relativeSensitivity by int(100) {
         name = "zoomify.gui.relativeSensitivity.name"
         description = "zoomify.gui.relativeSensitivity.description"
         category = "zoomify.gui.category.controls"
+        range = 0..200
     }
 
-    var relativeSensitivityAmount by int(100) {
-        name = "zoomify.gui.relativeSensitivityGradient.name"
-        description = "zoomify.gui.relativeSensitivityGradient.description"
+    var relativeViewBobbing by boolean(true) {
+        name = "zoomify.gui.relativeViewBobbing.name"
+        description = "zoomify.gui.relativeViewBobbing.description"
         category = "zoomify.gui.category.controls"
-        range = 1..200
     }
 
     var cinematicCam by boolean(false) {

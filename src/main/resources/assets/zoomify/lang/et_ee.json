@@ -9,8 +9,6 @@
   "zoomify.gui.category.behaviour": "Käitumine",
   "zoomify.gui.initialZoom.name": "Esialgne suum",
   "zoomify.gui.initialZoom.description": "Suumitase esialgsel klahvivajutusel.",
-  "zoomify.gui.zoomSpeed.name": "Suumi kiirus",
-  "zoomify.gui.zoomSpeed.description": "Suumi animatsiooni esituskiirus.",
   "zoomify.gui.zoomTransition.name": "Suumi üleminek",
   "zoomify.gui.zoomTransition.description": "Suumimisel kasutatav üleminekutüüp.",
   "zoomify.gui.zoomOppositeTransitionOut.name": "Vastupidine üleminek välja",
@@ -21,8 +19,6 @@
   "zoomify.gui.scrollZoom.description": "Võimaldab kerimisrattaga rohkem sisse ja välja suumida.",
   "zoomify.gui.scrollZoomAmount.name": "Kerimissuumi kogus",
   "zoomify.gui.scrollZoomAmount.description": "Täiendav vaatevälja jagaja kerimisammu kohta.",
-  "zoomify.gui.scrollZoomSpeed.name": "Kerimissuumi kiirus",
-  "zoomify.gui.scrollZoomSpeed.description": "Suumi kerimise animatsiooni esituskiirus.",
   "zoomify.gui.smoothScrollZoom.name": "Sujuv üleminek",
   "zoomify.gui.smoothScrollZoom.description": "Muudab sisse-välja kerimise sujuvaks.",
 
@@ -30,9 +26,7 @@
   "zoomify.gui.zoomKeyBehaviour.name": "Suumiklahvi käitumine",
   "zoomify.gui.zoomKeyBehaviour.description": "Suumiklahvi käitumise valik.",
   "zoomify.gui.relativeSensitivity.name": "Suhteline tundlikkus",
-  "zoomify.gui.relativeSensitivity.description": "Vähendab tundlikkust sõltuvalt suumitasemest.",
-  "zoomify.gui.relativeSensitivityGradient.name": "Suhtelise tundlikkuse üleminek",
-  "zoomify.gui.relativeSensitivityGradient.description": "Juhib suumitasemest sõltuvat tundlikkuse üleminekut.",
+  "zoomify.gui.relativeSensitivity.description": "Juhib suumitasemest sõltuvat tundlikkuse üleminekut.",
   "zoomify.gui.cinematicCam.name": "Kinemaatiline kaamera",
   "zoomify.gui.cinematicCam.description": "Muuda kaamera suumimise ajal sujuvalt liikuma.",
 
