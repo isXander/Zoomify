@@ -6,9 +6,10 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "AbstractClientPlayerEntityMixin",
+    "spyglass.AbstractClientPlayerEntityMixin",
     "GameRendererMixin",
-    "InGameHudMixin",
-    "MouseMixin"
+    "spyglass.InGameHudMixin",
+    "MouseMixin",
+    "spyglass.SpyglassItemMixin"
   ]
 }

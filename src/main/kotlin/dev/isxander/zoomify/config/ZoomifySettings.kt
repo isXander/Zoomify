@@ -133,6 +133,12 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = SPYGLASS
     }
 
+    var spyglassSoundBehaviour by enum(SoundBehaviour.WITH_OVERLAY) {
+        name = "zoomify.gui.spyglassSoundBehaviour.name"
+        description = "zoomify.gui.spyglassSoundBehaviour.description"
+        category = SPYGLASS
+    }
+
     init {
         import()
         if (needsSaving) {

@@ -39,10 +39,12 @@
   "zoomify.gui.cinematicCam.description": "Make the camera move smoothly when zoomed.",
 
   "zoomify.gui.category.spyglass": "Spyglass",
-  "zoomify.gui.spyglassBehaviour.name": "Spyglass Behaviour",
+  "zoomify.gui.spyglassBehaviour.name": "Zoom Behaviour",
   "zoomify.gui.spyglassBehaviour.description": "How Zoomify interacts with spyglass zoom.",
-  "zoomify.gui.spyglassOverlayVisibility.name": "Spyglass Overlay Visibility",
+  "zoomify.gui.spyglassOverlayVisibility.name": "Overlay Visibility",
   "zoomify.gui.spyglassOverlayVisibility.description": "When to show the spyglass overlay.",
+  "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behaviour",
+  "zoomify.gui.spyglassSoundBehaviour.description": "When to player the zoom in and out sounds from the spyglass.",
 
 
   "zoomify.transition.instant": "Instant",
@@ -70,8 +72,13 @@
   "zoomify.spyglass_behaviour.only_zoom_while_holding": "Allow While Holding",
   "zoomify.spyglass_behaviour.only_zoom_while_carrying": "Allow While Carrying",
 
-  "zoomify.overlay_visibility.default": "Default",
+  "zoomify.overlay_visibility.never": "Never",
   "zoomify.overlay_visibility.holding": "Holding",
   "zoomify.overlay_visibility.carrying": "Carrying",
-  "zoomify.overlay_visibility.always": "Always"
+  "zoomify.overlay_visibility.always": "Always",
+
+  "zoomify.sound_behaviour.never": "Never",
+  "zoomify.sound_behaviour.always": "Always",
+  "zoomify.sound_behaviour.only_spyglass": "Only Holding Spyglass",
+  "zoomify.sound_behaviour.with_overlay": "Match Overlay"
 }

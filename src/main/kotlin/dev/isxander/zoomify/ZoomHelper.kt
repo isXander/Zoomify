@@ -9,7 +9,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
     private var initialInterpolation = 0.0
 
     private var zoomingLastTick = false
-    private var activeTransition = ZoomifySettings.zoomTransition
+    private lateinit var activeTransition: TransitionType
 
     private var prevScrollInterpolation = 0.0
     private var scrollInterpolation = 0.0

@@ -1,4 +1,4 @@
-package dev.isxander.zoomify.mixins;
+package dev.isxander.zoomify.mixins.spyglass;
 
 import dev.isxander.zoomify.config.SpyglassBehaviour;
 import dev.isxander.zoomify.config.ZoomifySettings;

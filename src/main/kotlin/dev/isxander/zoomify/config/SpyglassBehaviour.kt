@@ -10,8 +10,15 @@ enum class SpyglassBehaviour(override val displayName: String) : SettingDisplayN
 }
 
 enum class OverlayVisibility(override val displayName: String) : SettingDisplayName {
-    DEFAULT("zoomify.overlay_visibility.default"),
+    NEVER("zoomify.overlay_visibility.never"),
     HOLDING("zoomify.overlay_visibility.holding"),
     CARRYING("zoomify.overlay_visibility.carrying"),
     ALWAYS("zoomify.overlay_visibility.always")
+}
+
+enum class SoundBehaviour(override val displayName: String) : SettingDisplayName {
+    NEVER("zoomify.sound_behaviour.never"),
+    ALWAYS("zoomify.sound_behaviour.always"),
+    ONLY_SPYGLASS("zoomify.sound_behaviour.only_spyglass"),
+    WITH_OVERLAY("zoomify.sound_behaviour.with_overlay"),
 }

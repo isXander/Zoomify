@@ -1,4 +1,4 @@
-package dev.isxander.zoomify.mixins;
+package dev.isxander.zoomify.mixins.spyglass;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.isxander.zoomify.Zoomify;
@@ -24,20 +24,6 @@ public class InGameHudMixin {
         )
     )
     private boolean shouldRenderSpyglassOverlay(boolean isUsingSpyglass) {
-        switch (ZoomifySettings.INSTANCE.getSpyglassOverlayVisibility()) {
-            case DEFAULT -> {
-                return isUsingSpyglass;
-            }
-            case ALWAYS -> {
-                return Zoomify.INSTANCE.getZooming();
-            }
-            case HOLDING -> {
-                return isUsingSpyglass || (Zoomify.INSTANCE.getZooming() && client.player.isHolding(Items.SPYGLASS) && ZoomifySettings.INSTANCE.getSpyglassBehaviour() != SpyglassBehaviour.COMBINE);
-            }
-            case CARRYING -> {
-                return Zoomify.INSTANCE.getZooming() && client.player.getInventory().containsAny(stack -> stack.isOf(Items.SPYGLASS));
-            }
-        }
-        return isUsingSpyglass;
+        return Zoomify.shouldRenderOverlay(client.player, isUsingSpyglass);
     }
 }

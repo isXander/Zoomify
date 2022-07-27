@@ -1,8 +1,6 @@
 package dev.isxander.zoomify
 
-import dev.isxander.zoomify.config.SpyglassBehaviour
-import dev.isxander.zoomify.config.ZoomKeyBehaviour
-import dev.isxander.zoomify.config.ZoomifySettings
+import dev.isxander.zoomify.config.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
@@ -10,7 +8,9 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.AbstractClientPlayerEntity
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
+import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
+import net.minecraft.sound.SoundEvents
 import org.slf4j.LoggerFactory
 
 object Zoomify : ClientModInitializer {
@@ -29,6 +29,8 @@ object Zoomify : ClientModInitializer {
     const val maxScrollTiers = 30
     private var scrollSteps = 0
 
+    private var shouldPlaySound = false
+
     override fun onInitializeClient() {
         // imports on <init>
         ZoomifySettings
@@ -41,6 +43,7 @@ object Zoomify : ClientModInitializer {
 
     private fun tick(client: MinecraftClient) {
         val cameraEntity = client.cameraEntity
+        val prevZooming = zooming
 
         when (ZoomifySettings.zoomKeyBehaviour) {
             ZoomKeyBehaviour.HOLD -> zooming = zoomKey.isPressed
@@ -59,6 +62,28 @@ object Zoomify : ClientModInitializer {
 
             val requiresSpyglass = ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
             zooming = zooming || (requiresSpyglass && client.options.perspective.isFirstPerson && cameraEntity.isUsingSpyglass)
+
+            if (shouldPlaySound) {
+                if (!zooming && prevZooming) {
+                    cameraEntity.playSound(SoundEvents.ITEM_SPYGLASS_STOP_USING, 1f, 1f)
+                }
+            }
+
+            shouldPlaySound = when (ZoomifySettings.spyglassSoundBehaviour) {
+                SoundBehaviour.NEVER -> false
+                SoundBehaviour.ALWAYS -> true
+                SoundBehaviour.ONLY_SPYGLASS -> cameraEntity.isUsingSpyglass || (requiresSpyglass && zooming && cameraEntity.isHolding(Items.SPYGLASS))
+                SoundBehaviour.WITH_OVERLAY -> shouldRenderOverlay(
+                    cameraEntity,
+                    client.options.perspective.isFirstPerson && cameraEntity.isUsingSpyglass
+                )
+            }
+
+            if (shouldPlaySound) {
+                if (zooming && !prevZooming) {
+                    cameraEntity.playSound(SoundEvents.ITEM_SPYGLASS_USE, 1f, 1f)
+                }
+            }
         }
 
         if (!zooming) {
@@ -71,6 +96,8 @@ object Zoomify : ClientModInitializer {
         while (guiKey.wasPressed()) {
             client.setScreen(ZoomifySettings.gui(client.currentScreen))
         }
+
+
     }
 
     @JvmStatic
@@ -86,5 +113,13 @@ object Zoomify : ClientModInitializer {
             scrollSteps--
         }
         scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+    }
+
+    @JvmStatic
+    fun shouldRenderOverlay(player: AbstractClientPlayerEntity, isUsingSpyglass: Boolean) = when (ZoomifySettings.spyglassOverlayVisibility) {
+        OverlayVisibility.NEVER -> false
+        OverlayVisibility.ALWAYS -> zooming
+        OverlayVisibility.HOLDING -> isUsingSpyglass || zooming && player.isHolding(Items.SPYGLASS) && ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
+        OverlayVisibility.CARRYING -> zooming && player.inventory.containsAny { stack: ItemStack -> stack.isOf(Items.SPYGLASS) }
     }
 }
