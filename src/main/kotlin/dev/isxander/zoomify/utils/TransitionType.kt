@@ -24,7 +24,7 @@ enum class TransitionType(override val displayName: String) : Transition, Settin
             sin((t * PI) / 2)
 
         override fun inverse(x: Double) =
-            asin(-x) * 2 / PI
+            asin(x) * 2 / PI
     },
     EASE_IN_OUT_SINE("zoomify.transition.ease_in_out_sine") {
         override fun apply(t: Double): Double =

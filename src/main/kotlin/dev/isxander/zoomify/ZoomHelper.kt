@@ -16,13 +16,11 @@ class ZoomHelper(private val starting: Double = 1.0) {
     private var lastScrollTier = 0
 
     private var resetting = false
-    private var wasResetting = false
     private var resetInterpolation = 0.0
 
     fun tick(zooming: Boolean, scrollTiers: Int) {
         tickInitial(zooming)
         tickScroll(scrollTiers)
-        wasResetting = resetting
     }
 
     private fun tickInitial(zooming: Boolean) {
@@ -37,6 +35,8 @@ class ZoomHelper(private val starting: Double = 1.0) {
         if (activeTransition == TransitionType.INSTANT) {
             initialInterpolation = targetZoom
         } else if (targetZoom > initialInterpolation) {
+            activeTransition = transition
+
             if (ZoomifySettings.zoomOppositeTransitionOut && !zoomingLastTick && transition.hasInverse()) {
                 prevInitialInterpolation = transition.inverse(transition.opposite().apply(prevInitialInterpolation))
                 initialInterpolation = transition.inverse(transition.opposite().apply(initialInterpolation))
@@ -64,7 +64,6 @@ class ZoomHelper(private val starting: Double = 1.0) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-
         val targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
 
         prevScrollInterpolation = scrollInterpolation
@@ -87,12 +86,13 @@ class ZoomHelper(private val starting: Double = 1.0) {
 
         return (initialDivisor + scrollDivisor).also {
             if (!resetting) resetInterpolation = it
+            if (it == 1.0) resetting = false
         }
     }
 
     private fun getInitialZoomDivisor(tickDelta: Float): Double {
         return MathHelper.lerp(
-            activeTransition.apply(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
+            activeTransition.apply(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation).also { Zoomify.LOGGER.info("$it") }),
             starting,
             if (!resetting) ZoomifySettings.initialZoom.toDouble() else resetInterpolation
         )
@@ -107,8 +107,11 @@ class ZoomHelper(private val starting: Double = 1.0) {
     }
 
     fun reset() {
-        resetting = true
-        scrollInterpolation = 0.0
-        prevScrollInterpolation = 0.0
+        if (scrollInterpolation > 0.0) {
+            resetting = true
+            scrollInterpolation = 0.0
+            prevScrollInterpolation = 0.0
+        }
+
     }
 }

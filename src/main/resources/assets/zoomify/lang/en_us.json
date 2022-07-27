@@ -38,6 +38,12 @@
   "zoomify.gui.cinematicCam.name": "Cinematic Camera",
   "zoomify.gui.cinematicCam.description": "Make the camera move smoothly when zoomed.",
 
+  "zoomify.gui.category.spyglass": "Spyglass",
+  "zoomify.gui.spyglassBehaviour.name": "Spyglass Behaviour",
+  "zoomify.gui.spyglassBehaviour.description": "How Zoomify interacts with spyglass zoom.",
+  "zoomify.gui.spyglassOverlayVisibility.name": "Spyglass Overlay Visibility",
+  "zoomify.gui.spyglassOverlayVisibility.description": "When to show the spyglass overlay.",
+
 
   "zoomify.transition.instant": "Instant",
   "zoomify.transition.linear": "Linear",
@@ -56,5 +62,16 @@
 
 
   "zoomify.zoom_key_behaviour.hold": "Hold",
-  "zoomify.zoom_key_behaviour.toggle": "Toggle"
+  "zoomify.zoom_key_behaviour.toggle": "Toggle",
+
+
+  "zoomify.spyglass_behaviour.combine": "Combine",
+  "zoomify.spyglass_behaviour.override": "Override",
+  "zoomify.spyglass_behaviour.only_zoom_while_holding": "Allow While Holding",
+  "zoomify.spyglass_behaviour.only_zoom_while_carrying": "Allow While Carrying",
+
+  "zoomify.overlay_visibility.default": "Default",
+  "zoomify.overlay_visibility.holding": "Holding",
+  "zoomify.overlay_visibility.carrying": "Carrying",
+  "zoomify.overlay_visibility.always": "Always"
 }

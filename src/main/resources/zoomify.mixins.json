@@ -6,7 +6,9 @@
     "defaultRequire": 1
   },
   "mixins": [
+    "AbstractClientPlayerEntityMixin",
     "GameRendererMixin",
+    "InGameHudMixin",
     "MouseMixin"
   ]
 }
