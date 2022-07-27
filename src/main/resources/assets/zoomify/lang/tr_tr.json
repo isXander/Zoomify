@@ -1,0 +1,84 @@
+{
+  "zoomify.key.zoom": "Yakınlaştır",
+  "zoomify.key.gui": "Menüyü Aç",
+  "zoomify.key.category": "Zoomify",
+
+
+  "zoomify.gui.title": "Zoomify",
+
+  "zoomify.gui.category.behaviour": "Davranış",
+  "zoomify.gui.initialZoom.name": "İlk Yakınlaştırma",
+  "zoomify.gui.initialZoom.description": "Tuş takımına ilk bastığınızda yakınlaştırma düzeyi.",
+  "zoomify.gui.zoomInTime.name": "Yakınlaştırma Süresi",
+  "zoomify.gui.zoomInTime.description": "Yakınlaştırmayı tamamlamak için ne kadar süre var.",
+  "zoomify.gui.zoomOutTime.name": "Uzaklaştırma Süresi",
+  "zoomify.gui.zoomOutTime.description": "Uzaklaştırmayı tamamlamak için ne kadar süre var.",
+  "zoomify.gui.zoomTransition.name": "Yakınlaştırma Geçişi",
+  "zoomify.gui.zoomTransition.description": "Yakınlaştırırken kullanılan geçiş türü.",
+  "zoomify.gui.zoomOppositeTransitionOut.name": "Zıt Geçiş Çıkışı",
+  "zoomify.gui.zoomOppositeTransitionOut.description": "Uzaklaştırırken geçiş türünü tersine çevirir.",
+
+  "zoomify.gui.category.scrolling": "Kaydırma",
+  "zoomify.gui.scrollZoom.name": "Kaydırma Yakınlaştırmasını Etkinleştir",
+  "zoomify.gui.scrollZoom.description": "Kaydırma tekerleği ile daha fazla yakınlaştırma ve uzaklaştırma yapmanızı sağlar.",
+  "zoomify.gui.scrollZoomAmount.name": "Kaydırma Yakınlaştırma Miktarı",
+  "zoomify.gui.scrollZoomAmount.description": "Kaydırma adımı başına FOV'un ek böleni.",
+  "zoomify.gui.scrollZoomSmoothness.name": "Kaydırma Yakınlaştırma Pürüzsüzlüğü",
+  "zoomify.gui.scrollZoomSmoothness.description": "Kaydırma-Yakınlaştırma ne kadar yumuşak/ne kadar sürer.",
+  "zoomify.gui.smoothScrollZoom.name": "Yumuşak Geçiş",
+  "zoomify.gui.smoothScrollZoom.description": "İçeri ve dışarı kaydırmayı pürüzsüz yapar.",
+
+  "zoomify.gui.category.controls": "Kontroller",
+  "zoomify.gui.zoomKeyBehaviour.name": "Yakınlaştırma Tuşu Davranışı",
+  "zoomify.gui.zoomKeyBehaviour.description": "Yakınlaştırma tuşunun davranışı.",
+  "zoomify.gui.relativeSensitivity.name": "Bağıl Hassaslık",
+  "zoomify.gui.relativeSensitivity.description": "Yakınlaştırma düzeyine göre hassasiyeti kontrol eder.",
+  "zoomify.gui.relativeViewBobbing.name": "Bağıl Sallanan Görüntü",
+  "zoomify.gui.relativeViewBobbing.description": "Yakınlaştırıldığında görüntü sallanmasını daha az sarsıcı hale getir.",
+  "zoomify.gui.cinematicCam.name": "Sinematik Kamera",
+  "zoomify.gui.cinematicCam.description": "Yakınlaştırıldığında kameranın düzgünce hareket etmesini sağla.",
+
+  "zoomify.gui.category.spyglass": "Dürbün",
+  "zoomify.gui.spyglassBehaviour.name": "Yakınlaştırma Davranışı",
+  "zoomify.gui.spyglassBehaviour.description": "Zoomify'ın dürbün yakınlaştırma ile nasıl etkileşime geçeceği.",
+  "zoomify.gui.spyglassOverlayVisibility.name": "Kaplama Görünürlüğü",
+  "zoomify.gui.spyglassOverlayVisibility.description": "Dürbün kaplamasının ne zaman gösterileceği.",
+  "zoomify.gui.spyglassSoundBehaviour.name": "Ses Davranışı",
+  "zoomify.gui.spyglassSoundBehaviour.description": "Dürbünden gelen yakınlaştırma ve uzaklaştırma seslerinin ne zaman oynatılacağı.",
+
+
+  "zoomify.transition.instant": "Anında",
+  "zoomify.transition.linear": "Doğrusal",
+  "zoomify.transition.ease_in_sine": "Kademeli Sinüs Girişi",
+  "zoomify.transition.ease_out_sine": "Kademeli Sinüs Çıkışı",
+  "zoomify.transition.ease_in_out_sine": "Kademeli Sinüs Giriş Çıkışı",
+  "zoomify.transition.ease_in_quad": "Kademeli Dörtlü Giriş",
+  "zoomify.transition.ease_out_quad": "Kademeli Dörtlü Çıkış",
+  "zoomify.transition.ease_in_out_quad": "Kademeli Dörtlü Giriş Çıkışı",
+  "zoomify.transition.ease_in_cubic": "Kademeli Kübik Girişi",
+  "zoomify.transition.ease_out_cubic": "Kademeli Kübik Çıkışı",
+  "zoomify.transition.ease_in_out_cubic": "Kademeli Kübik Giriş Çıkışı",
+  "zoomify.transition.ease_in_exp": "Kademeli Üstel Giriş",
+  "zoomify.transition.ease_out_exp": "Kademeli Üstel Çıkış",
+  "zoomify.transition.ease_in_out_exp": "Kademeli Üstel Giriş Çıkışı",
+
+
+  "zoomify.zoom_key_behaviour.hold": "Basılı Tut",
+  "zoomify.zoom_key_behaviour.toggle": "Aç/Kapa",
+
+
+  "zoomify.spyglass_behaviour.combine": "Birleştir",
+  "zoomify.spyglass_behaviour.override": "Geçersiz Kıl",
+  "zoomify.spyglass_behaviour.only_zoom_while_holding": "Basılı Tutarken İzin Ver",
+  "zoomify.spyglass_behaviour.only_zoom_while_carrying": "Taşırken İzin Ver",
+
+  "zoomify.overlay_visibility.never": "Asla",
+  "zoomify.overlay_visibility.holding": "Basılı Tutma",
+  "zoomify.overlay_visibility.carrying": "Taşıma",
+  "zoomify.overlay_visibility.always": "Her Zaman",
+
+  "zoomify.sound_behaviour.never": "Asla",
+  "zoomify.sound_behaviour.always": "Her Zaman",
+  "zoomify.sound_behaviour.only_spyglass": "Sadece Dürbün Tutarken",
+  "zoomify.sound_behaviour.with_overlay": "Kaplamaya Uy"
+}
