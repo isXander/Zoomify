@@ -1,0 +1,61 @@
+{
+  "zoomify.key.zoom": "Zoom",
+  "zoomify.key.gui": "Abrir GUI",
+  "zoomify.key.category": "Zoomify",
+
+
+  "zoomify.gui.title": "Zoomify",
+
+  "zoomify.gui.category.behaviour": "Comportamento",
+  "zoomify.gui.initialZoom.name": "Zoom Inicial",
+  "zoomify.gui.initialZoom.description": "O nível de zoom quando você aperta a tecla primeiro.",
+  "zoomify.gui.zoomSpeed.name": "Velocidade do Zoom",
+  "zoomify.gui.zoomSpeed.description": "A velocidade em que a animação do Zoom ocorre.",
+  "zoomify.gui.zoomTransition.name": "Transição do Zoom",
+  "zoomify.gui.zoomTransition.description": "O tipo de transição usado no zoom.",
+  "zoomify.gui.zoomOppositeTransitionOut.name": "Transição de saída oposta",
+  "zoomify.gui.zoomOppositeTransitionOut.description": "Inverte o tipo de transição quando tirando o zoom.",
+
+  "zoomify.gui.category.scrolling": "Rolagem",
+  "zoomify.gui.scrollZoom.name": "Habilitar Zoom de rolagem",
+  "zoomify.gui.scrollZoom.description": "Permitir você dar zoom com a roda do mouse.",
+  "zoomify.gui.maxScrollZoom.name": "Zoom de rolagem máximo",
+  "zoomify.gui.maxScrollZoom.description": "O nível máximo de zoom que pode ser atingido usando a roda do mouse.",
+  "zoomify.gui.scrollZoomSpeed.name": "Velocidade do Zoom de rolagem",
+  "zoomify.gui.scrollZoomSpeed.description": "A velocidade em quem a animação de Zoom de rolagem ocorre.",
+  "zoomify.gui.scrollZoomTransition.name": "Transição do Zoom de rolagem",
+  "zoomify.gui.scrollZoomTransition.description": "O tipo de transição usada quando aplicando o zoom.",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.name": "Transição de saída oposta",
+  "zoomify.gui.scrollZoomOppositeTransitionOut.description": "Inverte o tipo de transição quando tirando o zoom.",
+
+  "zoomify.gui.category.controls": "Controles",
+  "zoomify.gui.zoomKeyBehaviour.name": "Comportamento da tecla de Zoom",
+  "zoomify.gui.zoomKeyBehaviour.description": "O comportamento da tecla de zoom.",
+  "zoomify.gui.relativeSensitivity.name": "Sensibilidade Relativa",
+  "zoomify.gui.relativeSensitivity.description": "Diminui a sensibilidade dependendo do nível de zoom.",
+  "zoomify.gui.cinematicCam.name": "Câmera Cinemática",
+  "zoomify.gui.cinematicCam.description": "Faz a câmera se mover suavemente no zoom.",
+
+
+  "zoomify.transition.instant": "Instantâneo",
+  "zoomify.transition.linear": "Linear",
+  "zoomify.transition.ease_in_sine": "Entrada Suave Seno",
+  "zoomify.transition.ease_out_sine": "Saída Suave Seno",
+  "zoomify.transition.ease_in_out_sine": "Entrada Saída Suave Seno",
+  "zoomify.transition.ease_in_quad": "Entrada Suave Quadrática",
+  "zoomify.transition.ease_out_quad": "Saída Suave Quadrática",
+  "zoomify.transition.ease_in_out_quad": "Entrada Saída Suave Quadrática",
+  "zoomify.transition.ease_in_cubic": "Entrada Suave Cúbica",
+  "zoomify.transition.ease_out_cubic": "Saída Suave Cúbica",
+  "zoomify.transition.ease_in_out_cubic": "Entrada Saída Suave Cúbica",
+  "zoomify.transition.ease_in_exp": "Entrada Suave Exponencial",
+  "zoomify.transition.ease_out_exp": "Saída Suave Exponencial",
+  "zoomify.transition.ease_in_out_exp": "Entrada Saída Suave Exponencial",
+
+
+  "zoomify.zoom_key_behaviour.hold": "Segurar",
+  "zoomify.zoom_key_behaviour.toggle": "Alternar",
+
+
+  "zoomify.update.available": "Zoomify %s está disponível para download: "
+}
