@@ -92,7 +92,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
 
     private fun getInitialZoomDivisor(tickDelta: Float): Double {
         return MathHelper.lerp(
-            activeTransition.apply(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation).also { Zoomify.LOGGER.info("$it") }),
+            activeTransition.apply(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
             starting,
             if (!resetting) ZoomifySettings.initialZoom.toDouble() else resetInterpolation
         )

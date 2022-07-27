@@ -74,28 +74,51 @@ enum class TransitionType(override val displayName: String) : Transition, Settin
                 1 - (-2 * t + 2).pow(3) / 2
     },
     EASE_IN_EXP("zoomify.transition.ease_in_exp") {
+        private val c_log2_1023 = log(1023.0, base=2.0)
+
         override fun apply(t: Double): Double =
-            if (t == 0.0) 0.0 else 2.0.pow(10 * t - 10)
+            when (t) {
+                0.0 -> 0.0
+                1.0 -> 1.0
+                else -> 2.0.pow(10.0 * t - c_log2_1023) - 1/1023
+            }
 
         override fun inverse(x: Double) =
-            if (x == 0.0) 0.0 else log(x, 1024.0) + 1
+            when (x) {
+                0.0 -> 0.0
+                1.0 -> 1.0
+                else -> ln(1023 * x + 1) / (10 * ln(2.0))
+            }
     },
     EASE_OUT_EXP("zoomify.transition.ease_out_exp") {
+        private val c_log2_1023 = log(1023.0, base=2.0)
+        private val c_10_ln2 = 10.0 * ln(2.0)
+        private val c_ln_1203 = ln(1023.0)
+
         override fun apply(t: Double): Double =
-            if (t == 1.0) 1.0 else 1.0 - 2.0.pow(-10.0 * t)
+            when (t) {
+                0.0 -> 0.0
+                1.0 -> 1.0
+                else -> 1.0 - 2.0.pow(10.0 - c_log2_1023 - 10.0 * t) + 1/1023
+            }
 
         override fun inverse(x: Double) =
-            if (x == 1.0) 1.0 else -log(1 - x, 1024.0)
+            when (x) {
+                0.0 -> 0.0
+                1.0 -> 1.0
+                else -> -((ln(-((1023 * x - 1024) / 1023)) - c_10_ln2 + c_ln_1203) / c_10_ln2)
+            }
     },
     EASE_IN_OUT_EXP("zoomify.transition.ease_in_out_exp") {
+        private val c_log2_1023 = log(1023.0, base=2.0)
+
         override fun apply(t: Double): Double =
-            if (t == 0.0)
-                0.0
-            else if (t == 1.0)
-                1.0
-            else if (t < 0.5)
-                2.0.pow(20.0 * t - 10.0) / 2.0
-            else (2.0 - 2.0.pow(-20.0 * t + 10.0)) / 2
+            when {
+                t == 0.0 -> 0.0
+                t == 1.0 -> 1.0
+                t < 0.5 -> 2.0.pow(20.0 * t - c_log2_1023) - 1/1023
+                else -> 1.0 - 2.0.pow(10.0 - c_log2_1023 - 10.0 * t) + 1/1023
+            }
     };
 
     fun opposite(): TransitionType = when (this) {
