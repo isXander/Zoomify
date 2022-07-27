@@ -6,7 +6,7 @@
 
   "zoomify.gui.title": "Zoomify",
 
-  "zoomify.gui.category.behaviour": "Behavior",
+  "zoomify.gui.category.behaviour": "Behaviour",
   "zoomify.gui.initialZoom.name": "Initial Zoom",
   "zoomify.gui.initialZoom.description": "The zoom level when you first press the keybind.",
   "zoomify.gui.zoomInTime.name": "Zoom In Time",
@@ -29,8 +29,8 @@
   "zoomify.gui.smoothScrollZoom.description": "Makes scrolling in and out smooth.",
 
   "zoomify.gui.category.controls": "Controls",
-  "zoomify.gui.zoomKeyBehaviour.name": "Zoom Key Behavior",
-  "zoomify.gui.zoomKeyBehaviour.description": "The behavior of the zoom key.",
+  "zoomify.gui.zoomKeyBehaviour.name": "Zoom Key Behaviour",
+  "zoomify.gui.zoomKeyBehaviour.description": "The behaviour of the zoom key.",
   "zoomify.gui.relativeSensitivity.name": "Relative Sensitivity",
   "zoomify.gui.relativeSensitivity.description": "Controls the sensitivity based on the zoom level.",
   "zoomify.gui.relativeViewBobbing.name": "Relative View Bobbing",
@@ -39,11 +39,11 @@
   "zoomify.gui.cinematicCam.description": "Make the camera move smoothly when zoomed.",
 
   "zoomify.gui.category.spyglass": "Spyglass",
-  "zoomify.gui.spyglassBehaviour.name": "Zoom Behavior",
+  "zoomify.gui.spyglassBehaviour.name": "Zoom Behaviour",
   "zoomify.gui.spyglassBehaviour.description": "How Zoomify interacts with spyglass zoom.",
   "zoomify.gui.spyglassOverlayVisibility.name": "Overlay Visibility",
   "zoomify.gui.spyglassOverlayVisibility.description": "When to show the spyglass overlay.",
-  "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behavior",
+  "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behaviour",
   "zoomify.gui.spyglassSoundBehaviour.description": "When to player the zoom in and out sounds from the spyglass.",
 
 
