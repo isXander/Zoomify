@@ -2,11 +2,16 @@
   "zoomify.key.zoom": "放大",
   "zoomify.key.gui": "打开设置GUI",
   "zoomify.key.category": "Zoomify",
+  
 
   "zoomify.gui.title": "Zoomify",
 
   "zoomify.gui.category.behaviour": "行为",
   "zoomify.gui.initialZoom.name": "初始缩放",
+  "zoomify.gui.zoomInTime.name": "放大时间",
+  "zoomify.gui.zoomInTime.description": "多少秒完成放大.",
+  "zoomify.gui.zoomOutTime.name": "缩小时间",
+  "zoomify.gui.zoomOutTime.description": "多少秒完成缩小.",
   "zoomify.gui.initialZoom.description": "首次按下键绑定时的缩放级别.",
   "zoomify.gui.zoomTransition.name": "缩放过渡",
   "zoomify.gui.zoomTransition.description": "缩放时使用的过渡类型.",
@@ -16,6 +21,10 @@
   "zoomify.gui.category.scrolling": "滚动",
   "zoomify.gui.scrollZoom.name": "启用滚动缩放",
   "zoomify.gui.scrollZoom.description": "允许您使用滚轮放大或缩小一些.",
+  "zoomify.gui.scrollZoomAmount.name": "滚动缩放量",
+  "zoomify.gui.scrollZoomAmount.description": "每个滚动步骤FOV的附加除数.",
+  "zoomify.gui.scrollZoomSmoothness.name": "滚动缩放平滑度",
+  "zoomify.gui.scrollZoomSmoothness.description": "滚动缩放的平滑度/需要多长时间.",
   "zoomify.gui.smoothScrollZoom.name": "平滑过渡",
   "zoomify.gui.smoothScrollZoom.description": "使滚入和滚出更平滑.",
 
@@ -24,9 +33,12 @@
   "zoomify.gui.zoomKeyBehaviour.description": "按下缩放键时的行为.",
   "zoomify.gui.relativeSensitivity.name": "相对灵敏度",
   "zoomify.gui.relativeSensitivity.description": "根据缩放级别控制灵敏度的梯度.",
+  "zoomify.gui.relativeViewBobbing.name": "相对视线晃动",
+  "zoomify.gui.relativeViewBobbing.description": "在放大时使视线晃动较为协调.",
   "zoomify.gui.cinematicCam.name": "电影摄像机",
   "zoomify.gui.cinematicCam.description": "使相机在缩放时平滑移动.",
-
+  
+  
   "zoomify.transition.instant": "即时",
   "zoomify.transition.linear": "直线",
   "zoomify.transition.ease_in_sine": "正弦缓入",
@@ -42,6 +54,7 @@
   "zoomify.transition.ease_out_exp": "指数缓出",
   "zoomify.transition.ease_in_out_exp": "指数缓出入",
 
+  
   "zoomify.zoom_key_behaviour.hold": "保持",
   "zoomify.zoom_key_behaviour.toggle": "切换"
 }
