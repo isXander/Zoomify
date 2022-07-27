@@ -70,7 +70,7 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         name = "zoomify.gui.scrollZoomAmount.name"
         description = "zoomify.gui.scrollZoomAmount.description"
         category = SCROLLING
-        range = 1..5
+        range = 1..10
         migrator { type ->
             if (!type.isInt) {
                 PrimitiveType.of(default)

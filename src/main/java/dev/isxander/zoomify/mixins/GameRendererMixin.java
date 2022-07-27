@@ -29,8 +29,8 @@ public class GameRendererMixin {
         method = "getFov",
         at = @At("RETURN")
     )
-    private double modifyFovWithZoom(double fov, Camera camera, float tickDelta, boolean changingFov) {
-        return fov / Zoomify.getZoomDivisor(tickDelta);
+    private double modifyFovWithZoom(double fov) {
+        return fov / Zoomify.getZoomDivisor();
     }
 
     @ModifyExpressionValue(

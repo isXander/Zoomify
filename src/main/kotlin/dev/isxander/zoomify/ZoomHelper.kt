@@ -18,12 +18,12 @@ class ZoomHelper(private val starting: Double = 1.0) {
     private var resetting = false
     private var resetInterpolation = 0.0
 
-    fun tick(zooming: Boolean, scrollTiers: Int) {
-        tickInitial(zooming)
-        tickScroll(scrollTiers)
+    fun tick(zooming: Boolean, scrollTiers: Int, lastFrameDuration: Double = 0.05) {
+        tickInitial(zooming, lastFrameDuration)
+        tickScroll(scrollTiers, lastFrameDuration)
     }
 
-    private fun tickInitial(zooming: Boolean) {
+    private fun tickInitial(zooming: Boolean, lastFrameDuration: Double) {
         if (zooming && !zoomingLastTick)
             resetting = false
 
@@ -42,7 +42,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
                 initialInterpolation = transition.inverse(transition.opposite().apply(initialInterpolation))
             }
 
-            initialInterpolation += 0.05 / ZoomifySettings.zoomInTime
+            initialInterpolation += lastFrameDuration / ZoomifySettings.zoomInTime
             initialInterpolation = initialInterpolation.coerceAtMost(targetZoom)
         } else if (targetZoom < initialInterpolation) {
             if (ZoomifySettings.zoomOppositeTransitionOut) {
@@ -53,34 +53,34 @@ class ZoomHelper(private val starting: Double = 1.0) {
                 }
             }
 
-            initialInterpolation -= 0.05 / ZoomifySettings.zoomOutTime
+            initialInterpolation -= lastFrameDuration / ZoomifySettings.zoomOutTime
             initialInterpolation = initialInterpolation.coerceAtLeast(targetZoom)
         }
 
         zoomingLastTick = zooming
     }
 
-    private fun tickScroll(scrollTiers: Int) {
+    private fun tickScroll(scrollTiers: Int, lastFrameDuration: Double) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-        val targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
+        val targetZoom = TransitionType.EASE_IN_QUAD.apply(scrollTiers.toDouble() / Zoomify.maxScrollTiers)
 
         prevScrollInterpolation = scrollInterpolation
 
         val smoothness = MathHelper.lerp(ZoomifySettings.scrollZoomSmoothness / 100.0, 1.0, 0.1)
         if (scrollInterpolation < targetZoom) {
-            scrollInterpolation += (targetZoom - scrollInterpolation) * smoothness
+            scrollInterpolation += (targetZoom - scrollInterpolation) * smoothness / 0.05 * lastFrameDuration
             scrollInterpolation = scrollInterpolation.coerceAtMost(targetZoom)
         } else if (scrollInterpolation > targetZoom) {
-            scrollInterpolation -= (scrollInterpolation - targetZoom) * smoothness
+            scrollInterpolation -= (scrollInterpolation - targetZoom) * smoothness / 0.05 * lastFrameDuration
             scrollInterpolation = scrollInterpolation.coerceAtLeast(targetZoom)
         }
 
         lastScrollTier = scrollTiers
     }
 
-    fun getZoomDivisor(tickDelta: Float): Double {
+    fun getZoomDivisor(tickDelta: Float = 1f): Double {
         val initialDivisor = getInitialZoomDivisor(tickDelta)
         val scrollDivisor = getScrollZoomDivisor(tickDelta)
 
@@ -112,6 +112,5 @@ class ZoomHelper(private val starting: Double = 1.0) {
             scrollInterpolation = 0.0
             prevScrollInterpolation = 0.0
         }
-
     }
 }

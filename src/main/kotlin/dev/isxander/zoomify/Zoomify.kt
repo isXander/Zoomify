@@ -76,7 +76,7 @@ object Zoomify : ClientModInitializer {
                 SoundBehaviour.WITH_OVERLAY -> shouldRenderOverlay(
                     cameraEntity,
                     client.options.perspective.isFirstPerson && cameraEntity.isUsingSpyglass
-                )
+                ) && requiresSpyglass
             }
 
             if (shouldPlaySound) {
@@ -86,13 +86,6 @@ object Zoomify : ClientModInitializer {
             }
         }
 
-        if (!zooming) {
-            scrollSteps = 0
-            zoomHelper.reset()
-        }
-
-        zoomHelper.tick(zooming, scrollSteps)
-
         while (guiKey.wasPressed()) {
             client.setScreen(ZoomifySettings.gui(client.currentScreen))
         }
@@ -101,8 +94,16 @@ object Zoomify : ClientModInitializer {
     }
 
     @JvmStatic
-    fun getZoomDivisor(tickDelta: Float = 1f): Double {
-        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it }
+    fun getZoomDivisor(): Double {
+        if (!zooming) {
+            scrollSteps = 0
+            zoomHelper.reset()
+        }
+
+        // tick every frame so fps isn't
+        zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0)
+
+        return zoomHelper.getZoomDivisor().also { previousZoomDivisor = it }
     }
 
     @JvmStatic
@@ -116,10 +117,15 @@ object Zoomify : ClientModInitializer {
     }
 
     @JvmStatic
-    fun shouldRenderOverlay(player: AbstractClientPlayerEntity, isUsingSpyglass: Boolean) = when (ZoomifySettings.spyglassOverlayVisibility) {
-        OverlayVisibility.NEVER -> false
-        OverlayVisibility.ALWAYS -> zooming
-        OverlayVisibility.HOLDING -> isUsingSpyglass || zooming && player.isHolding(Items.SPYGLASS) && ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
-        OverlayVisibility.CARRYING -> zooming && player.inventory.containsAny { stack: ItemStack -> stack.isOf(Items.SPYGLASS) }
-    }
+    fun shouldRenderOverlay(player: AbstractClientPlayerEntity, isUsingSpyglass: Boolean) =
+        when (ZoomifySettings.spyglassOverlayVisibility) {
+            OverlayVisibility.NEVER -> false
+            OverlayVisibility.ALWAYS -> zooming
+            OverlayVisibility.HOLDING -> isUsingSpyglass
+                    || zooming
+                    && player.isHolding(Items.SPYGLASS)
+                    && ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
+            OverlayVisibility.CARRYING -> zooming
+                    && player.inventory.containsAny { stack: ItemStack -> stack.isOf(Items.SPYGLASS) }
+        }
 }
