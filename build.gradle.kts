@@ -17,11 +17,10 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "1.8.0"
+version = "2.0.0"
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://repo.sk1er.club/repository/maven-public")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
