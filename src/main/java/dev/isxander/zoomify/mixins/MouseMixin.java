@@ -46,7 +46,7 @@ public class MouseMixin {
     )
     private Object applyRelativeSensitivity(Object genericValue) {
         double value = (Double) genericValue;
-        return value / MathHelper.lerp(ZoomifySettings.INSTANCE.getRelativeSensitivity() / 100.0, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor());
+        return value / MathHelper.lerp(ZoomifySettings.INSTANCE.getRelativeSensitivity() / 100.0, 1.0, 1/Zoomify.INSTANCE.getPreviousZoomDivisor());
     }
 
     @ModifyExpressionValue(

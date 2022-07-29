@@ -64,7 +64,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-        val targetZoom = TransitionType.EASE_IN_QUAD.apply(scrollTiers.toDouble() / Zoomify.maxScrollTiers)
+        val targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
 
         prevScrollInterpolation = scrollInterpolation
 
@@ -80,30 +80,30 @@ class ZoomHelper(private val starting: Double = 1.0) {
         lastScrollTier = scrollTiers
     }
 
-    fun getZoomDivisor(tickDelta: Float = 1f): Double {
-        val initialDivisor = getInitialZoomDivisor(tickDelta)
-        val scrollDivisor = getScrollZoomDivisor(tickDelta)
+    fun getZoomMultiplier(tickDelta: Float = 1f): Double {
+        val initialDivisor = getInitialZoomMultiplier(tickDelta)
+        val scrollDivisor = getScrollZoomMultiplier(tickDelta)
 
-        return (initialDivisor + scrollDivisor).also {
+        return (initialDivisor * scrollDivisor).also {
+            if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
             if (!resetting) resetInterpolation = it
-            if (it == 1.0) resetting = false
         }
     }
 
-    private fun getInitialZoomDivisor(tickDelta: Float): Double {
+    private fun getInitialZoomMultiplier(tickDelta: Float): Double {
         return MathHelper.lerp(
             activeTransition.apply(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
-            starting,
-            if (!resetting) ZoomifySettings.initialZoom.toDouble() else resetInterpolation
+            1 / starting,
+            if (!resetting) 1 / ZoomifySettings.initialZoom.toDouble() else resetInterpolation
         )
     }
 
-    private fun getScrollZoomDivisor(tickDelta: Float): Double {
+    private fun getScrollZoomMultiplier(tickDelta: Float): Double {
         return MathHelper.lerp(
             MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation),
-            0.0,
-            Zoomify.maxScrollTiers * ZoomifySettings.scrollZoomAmount.toDouble()
-        ).let { if (resetting) 0.0 else it }
+            1.0,
+            1 / (Zoomify.maxScrollTiers * ZoomifySettings.scrollZoomAmount.toDouble())
+        ).let { if (resetting) 1.0 else it }
     }
 
     fun reset() {
