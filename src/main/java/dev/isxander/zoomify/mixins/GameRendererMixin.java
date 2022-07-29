@@ -30,7 +30,7 @@ public class GameRendererMixin {
         at = @At("RETURN")
     )
     private double modifyFovWithZoom(double fov) {
-        return fov * Zoomify.getZoomDivisor();
+        return fov / Zoomify.getZoomDivisor();
     }
 
     @ModifyExpressionValue(
@@ -44,6 +44,6 @@ public class GameRendererMixin {
         if (!ZoomifySettings.INSTANCE.getRelativeViewBobbing())
             return p;
 
-        return (float) (p / MathHelper.lerp(0.2, 1.0, 1 / Zoomify.INSTANCE.getPreviousZoomDivisor()));
+        return (float) (p / MathHelper.lerp(0.2, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()));
     }
 }

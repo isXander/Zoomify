@@ -101,7 +101,7 @@ object Zoomify : ClientModInitializer {
         // tick every frame so fps isn't
         zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0)
 
-        return zoomHelper.getZoomMultiplier().also { previousZoomDivisor = it }
+        return zoomHelper.getZoomDivisor().also { previousZoomDivisor = it }
     }
 
     @JvmStatic

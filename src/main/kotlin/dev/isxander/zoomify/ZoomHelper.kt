@@ -64,7 +64,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-        val targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
+        val targetZoom = TransitionType.EASE_IN_SINE.apply(scrollTiers.toDouble() / Zoomify.maxScrollTiers)
 
         prevScrollInterpolation = scrollInterpolation
 
@@ -80,13 +80,13 @@ class ZoomHelper(private val starting: Double = 1.0) {
         lastScrollTier = scrollTiers
     }
 
-    fun getZoomMultiplier(tickDelta: Float = 1f): Double {
-        val initialDivisor = getInitialZoomMultiplier(tickDelta)
-        val scrollDivisor = getScrollZoomMultiplier(tickDelta)
+    fun getZoomDivisor(tickDelta: Float = 1f): Double {
+        val initialMultiplier = getInitialZoomMultiplier(tickDelta)
+        val scrollDivisor = getScrollZoomDivisor(tickDelta)
 
-        return (initialDivisor * scrollDivisor).also {
+        return (1/initialMultiplier + scrollDivisor).also {
             if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
-            if (!resetting) resetInterpolation = it
+            if (!resetting) resetInterpolation = 1/it
         }
     }
 
@@ -98,12 +98,12 @@ class ZoomHelper(private val starting: Double = 1.0) {
         )
     }
 
-    private fun getScrollZoomMultiplier(tickDelta: Float): Double {
+    private fun getScrollZoomDivisor(tickDelta: Float): Double {
         return MathHelper.lerp(
             MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation),
-            1.0,
-            1 / (Zoomify.maxScrollTiers * ZoomifySettings.scrollZoomAmount.toDouble())
-        ).let { if (resetting) 1.0 else it }
+            0.0,
+            Zoomify.maxScrollTiers * ZoomifySettings.scrollZoomAmount.toDouble()
+        ).let { if (resetting) 0.0 else it }
     }
 
     fun reset() {
