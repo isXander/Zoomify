@@ -45,7 +45,7 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:7.+") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:8.+") {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
