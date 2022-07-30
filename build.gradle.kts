@@ -53,7 +53,7 @@ dependencies {
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:$settxiVersion")!!)
     include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:$settxiVersion:fabric-1.19")!!)
 
-    modImplementation("com.terraformersmc:modmenu:4.+")
+    modImplementation("com.terraformersmc:modmenu:4.0.5")
 
     include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
     annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
