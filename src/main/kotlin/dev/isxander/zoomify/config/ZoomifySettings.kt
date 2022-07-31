@@ -66,7 +66,7 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = SCROLLING
     }
 
-    var scrollZoomAmount by int(2) {
+    var scrollZoomAmount by int(3) {
         name = "zoomify.gui.scrollZoomAmount.name"
         description = "zoomify.gui.scrollZoomAmount.description"
         category = SCROLLING

@@ -10,10 +10,10 @@ plugins {
 
     id("com.modrinth.minotaur") version "2.4.+"
     id("me.hypherionmc.cursegradle") version "2.+"
-    id("com.github.breadmoirai.github-release") version "2.+"
+    id("com.github.breadmoirai.github-release") version "2.4.+"
     `maven-publish`
 
-    id("io.github.p03w.machete") version "1.+"
+    id("io.github.p03w.machete") version "1.1.+"
 }
 
 group = "dev.isxander"
@@ -21,11 +21,10 @@ version = "2.0.0"
 
 repositories {
     mavenCentral()
-    maven("https://repo.sk1er.club/repository/maven-public")
+    maven("https://maven.isxander.dev/releases")
+    maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
-    maven("https://maven.shedaniel.me/")
-    maven("https://maven.isxander.dev/releases")
 }
 
 val minecraftVersion: String by project

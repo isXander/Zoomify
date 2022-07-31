@@ -90,7 +90,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
 
         return (1/initialMultiplier + scrollDivisor).also {
             if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
-            if (!resetting) resetInterpolation = 1/it
+            if (!resetting) resetInterpolation = 1 / it
         }
     }
 
@@ -106,7 +106,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         return MathHelper.lerp(
             MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation),
             0.0,
-            Zoomify.maxScrollTiers * (ZoomifySettings.scrollZoomAmount * 2.0)
+            Zoomify.maxScrollTiers * (ZoomifySettings.scrollZoomAmount * 3.0)
         ).let { if (resetting) 0.0 else it }
     }
 
