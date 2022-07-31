@@ -44,7 +44,7 @@
   "zoomify.gui.spyglassOverlayVisibility.name": "Overlay Visibility",
   "zoomify.gui.spyglassOverlayVisibility.description": "When to show the spyglass overlay.",
   "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behavior",
-  "zoomify.gui.spyglassSoundBehaviour.description": "When to player the zoom in and out sounds from the spyglass.",
+  "zoomify.gui.spyglassSoundBehaviour.description": "When to play the zoom in and out sounds from the spyglass.",
 
 
   "zoomify.transition.instant": "Instant",
