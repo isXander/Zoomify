@@ -3,6 +3,7 @@ package dev.isxander.zoomify
 import dev.isxander.zoomify.config.ZoomifySettings
 import dev.isxander.zoomify.utils.TransitionType
 import net.minecraft.util.math.MathHelper
+import kotlin.math.pow
 
 class ZoomHelper(private val starting: Double = 1.0) {
     private var prevInitialInterpolation = 0.0
@@ -64,7 +65,10 @@ class ZoomHelper(private val starting: Double = 1.0) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-        val targetZoom = TransitionType.EASE_IN_SINE.apply(scrollTiers.toDouble() / Zoomify.maxScrollTiers)
+        var targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
+        val curvature = 0.3
+        val exp = 1 / (1 - curvature)
+        targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
 
         prevScrollInterpolation = scrollInterpolation
 
@@ -102,7 +106,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         return MathHelper.lerp(
             MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation),
             0.0,
-            Zoomify.maxScrollTiers * ZoomifySettings.scrollZoomAmount.toDouble()
+            Zoomify.maxScrollTiers * (ZoomifySettings.scrollZoomAmount * 2.0)
         ).let { if (resetting) 0.0 else it }
     }
 

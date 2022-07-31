@@ -106,7 +106,7 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         name = "zoomify.gui.relativeSensitivity.name"
         description = "zoomify.gui.relativeSensitivity.description"
         category = CONTROLS
-        range = 0..100
+        range = 0..150
     }
 
     var relativeViewBobbing by boolean(true) {
