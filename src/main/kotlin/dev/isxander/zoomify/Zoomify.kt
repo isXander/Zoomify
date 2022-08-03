@@ -98,8 +98,8 @@ object Zoomify : ClientModInitializer {
             zoomHelper.reset()
         }
 
-        // tick every frame so fps isn't
-        zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0)
+        // tick every frame so fps isn't 20
+        zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0 / 2)
 
         return zoomHelper.getZoomDivisor().also { previousZoomDivisor = it }
     }
@@ -120,8 +120,7 @@ object Zoomify : ClientModInitializer {
             OverlayVisibility.NEVER -> false
             OverlayVisibility.ALWAYS -> zooming
             OverlayVisibility.HOLDING -> isUsingSpyglass
-                    || zooming
-                    && player.isHolding(Items.SPYGLASS)
+                    || (zooming && player.isHolding(Items.SPYGLASS))
                     && ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
             OverlayVisibility.CARRYING -> zooming
                     && player.inventory.containsAny { stack: ItemStack -> stack.isOf(Items.SPYGLASS) }

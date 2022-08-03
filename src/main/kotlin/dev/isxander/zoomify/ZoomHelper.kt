@@ -88,7 +88,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         val initialMultiplier = getInitialZoomMultiplier(tickDelta)
         val scrollDivisor = getScrollZoomDivisor(tickDelta)
 
-        return (1/initialMultiplier + scrollDivisor).also {
+        return (1 / initialMultiplier + scrollDivisor).also {
             if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
             if (!resetting) resetInterpolation = 1 / it
         }
