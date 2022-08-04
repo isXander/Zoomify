@@ -33,7 +33,7 @@
   "zoomify.gui.zoomKeyBehaviour.description": "Suumiklahvi käitumise valik.",
   "zoomify.gui.relativeSensitivity.name": "Suhteline tundlikkus",
   "zoomify.gui.relativeSensitivity.description": "Juhib suumitasemest sõltuvat tundlikkuse üleminekut.",
-    "zoomify.gui.relativeViewBobbing.name": "Suhteline vaate hüplemine",
+  "zoomify.gui.relativeViewBobbing.name": "Suhteline vaate hüplemine",
   "zoomify.gui.relativeViewBobbing.description": "Muudab vaate hüplemise sissesuumimisel vähem \"teravaks\".",
   "zoomify.gui.cinematicCam.name": "Kinemaatiline kaamera",
   "zoomify.gui.cinematicCam.description": "Muuda kaamera suumimise ajal sujuvalt liikuma.",
@@ -64,7 +64,7 @@
 
 
   "zoomify.zoom_key_behaviour.hold": "Hoia",
-  "zoomify.zoom_key_behaviour.toggle": "Lülita"
+  "zoomify.zoom_key_behaviour.toggle": "Lülita",
 
   "zoomify.spyglass_behaviour.combine": "kombineeri",
   "zoomify.spyglass_behaviour.override": "kirjuta üle",

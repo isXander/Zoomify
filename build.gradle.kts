@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.0.1"
+version = "2.0.2"
 
 repositories {
     mavenCentral()
@@ -54,8 +54,11 @@ dependencies {
 
     modImplementation("com.terraformersmc:modmenu:4.0.5")
 
-    include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
-    annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
+    "com.github.llamalad7:mixinextras:0.0.+".let {
+        implementation(it)
+        annotationProcessor(it)
+        include(it)
+    }
 }
 
 loom {
