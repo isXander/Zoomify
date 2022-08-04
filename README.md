@@ -8,7 +8,7 @@ Zoomify aims to provide the easiest, most configurable and most sexy looking zoo
 ## How to use
 ### Keybind
 Initially, Minecraft has a keybind that overrides Zoomify by default.
-Go to the controls menu and make sure the Zoomify keybind (default <kbd>C</kbd>)
+Go to the controls menu and make sure the Zoomify keybind (default `C`)
 isn't conflicting (goes red).
 
 ### Open settings menu
