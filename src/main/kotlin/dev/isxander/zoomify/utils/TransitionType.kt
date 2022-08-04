@@ -64,7 +64,7 @@ enum class TransitionType(override val displayName: String) : Transition, Settin
             1 - (1 - t).pow(3)
 
         override fun inverse(x: Double) =
-            -((-(x - 1)).pow(1 / 3.0))
+            -((-x + 1).pow(1.0 / 3.0)) + 1
     },
     EASE_IN_OUT_CUBIC("zoomify.transition.ease_in_out_cubic") {
         override fun apply(t: Double): Double =
