@@ -1,0 +1,84 @@
+{
+  "zoomify.key.zoom": "Приблизить",
+  "zoomify.key.gui": "Открыть настройки",
+  "zoomify.key.category": "Zoomify",
+
+
+  "zoomify.gui.title": "Настройки Zoomify",
+
+  "zoomify.gui.category.behaviour": "Приближение",
+  "zoomify.gui.initialZoom.name": "Базовое приближение",
+  "zoomify.gui.initialZoom.description": "Первичное приближение при нажатии кнопки.",
+  "zoomify.gui.zoomInTime.name": "Время приближения",
+  "zoomify.gui.zoomInTime.description": "Общее время воспроизведения анимации приближения.",
+  "zoomify.gui.zoomOutTime.name": "Время отдаления",
+  "zoomify.gui.zoomOutTime.description": "Общее время воспроизведения анимации отдаления.",
+  "zoomify.gui.zoomTransition.name": "Тип анимации",
+  "zoomify.gui.zoomTransition.description": "Метод интерполяции, используемый при приближении.",
+  "zoomify.gui.zoomOppositeTransitionOut.name": "Обратная анимация при отдалении",
+  "zoomify.gui.zoomOppositeTransitionOut.description": "Воспроизводить инвентированную анимацию при отдалении.",
+
+  "zoomify.gui.category.scrolling": "Прокрутка",
+  "zoomify.gui.scrollZoom.name": "Изменение поля зрения",
+  "zoomify.gui.scrollZoom.description": "Включить изменение поля зрения при помощи колёсика мыши.",
+  "zoomify.gui.scrollZoomAmount.name": "Шаг прокрутки",
+  "zoomify.gui.scrollZoomAmount.description": "Дополнительный делитель поля зрения на каждый шаг прокрутки.",
+  "zoomify.gui.scrollZoomSmoothness.name": "Плавность прокрутки",
+  "zoomify.gui.scrollZoomSmoothness.description": "Плавность (длительность) изменения поля зрения при прокрутке.",
+  "zoomify.gui.smoothScrollZoom.name": "Плавная прокрутка",
+  "zoomify.gui.smoothScrollZoom.description": "Сглаживать изменение поля зрения при прокрутке.",
+
+  "zoomify.gui.category.controls": "Управление",
+  "zoomify.gui.zoomKeyBehaviour.name": "Режим клавиши",
+  "zoomify.gui.zoomKeyBehaviour.description": "Режим управления приближением при нажатии клавиши.",
+  "zoomify.gui.relativeSensitivity.name": "Адаптивная чувствительность",
+  "zoomify.gui.relativeSensitivity.description": "Уменьшать чувствительность в зависимости от степени приближения.",
+  "zoomify.gui.relativeViewBobbing.name": "Адаптивное покачивание камеры",
+  "zoomify.gui.relativeViewBobbing.description": "Менее резкое покачивание камеры при приближении.",
+  "zoomify.gui.cinematicCam.name": "Кинематографическая камера",
+  "zoomify.gui.cinematicCam.description": "Плавное движение камеры при приближении.",
+
+  "zoomify.gui.category.spyglass": "Подзорная труба",
+  "zoomify.gui.spyglassBehaviour.name": "Режим (условие) приближения",
+  "zoomify.gui.spyglassBehaviour.description": "Взаимодействие приближения с подзорной трубой.",
+  "zoomify.gui.spyglassOverlayVisibility.name": "Контур трубы",
+  "zoomify.gui.spyglassOverlayVisibility.description": "Накладывать текстуру подзорной трубы.",
+  "zoomify.gui.spyglassSoundBehaviour.name": "Воспроизведение звуков",
+  "zoomify.gui.spyglassSoundBehaviour.description": "Воспроизведение звуков приближения/отдаления.",
+
+
+  "zoomify.transition.instant": "Отключена",
+  "zoomify.transition.linear": "Линейная",
+  "zoomify.transition.ease_in_sine": "Синусоидальная",
+  "zoomify.transition.ease_out_sine": "Обратная синусоид.",
+  "zoomify.transition.ease_in_out_sine": "Двойная синусоид.",
+  "zoomify.transition.ease_in_quad": "Квадратичная",
+  "zoomify.transition.ease_out_quad": "Обратная квадрат.",
+  "zoomify.transition.ease_in_out_quad": "Двойная квадрат.",
+  "zoomify.transition.ease_in_cubic": "Кубическая",
+  "zoomify.transition.ease_out_cubic": "Обратная кубическая",
+  "zoomify.transition.ease_in_out_cubic": "Двойная кубическая",
+  "zoomify.transition.ease_in_exp": "Экспоненциальная",
+  "zoomify.transition.ease_out_exp": "Обратная экспоненц.",
+  "zoomify.transition.ease_in_out_exp": "Двойная экспоненц.",
+
+
+  "zoomify.zoom_key_behaviour.hold": "Удерживание",
+  "zoomify.zoom_key_behaviour.toggle": "Переключение",
+
+
+  "zoomify.spyglass_behaviour.combine": "По отдельности",
+  "zoomify.spyglass_behaviour.override": "Совместно с трубой",
+  "zoomify.spyglass_behaviour.only_zoom_while_holding": "Труба в руке",
+  "zoomify.spyglass_behaviour.only_zoom_while_carrying": "Труба с собой",
+
+  "zoomify.overlay_visibility.never": "Никогда",
+  "zoomify.overlay_visibility.holding": "Удерживание",
+  "zoomify.overlay_visibility.carrying": "Carrying",
+  "zoomify.overlay_visibility.always": "Всегда",
+
+  "zoomify.sound_behaviour.never": "Всегда отключено",
+  "zoomify.sound_behaviour.always": "Всегда включено",
+  "zoomify.sound_behaviour.only_spyglass": "С подзорной трубой",
+  "zoomify.sound_behaviour.with_overlay": "С контуром трубы"
+}

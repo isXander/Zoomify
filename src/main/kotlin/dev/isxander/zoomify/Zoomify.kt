@@ -2,6 +2,8 @@ package dev.isxander.zoomify
 
 import dev.isxander.zoomify.config.*
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.MinecraftClient
@@ -16,11 +18,9 @@ import org.slf4j.LoggerFactory
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    private val guiKey = KeyBinding("zoomify.key.gui", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_F8, "zoomify.key.category")
     private val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
 
     var zooming = false
-
     private val zoomHelper = ZoomHelper()
 
     var previousZoomDivisor = 1.0
@@ -31,12 +31,22 @@ object Zoomify : ClientModInitializer {
 
     private var shouldPlaySound = false
 
+    private var displayGui = false
+
     override fun onInitializeClient() {
         // imports on <init>
         ZoomifySettings
 
         KeyBindingHelper.registerKeyBinding(zoomKey)
-        KeyBindingHelper.registerKeyBinding(guiKey)
+
+        ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
+            dispatcher.register(
+                literal("zoomify").executes {
+                    displayGui = true
+                    0
+                }
+            )
+        }
 
         ClientTickEvents.END_CLIENT_TICK.register(this::tick)
     }
@@ -86,11 +96,10 @@ object Zoomify : ClientModInitializer {
             }
         }
 
-        while (guiKey.wasPressed()) {
+        if (displayGui) {
+            displayGui = false
             client.setScreen(ZoomifySettings.gui(client.currentScreen))
         }
-
-
     }
 
     @JvmStatic
@@ -100,8 +109,8 @@ object Zoomify : ClientModInitializer {
             zoomHelper.reset()
         }
 
-        // tick every frame so fps isn't
-        zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0)
+        // tick every frame so fps isn't 20
+        zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0 / 2)
 
         return zoomHelper.getZoomDivisor().also { previousZoomDivisor = it }
     }
@@ -122,8 +131,7 @@ object Zoomify : ClientModInitializer {
             OverlayVisibility.NEVER -> false
             OverlayVisibility.ALWAYS -> zooming
             OverlayVisibility.HOLDING -> isUsingSpyglass
-                    || zooming
-                    && player.isHolding(Items.SPYGLASS)
+                    || (zooming && player.isHolding(Items.SPYGLASS))
                     && ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
             OverlayVisibility.CARRYING -> zooming
                     && player.inventory.containsAny { stack: ItemStack -> stack.isOf(Items.SPYGLASS) }

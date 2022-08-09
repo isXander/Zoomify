@@ -3,6 +3,7 @@ package dev.isxander.zoomify
 import dev.isxander.zoomify.config.ZoomifySettings
 import dev.isxander.zoomify.utils.TransitionType
 import net.minecraft.util.math.MathHelper
+import kotlin.math.pow
 
 class ZoomHelper(private val starting: Double = 1.0) {
     private var prevInitialInterpolation = 0.0
@@ -28,33 +29,33 @@ class ZoomHelper(private val starting: Double = 1.0) {
             resetting = false
 
         val targetZoom = if (zooming) 1.0 else 0.0
-        val transition = ZoomifySettings.zoomTransition
-        activeTransition = ZoomifySettings.zoomTransition
+        activeTransition = ZoomifySettings.zoomInTransition
         prevInitialInterpolation = initialInterpolation
 
-        if (activeTransition == TransitionType.INSTANT) {
-            initialInterpolation = targetZoom
-        } else if (targetZoom > initialInterpolation) {
-            activeTransition = transition
+         if (targetZoom > initialInterpolation) {
+            activeTransition = ZoomifySettings.zoomInTransition
 
-            if (ZoomifySettings.zoomOppositeTransitionOut && !zoomingLastTick && transition.hasInverse()) {
-                prevInitialInterpolation = transition.inverse(transition.opposite().apply(prevInitialInterpolation))
-                initialInterpolation = transition.inverse(transition.opposite().apply(initialInterpolation))
+            if (!zoomingLastTick && activeTransition.hasInverse()) {
+                prevInitialInterpolation = activeTransition.inverse(ZoomifySettings.zoomOutTransition.apply(prevInitialInterpolation))
+                initialInterpolation = activeTransition.inverse(ZoomifySettings.zoomOutTransition.apply(initialInterpolation))
             }
 
             initialInterpolation += lastFrameDuration / ZoomifySettings.zoomInTime
             initialInterpolation = initialInterpolation.coerceAtMost(targetZoom)
         } else if (targetZoom < initialInterpolation) {
-            if (ZoomifySettings.zoomOppositeTransitionOut) {
-                activeTransition = activeTransition.opposite()
-                if (zoomingLastTick && activeTransition.hasInverse()) {
-                    prevInitialInterpolation = activeTransition.inverse(transition.apply(prevInitialInterpolation))
-                    initialInterpolation = activeTransition.inverse(transition.apply(initialInterpolation))
-                }
+            activeTransition = ZoomifySettings.zoomOutTransition
+
+            if (zoomingLastTick && activeTransition.hasInverse()) {
+                prevInitialInterpolation = activeTransition.inverse(ZoomifySettings.zoomInTransition.apply(prevInitialInterpolation))
+                initialInterpolation = activeTransition.inverse(ZoomifySettings.zoomInTransition.apply(initialInterpolation))
             }
 
             initialInterpolation -= lastFrameDuration / ZoomifySettings.zoomOutTime
             initialInterpolation = initialInterpolation.coerceAtLeast(targetZoom)
+        }
+
+        if (activeTransition == TransitionType.INSTANT) {
+            initialInterpolation = targetZoom
         }
 
         zoomingLastTick = zooming
@@ -64,7 +65,10 @@ class ZoomHelper(private val starting: Double = 1.0) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-        val targetZoom = TransitionType.EASE_IN_QUAD.apply(scrollTiers.toDouble() / Zoomify.maxScrollTiers)
+        var targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
+        val curvature = 0.3
+        val exp = 1 / (1 - curvature)
+        targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
 
         prevScrollInterpolation = scrollInterpolation
 
@@ -81,20 +85,20 @@ class ZoomHelper(private val starting: Double = 1.0) {
     }
 
     fun getZoomDivisor(tickDelta: Float = 1f): Double {
-        val initialDivisor = getInitialZoomDivisor(tickDelta)
+        val initialMultiplier = getInitialZoomMultiplier(tickDelta)
         val scrollDivisor = getScrollZoomDivisor(tickDelta)
 
-        return (initialDivisor + scrollDivisor).also {
-            if (!resetting) resetInterpolation = it
-            if (it == 1.0) resetting = false
+        return (1 / initialMultiplier + scrollDivisor).also {
+            if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
+            if (!resetting) resetInterpolation = 1 / it
         }
     }
 
-    private fun getInitialZoomDivisor(tickDelta: Float): Double {
+    private fun getInitialZoomMultiplier(tickDelta: Float): Double {
         return MathHelper.lerp(
             activeTransition.apply(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
-            starting,
-            if (!resetting) ZoomifySettings.initialZoom.toDouble() else resetInterpolation
+            1 / starting,
+            if (!resetting) 1 / ZoomifySettings.initialZoom.toDouble() else resetInterpolation
         )
     }
 
@@ -102,7 +106,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         return MathHelper.lerp(
             MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation),
             0.0,
-            Zoomify.maxScrollTiers * ZoomifySettings.scrollZoomAmount.toDouble()
+            Zoomify.maxScrollTiers * (ZoomifySettings.scrollZoomAmount * 3.0)
         ).let { if (resetting) 0.0 else it }
     }
 

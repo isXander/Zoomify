@@ -10,22 +10,21 @@ plugins {
 
     id("com.modrinth.minotaur") version "2.4.+"
     id("me.hypherionmc.cursegradle") version "2.+"
-    id("com.github.breadmoirai.github-release") version "2.+"
+    id("com.github.breadmoirai.github-release") version "2.4.+"
     `maven-publish`
 
-    id("io.github.p03w.machete") version "1.+"
+    id("io.github.p03w.machete") version "1.1.+"
 }
 
 group = "dev.isxander"
-version = "2.0.0"
+version = "2.1.0"
 
 repositories {
     mavenCentral()
-    maven("https://repo.sk1er.club/repository/maven-public")
+    maven("https://maven.isxander.dev/releases")
+    maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
-    maven("https://maven.shedaniel.me/")
-    maven("https://maven.isxander.dev/releases")
 }
 
 val minecraftVersion: String by project
@@ -45,22 +44,21 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:7.+") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:8.0.+") {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
     include(implementation("dev.isxander.settxi:settxi-core:$settxiVersion")!!)
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:$settxiVersion")!!)
-    include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:$settxiVersion:fabric-1.19")!!)
+    include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:$settxiVersion:fabric-1.19.2")!!)
 
-    modImplementation("com.terraformersmc:modmenu:4.+")
+    modImplementation("com.terraformersmc:modmenu:4.0.6")
 
-    include(implementation("com.github.llamalad7:mixinextras:0.0.+")!!)
-    annotationProcessor("com.github.llamalad7:mixinextras:0.0.+")
-}
-
-loom {
-    clientOnlyMinecraftJar()
+    "com.github.llamalad7:mixinextras:0.0.+".let {
+        implementation(it)
+        annotationProcessor(it)
+        include(it)
+    }
 }
 
 java {
@@ -107,7 +105,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf(minecraftVersion))
+        gameVersions.set(listOf("1.19", "1.19.1", "1.19.2"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -131,7 +129,9 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
 
             id = curseforgeId
             releaseType = "release"
-            addGameVersion(minecraftVersion)
+            addGameVersion("1.19")
+            addGameVersion("1.19.1")
+            addGameVersion("1.19.2")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
             addGameVersion("Java 17")

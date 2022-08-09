@@ -39,25 +39,49 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         range = 0.1..20.0
     }
 
-    var zoomTransition by enum(TransitionType.EASE_OUT_EXP) {
-        name = "zoomify.gui.zoomTransition.name"
-        description = "zoomify.gui.zoomTransition.description"
+    var zoomInTransition by enum(TransitionType.EASE_OUT_EXP) {
+        name = "zoomify.gui.zoomInTransition.name"
+        description = "zoomify.gui.zoomInTransition.description"
         category = BEHAVIOUR
+        defaultSerializedValue = { _, category ->
+            if (category?.containsKey("zoomify_gui_zoomtransition_name") == true) {
+                category["zoomify_gui_zoomtransition_name"]!!.primitive
+            } else {
+                PrimitiveType.of(default.ordinal)
+            }
+        }
         migrator { type ->
-            if (type.isString) {
+            if (type.primitive.isString) {
                 Zoomify.LOGGER.info("Migrating transition type from string to int")
                 PrimitiveType.of(TransitionType.values().find { transition ->
                     transition.displayName.lowercase().replace(Regex("\\W+"), "_")
-                        .trim { it == '_' || it.isWhitespace() } == type.string
+                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
                 }!!.ordinal).also { needsSaving = true }
             } else type
         }
     }
 
-    var zoomOppositeTransitionOut by boolean(true) {
-        name = "zoomify.gui.zoomOppositeTransitionOut.name"
-        description = "zoomify.gui.zoomOppositeTransitionOut.description"
+    var zoomOutTransition by enum(TransitionType.EASE_OUT_EXP) {
+        name = "zoomify.gui.zoomOutTransition.name"
+        description = "zoomify.gui.zoomOutTransition.description"
         category = BEHAVIOUR
+        defaultSerializedValue = { _, category ->
+            if (category?.containsKey("zoomify_gui_zoomtransition_name") == true) {
+                category["zoomify_gui_zoomtransition_name"]!!.primitive
+            } else {
+                PrimitiveType.of(default.ordinal)
+            }
+        }
+        migrator { type ->
+            if (type.primitive.isString) {
+                Zoomify.LOGGER.info("Migrating transition type from string to int")
+                PrimitiveType.of(TransitionType.values().find { transition ->
+                    transition.displayName.lowercase().replace(Regex("\\W+"), "_")
+                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
+                }!!.ordinal).also { needsSaving = true }
+            } else type
+        }
+        modifyGet { it.opposite() }
     }
 
     var scrollZoom by boolean(true) {
@@ -66,13 +90,13 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = SCROLLING
     }
 
-    var scrollZoomAmount by int(2) {
+    var scrollZoomAmount by int(3) {
         name = "zoomify.gui.scrollZoomAmount.name"
         description = "zoomify.gui.scrollZoomAmount.description"
         category = SCROLLING
         range = 1..10
         migrator { type ->
-            if (!type.isInt) {
+            if (!type.primitive.isInt) {
                 PrimitiveType.of(default)
             }
             type
@@ -91,12 +115,12 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.zoomKeyBehaviour.description"
         category = CONTROLS
         migrator { type ->
-            if (type.isString) {
+            if (type.primitive.isString) {
                 Zoomify.LOGGER.info("Migrating transition type from string to int")
                 PrimitiveType.of(ZoomKeyBehaviour.values().find { keyBehaviour ->
                     keyBehaviour.displayName.lowercase()
                         .replace(Regex("\\W+"), "_")
-                        .trim { it == '_' || it.isWhitespace() } == type.string
+                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
                 }!!.ordinal).also { needsSaving = true }
             } else type
         }
@@ -106,7 +130,7 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         name = "zoomify.gui.relativeSensitivity.name"
         description = "zoomify.gui.relativeSensitivity.description"
         category = CONTROLS
-        range = 0..100
+        range = 0..150
     }
 
     var relativeViewBobbing by boolean(true) {
