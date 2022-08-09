@@ -52,7 +52,7 @@ dependencies {
     include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:$settxiVersion")!!)
     include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:$settxiVersion:fabric-1.19.2")!!)
 
-    modImplementation("com.terraformersmc:modmenu:4.0.5")
+    modImplementation("com.terraformersmc:modmenu:4.0.6")
 
     "com.github.llamalad7:mixinextras:0.0.+".let {
         implementation(it)
