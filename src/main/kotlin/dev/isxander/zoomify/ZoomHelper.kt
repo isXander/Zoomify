@@ -29,33 +29,33 @@ class ZoomHelper(private val starting: Double = 1.0) {
             resetting = false
 
         val targetZoom = if (zooming) 1.0 else 0.0
-        val transition = ZoomifySettings.zoomTransition
-        activeTransition = ZoomifySettings.zoomTransition
+        activeTransition = ZoomifySettings.zoomInTransition
         prevInitialInterpolation = initialInterpolation
 
-        if (activeTransition == TransitionType.INSTANT) {
-            initialInterpolation = targetZoom
-        } else if (targetZoom > initialInterpolation) {
-            activeTransition = transition
+         if (targetZoom > initialInterpolation) {
+            activeTransition = ZoomifySettings.zoomInTransition
 
-            if (ZoomifySettings.zoomOppositeTransitionOut && !zoomingLastTick && transition.hasInverse()) {
-                prevInitialInterpolation = transition.inverse(transition.opposite().apply(prevInitialInterpolation))
-                initialInterpolation = transition.inverse(transition.opposite().apply(initialInterpolation))
+            if (!zoomingLastTick && activeTransition.hasInverse()) {
+                prevInitialInterpolation = activeTransition.inverse(ZoomifySettings.zoomOutTransition.apply(prevInitialInterpolation))
+                initialInterpolation = activeTransition.inverse(ZoomifySettings.zoomOutTransition.apply(initialInterpolation))
             }
 
             initialInterpolation += lastFrameDuration / ZoomifySettings.zoomInTime
             initialInterpolation = initialInterpolation.coerceAtMost(targetZoom)
         } else if (targetZoom < initialInterpolation) {
-            if (ZoomifySettings.zoomOppositeTransitionOut) {
-                activeTransition = activeTransition.opposite()
-                if (zoomingLastTick && activeTransition.hasInverse()) {
-                    prevInitialInterpolation = activeTransition.inverse(transition.apply(prevInitialInterpolation))
-                    initialInterpolation = activeTransition.inverse(transition.apply(initialInterpolation))
-                }
+            activeTransition = ZoomifySettings.zoomOutTransition
+
+            if (zoomingLastTick && activeTransition.hasInverse()) {
+                prevInitialInterpolation = activeTransition.inverse(ZoomifySettings.zoomInTransition.apply(prevInitialInterpolation))
+                initialInterpolation = activeTransition.inverse(ZoomifySettings.zoomInTransition.apply(initialInterpolation))
             }
 
             initialInterpolation -= lastFrameDuration / ZoomifySettings.zoomOutTime
             initialInterpolation = initialInterpolation.coerceAtLeast(targetZoom)
+        }
+
+        if (activeTransition == TransitionType.INSTANT) {
+            initialInterpolation = targetZoom
         }
 
         zoomingLastTick = zooming
