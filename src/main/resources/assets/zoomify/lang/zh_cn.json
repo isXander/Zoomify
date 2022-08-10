@@ -8,7 +8,7 @@
 
   "zoomify.gui.category.behaviour": "行为",
   "zoomify.gui.initialZoom.name": "初始缩放",
-  "zoomify.gui.initialZoom.description": "首次按下键绑定时的缩放级别.",
+  "zoomify.gui.initialZoom.description": "首次按下绑定键时的缩放级别.",
   "zoomify.gui.zoomInTime.name": "放大时间",
   "zoomify.gui.zoomInTime.description": "多少秒完成放大.",
   "zoomify.gui.zoomOutTime.name": "缩小时间",
