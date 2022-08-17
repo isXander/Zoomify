@@ -3,7 +3,7 @@
 
 Zoomify aims to provide the easiest, most configurable and most sexy looking zoom mod you will ever find.
 
-![Zoom Example](https://i.imgur.com/SmIuyZQ.gif)
+![Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/zoom-example.gif)
 
 ## How to use
 ### Keybind
@@ -20,7 +20,7 @@ You can access the settings menu with two ways.
 ### Scroll Zoom
 You can zoom in further using your scroll wheel.
 
-![Scroll Zoom Example](https://i.imgur.com/aZCxkL7.gif)
+![Scroll Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/scroll-zoom-example.gif)
 
 ### Spyglass Integration
 You can configure Zoomify to only be able to zoom in when you are holding or carrying a spyglass.
@@ -28,7 +28,7 @@ Or even just override the spyglass zoom with Zoomify!
 
 Show the spyglass overlay and play spyglass sound effects when using Zoomify.
 
-![Spyglass Integration Example](https://i.imgur.com/Sii2Sdr.gif)
+![Spyglass Integration Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/spyglass-integration-example.gif)
 
 ### Transitions
 **14 different** transitions to choose from!
@@ -51,26 +51,29 @@ Show the spyglass overlay and play spyglass sound effects when using Zoomify.
 Reduce your mouse sensitivity based on the amount of zoom,
 so you have fine control over your player.
 
-![Relative Sensitivity Example](https://i.imgur.com/vnLXGlP.gif)
+![Relative Sensitivity Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/relative-sensitivity-example.gif)
 
 ### Relative View Bobbing
 Reduce the view bobbing effect based on the amount of zoom,
 so you can walk and zoom at the same time!
 
-![Relative View Bobbing Example](https://i.imgur.com/V58m4ku.gif)
+![Relative View Bobbing Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/relative-view-bobbing-example.gif)
 
 ### Cinematic Camera
 Make the mouse/camera smooth, like the zoom in [Optifine](https://www.optifine.net).
 
-![Cinematic Cam Example](https://i.imgur.com/MY68CqJ.gif)
+![Cinematic Cam Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/cinematic-cam-example.gif)
 
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
 
-![Behaviour Settings Page](https://i.imgur.com/dYAh1FQ.png)
-![Scrolling Settings Page](https://i.imgur.com/hbxGLk3.png)
-![Controls Settings Page](https://i.imgur.com/urvuxgg.png)
-![Spyglass Settings Page](https://i.imgur.com/toQ2uMm.png)
+![Behaviour Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/behaviour-settings-page.png)
+
+![Scrolling Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/scrolling-settings-page.png)
+
+![Controls Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/controls-settings-page.png)
+
+![Spyglass Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/spyglass-settings-page.png)
 
 ### Control the zoom speed with seconds
 Instead of some stupid arbitrary value such as zoom speed, you can pick
