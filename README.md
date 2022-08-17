@@ -32,6 +32,7 @@ Show the spyglass overlay and play spyglass sound effects when using Zoomify.
 
 ### Transitions
 **14 different** transitions to choose from!
+
 - Instant
 - Linear
 - [Ease in Sine](https://easings.net/#easeInSine)
