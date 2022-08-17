@@ -92,6 +92,12 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = BEHAVIOUR
     }
 
+    var retainZoomSteps by boolean(false) {
+        name = "zoomify.gui.retainZoomSteps.name"
+        description = "zoomify.gui.retainZoomSteps.description"
+        category = BEHAVIOUR
+    }
+
     var scrollZoom by boolean(true) {
         name = "zoomify.gui.scrollZoom.name"
         description = "zoomify.gui.scrollZoom.description"

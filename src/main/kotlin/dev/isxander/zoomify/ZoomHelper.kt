@@ -21,7 +21,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
 
     fun tick(zooming: Boolean, scrollTiers: Int, lastFrameDuration: Double = 0.05) {
         tickInitial(zooming, lastFrameDuration)
-        tickScroll(scrollTiers, lastFrameDuration)
+        tickScroll(scrollTiers, zooming, lastFrameDuration)
     }
 
     private fun tickInitial(zooming: Boolean, lastFrameDuration: Double) {
@@ -61,7 +61,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
         zoomingLastTick = zooming
     }
 
-    private fun tickScroll(scrollTiers: Int, lastFrameDuration: Double) {
+    private fun tickScroll(scrollTiers: Int, zooming: Boolean, lastFrameDuration: Double) {
         if (scrollTiers > lastScrollTier)
             resetting = false
 
@@ -73,13 +73,16 @@ class ZoomHelper(private val starting: Double = 1.0) {
         prevScrollInterpolation = scrollInterpolation
 
         val smoothness = MathHelper.lerp(ZoomifySettings.scrollZoomSmoothness / 100.0, 1.0, 0.1)
-        if (scrollInterpolation < targetZoom) {
-            scrollInterpolation += (targetZoom - scrollInterpolation) * smoothness / 0.05 * lastFrameDuration
-            scrollInterpolation = scrollInterpolation.coerceAtMost(targetZoom)
-        } else if (scrollInterpolation > targetZoom) {
-            scrollInterpolation -= (scrollInterpolation - targetZoom) * smoothness / 0.05 * lastFrameDuration
-            scrollInterpolation = scrollInterpolation.coerceAtLeast(targetZoom)
+        if (zooming) {
+            if (scrollInterpolation < targetZoom) {
+                scrollInterpolation += (targetZoom - scrollInterpolation) * smoothness / 0.05 * lastFrameDuration
+                scrollInterpolation = scrollInterpolation.coerceAtMost(targetZoom)
+            } else if (scrollInterpolation > targetZoom) {
+                scrollInterpolation -= (scrollInterpolation - targetZoom) * smoothness / 0.05 * lastFrameDuration
+                scrollInterpolation = scrollInterpolation.coerceAtLeast(targetZoom)
+            }
         }
+
 
         lastScrollTier = scrollTiers
     }

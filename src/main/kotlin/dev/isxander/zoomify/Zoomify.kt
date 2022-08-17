@@ -107,7 +107,9 @@ object Zoomify : ClientModInitializer {
     @JvmStatic
     fun getZoomDivisor(tickDelta: Float): Double {
         if (!zooming) {
-            scrollSteps = 0
+            if (!ZoomifySettings.retainZoomSteps)
+                scrollSteps = 0
+
             zoomHelper.reset()
         }
 
