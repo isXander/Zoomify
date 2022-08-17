@@ -92,6 +92,7 @@ tasks {
         dependsOn("modrinthSyncBody")
         dependsOn("curseforge")
         dependsOn("githubRelease")
+        dependsOn("publish")
     }
 }
 
