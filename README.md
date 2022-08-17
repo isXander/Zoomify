@@ -80,15 +80,17 @@ Instead of some stupid arbitrary value such as zoom speed, you can pick
 the exact amount of seconds it will take to zoom in, with a separate setting for zooming out.
 
 ### Credits
-- [Xander](https://github.com/isXander) - Founder
+- [Xander](https://github.com/isXander) - Developer
 - [MoonTidez](https://github.com/MoonTidez) - Logo designer
 
 #### Translators
 Languages in alphabetical order
-- [Xander](https://github.com/isXander) - British English
-- [神枪968](https://github.com/GodGun968) - Chinese
-- [Madis0](https://github.com/Madis0) - Estonian
-- [Rodrigo Appelt](https://github.com/Agentew04) - Portuguese
-- [SyberiaK](https://github.com/SyberiaK) - Russian
-- [Felix14-v2](https://github.com/Felix14-v2) - Russian
-- [localfossa](https://github.com/localfossa) - Turkish
+- [Xander](https://github.com/isXander) - English (Britain)
+- [神枪968](https://github.com/GodGun968) - 简体中文 / Chinese (Simplified)
+- [Madis0](https://github.com/Madis0) - eestlane / Estonian
+- [Rodrigo Appelt](https://github.com/Agentew04) - Português / Portuguese
+- [SyberiaK](https://github.com/SyberiaK) - Русский / Russian
+- [Felix14-v2](https://github.com/Felix14-v2) - Русский / Russian
+- [Zetsphiron](https://github.com/Zetsphiron) - Español (mexicano) / Spanish (Mexico)
+- [Zetsphiron](https://github.com/Zetsphiron) - Español (españa) / Spanish (Spain)
+- [localfossa](https://github.com/localfossa) - Türkçe / Turkish

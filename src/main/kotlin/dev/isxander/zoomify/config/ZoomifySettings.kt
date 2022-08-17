@@ -45,7 +45,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = BEHAVIOUR
         defaultSerializedValue = { _, category ->
             if (category?.containsKey("zoomify_gui_zoomtransition_name") == true) {
-                category["zoomify_gui_zoomtransition_name"]!!.primitive
+                needsSaving = true
+                category["zoomify_gui_zoomtransition_name"]!!
             } else {
                 PrimitiveType.of(default.ordinal)
             }
@@ -67,7 +68,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = BEHAVIOUR
         defaultSerializedValue = { _, category ->
             if (category?.containsKey("zoomify_gui_zoomtransition_name") == true) {
-                category["zoomify_gui_zoomtransition_name"]!!.primitive
+                needsSaving = true
+                category["zoomify_gui_zoomtransition_name"]!!
             } else {
                 PrimitiveType.of(default.ordinal)
             }
