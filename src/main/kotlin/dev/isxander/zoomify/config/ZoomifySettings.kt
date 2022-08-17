@@ -86,6 +86,12 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         modifyGet { it.opposite() }
     }
 
+    var affectHandFov by boolean(true) {
+        name = "zoomify.gui.affectHandFov.name"
+        description = "zoomify.gui.affectHandFov.description"
+        category = BEHAVIOUR
+    }
+
     var scrollZoom by boolean(true) {
         name = "zoomify.gui.scrollZoom.name"
         description = "zoomify.gui.scrollZoom.description"

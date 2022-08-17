@@ -17,6 +17,8 @@
   "zoomify.gui.zoomInTransition.description": "The transition type used when zooming in.",
   "zoomify.gui.zoomOutTransition.name": "Zoom Out Transition",
   "zoomify.gui.zoomOutTransition.description": "The transition type used when zooming out.",
+  "zoomify.gui.affectHandFov.name": "Affect Hand FOV",
+  "zoomify.gui.affectHandFov.description": "When zooming, keep the FOV of the hand normal while the world view zooms in.",
 
   "zoomify.gui.category.scrolling": "Scrolling",
   "zoomify.gui.scrollZoom.name": "Enable Scroll Zoom",

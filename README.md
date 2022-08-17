@@ -66,6 +66,11 @@ Make the mouse/camera smooth, like the zoom in [Optifine](https://www.optifine.n
 
 ![Cinematic Cam Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/cinematic-cam-example.gif)
 
+### Affect Hand FOV
+Turn off this setting to prevent your hand from also being zoomed in!
+
+![Affect Hand FOV Turned Off Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/affect-hand-fov-disabled-example.gif)
+
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
 

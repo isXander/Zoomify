@@ -111,7 +111,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
     }
 
     fun reset() {
-        if (scrollInterpolation > 0.0) {
+        if (!resetting && scrollInterpolation > 0.0) {
             resetting = true
             scrollInterpolation = 0.0
             prevScrollInterpolation = 0.0

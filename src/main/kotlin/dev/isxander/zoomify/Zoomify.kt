@@ -64,6 +64,8 @@ object Zoomify : ClientModInitializer {
             }
         }
 
+        zoomHelper.tick(zooming, scrollSteps)
+
         if (cameraEntity is AbstractClientPlayerEntity) {
             if (ZoomifySettings.spyglassBehaviour == SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING && !cameraEntity.isHolding(Items.SPYGLASS))
                 zooming = false
@@ -103,16 +105,13 @@ object Zoomify : ClientModInitializer {
     }
 
     @JvmStatic
-    fun getZoomDivisor(): Double {
+    fun getZoomDivisor(tickDelta: Float): Double {
         if (!zooming) {
             scrollSteps = 0
             zoomHelper.reset()
         }
 
-        // tick every frame so fps isn't 20
-        zoomHelper.tick(zooming, scrollSteps, MinecraftClient.getInstance().lastFrameDuration * 50 / 1000.0 / 2)
-
-        return zoomHelper.getZoomDivisor().also { previousZoomDivisor = it }
+        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it }
     }
 
     @JvmStatic

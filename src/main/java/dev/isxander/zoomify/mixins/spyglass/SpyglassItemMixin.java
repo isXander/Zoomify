@@ -1,15 +1,12 @@
 package dev.isxander.zoomify.mixins.spyglass;
 
 import com.llamalad7.mixinextras.injector.WrapWithCondition;
-import dev.isxander.zoomify.Zoomify;
 import dev.isxander.zoomify.config.OverlayVisibility;
 import dev.isxander.zoomify.config.SoundBehaviour;
 import dev.isxander.zoomify.config.ZoomifySettings;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.SpyglassItem;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.stat.Stat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
