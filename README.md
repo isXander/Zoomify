@@ -13,6 +13,7 @@ isn't conflicting (goes red).
 
 ### Open settings menu
 You can access the settings menu with two ways.
+
 - The client command `/zoomify`
 - [Mod Menu](https://modrinth.com/mod/modmenu) settings button
 
