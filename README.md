@@ -86,6 +86,7 @@ the exact amount of seconds it will take to zoom in, with a separate setting for
 
 #### Translators
 Languages in alphabetical order
+
 - [Xander](https://github.com/isXander) - English (Britain)
 - [神枪968](https://github.com/GodGun968) - 简体中文 / Chinese (Simplified)
 - [Madis0](https://github.com/Madis0) - eestlane / Estonian
