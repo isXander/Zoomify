@@ -28,7 +28,7 @@
   "zoomify.gui.scrollZoomAmount.name": "Kaydırma Yakınlaştırma Miktarı",
   "zoomify.gui.scrollZoomAmount.description": "Kaydırma adımı başına FOV'un ek böleni",
   "zoomify.gui.scrollZoomSmoothness.name": "Kaydırma Yakınlaştırma Pürüzsüzlüğü",
-  "zoomify.gui.scrollZoomSmoothness.description": "Kaydırma-Yakınlaştırma ne kadar yumuşak olduğu/ne kadar sürdüğü",
+  "zoomify.gui.scrollZoomSmoothness.description": "Kaydırmanın-Yakınlaştırmanın ne kadar yumuşak olduğu/ne kadar sürdüğü",
   "zoomify.gui.smoothScrollZoom.name": "Yumuşak Geçiş",
   "zoomify.gui.smoothScrollZoom.description": "İçeri ve dışarı kaydırmayı pürüzsüz yapar.",
   "zoomify.gui.linearLikeSteps.name": "Doğrusal Benzeri Adımlar",
