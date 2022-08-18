@@ -5,10 +5,13 @@ import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiConfigKotlinx
 import dev.isxander.zoomify.Zoomify
+import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
 import dev.isxander.zoomify.utils.TransitionType
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
 
 object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
     private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
@@ -124,6 +127,12 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         range = 0..100
     }
 
+    var linearLikeSteps by boolean(true) {
+        name = "zoomify.gui.linearLikeSteps.name"
+        description = "zoomify.gui.linearLikeSteps.description"
+        category = SCROLLING
+    }
+
     var zoomKeyBehaviour by enum(ZoomKeyBehaviour.HOLD) {
         name = "zoomify.gui.zoomKeyBehaviour.name"
         description = "zoomify.gui.zoomKeyBehaviour.description"
@@ -185,6 +194,27 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         }
     }
 
-    fun gui(parent: Screen? = null) =
-        clothGui(Text.translatable("zoomify.gui.title"), parent)
+    fun gui(parent: Screen? = null): Screen =
+        clothGui(Text.translatable("zoomify.gui.title"), parent) {
+            val category = this.getOrCreateCategory(Text.translatable("zoomify.gui.category.presets"))
+            for (preset in Presets.values()) {
+                category.addEntry(
+                    ButtonEntryBuilder(
+                        Text.translatable(preset.displayName),
+                        Text.translatable("zoomify.gui.preset.apply")
+                    ) {
+                        preset.apply(ZoomifySettings)
+                        export()
+                        MinecraftClient.getInstance().setScreen(gui(parent))
+                    }.apply {
+                        setTooltip(
+                            Text.translatable(
+                                "zoomify.gui.preset.apply.description",
+                                Text.translatable(preset.displayName)
+                            ), Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)
+                        )
+                    }.build()
+                )
+            }
+        }
 }

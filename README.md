@@ -71,6 +71,11 @@ Turn off this setting to prevent your hand from also being zoomed in!
 
 ![Affect Hand FOV Turned Off Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/affect-hand-fov-disabled-example.gif)
 
+### Presets
+You can reset to default, make Zoomify behave like OptiFine and others!
+
+![Presets Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/presets-page.png)
+
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
 

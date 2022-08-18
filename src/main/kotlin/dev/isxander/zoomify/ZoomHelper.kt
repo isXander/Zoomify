@@ -56,6 +56,7 @@ class ZoomHelper(private val starting: Double = 1.0) {
 
         if (activeTransition == TransitionType.INSTANT) {
             initialInterpolation = targetZoom
+            prevInitialInterpolation = targetZoom
         }
 
         zoomingLastTick = zooming
@@ -66,9 +67,11 @@ class ZoomHelper(private val starting: Double = 1.0) {
             resetting = false
 
         var targetZoom = scrollTiers.toDouble() / Zoomify.maxScrollTiers
-        val curvature = 0.3
-        val exp = 1 / (1 - curvature)
-        targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
+        if (ZoomifySettings.linearLikeSteps) {
+            val curvature = 0.3
+            val exp = 1 / (1 - curvature)
+            targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
+        }
 
         prevScrollInterpolation = scrollInterpolation
 
@@ -80,6 +83,11 @@ class ZoomHelper(private val starting: Double = 1.0) {
             } else if (scrollInterpolation > targetZoom) {
                 scrollInterpolation -= (scrollInterpolation - targetZoom) * smoothness / 0.05 * lastFrameDuration
                 scrollInterpolation = scrollInterpolation.coerceAtLeast(targetZoom)
+            }
+
+            if (smoothness == 1.0) {
+                scrollInterpolation = targetZoom
+                prevScrollInterpolation = targetZoom
             }
         }
 

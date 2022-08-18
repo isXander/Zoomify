@@ -31,6 +31,8 @@
   "zoomify.gui.scrollZoomSmoothness.description": "How smooth/how long it takes to scroll-zoom.",
   "zoomify.gui.smoothScrollZoom.name": "Smooth Transition",
   "zoomify.gui.smoothScrollZoom.description": "Makes scrolling in and out smooth.",
+  "zoomify.gui.linearLikeSteps.name": "Linear-like Steps",
+  "zoomify.gui.linearLikeSteps.description": "Applies a curve to the increments to make them feel more linear.",
 
   "zoomify.gui.category.controls": "Controls",
   "zoomify.gui.zoomKeyBehaviour.name": "Zoom Key Behaviour",
@@ -49,6 +51,14 @@
   "zoomify.gui.spyglassOverlayVisibility.description": "When to show the spyglass overlay.",
   "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behaviour",
   "zoomify.gui.spyglassSoundBehaviour.description": "When to play the zoom in and out sounds from the spyglass.",
+
+  "zoomify.gui.category.presets": "Presets",
+  "zoomify.gui.preset.default": "Default",
+  "zoomify.gui.preset.optifine": "OptiFine",
+  "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
+  "zoomify.gui.preset.apply": "Apply Preset",
+  "zoomify.gui.preset.apply.description": "Makes Zoomify behave like %s.",
+  "zoomify.gui.preset.apply.warning": "Pressing the button will immediately apply changes!",
 
 
   "zoomify.transition.instant": "Instant",
