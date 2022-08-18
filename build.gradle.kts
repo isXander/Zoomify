@@ -27,34 +27,29 @@ repositories {
     maven("https://jitpack.io")
 }
 
-val minecraftVersion: String by project
-
 dependencies {
     val kotlinVersion: String by System.getProperties()
-    val loaderVersion: String by project
-    val fabricVersion: String by project
-    val fabricKotlinVersion: String by project
-    val settxiVersion: String by project
 
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
 
-    minecraft("com.mojang:minecraft:$minecraftVersion")
-    mappings("net.fabricmc:yarn:$minecraftVersion+build.+:v2")
-    modImplementation("net.fabricmc:fabric-loader:$loaderVersion")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:$fabricVersion")
-    modImplementation("net.fabricmc:fabric-language-kotlin:$fabricKotlinVersion+kotlin.$kotlinVersion")
+    minecraft(libs.minecraft)
+    mappings("net.fabricmc:yarn:${libs.versions.minecraft.get()}+build.+:v2")
+    modImplementation(libs.fabric.loader)
+    modImplementation(libs.fabric.api)
+    modImplementation(libs.fabric.language.kotlin)
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:8.0.+") {
-        exclude(group = "net.fabricmc.fabric-api")
-    }
+    modApi(libs.cloth.config)
 
-    include(implementation("dev.isxander.settxi:settxi-core:$settxiVersion")!!)
-    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:$settxiVersion")!!)
-    include(modImplementation("dev.isxander.settxi:settxi-gui-cloth-config:$settxiVersion:fabric-1.19.2")!!)
+    implementation(libs.settxi.core)
+    include(libs.settxi.core)
+    implementation(libs.settxi.serialization.kotlinx)
+    include(libs.settxi.serialization.kotlinx)
+    modImplementation("${libs.settxi.gui.cloth.config.get().module}:${libs.versions.settxi.get()}:fabric-1.19.2")
+    include("${libs.settxi.gui.cloth.config.get().module}:${libs.versions.settxi.get()}:fabric-1.19.2")
 
-    modImplementation("com.terraformersmc:modmenu:4.0.6")
+    modImplementation(libs.mod.menu)
 
-    "com.github.llamalad7:mixinextras:0.0.+".let {
+    libs.mixin.extras.let {
         implementation(it)
         annotationProcessor(it)
         include(it)
