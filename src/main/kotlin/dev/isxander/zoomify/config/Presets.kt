@@ -28,4 +28,14 @@ enum class Presets(override val displayName: String, val apply: ZoomifySettings.
         this.scrollZoomSmoothness = 25
         this.linearLikeSteps = false
     }),
+    SMOOTH("zoomify.gui.preset.smooth", {
+        DEFAULT.apply(this)
+
+        this.zoomInTime = 0.25
+        this.zoomOutTime = 0.30
+        this.relativeSensitivity = 50
+        this.relativeViewBobbing = false
+        this.scrollZoomSmoothness = 25
+        this.linearLikeSteps = false
+    }),
 }
