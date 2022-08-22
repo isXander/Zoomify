@@ -46,14 +46,14 @@
   "zoomify.gui.linearLikeSteps.name": "Etapas Quase Lineares",
   "zoomify.gui.linearLikeSteps.description": "Aplica uma curva aos incrementos para eles parecerem lineares.",
 
-  "zoomify.gui.category.presets": "Padronizações",
+  "zoomify.gui.subcategory.presets": "Padronizações",
   "zoomify.gui.preset.default": "Padrão",
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
   "zoomify.gui.preset.apply": "Aplicar Padronização",
   "zoomify.gui.preset.apply.description": "Faz o Zoomify se comportar como %s.",
   "zoomify.gui.preset.apply.warning": "Pressionar o botão vai aplicar as mudanças instantaneamente!",
-  
+
   "zoomify.transition.instant": "Instantâneo",
   "zoomify.transition.linear": "Linear",
   "zoomify.transition.ease_in_sine": "Entrada Suave Seno",

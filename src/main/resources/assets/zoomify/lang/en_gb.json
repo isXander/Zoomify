@@ -52,7 +52,11 @@
   "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behaviour",
   "zoomify.gui.spyglassSoundBehaviour.description": "When to play the zoom in and out sounds from the spyglass.",
 
-  "zoomify.gui.category.presets": "Presets",
+  "zoomify.gui.category.misc": "Misc",
+  "zoomify.gui.unbindConflicting.name": "Unbind Conflicting Keybind",
+  "zoomify.gui.unbindConflicting.button": "Unbind",
+  "zoomify.gui.unbindConflicting.description": "Removes the keybind that has the same key as Zoomify zoom key.",
+  "zoomify.gui.subcategory.presets": "Presets",
   "zoomify.gui.preset.default": "Default",
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
@@ -94,5 +98,10 @@
   "zoomify.sound_behaviour.never": "Never",
   "zoomify.sound_behaviour.always": "Always",
   "zoomify.sound_behaviour.only_spyglass": "Only Holding Spyglass",
-  "zoomify.sound_behaviour.with_overlay": "Match Overlay"
+  "zoomify.sound_behaviour.with_overlay": "Match Overlay",
+
+  "zoomify.toast.conflictingKeybind.title": "Zoomify won't work!",
+  "zoomify.toast.conflictingKeybind.description": "There is a conflicting keybind preventing the usage of the zoom key. You can unbind it in the %s category of Zoomify settings.",
+  "zoomify.toast.unbindConflicting.name": "Unbound %s",
+  "zoomify.toast.unbindConflicting.description": "Zoomify unbound key because it was conflicting with the zoom key."
 }

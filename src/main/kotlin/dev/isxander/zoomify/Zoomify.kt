@@ -9,16 +9,18 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.network.AbstractClientPlayerEntity
 import net.minecraft.client.option.KeyBinding
+import net.minecraft.client.toast.SystemToast
 import net.minecraft.client.util.InputUtil
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.sound.SoundEvents
+import net.minecraft.text.Text
 import org.slf4j.LoggerFactory
 
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    private val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
+    val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
 
     var zooming = false
     private val zoomHelper = ZoomHelper()
@@ -137,4 +139,53 @@ object Zoomify : ClientModInitializer {
             OverlayVisibility.CARRYING -> zooming
                     && player.inventory.containsAny { stack: ItemStack -> stack.isOf(Items.SPYGLASS) }
         }
+
+    fun onGameFinishedLoading() {
+        if (ZoomifySettings.firstLaunch) {
+            detectConflictingToast()
+        }
+    }
+
+    fun unbindConflicting(): Boolean {
+        val client = MinecraftClient.getInstance()
+        if (!zoomKey.isUnbound) {
+            for (key in client.options.allKeys) {
+                if (key != zoomKey && key.equals(zoomKey)) {
+                    client.options.setKeyCode(key, InputUtil.UNKNOWN_KEY)
+
+                    val toast = SystemToast.create(
+                        client,
+                        SystemToast.Type.TUTORIAL_HINT, // doesn't do anything except toast duration
+                        Text.translatable("zoomify.toast.unbindConflicting.name"),
+                        Text.translatable("zoomify.toast.unbindConflicting.description",
+                            Text.translatable(key.translationKey)
+                        )
+                    )
+                    client.toastManager.add(toast)
+
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+    private fun detectConflictingToast() {
+        val client = MinecraftClient.getInstance()
+
+        if (zoomKey.isUnbound)
+            return
+
+        if (client.options.allKeys.any { it.equals(zoomKey) }) {
+            val toast = SystemToast.create(
+                client,
+                SystemToast.Type.CHAT_PREVIEW_WARNING,
+                Text.translatable("zoomify.toast.conflictingKeybind.title"),
+                Text.translatable("zoomify.toast.conflictingKeybind.description",
+                    Text.translatable("zoomify.gui.category.misc"))
+            )
+            client.toastManager.add(toast)
+        }
+    }
 }

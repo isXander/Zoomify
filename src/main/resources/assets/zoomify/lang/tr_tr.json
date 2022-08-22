@@ -51,8 +51,8 @@
   "zoomify.gui.spyglassOverlayVisibility.description": "Dürbün kaplamasının ne zaman gösterileceği",
   "zoomify.gui.spyglassSoundBehaviour.name": "Ses Davranışı",
   "zoomify.gui.spyglassSoundBehaviour.description": "Dürbünden gelen yakınlaştırma ve uzaklaştırma seslerinin ne zaman oynatılacağı",
-  
-  "zoomify.gui.category.presets": "Ön Ayarlar",
+
+  "zoomify.gui.subcategory.presets": "Ön Ayarlar",
   "zoomify.gui.preset.default": "Varsayılan",
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",

@@ -74,8 +74,6 @@ Turn off this setting to prevent your hand from also being zoomed in!
 ### Presets
 You can reset to default, make Zoomify behave like OptiFine and others!
 
-![Presets Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/presets-page.png)
-
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
 
@@ -86,6 +84,8 @@ Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
 ![Controls Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/controls-settings-page.png)
 
 ![Spyglass Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/spyglass-settings-page.png)
+
+![Misc Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/misc-page.png)
 
 ### Control the zoom speed with seconds
 Instead of some stupid arbitrary value such as zoom speed, you can pick

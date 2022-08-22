@@ -12,6 +12,7 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
+import kotlin.io.path.notExists
 
 object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
     private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
@@ -186,6 +187,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = SPYGLASS
     }
 
+    val firstLaunch = filePath.notExists()
+
     init {
         import()
         if (needsSaving) {
@@ -196,9 +199,21 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
 
     fun gui(parent: Screen? = null): Screen =
         clothGui(Text.translatable("zoomify.gui.title"), parent) {
-            val category = this.getOrCreateCategory(Text.translatable("zoomify.gui.category.presets"))
+            val category = this.getOrCreateCategory(Text.translatable("zoomify.gui.category.misc"))
+
+            category.addEntry(ButtonEntryBuilder(
+                Text.translatable("zoomify.gui.unbindConflicting.name"),
+                Text.translatable("zoomify.gui.unbindConflicting.button")
+            ) {
+                Zoomify.unbindConflicting()
+            }.apply {
+                setTooltip(Text.translatable("zoomify.gui.unbindConflicting.description"))
+            }.build())
+
+            val presetsSubCategory = entryBuilder().startSubCategory(Text.translatable("zoomify.gui.subcategory.presets"))
+            presetsSubCategory.setExpanded(true)
             for (preset in Presets.values()) {
-                category.addEntry(
+                presetsSubCategory.add(
                     ButtonEntryBuilder(
                         Text.translatable(preset.displayName),
                         Text.translatable("zoomify.gui.preset.apply")
@@ -216,5 +231,6 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
                     }.build()
                 )
             }
+            category.addEntry(presetsSubCategory.build())
         }
 }

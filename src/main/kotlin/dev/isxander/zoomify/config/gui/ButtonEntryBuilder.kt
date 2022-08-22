@@ -4,8 +4,11 @@ import me.shedaniel.clothconfig2.impl.builders.FieldBuilder
 import net.minecraft.text.Text
 import java.util.*
 
-class ButtonEntryBuilder(fieldNameKey: Text, private val buttonNameKey: Text, private val action: () -> Unit) :
-    FieldBuilder<Unit, ButtonListEntry>(Text.empty(), fieldNameKey) {
+class ButtonEntryBuilder(
+    fieldNameKey: Text,
+    private val buttonNameKey: Text,
+    private val action: () -> Unit
+) : FieldBuilder<Unit, ButtonListEntry>(Text.empty(), fieldNameKey) {
     private var tooltipSupplier: () -> Optional<Array<out Text>> = { Optional.empty() }
 
     fun requireRestart(): ButtonEntryBuilder {

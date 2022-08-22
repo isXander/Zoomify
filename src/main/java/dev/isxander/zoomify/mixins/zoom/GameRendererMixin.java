@@ -1,4 +1,4 @@
-package dev.isxander.zoomify.mixins;
+package dev.isxander.zoomify.mixins.zoom;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
