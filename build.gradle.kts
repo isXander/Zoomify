@@ -13,7 +13,7 @@ plugins {
     id("com.github.breadmoirai.github-release") version "2.4.+"
     `maven-publish`
 
-    id("io.github.p03w.machete") version "1.1.+"
+    id("io.github.p03w.machete") version "1.2.+"
 }
 
 group = "dev.isxander"
