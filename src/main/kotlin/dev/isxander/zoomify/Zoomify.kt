@@ -142,6 +142,7 @@ object Zoomify : ClientModInitializer {
 
     fun onGameFinishedLoading() {
         if (ZoomifySettings.firstLaunch) {
+            LOGGER.info("Zoomify detected first launch! Detecting conflicting keybindings!")
             detectConflictingToast()
         }
     }
@@ -177,7 +178,7 @@ object Zoomify : ClientModInitializer {
         if (zoomKey.isUnbound)
             return
 
-        if (client.options.allKeys.any { it.equals(zoomKey) }) {
+        if (client.options.allKeys.any { it != zoomKey && it.equals(zoomKey) }) {
             val toast = SystemToast.create(
                 client,
                 SystemToast.Type.CHAT_PREVIEW_WARNING,
