@@ -17,7 +17,7 @@
   "zoomify.gui.zoomInTransition.description": "放大时使用的过渡类型.",
   "zoomify.gui.zoomOutTransition.name": "缩小过度",
   "zoomify.gui.zoomOutTransition.description": "缩小时使用的过渡类型.",
-  "zoomify.gui.affectHandFov.name": "Affect Hand FOV",
+  "zoomify.gui.affectHandFov.name": "影响手部FOV值",
   "zoomify.gui.affectHandFov.description": "缩放时,世界视图放大且保持手部的FOV值正常.",
   "zoomify.gui.retainZoomSteps.name": "记住缩放步骤",
   "zoomify.gui.retainZoomSteps.description": "在放大和缩小之间保持滚动缩放量.",
