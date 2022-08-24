@@ -5,6 +5,10 @@ Zoomify aims to provide the easiest, most configurable and most sexy looking zoo
 
 ![Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/zoom-example.gif)
 
+Commissions available!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X0DB1KQ)
+
 ## How to use
 ### Keybind
 Initially, Minecraft has a keybind that overrides Zoomify by default.

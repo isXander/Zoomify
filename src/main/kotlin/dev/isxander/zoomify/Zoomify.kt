@@ -184,7 +184,8 @@ object Zoomify : ClientModInitializer {
                 SystemToast.Type.CHAT_PREVIEW_WARNING,
                 Text.translatable("zoomify.toast.conflictingKeybind.title"),
                 Text.translatable("zoomify.toast.conflictingKeybind.description",
-                    Text.translatable("zoomify.gui.category.misc"))
+                    Text.translatable("zoomify.gui.category.misc")
+                )
             )
             client.toastManager.add(toast)
         }
