@@ -52,7 +52,11 @@
   "zoomify.gui.spyglassSoundBehaviour.name": "Helikäitumine",
   "zoomify.gui.spyglassSoundBehaviour.description": "Millal esitada pikksilma sisse-välja suumimise helisid.",
 
-  "zoomify.gui.category.presets": "Eelseadistused",
+  "zoomify.gui.category.misc": "Varia",
+  "zoomify.gui.unbindConflicting.name": "Tühjenda konfliktse kiirklahvi määrang",
+  "zoomify.gui.unbindConflicting.button": "Tühjenda",
+  "zoomify.gui.unbindConflicting.description": "Eemaldab kiirklahvi määrangu, millel on Zoomify suumiklahviga sama klahv.",
+  "zoomify.gui.subcategory.presets": "Eelseadistused",
   "zoomify.gui.preset.default": "Vaikimisi",
   
   "zoomify.gui.preset.apply": "Rakenda eelseadistus",
@@ -92,5 +96,10 @@
   "zoomify.sound_behaviour.never": "Mitte kunagi",
   "zoomify.sound_behaviour.always": "Alati",
   "zoomify.sound_behaviour.only_spyglass": "Ainult pikksilma hoidmisel",
-  "zoomify.sound_behaviour.with_overlay": "Sama, mis ülekatte valik"
+  "zoomify.sound_behaviour.with_overlay": "Sama, mis ülekatte valik",
+  
+  "zoomify.toast.conflictingKeybind.title": "Zoomify ei tööta!",
+  "zoomify.toast.conflictingKeybind.description": "Konfliktne kiirklahvi määrang ei võimalda suumiklahvi kasutada. Sa saad selle tühjendada Zoomify seadete kategoorias %s.",
+  "zoomify.toast.unbindConflicting.name": "Konfliktne kiirklahv tühjendatud",
+  "zoomify.toast.unbindConflicting.description": "Zoomify tühjendas klahvi \"%s\" määrangu, kuna see oli suumiklahviga konfliktis."
 }
