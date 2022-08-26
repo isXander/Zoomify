@@ -5,7 +5,7 @@ minecraft = "1.19.2"
 fabric_loader = "0.14.9"
 
 fabric_api = "0.60.0+1.19.2"
-fabric_language_kotlin = "1.8.2+kotlin.1.7.10"
+fabric_language_kotlin = "1.8.3+kotlin.1.7.10"
 cloth_config = "8.0.+"
 mod_menu = "4.0.6"
 mixin_extras = "0.0.12"

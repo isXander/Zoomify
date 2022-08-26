@@ -38,7 +38,7 @@
   "depends": {
     "fabric": "*",
     "fabricloader": ">=0.14.0",
-    "fabric-language-kotlin": ">=1.8.2+kotlin.1.7.10",
+    "fabric-language-kotlin": ">=1.8.3+kotlin.1.7.10",
     "minecraft": "1.19.x",
     "java": ">=17",
     "cloth-config": ["7.x.x", "8.x.x"],

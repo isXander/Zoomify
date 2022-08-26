@@ -103,5 +103,7 @@
   "zoomify.toast.conflictingKeybind.title": "Zoomify won't work!",
   "zoomify.toast.conflictingKeybind.description": "There is a conflicting keybind preventing the usage of the zoom key. You can unbind it in the %s category of Zoomify settings.",
   "zoomify.toast.unbindConflicting.name": "Unbound %s",
-  "zoomify.toast.unbindConflicting.description": "Zoomify unbound key because it was conflicting with the zoom key."
+  "zoomify.toast.unbindConflicting.description": "Zoomify unbound key because it was conflicting with the zoom key.",
+
+  "zoomify.gui.donate": "Support me!"
 }

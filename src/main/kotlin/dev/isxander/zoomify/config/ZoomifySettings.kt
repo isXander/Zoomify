@@ -7,12 +7,23 @@ import dev.isxander.settxi.serialization.SettxiConfigKotlinx
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
 import dev.isxander.zoomify.utils.TransitionType
+import me.shedaniel.clothconfig2.api.AbstractConfigEntry
+import me.shedaniel.clothconfig2.api.ConfigEntryBuilder
+import me.shedaniel.clothconfig2.gui.ClothConfigScreen
+import me.shedaniel.clothconfig2.gui.GlobalizedClothConfigScreen
+import net.fabricmc.fabric.api.client.screen.v1.Screens
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.text.ClickEvent
+import net.minecraft.text.HoverEvent
 import net.minecraft.text.Text
+import net.minecraft.text.TextColor
 import net.minecraft.util.Formatting
+import net.minecraft.util.Util
 import kotlin.io.path.notExists
+
 
 object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
     private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
@@ -232,5 +243,13 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
                 )
             }
             category.addEntry(presetsSubCategory.build())
+
+            setAfterInitConsumer { screen ->
+                val text = Text.translatable("zoomify.gui.donate")
+                val width = MinecraftClient.getInstance().textRenderer.getWidth(text) + 8
+                Screens.getButtons(screen).add(ButtonWidget(screen.width - width - 4, 4, width, 20, text) {
+                    Util.getOperatingSystem().open("https://ko-fi.com/isxander")
+                })
+            }
         }
 }
