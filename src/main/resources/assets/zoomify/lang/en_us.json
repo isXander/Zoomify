@@ -42,7 +42,7 @@
   "zoomify.gui.relativeViewBobbing.name": "Relative View Bobbing",
   "zoomify.gui.relativeViewBobbing.description": "Make view-bobbing less jarring when zoomed in.",
   "zoomify.gui.cinematicCam.name": "Cinematic Camera",
-  "zoomify.gui.cinematicCam.description": "Make the camera move smoothly when zoomed.",
+  "zoomify.gui.cinematicCam.description": "How much the camera glides once moved.",
 
   "zoomify.gui.category.spyglass": "Spyglass",
   "zoomify.gui.spyglassBehaviour.name": "Zoom Behavior",

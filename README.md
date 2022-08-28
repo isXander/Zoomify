@@ -81,16 +81,6 @@ You can reset to default, make Zoomify behave like OptiFine and others!
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
 
-![Behaviour Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/behaviour-settings-page.png)
-
-![Scrolling Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/scrolling-settings-page.png)
-
-![Controls Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/controls-settings-page.png)
-
-![Spyglass Settings Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/spyglass-settings-page.png)
-
-![Misc Page](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/misc-page.png)
-
 ### Control the zoom speed with seconds
 Instead of some stupid arbitrary value such as zoom speed, you can pick
 the exact amount of seconds it will take to zoom in, with a separate setting for zooming out.

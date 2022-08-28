@@ -1,35 +1,31 @@
 package dev.isxander.zoomify.config
 
 import dev.isxander.settxi.gui.clothGui
+import dev.isxander.settxi.gui.clothTextGetter
 import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiConfigKotlinx
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
 import dev.isxander.zoomify.utils.TransitionType
-import me.shedaniel.clothconfig2.api.AbstractConfigEntry
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder
-import me.shedaniel.clothconfig2.gui.ClothConfigScreen
-import me.shedaniel.clothconfig2.gui.GlobalizedClothConfigScreen
+import kotlinx.serialization.json.Json
 import net.fabricmc.fabric.api.client.screen.v1.Screens
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
-import net.minecraft.text.ClickEvent
-import net.minecraft.text.HoverEvent
 import net.minecraft.text.Text
-import net.minecraft.text.TextColor
 import net.minecraft.util.Formatting
 import net.minecraft.util.Util
 import kotlin.io.path.notExists
 
 
-object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
+object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json"), Json { prettyPrint = true }) {
     private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
     private const val SCROLLING = "zoomify.gui.category.scrolling"
     private const val CONTROLS = "zoomify.gui.category.controls"
     private const val SPYGLASS = "zoomify.gui.category.spyglass"
+    private const val MISC = "zoomify.gui.category.misc"
 
     private var needsSaving = false
 
@@ -38,9 +34,11 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.initialZoom.description"
         category = BEHAVIOUR
         range = 1..10
+
+        clothTextGetter = { Text.literal("Value: %dx".format(it)) }
     }
 
-    var zoomInTime by double(2.0) {
+    var zoomInTime by double(1.0) {
         name = "zoomify.gui.zoomInTime.name"
         description = "zoomify.gui.zoomInTime.description"
         category = BEHAVIOUR
@@ -137,6 +135,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.scrollZoomSmoothness.description"
         category = SCROLLING
         range = 0..100
+
+        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
     }
 
     var linearLikeSteps by boolean(true) {
@@ -166,6 +166,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.relativeSensitivity.description"
         category = CONTROLS
         range = 0..150
+
+        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
     }
 
     var relativeViewBobbing by boolean(true) {
@@ -174,10 +176,25 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = CONTROLS
     }
 
-    var cinematicCam by boolean(false) {
+    var cinematicCamera by int(0) {
         name = "zoomify.gui.cinematicCam.name"
         description = "zoomify.gui.cinematicCam.description"
         category = CONTROLS
+        range = 0..250
+
+        migrator { type ->
+            if (type.isPrimitive && type.primitive.isBoolean) {
+                needsSaving = true
+                if (type.primitive.boolean)
+                    PrimitiveType.of(100)
+                else
+                    PrimitiveType.of(0)
+            } else {
+                type
+            }
+        }
+
+        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
     }
 
     var spyglassBehaviour by enum(SpyglassBehaviour.COMBINE) {
@@ -210,7 +227,7 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
 
     fun gui(parent: Screen? = null): Screen =
         clothGui(Text.translatable("zoomify.gui.title"), parent) {
-            val category = this.getOrCreateCategory(Text.translatable("zoomify.gui.category.misc"))
+            val category = this.getOrCreateCategory(Text.translatable(MISC))
 
             category.addEntry(ButtonEntryBuilder(
                 Text.translatable("zoomify.gui.unbindConflicting.name"),

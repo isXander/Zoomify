@@ -16,7 +16,7 @@ enum class Presets(override val displayName: String, val apply: ZoomifySettings.
         this.scrollZoom = false
         this.relativeSensitivity = 0
         this.relativeViewBobbing = false
-        this.cinematicCam = true
+        this.cinematicCamera = 100
     }),
     OK_ZOOMER("zoomify.gui.preset.ok_zoomer", {
         DEFAULT.apply(this)

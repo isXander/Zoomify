@@ -42,7 +42,7 @@
     "minecraft": "1.19.x",
     "java": ">=17",
     "cloth-config": ["7.x.x", "8.x.x"],
-    "settxi-gui-cloth-config": "2.x.x"
+    "settxi-gui-cloth-config": ">=2.8.2"
   },
   "suggests": {
     "modmenu": ">=4.0.0"
