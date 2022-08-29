@@ -1,10 +1,11 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.gui.clothGui
-import dev.isxander.settxi.gui.clothTextGetter
+import dev.isxander.settxi.gui.cloth.clothGui
+import dev.isxander.settxi.gui.cloth.clothTextGetter
 import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
-import dev.isxander.settxi.serialization.SettxiConfigKotlinx
+import dev.isxander.settxi.serialization.SettxiFileConfig
+import dev.isxander.settxi.serialization.kotlinxSerializer
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
 import dev.isxander.zoomify.utils.TransitionType
@@ -19,8 +20,10 @@ import net.minecraft.util.Formatting
 import net.minecraft.util.Util
 import kotlin.io.path.notExists
 
-
-object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json"), Json { prettyPrint = true }) {
+object ZoomifySettings : SettxiFileConfig(
+    FabricLoader.getInstance().configDir.resolve("zoomify.json"),
+    kotlinxSerializer(Json { prettyPrint = true })
+) {
     private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
     private const val SCROLLING = "zoomify.gui.category.scrolling"
     private const val CONTROLS = "zoomify.gui.category.controls"
