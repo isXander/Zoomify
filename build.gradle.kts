@@ -22,9 +22,9 @@ version = "2.5.0"
 repositories {
     mavenCentral()
     maven("https://maven.isxander.dev/releases")
-    maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
+    maven("https://maven.gegy.dev")
 }
 
 dependencies {
@@ -38,18 +38,18 @@ dependencies {
     modImplementation(libs.fabric.api)
     modImplementation(libs.fabric.language.kotlin)
 
-    modApi(libs.cloth.config)
-
     implementation(libs.settxi.core)
     include(libs.settxi.core)
     implementation(libs.settxi.serialization.kotlinx)
     include(libs.settxi.serialization.kotlinx)
-    modImplementation(libs.settxi.gui.cloth.config) {
+    modImplementation(libs.settxi.gui.spruce.ui) {
         artifact { classifier = "fabric-1.19.2" }
     }
-    include(libs.settxi.gui.cloth.config) {
+    include(libs.settxi.gui.spruce.ui) {
         artifact { classifier = "fabric-1.19.2" }
     }
+
+    include(libs.spruce.ui)
 
     modImplementation(libs.mod.menu)
 
@@ -112,7 +112,6 @@ if (modrinthId.isNotEmpty()) {
         dependencies {
             required.project("fabric-api")
             required.project("fabric-language-kotlin")
-            required.project("cloth-config")
             optional.project("modmenu")
         }
     }

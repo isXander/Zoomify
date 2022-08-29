@@ -1,6 +1,7 @@
 package dev.isxander.zoomify
 
 import dev.isxander.zoomify.config.*
+import dev.isxander.zoomify.config.settxi.ButtonSetting
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
@@ -36,6 +37,7 @@ object Zoomify : ClientModInitializer {
     private var displayGui = false
 
     override fun onInitializeClient() {
+        ButtonSetting.registerSpruceUI()
         // imports on <init>
         ZoomifySettings
 

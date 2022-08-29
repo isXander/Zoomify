@@ -1,13 +1,12 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.gui.cloth.clothGui
-import dev.isxander.settxi.gui.cloth.clothTextGetter
+import dev.isxander.settxi.gui.spruce.*
 import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiFileConfig
 import dev.isxander.settxi.serialization.kotlinxSerializer
 import dev.isxander.zoomify.Zoomify
-import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
+import dev.isxander.zoomify.config.settxi.button
 import dev.isxander.zoomify.utils.TransitionType
 import kotlinx.serialization.json.Json
 import net.fabricmc.fabric.api.client.screen.v1.Screens
@@ -16,7 +15,6 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import net.minecraft.util.Util
 import kotlin.io.path.notExists
 
@@ -36,23 +34,28 @@ object ZoomifySettings : SettxiFileConfig(
         name = "zoomify.gui.initialZoom.name"
         description = "zoomify.gui.initialZoom.description"
         category = BEHAVIOUR
-        range = 1..10
-
-        clothTextGetter = { Text.literal("Value: %dx".format(it)) }
+        range = 1..20
+        spruceUITextGetter = { Text.literal("%dx".format(it)) }
     }
 
     var zoomInTime by double(1.0) {
         name = "zoomify.gui.zoomInTime.name"
         description = "zoomify.gui.zoomInTime.description"
         category = BEHAVIOUR
-        range = 0.1..20.0
+        range = 0.1..5.0
+        spruceUIHalfWidth = true
+        spruceUITextGetter = { Text.literal("%.2f secs".format(it)) }
+        spruceUISliderStep = 0.05
     }
 
     var zoomOutTime by double(0.5) {
         name = "zoomify.gui.zoomOutTime.name"
         description = "zoomify.gui.zoomOutTime.description"
         category = BEHAVIOUR
-        range = 0.1..20.0
+        range = 0.1..5.0
+        spruceUIHalfWidth = true
+        spruceUITextGetter = { Text.literal("%.2f secs".format(it)) }
+        spruceUISliderStep = 0.05
     }
 
     var zoomInTransition by enum(TransitionType.EASE_OUT_EXP) {
@@ -106,12 +109,14 @@ object ZoomifySettings : SettxiFileConfig(
         name = "zoomify.gui.affectHandFov.name"
         description = "zoomify.gui.affectHandFov.description"
         category = BEHAVIOUR
+        spruceUIHalfWidth = true
     }
 
     var retainZoomSteps by boolean(false) {
         name = "zoomify.gui.retainZoomSteps.name"
         description = "zoomify.gui.retainZoomSteps.description"
         category = BEHAVIOUR
+        spruceUIHalfWidth = true
     }
 
     var scrollZoom by boolean(true) {
@@ -131,6 +136,14 @@ object ZoomifySettings : SettxiFileConfig(
             }
             type
         }
+        spruceUIHalfWidth = true
+    }
+
+    var linearLikeSteps by boolean(true) {
+        name = "zoomify.gui.linearLikeSteps.name"
+        description = "zoomify.gui.linearLikeSteps.description"
+        category = SCROLLING
+        spruceUIHalfWidth = true
     }
 
     var scrollZoomSmoothness by int(70) {
@@ -139,13 +152,7 @@ object ZoomifySettings : SettxiFileConfig(
         category = SCROLLING
         range = 0..100
 
-        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
-    }
-
-    var linearLikeSteps by boolean(true) {
-        name = "zoomify.gui.linearLikeSteps.name"
-        description = "zoomify.gui.linearLikeSteps.description"
-        category = SCROLLING
+        spruceUITextGetter = { Text.literal("%d%%".format(it)) }
     }
 
     var zoomKeyBehaviour by enum(ZoomKeyBehaviour.HOLD) {
@@ -169,14 +176,15 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.relativeSensitivity.description"
         category = CONTROLS
         range = 0..150
-
-        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
+        spruceUITextGetter = { Text.literal("%d%%".format(it)) }
+        spruceUIHalfWidth = true
     }
 
     var relativeViewBobbing by boolean(true) {
         name = "zoomify.gui.relativeViewBobbing.name"
         description = "zoomify.gui.relativeViewBobbing.description"
         category = CONTROLS
+        spruceUIHalfWidth = true
     }
 
     var cinematicCamera by int(0) {
@@ -197,7 +205,7 @@ object ZoomifySettings : SettxiFileConfig(
             }
         }
 
-        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
+        spruceUITextGetter = { Text.literal("Value: %d%%".format(it)) }
     }
 
     var spyglassBehaviour by enum(SpyglassBehaviour.COMBINE) {
@@ -218,6 +226,35 @@ object ZoomifySettings : SettxiFileConfig(
         category = SPYGLASS
     }
 
+    var presetSelection by enum(Presets.OPTIFINE) {
+        name = "zoomify.gui.preset.prefix"
+        category = MISC
+        shouldSave = false
+        spruceUIHalfWidth = true
+    }
+
+    var applyPresetButton by button({
+        presetSelection.apply(ZoomifySettings)
+        presetSelection = Presets.OPTIFINE
+        export()
+
+        val currentScreen = MinecraftClient.getInstance().currentScreen
+        if (currentScreen is SettxiSpruceScreen) {
+            currentScreen.init(MinecraftClient.getInstance(), currentScreen.width, currentScreen.height)
+        }
+    }) {
+        name = "zoomify.gui.preset.apply"
+        description = "zoomify.gui.preset.apply.description"
+        category = MISC
+        spruceUIHalfWidth = true
+    }
+
+    var unbindConflictingButton by button({ Zoomify.unbindConflicting() }) {
+        name = "zoomify.gui.unbindConflicting.name"
+        description = "zoomify.gui.unbindConflicting.description"
+        category = MISC
+    }
+
     val firstLaunch = filePath.notExists()
 
     init {
@@ -229,47 +266,11 @@ object ZoomifySettings : SettxiFileConfig(
     }
 
     fun gui(parent: Screen? = null): Screen =
-        clothGui(Text.translatable("zoomify.gui.title"), parent) {
-            val category = this.getOrCreateCategory(Text.translatable(MISC))
-
-            category.addEntry(ButtonEntryBuilder(
-                Text.translatable("zoomify.gui.unbindConflicting.name"),
-                Text.translatable("zoomify.gui.unbindConflicting.button")
-            ) {
-                Zoomify.unbindConflicting()
-            }.apply {
-                setTooltip(Text.translatable("zoomify.gui.unbindConflicting.description"))
-            }.build())
-
-            val presetsSubCategory = entryBuilder().startSubCategory(Text.translatable("zoomify.gui.subcategory.presets"))
-            presetsSubCategory.setExpanded(true)
-            for (preset in Presets.values()) {
-                presetsSubCategory.add(
-                    ButtonEntryBuilder(
-                        Text.translatable(preset.displayName),
-                        Text.translatable("zoomify.gui.preset.apply")
-                    ) {
-                        preset.apply(ZoomifySettings)
-                        export()
-                        MinecraftClient.getInstance().setScreen(gui(parent))
-                    }.apply {
-                        setTooltip(
-                            Text.translatable(
-                                "zoomify.gui.preset.apply.description",
-                                Text.translatable(preset.displayName)
-                            ), Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)
-                        )
-                    }.build()
-                )
-            }
-            category.addEntry(presetsSubCategory.build())
-
-            setAfterInitConsumer { screen ->
-                val text = Text.translatable("zoomify.gui.donate")
-                val width = MinecraftClient.getInstance().textRenderer.getWidth(text) + 8
-                Screens.getButtons(screen).add(ButtonWidget(screen.width - width - 4, 4, width, 20, text) {
-                    Util.getOperatingSystem().open("https://ko-fi.com/isxander")
-                })
-            }
+        spruceUI(Text.translatable("zoomify.gui.title"), parent) {
+            val text = Text.translatable("zoomify.gui.donate")
+            val width = MinecraftClient.getInstance().textRenderer.getWidth(text) + 8
+            Screens.getButtons(this).add(ButtonWidget(this.width - width - 1, 1, width, 20, text) {
+                Util.getOperatingSystem().open("https://ko-fi.com/isxander")
+            })
         }
 }

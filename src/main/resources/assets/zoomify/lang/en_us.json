@@ -56,12 +56,12 @@
   "zoomify.gui.unbindConflicting.name": "Unbind Conflicting Keybind",
   "zoomify.gui.unbindConflicting.button": "Unbind",
   "zoomify.gui.unbindConflicting.description": "Removes the keybind that has the same key as Zoomify zoom key.",
-  "zoomify.gui.subcategory.presets": "Presets",
+  "zoomify.gui.preset.prefix": "Preset",
   "zoomify.gui.preset.default": "Default",
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
   "zoomify.gui.preset.apply": "Apply Preset",
-  "zoomify.gui.preset.apply.description": "Makes Zoomify behave like %s.",
+  "zoomify.gui.preset.apply.description": "Applies the preset selected on the button to the left.",
   "zoomify.gui.preset.apply.warning": "Pressing the button will immediately apply changes!",
 
 
