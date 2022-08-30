@@ -24,6 +24,7 @@ mixin_extras = { module = "com.github.llamalad7:mixinextras", version.ref = "mix
 
 settxi_core = { module = "dev.isxander.settxi:settxi-core", version.ref = "settxi" }
 settxi_serialization_kotlinx = { module = "dev.isxander.settxi:settxi-kotlinx-serialization", version.ref = "settxi" }
+settxi_gui = { module = "dev.isxander.settxi:settxi-gui", version.ref = "settxi" }
 settxi_gui_cloth_config = { module = "dev.isxander.settxi:settxi-gui-cloth-config", version.ref = "settxi" }
 
 
