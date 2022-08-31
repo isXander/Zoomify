@@ -104,4 +104,6 @@
   "zoomify.toast.conflictingKeybind.description": "存在冲突的按键绑定,阻止了缩放键起作用.你可以在Zoomify设置的%s类别中取消绑定.",
   "zoomify.toast.unbindConflicting.name": "解除冲突键位",
   "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键'%s'因为它与缩放键冲突."
+  
+  "zoomify.gui.donate": "赞助我!"
 }
