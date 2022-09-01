@@ -17,6 +17,10 @@
   "zoomify.gui.zoomInTransition.description": "The transition type used when zooming in.",
   "zoomify.gui.zoomOutTransition.name": "Zoom Out Transition",
   "zoomify.gui.zoomOutTransition.description": "The transition type used when zooming out.",
+  "zoomify.gui.affectHandFov.name": "Affect Hand FOV",
+  "zoomify.gui.affectHandFov.description": "When zooming, keep the FOV of the hand normal while the world view zooms in.",
+  "zoomify.gui.retainZoomSteps.name": "Remember Zoom Steps",
+  "zoomify.gui.retainZoomSteps.description": "Keep scroll zoom amount between zooming in and out.",
 
   "zoomify.gui.category.scrolling": "Scrolling",
   "zoomify.gui.scrollZoom.name": "Enable Scroll Zoom",
@@ -27,6 +31,8 @@
   "zoomify.gui.scrollZoomSmoothness.description": "How smooth/how long it takes to scroll-zoom.",
   "zoomify.gui.smoothScrollZoom.name": "Smooth Transition",
   "zoomify.gui.smoothScrollZoom.description": "Makes scrolling in and out smooth.",
+  "zoomify.gui.linearLikeSteps.name": "Linear-like Steps",
+  "zoomify.gui.linearLikeSteps.description": "Applies a curve to the increments to make them feel more linear.",
 
   "zoomify.gui.category.controls": "Controls",
   "zoomify.gui.zoomKeyBehaviour.name": "Zoom Key Behaviour",
@@ -36,7 +42,7 @@
   "zoomify.gui.relativeViewBobbing.name": "Relative View Bobbing",
   "zoomify.gui.relativeViewBobbing.description": "Make view-bobbing less jarring when zoomed in.",
   "zoomify.gui.cinematicCam.name": "Cinematic Camera",
-  "zoomify.gui.cinematicCam.description": "Make the camera move smoothly when zoomed.",
+  "zoomify.gui.cinematicCam.description": "How much the camera glides once moved.",
 
   "zoomify.gui.category.spyglass": "Spyglass",
   "zoomify.gui.spyglassBehaviour.name": "Zoom Behaviour",
@@ -45,6 +51,18 @@
   "zoomify.gui.spyglassOverlayVisibility.description": "When to show the spyglass overlay.",
   "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behaviour",
   "zoomify.gui.spyglassSoundBehaviour.description": "When to play the zoom in and out sounds from the spyglass.",
+
+  "zoomify.gui.category.misc": "Misc",
+  "zoomify.gui.unbindConflicting.name": "Unbind Conflicting Keybind",
+  "zoomify.gui.unbindConflicting.button": "Unbind",
+  "zoomify.gui.unbindConflicting.description": "Removes the keybind that has the same key as Zoomify zoom key.",
+  "zoomify.gui.subcategory.presets": "Presets",
+  "zoomify.gui.preset.default": "Default",
+  "zoomify.gui.preset.optifine": "OptiFine",
+  "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
+  "zoomify.gui.preset.apply": "Apply Preset",
+  "zoomify.gui.preset.apply.description": "Makes Zoomify behave like %s.",
+  "zoomify.gui.preset.apply.warning": "Pressing the button will immediately apply changes!",
 
 
   "zoomify.transition.instant": "Instant",
@@ -80,5 +98,12 @@
   "zoomify.sound_behaviour.never": "Never",
   "zoomify.sound_behaviour.always": "Always",
   "zoomify.sound_behaviour.only_spyglass": "Only Holding Spyglass",
-  "zoomify.sound_behaviour.with_overlay": "Match Overlay"
+  "zoomify.sound_behaviour.with_overlay": "Match Overlay",
+
+  "zoomify.toast.conflictingKeybind.title": "Zoomify won't work!",
+  "zoomify.toast.conflictingKeybind.description": "There is a conflicting keybind preventing the usage of the zoom key. You can unbind it in the %s category of Zoomify settings.",
+  "zoomify.toast.unbindConflicting.name": "Unbound %s",
+  "zoomify.toast.unbindConflicting.description": "Zoomify unbound key because it was conflicting with the zoom key.",
+
+  "zoomify.gui.donate": "Support me!"
 }

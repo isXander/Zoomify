@@ -3,7 +3,11 @@
 
 Zoomify aims to provide the easiest, most configurable and most sexy looking zoom mod you will ever find.
 
-![Zoom Example](https://i.imgur.com/SmIuyZQ.gif)
+![Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/zoom-example.gif)
+
+**If you like what I do...** Commissions available!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X0DB1KQ)
 
 ## How to use
 ### Keybind
@@ -13,6 +17,7 @@ isn't conflicting (goes red).
 
 ### Open settings menu
 You can access the settings menu with two ways.
+
 - The client command `/zoomify`
 - [Mod Menu](https://modrinth.com/mod/modmenu) settings button
 
@@ -20,7 +25,7 @@ You can access the settings menu with two ways.
 ### Scroll Zoom
 You can zoom in further using your scroll wheel.
 
-![Scroll Zoom Example](https://i.imgur.com/aZCxkL7.gif)
+![Scroll Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/scroll-zoom-example.gif)
 
 ### Spyglass Integration
 You can configure Zoomify to only be able to zoom in when you are holding or carrying a spyglass.
@@ -28,10 +33,11 @@ Or even just override the spyglass zoom with Zoomify!
 
 Show the spyglass overlay and play spyglass sound effects when using Zoomify.
 
-![Spyglass Integration Example](https://i.imgur.com/Sii2Sdr.gif)
+![Spyglass Integration Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/spyglass-integration-example.gif)
 
 ### Transitions
 **14 different** transitions to choose from!
+
 - Instant
 - Linear
 - [Ease in Sine](https://easings.net/#easeInSine)
@@ -51,41 +57,47 @@ Show the spyglass overlay and play spyglass sound effects when using Zoomify.
 Reduce your mouse sensitivity based on the amount of zoom,
 so you have fine control over your player.
 
-![Relative Sensitivity Example](https://i.imgur.com/vnLXGlP.gif)
+![Relative Sensitivity Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/relative-sensitivity-example.gif)
 
 ### Relative View Bobbing
 Reduce the view bobbing effect based on the amount of zoom,
 so you can walk and zoom at the same time!
 
-![Relative View Bobbing Example](https://i.imgur.com/V58m4ku.gif)
+![Relative View Bobbing Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/relative-view-bobbing-example.gif)
 
 ### Cinematic Camera
 Make the mouse/camera smooth, like the zoom in [Optifine](https://www.optifine.net).
 
-![Cinematic Cam Example](https://i.imgur.com/MY68CqJ.gif)
+![Cinematic Cam Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/cinematic-cam-example.gif)
+
+### Affect Hand FOV
+Turn off this setting to prevent your hand from also being zoomed in!
+
+![Affect Hand FOV Turned Off Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/affect-hand-fov-disabled-example.gif)
+
+### Presets
+You can reset to default, make Zoomify behave like OptiFine and others!
 
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!
-
-![Behaviour Settings Page](https://i.imgur.com/dYAh1FQ.png)
-![Scrolling Settings Page](https://i.imgur.com/hbxGLk3.png)
-![Controls Settings Page](https://i.imgur.com/urvuxgg.png)
-![Spyglass Settings Page](https://i.imgur.com/toQ2uMm.png)
 
 ### Control the zoom speed with seconds
 Instead of some stupid arbitrary value such as zoom speed, you can pick
 the exact amount of seconds it will take to zoom in, with a separate setting for zooming out.
 
 ### Credits
-- [Xander](https://github.com/isXander) - Founder
+- [Xander](https://github.com/isXander) - Developer
 - [MoonTidez](https://github.com/MoonTidez) - Logo designer
 
 #### Translators
 Languages in alphabetical order
-- [Xander](https://github.com/isXander) - British English
-- [神枪968](https://github.com/GodGun968) - Chinese
-- [Madis0](https://github.com/Madis0) - Estonian
-- [Rodrigo Appelt](https://github.com/Agentew04) - Portuguese
-- [SyberiaK](https://github.com/SyberiaK) - Russian
-- [Felix14-v2](https://github.com/Felix14-v2) - Russian
-- [localfossa](https://github.com/localfossa) - Turkish
+
+- [Xander](https://github.com/isXander) - English (United Kingdom)
+- [神枪968](https://github.com/GodGun968) - 简体中文 / Chinese (Simplified)
+- [Madis0](https://github.com/Madis0) - eestlane / Estonian
+- [Rodrigo Appelt](https://github.com/Agentew04) - Português / Portuguese
+- [SyberiaK](https://github.com/SyberiaK) - Русский / Russian
+- [Felix14-v2](https://github.com/Felix14-v2) - Русский / Russian
+- [Zetsphiron](https://github.com/Zetsphiron) - Español (mexicano) / Spanish (Mexico)
+- [Zetsphiron](https://github.com/Zetsphiron) - Español (españa) / Spanish (Spain)
+- [localfossa](https://github.com/localfossa) - Türkçe / Turkish

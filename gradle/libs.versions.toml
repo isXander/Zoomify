@@ -1,0 +1,30 @@
+[versions]
+kotlin = "1.7.10"
+
+minecraft = "1.19.2"
+fabric_loader = "0.14.9"
+
+fabric_api = "0.60.0+1.19.2"
+fabric_language_kotlin = "1.8.3+kotlin.1.7.10"
+cloth_config = "8.0.+"
+mod_menu = "4.0.6"
+mixin_extras = "0.0.12"
+
+settxi = "2.9.0"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
+
+fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
+fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
+cloth_config = { module = "me.shedaniel.cloth:cloth-config-fabric", version.ref = "cloth_config" }
+mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
+mixin_extras = { module = "com.github.llamalad7:mixinextras", version.ref = "mixin_extras" }
+
+settxi_core = { module = "dev.isxander.settxi:settxi-core", version.ref = "settxi" }
+settxi_serialization_kotlinx = { module = "dev.isxander.settxi:settxi-kotlinx-serialization", version.ref = "settxi" }
+settxi_gui = { module = "dev.isxander.settxi:settxi-gui", version.ref = "settxi" }
+settxi_gui_cloth_config = { module = "dev.isxander.settxi:settxi-gui-cloth-config", version.ref = "settxi" }
+
+

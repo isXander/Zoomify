@@ -38,6 +38,21 @@
   "zoomify.gui.cinematicCam.name": "Câmera cinemática",
   "zoomify.gui.cinematicCam.description": "Faz a câmera se mover suavemente no zoom.",
 
+  "zoomify.gui.affectHandFov.name": "Afetar o Campo de Visão da Mão",
+  "zoomify.gui.affectHandFov.description": "Com zoom, mantém o campo de visão da mão normal, enquanto o mundo aumenta.",
+  "zoomify.gui.retainZoomSteps.name": "Lembrar Etapas de Zoom",
+  "zoomify.gui.retainZoomSteps.description": "Mantém a quantia de zoom entre entrada e saída de zoom.",
+
+  "zoomify.gui.linearLikeSteps.name": "Etapas Quase Lineares",
+  "zoomify.gui.linearLikeSteps.description": "Aplica uma curva aos incrementos para eles parecerem lineares.",
+
+  "zoomify.gui.subcategory.presets": "Padronizações",
+  "zoomify.gui.preset.default": "Padrão",
+  "zoomify.gui.preset.optifine": "OptiFine",
+  "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
+  "zoomify.gui.preset.apply": "Aplicar Padronização",
+  "zoomify.gui.preset.apply.description": "Faz o Zoomify se comportar como %s.",
+  "zoomify.gui.preset.apply.warning": "Pressionar o botão vai aplicar as mudanças instantaneamente!",
 
   "zoomify.transition.instant": "Instantâneo",
   "zoomify.transition.linear": "Linear",

@@ -6,10 +6,11 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "GameRendererMixin",
-    "MouseMixin",
+    "hooks.MinecraftClientMixin",
     "spyglass.AbstractClientPlayerEntityMixin",
     "spyglass.InGameHudMixin",
-    "spyglass.SpyglassItemMixin"
+    "spyglass.SpyglassItemMixin",
+    "zoom.GameRendererMixin",
+    "zoom.MouseMixin"
   ]
 }

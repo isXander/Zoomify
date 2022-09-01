@@ -13,10 +13,14 @@
   "zoomify.gui.zoomInTime.description": "Mitu sekundit kulub sissesuumimiseks.",
   "zoomify.gui.zoomOutTime.name": "Väljasuumimise aeg",
   "zoomify.gui.zoomOutTime.description": "Mitu sekundit kulub väljasuumimiseks.",
-  "zoomify.gui.zoomTransition.name": "Suumi üleminek",
-  "zoomify.gui.zoomTransition.description": "Suumimisel kasutatav üleminekutüüp.",
-  "zoomify.gui.zoomOppositeTransitionOut.name": "Vastupidine üleminek välja",
-  "zoomify.gui.zoomOppositeTransitionOut.description": "Pöörab väljasuumimisel üleminekutüübi ümber.",
+  "zoomify.gui.zoomInTransition.name": "Sisse suumimise üleminek",
+  "zoomify.gui.zoomInTransition.description": "Sisse suumimisel kasutatav üleminekutüüp.",
+  "zoomify.gui.zoomOutTransition.name": "Välja suumimise üleminek",
+  "zoomify.gui.zoomOutTransition.description": "Välja suumimisel kasutatav üleminekutüüp.",
+  "zoomify.gui.affectHandFov.name": "Mõjuta käe vaatevälja",
+  "zoomify.gui.affectHandFov.description": "Hoia suumimisel käe vaateväli normaalsena, kuni maailmavaade sisse suumib.",
+  "zoomify.gui.retainZoomSteps.name": "Jäta suumitasemed meelde",
+  "zoomify.gui.retainZoomSteps.description": "Jäta suumitasemete arv enne välja suumimist meelde, et seda arvu järgmisel suumimisel kasutada.",
 
   "zoomify.gui.category.scrolling": "Kerimine",
   "zoomify.gui.scrollZoom.name": "Luba kerimissuum",
@@ -27,6 +31,8 @@
   "zoomify.gui.scrollZoomSmoothness.description": "Kui sujuv/kui kaua kulub aega kerimissuumiks.",
   "zoomify.gui.smoothScrollZoom.name": "Sujuv üleminek",
   "zoomify.gui.smoothScrollZoom.description": "Muudab sisse-välja kerimise sujuvaks.",
+  "zoomify.gui.linearLikeSteps.name": "Lineaarse-sarnased sammud",
+  "zoomify.gui.linearLikeSteps.description": "Lisab juurdekasvudele kõveruse, et need tunduksid lineaarsemad.",
 
   "zoomify.gui.category.controls": "Juhtnupud",
   "zoomify.gui.zoomKeyBehaviour.name": "Suumiklahvi käitumine",
@@ -46,7 +52,18 @@
   "zoomify.gui.spyglassSoundBehaviour.name": "Helikäitumine",
   "zoomify.gui.spyglassSoundBehaviour.description": "Millal esitada pikksilma sisse-välja suumimise helisid.",
 
-
+  "zoomify.gui.category.misc": "Varia",
+  "zoomify.gui.unbindConflicting.name": "Tühjenda konfliktse kiirklahvi määrang",
+  "zoomify.gui.unbindConflicting.button": "Tühjenda",
+  "zoomify.gui.unbindConflicting.description": "Eemaldab kiirklahvi määrangu, millel on Zoomify suumiklahviga sama klahv.",
+  "zoomify.gui.subcategory.presets": "Eelseadistused",
+  "zoomify.gui.preset.default": "Vaikimisi",
+  
+  "zoomify.gui.preset.apply": "Rakenda eelseadistus",
+  "zoomify.gui.preset.apply.description": "Määrab Zoomify käituma nagu %s.",
+  "zoomify.gui.preset.apply.warning": "Nupu vajutamine rakendab muudatused koheselt!",
+  
+  
   "zoomify.transition.instant": "Kohene",
   "zoomify.transition.linear": "Lineaarne",
   "zoomify.transition.ease_in_sine": "Sujuvalt sisse siinus",
@@ -66,18 +83,23 @@
   "zoomify.zoom_key_behaviour.hold": "Hoia",
   "zoomify.zoom_key_behaviour.toggle": "Lülita",
 
-  "zoomify.spyglass_behaviour.combine": "kombineeri",
-  "zoomify.spyglass_behaviour.override": "kirjuta üle",
-  "zoomify.spyglass_behaviour.only_zoom_while_holding": "luba käes hoides",
-  "zoomify.spyglass_behaviour.only_zoom_while_carrying": "luba kaasas kandes",
+  "zoomify.spyglass_behaviour.combine": "Kombineeri",
+  "zoomify.spyglass_behaviour.override": "Kirjuta üle",
+  "zoomify.spyglass_behaviour.only_zoom_while_holding": "Luba käes hoides",
+  "zoomify.spyglass_behaviour.only_zoom_while_carrying": "Luba kaasas kandes",
 
-  "zoomify.overlay_visibility.never": "mitte kunagi",
-  "zoomify.overlay_visibility.holding": "hoides",
-  "zoomify.overlay_visibility.carrying": "kaasas kandes",
-  "zoomify.overlay_visibility.always": "alati",
+  "zoomify.overlay_visibility.never": "Mitte kunagi",
+  "zoomify.overlay_visibility.holding": "Hoides",
+  "zoomify.overlay_visibility.carrying": "Kaasas kandes",
+  "zoomify.overlay_visibility.always": "Alati",
 
-  "zoomify.sound_behaviour.never": "mitte kunagi",
-  "zoomify.sound_behaviour.always": "alati",
-  "zoomify.sound_behaviour.only_spyglass": "ainult pikksilma hoidmisel",
-  "zoomify.sound_behaviour.with_overlay": "sama, mis ülekatte valik"
+  "zoomify.sound_behaviour.never": "Mitte kunagi",
+  "zoomify.sound_behaviour.always": "Alati",
+  "zoomify.sound_behaviour.only_spyglass": "Ainult pikksilma hoidmisel",
+  "zoomify.sound_behaviour.with_overlay": "Sama, mis ülekatte valik",
+  
+  "zoomify.toast.conflictingKeybind.title": "Zoomify ei tööta!",
+  "zoomify.toast.conflictingKeybind.description": "Konfliktne kiirklahvi määrang ei võimalda suumiklahvi kasutada. Sa saad selle tühjendada Zoomify seadete kategoorias %s.",
+  "zoomify.toast.unbindConflicting.name": "Konfliktne kiirklahv tühjendatud",
+  "zoomify.toast.unbindConflicting.description": "Zoomify tühjendas klahvi \"%s\" määrangu, kuna see oli suumiklahviga konfliktis."
 }

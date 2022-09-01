@@ -1,20 +1,34 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.gui.clothGui
+import dev.isxander.settxi.gui.cloth.clothGui
+import dev.isxander.settxi.gui.cloth.clothTextGetter
 import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
-import dev.isxander.settxi.serialization.SettxiConfigKotlinx
+import dev.isxander.settxi.serialization.SettxiFileConfig
+import dev.isxander.settxi.serialization.kotlinxSerializer
 import dev.isxander.zoomify.Zoomify
+import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
 import dev.isxander.zoomify.utils.TransitionType
+import kotlinx.serialization.json.Json
+import net.fabricmc.fabric.api.client.screen.v1.Screens
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.text.Text
+import net.minecraft.util.Formatting
+import net.minecraft.util.Util
+import kotlin.io.path.notExists
 
-object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDir.resolve("zoomify.json")) {
+object ZoomifySettings : SettxiFileConfig(
+    FabricLoader.getInstance().configDir.resolve("zoomify.json"),
+    kotlinxSerializer(Json { prettyPrint = true })
+) {
     private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
     private const val SCROLLING = "zoomify.gui.category.scrolling"
     private const val CONTROLS = "zoomify.gui.category.controls"
     private const val SPYGLASS = "zoomify.gui.category.spyglass"
+    private const val MISC = "zoomify.gui.category.misc"
 
     private var needsSaving = false
 
@@ -23,9 +37,11 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.initialZoom.description"
         category = BEHAVIOUR
         range = 1..10
+
+        clothTextGetter = { Text.literal("Value: %dx".format(it)) }
     }
 
-    var zoomInTime by double(2.0) {
+    var zoomInTime by double(1.0) {
         name = "zoomify.gui.zoomInTime.name"
         description = "zoomify.gui.zoomInTime.description"
         category = BEHAVIOUR
@@ -45,7 +61,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = BEHAVIOUR
         defaultSerializedValue = { _, category ->
             if (category?.containsKey("zoomify_gui_zoomtransition_name") == true) {
-                category["zoomify_gui_zoomtransition_name"]!!.primitive
+                needsSaving = true
+                category["zoomify_gui_zoomtransition_name"]!!
             } else {
                 PrimitiveType.of(default.ordinal)
             }
@@ -67,7 +84,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = BEHAVIOUR
         defaultSerializedValue = { _, category ->
             if (category?.containsKey("zoomify_gui_zoomtransition_name") == true) {
-                category["zoomify_gui_zoomtransition_name"]!!.primitive
+                needsSaving = true
+                category["zoomify_gui_zoomtransition_name"]!!
             } else {
                 PrimitiveType.of(default.ordinal)
             }
@@ -82,6 +100,18 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
             } else type
         }
         modifyGet { it.opposite() }
+    }
+
+    var affectHandFov by boolean(true) {
+        name = "zoomify.gui.affectHandFov.name"
+        description = "zoomify.gui.affectHandFov.description"
+        category = BEHAVIOUR
+    }
+
+    var retainZoomSteps by boolean(false) {
+        name = "zoomify.gui.retainZoomSteps.name"
+        description = "zoomify.gui.retainZoomSteps.description"
+        category = BEHAVIOUR
     }
 
     var scrollZoom by boolean(true) {
@@ -108,6 +138,14 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.scrollZoomSmoothness.description"
         category = SCROLLING
         range = 0..100
+
+        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
+    }
+
+    var linearLikeSteps by boolean(true) {
+        name = "zoomify.gui.linearLikeSteps.name"
+        description = "zoomify.gui.linearLikeSteps.description"
+        category = SCROLLING
     }
 
     var zoomKeyBehaviour by enum(ZoomKeyBehaviour.HOLD) {
@@ -131,6 +169,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         description = "zoomify.gui.relativeSensitivity.description"
         category = CONTROLS
         range = 0..150
+
+        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
     }
 
     var relativeViewBobbing by boolean(true) {
@@ -139,10 +179,25 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = CONTROLS
     }
 
-    var cinematicCam by boolean(false) {
+    var cinematicCamera by int(0) {
         name = "zoomify.gui.cinematicCam.name"
         description = "zoomify.gui.cinematicCam.description"
         category = CONTROLS
+        range = 0..250
+
+        migrator { type ->
+            if (type.isPrimitive && type.primitive.isBoolean) {
+                needsSaving = true
+                if (type.primitive.boolean)
+                    PrimitiveType.of(100)
+                else
+                    PrimitiveType.of(0)
+            } else {
+                type
+            }
+        }
+
+        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
     }
 
     var spyglassBehaviour by enum(SpyglassBehaviour.COMBINE) {
@@ -163,6 +218,8 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         category = SPYGLASS
     }
 
+    val firstLaunch = filePath.notExists()
+
     init {
         import()
         if (needsSaving) {
@@ -171,6 +228,48 @@ object ZoomifySettings : SettxiConfigKotlinx(FabricLoader.getInstance().configDi
         }
     }
 
-    fun gui(parent: Screen? = null) =
-        clothGui(Text.translatable("zoomify.gui.title"), parent)
+    fun gui(parent: Screen? = null): Screen =
+        clothGui(Text.translatable("zoomify.gui.title"), parent) {
+            val category = this.getOrCreateCategory(Text.translatable(MISC))
+
+            category.addEntry(ButtonEntryBuilder(
+                Text.translatable("zoomify.gui.unbindConflicting.name"),
+                Text.translatable("zoomify.gui.unbindConflicting.button")
+            ) {
+                Zoomify.unbindConflicting()
+            }.apply {
+                setTooltip(Text.translatable("zoomify.gui.unbindConflicting.description"))
+            }.build())
+
+            val presetsSubCategory = entryBuilder().startSubCategory(Text.translatable("zoomify.gui.subcategory.presets"))
+            presetsSubCategory.setExpanded(true)
+            for (preset in Presets.values()) {
+                presetsSubCategory.add(
+                    ButtonEntryBuilder(
+                        Text.translatable(preset.displayName),
+                        Text.translatable("zoomify.gui.preset.apply")
+                    ) {
+                        preset.apply(ZoomifySettings)
+                        export()
+                        MinecraftClient.getInstance().setScreen(gui(parent))
+                    }.apply {
+                        setTooltip(
+                            Text.translatable(
+                                "zoomify.gui.preset.apply.description",
+                                Text.translatable(preset.displayName)
+                            ), Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)
+                        )
+                    }.build()
+                )
+            }
+            category.addEntry(presetsSubCategory.build())
+
+            setAfterInitConsumer { screen ->
+                val text = Text.translatable("zoomify.gui.donate")
+                val width = MinecraftClient.getInstance().textRenderer.getWidth(text) + 8
+                Screens.getButtons(screen).add(ButtonWidget(screen.width - width - 4, 4, width, 20, text) {
+                    Util.getOperatingSystem().open("https://ko-fi.com/isxander")
+                })
+            }
+        }
 }

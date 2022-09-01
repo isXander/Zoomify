@@ -6,4 +6,10 @@ pluginManagement {
     }
 }
 
+dependencyResolutionManagement {
+    versionCatalogs {
+        create("libs")
+    }
+}
+
 rootProject.name = "Zoomify"
