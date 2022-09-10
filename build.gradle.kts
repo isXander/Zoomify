@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.5.1"
+version = "2.6.0"
 
 repositories {
     mavenCentral()
@@ -38,17 +38,17 @@ dependencies {
     modImplementation(libs.fabric.api)
     modImplementation(libs.fabric.language.kotlin)
 
-    modApi(libs.cloth.config)
+    modApi(libs.yet.another.config.lib)
 
     implementation(libs.settxi.core)
     include(libs.settxi.core)
     implementation(libs.settxi.serialization.kotlinx)
     include(libs.settxi.serialization.kotlinx)
     include(libs.settxi.gui)
-    modImplementation(libs.settxi.gui.cloth.config) {
+    modImplementation(libs.settxi.gui.yacl) {
         artifact { classifier = "fabric-1.19.2" }
     }
-    include(libs.settxi.gui.cloth.config) {
+    include(libs.settxi.gui.yacl) {
         artifact { classifier = "fabric-1.19.2" }
     }
 

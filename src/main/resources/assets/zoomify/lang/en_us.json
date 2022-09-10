@@ -61,8 +61,10 @@
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
   "zoomify.gui.preset.apply": "Apply Preset",
+  "zoomify.gui.preset.toast.title": "Preset Applied",
+  "zoomify.gui.preset.toast.description": "Zoomify applied the %s preset.",
   "zoomify.gui.preset.apply.description": "Makes Zoomify behave like %s.",
-  "zoomify.gui.preset.apply.warning": "Pressing the button will immediately apply changes!",
+  "zoomify.gui.preset.apply.warning": "Applying a preset will immediately apply changes and undo any pending changes.",
 
 
   "zoomify.transition.instant": "Instant",

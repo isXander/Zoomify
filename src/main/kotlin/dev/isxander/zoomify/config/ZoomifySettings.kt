@@ -1,23 +1,21 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.gui.cloth.clothGui
-import dev.isxander.settxi.gui.cloth.clothTextGetter
+import dev.isxander.settxi.gui.yacl.*
 import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiFileConfig
 import dev.isxander.settxi.serialization.kotlinxSerializer
+import dev.isxander.yacl.api.Option
+import dev.isxander.yacl.api.utils.OptionUtils
 import dev.isxander.zoomify.Zoomify
-import dev.isxander.zoomify.config.gui.ButtonEntryBuilder
 import dev.isxander.zoomify.utils.TransitionType
 import kotlinx.serialization.json.Json
-import net.fabricmc.fabric.api.client.screen.v1.Screens
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.ButtonWidget
+import net.minecraft.client.toast.SystemToast
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
-import net.minecraft.util.Util
 import kotlin.io.path.notExists
 
 object ZoomifySettings : SettxiFileConfig(
@@ -38,21 +36,26 @@ object ZoomifySettings : SettxiFileConfig(
         category = BEHAVIOUR
         range = 1..10
 
-        clothTextGetter = { Text.literal("Value: %dx".format(it)) }
+        yaclValueFormatter = { Text.of("%dx".format(it)) }
+        yaclSliderInterval = 1
     }
 
     var zoomInTime by double(1.0) {
         name = "zoomify.gui.zoomInTime.name"
         description = "zoomify.gui.zoomInTime.description"
         category = BEHAVIOUR
-        range = 0.1..20.0
+        range = 0.1..5.0
+        yaclValueFormatter = { Text.of("%.1f secs".format(it) ) }
+        yaclSliderInterval = 0.1
     }
 
     var zoomOutTime by double(0.5) {
         name = "zoomify.gui.zoomOutTime.name"
         description = "zoomify.gui.zoomOutTime.description"
         category = BEHAVIOUR
-        range = 0.1..20.0
+        range = 0.1..5.0
+        yaclValueFormatter = { Text.of("%.1f secs".format(it) ) }
+        yaclSliderInterval = 0.1
     }
 
     var zoomInTransition by enum(TransitionType.EASE_OUT_EXP) {
@@ -131,6 +134,7 @@ object ZoomifySettings : SettxiFileConfig(
             }
             type
         }
+        yaclSliderInterval = 1
     }
 
     var scrollZoomSmoothness by int(70) {
@@ -139,7 +143,8 @@ object ZoomifySettings : SettxiFileConfig(
         category = SCROLLING
         range = 0..100
 
-        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
+        yaclValueFormatter = { Text.of("%d%%".format(it)) }
+        yaclSliderInterval = 1
     }
 
     var linearLikeSteps by boolean(true) {
@@ -170,7 +175,8 @@ object ZoomifySettings : SettxiFileConfig(
         category = CONTROLS
         range = 0..150
 
-        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
+        yaclValueFormatter = { Text.of("%d%%".format(it)) }
+        yaclSliderInterval = 1
     }
 
     var relativeViewBobbing by boolean(true) {
@@ -197,7 +203,8 @@ object ZoomifySettings : SettxiFileConfig(
             }
         }
 
-        clothTextGetter = { Text.literal("Value: %d%%".format(it)) }
+        yaclValueFormatter = { Text.of("%d%%".format(it)) }
+        yaclSliderInterval = 10
     }
 
     var spyglassBehaviour by enum(SpyglassBehaviour.COMBINE) {
@@ -218,6 +225,45 @@ object ZoomifySettings : SettxiFileConfig(
         category = SPYGLASS
     }
 
+    init {
+        for (setting in settings) {
+            if (setting is BooleanSetting) setting.yaclUseTickBox = true
+        }
+
+        yaclButton({
+            Zoomify.unbindConflicting()
+        }) {
+            name = "zoomify.gui.unbindConflicting.name"
+            yaclButtonText = Text.translatable("zoomify.gui.unbindConflicting.button")
+            description = "zoomify.gui.unbindConflicting.description"
+            category = MISC
+        }
+
+        val presetGroup = Group(Text.translatable("zoomify.gui.subcategory.presets"))
+
+        yaclLabel(Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)) {
+            name = ""
+            yaclGroup = presetGroup
+            category = MISC
+        }
+        for (preset in Presets.values()) {
+            yaclButton({
+                val client = MinecraftClient.getInstance()
+                preset.apply(this)
+                client.toastManager.add(SystemToast.create(client, SystemToast.Type.TUTORIAL_HINT, Text.translatable("zoomify.gui.preset.toast.title"), Text.translatable("zoomify.gui.preset.toast.description", Text.translatable(preset.displayName))))
+
+                OptionUtils.forEachOptions(it.config, Option<*>::forgetPendingValue)
+                export()
+                it.init(client, it.width, it.height)
+            }) {
+                name = preset.displayName
+                yaclGroup = presetGroup
+                category = MISC
+                yaclButtonText = Text.translatable("zoomify.gui.preset.apply")
+            }
+        }
+    }
+
     val firstLaunch = filePath.notExists()
 
     init {
@@ -229,47 +275,5 @@ object ZoomifySettings : SettxiFileConfig(
     }
 
     fun gui(parent: Screen? = null): Screen =
-        clothGui(Text.translatable("zoomify.gui.title"), parent) {
-            val category = this.getOrCreateCategory(Text.translatable(MISC))
-
-            category.addEntry(ButtonEntryBuilder(
-                Text.translatable("zoomify.gui.unbindConflicting.name"),
-                Text.translatable("zoomify.gui.unbindConflicting.button")
-            ) {
-                Zoomify.unbindConflicting()
-            }.apply {
-                setTooltip(Text.translatable("zoomify.gui.unbindConflicting.description"))
-            }.build())
-
-            val presetsSubCategory = entryBuilder().startSubCategory(Text.translatable("zoomify.gui.subcategory.presets"))
-            presetsSubCategory.setExpanded(true)
-            for (preset in Presets.values()) {
-                presetsSubCategory.add(
-                    ButtonEntryBuilder(
-                        Text.translatable(preset.displayName),
-                        Text.translatable("zoomify.gui.preset.apply")
-                    ) {
-                        preset.apply(ZoomifySettings)
-                        export()
-                        MinecraftClient.getInstance().setScreen(gui(parent))
-                    }.apply {
-                        setTooltip(
-                            Text.translatable(
-                                "zoomify.gui.preset.apply.description",
-                                Text.translatable(preset.displayName)
-                            ), Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)
-                        )
-                    }.build()
-                )
-            }
-            category.addEntry(presetsSubCategory.build())
-
-            setAfterInitConsumer { screen ->
-                val text = Text.translatable("zoomify.gui.donate")
-                val width = MinecraftClient.getInstance().textRenderer.getWidth(text) + 8
-                Screens.getButtons(screen).add(ButtonWidget(screen.width - width - 4, 4, width, 20, text) {
-                    Util.getOperatingSystem().open("https://ko-fi.com/isxander")
-                })
-            }
-        }
+        yetAnotherConfigLib(Text.translatable("zoomify.gui.title"), parent)
 }
