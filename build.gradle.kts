@@ -113,7 +113,7 @@ if (modrinthId.isNotEmpty()) {
         dependencies {
             required.project("fabric-api")
             required.project("fabric-language-kotlin")
-            required.project("cloth-config")
+            required.project("yacl")
             optional.project("modmenu")
         }
     }
@@ -140,7 +140,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             relations(closureOf<me.hypherionmc.cursegradle.CurseRelation> {
                 requiredDependency("fabric-api")
                 requiredDependency("fabric-language-kotlin")
-                requiredDependency("cloth-config")
+                requiredDependency("yacl")
                 optionalDependency("modmenu")
             })
 
