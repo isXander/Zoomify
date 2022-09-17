@@ -16,7 +16,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "1.6.0"
+version = "1.6.1"
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ repositories {
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
     maven("https://maven.shedaniel.me/")
-    maven("https://repo.woverflow.cc/")
+    maven("https://maven.isxander.dev/releases")
 }
 
 val minecraftVersion: String by project
@@ -35,6 +35,7 @@ dependencies {
     val loaderVersion: String by project
     val fabricVersion: String by project
     val fabricKotlinVersion: String by project
+    val settxiVersion: String by project
 
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
 
@@ -48,8 +49,9 @@ dependencies {
         exclude(group = "net.fabricmc.fabric-api")
     }
 
-    include(implementation("dev.isxander:settxi:2.1.1")!!)
-    include(modImplementation("dev.isxander:settxi-cloth-impl:1.+:fabric-1.18.2")!!)
+    include(implementation("dev.isxander.settxi:settxi-core:$settxiVersion")!!)
+    include(implementation("dev.isxander.settxi:settxi-kotlinx-serialization:$settxiVersion")!!)
+    include(implementation("dev.isxander.settxi:settxi-gui:$settxiVersion")!!)
 
     modImplementation("com.terraformersmc:modmenu:3.+")
 

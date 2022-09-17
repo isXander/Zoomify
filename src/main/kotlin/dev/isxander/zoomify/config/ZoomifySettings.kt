@@ -1,17 +1,19 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.Setting
-import dev.isxander.settxi.clothconfig.SettxiGuiWrapper
 import dev.isxander.settxi.impl.boolean
+import dev.isxander.settxi.impl.enum
 import dev.isxander.settxi.impl.int
-import dev.isxander.settxi.impl.option
+import dev.isxander.settxi.serialization.PrimitiveType
+import dev.isxander.settxi.serialization.SettxiFileConfig
+import dev.isxander.settxi.serialization.kotlinxSerializer
+import dev.isxander.zoomify.config.cloth.clothGui
 import dev.isxander.zoomify.utils.TransitionType
-import dev.isxander.zoomify.utils.mc
+import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.TranslatableText
-import java.io.File
 
-object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"), File(mc.runDirectory, "config/zoomify.json")) {
-    override val settings = mutableListOf<Setting<*>>()
+object ZoomifySettings : SettxiFileConfig(FabricLoader.getInstance().configDir.resolve("zoomify.json"), kotlinxSerializer()) {
+    private var needsSaving = false
 
     var initialZoom by int(4) {
         name = "zoomify.gui.initialZoom.name"
@@ -27,16 +29,20 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
         range = 1..150
     }
 
-    var _zoomTransition by option(TransitionType.values().toOptionContainer { it.translationKey }.options[0]) {
+    var zoomTransition by enum(TransitionType.INSTANT) {
         name = "zoomify.gui.zoomTransition.name"
         description = "zoomify.gui.zoomTransition.description"
         category = "zoomify.gui.category.behaviour"
-    }
-    var zoomTransition: TransitionType
-        get() = TransitionType.values()[this._zoomTransition.ordinal]
-        set(value) {
-            this._zoomTransition = _zoomTransition.container.options[value.ordinal]
+
+        migrator { type ->
+            if (type.primitive.isString) {
+                PrimitiveType.of(TransitionType.values().find { transition ->
+                    transition.translationKey.lowercase().replace(Regex("\\W+"), "_")
+                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
+                }!!.ordinal).also { needsSaving = true }
+            } else type
         }
+    }
 
     var zoomOppositeTransitionOut by boolean(true) {
         name = "zoomify.gui.zoomOppositeTransitionOut.name"
@@ -57,16 +63,20 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
         range = 1..100
     }
 
-    var _scrollZoomTransition by option(TransitionType.values().toOptionContainer { it.translationKey }.options[0]) {
+    var scrollZoomTransition by enum(TransitionType.INSTANT) {
         name = "zoomify.gui.scrollZoomTransition.name"
         description = "zoomify.gui.scrollZoomTransition.description"
         category = "zoomify.gui.category.scrolling"
-    }
-    var scrollZoomTransition: TransitionType
-        get() = TransitionType.values()[this._scrollZoomTransition.ordinal]
-        set(value) {
-            this._scrollZoomTransition = _scrollZoomTransition.container.options[value.ordinal]
+
+        migrator { type ->
+            if (type.primitive.isString) {
+                PrimitiveType.of(TransitionType.values().find { transition ->
+                    transition.translationKey.lowercase().replace(Regex("\\W+"), "_")
+                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
+                }!!.ordinal).also { needsSaving = true }
+            } else type
         }
+    }
 
     var scrollZoomOppositeTransitionOut by boolean(true) {
         name = "zoomify.gui.scrollZoomOppositeTransitionOut.name"
@@ -81,30 +91,64 @@ object ZoomifySettings : SettxiGuiWrapper(TranslatableText("zoomify.gui.title"),
         range = 1..150
     }
 
-    var _zoomKeyBehaviour by option(ZoomKeyBehaviour.values().toOptionContainer { it.translationKey }.options[0]) {
+    var zoomKeyBehaviour by enum(ZoomKeyBehaviour.HOLD) {
         name = "zoomify.gui.zoomKeyBehaviour.name"
         description = "zoomify.gui.zoomKeyBehaviour.description"
         category = "zoomify.gui.category.controls"
-    }
-    var zoomKeyBehaviour: ZoomKeyBehaviour
-        get() = ZoomKeyBehaviour.values()[this._zoomKeyBehaviour.ordinal]
-        set(value) {
-            this._zoomKeyBehaviour = _zoomKeyBehaviour.container.options[value.ordinal]
+
+        migrator { type ->
+            if (type.primitive.isString) {
+                PrimitiveType.of(ZoomKeyBehaviour.values().find { transition ->
+                    transition.translationKey.lowercase().replace(Regex("\\W+"), "_")
+                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
+                }!!.ordinal).also { needsSaving = true }
+            } else type
         }
+    }
 
     var relativeSensitivity by boolean(false) {
         name = "zoomify.gui.relativeSensitivity.name"
         description = "zoomify.gui.relativeSensitivity.description"
         category = "zoomify.gui.category.controls"
+
+        migrator { type ->
+            if (type.primitive.isInt) {
+                if (type.primitive.int > 0)
+                    PrimitiveType.of(true)
+                else
+                    PrimitiveType.of(false)
+            }
+
+            type
+        }
     }
 
     var cinematicCam by boolean(false) {
         name = "zoomify.gui.cinematicCam.name"
         description = "zoomify.gui.cinematicCam.description"
         category = "zoomify.gui.category.controls"
+
+        migrator { type ->
+            if (type.primitive.isInt) {
+                if (type.primitive.int > 0)
+                    PrimitiveType.of(true)
+                else
+                    PrimitiveType.of(false)
+            }
+
+            type
+        }
     }
 
     init {
-        load()
+        import()
+
+        if (needsSaving) {
+            export()
+            needsSaving = false
+        }
     }
+
+    fun gui(parent: Screen?) =
+        clothGui(TranslatableText("zoomify.gui.title"), parent)
 }

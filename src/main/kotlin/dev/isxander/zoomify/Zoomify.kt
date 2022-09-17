@@ -26,7 +26,7 @@ object Zoomify : ClientModInitializer {
         private set
 
     override fun onInitializeClient() {
-        ZoomifySettings.load()
+        ZoomifySettings
 
         KeyBindingHelper.registerKeyBinding(zoomKey)
         KeyBindingHelper.registerKeyBinding(guiKey)
@@ -37,7 +37,7 @@ object Zoomify : ClientModInitializer {
             }
 
             if (guiKey.wasPressed()) {
-                mc.setScreen(ZoomifySettings.clothGui(mc.currentScreen))
+                mc.setScreen(ZoomifySettings.gui(mc.currentScreen))
             }
         }
     }
