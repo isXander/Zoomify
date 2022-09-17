@@ -113,6 +113,7 @@ object ZoomifySettings : SettxiFileConfig(FabricLoader.getInstance().configDir.r
 
         migrator { type ->
             if (type.primitive.isInt) {
+                needsSaving = true
                 if (type.primitive.int > 0)
                     PrimitiveType.of(true)
                 else
@@ -130,6 +131,7 @@ object ZoomifySettings : SettxiFileConfig(FabricLoader.getInstance().configDir.r
 
         migrator { type ->
             if (type.primitive.isInt) {
+                needsSaving = true
                 if (type.primitive.int > 0)
                     PrimitiveType.of(true)
                 else
