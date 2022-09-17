@@ -177,6 +177,18 @@ object ZoomifySettings : SettxiFileConfig(
 
         yaclValueFormatter = { Text.of("%d%%".format(it)) }
         yaclSliderInterval = 1
+
+        migrator { type ->
+            if (type.isPrimitive && type.primitive.isBoolean) {
+                needsSaving = true
+                if (type.primitive.boolean)
+                    PrimitiveType.of(100)
+                else
+                    PrimitiveType.of(0)
+            } else {
+                type
+            }
+        }
     }
 
     var relativeViewBobbing by boolean(true) {

@@ -6,7 +6,7 @@ fabric_loader = "0.14.9"
 
 fabric_api = "0.60.0+1.19.2"
 fabric_language_kotlin = "1.8.3+kotlin.1.7.10"
-yet_another_config_lib = "1.0.0"
+yet_another_config_lib = "1.2.0"
 mod_menu = "4.0.6"
 mixin_extras = "0.0.12"
 
