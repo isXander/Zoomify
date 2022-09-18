@@ -61,6 +61,8 @@
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
   "zoomify.gui.preset.apply": "应用预设",
+  "zoomify.gui.preset.toast.title": "应用预设",
+  "zoomify.gui.preset.toast.description": "Zoomify应用了%s预设.",
   "zoomify.gui.preset.apply.description": "使Zoomify的行为像%s.",
   "zoomify.gui.preset.apply.warning": "按下按钮将立即应用更改!",
   
