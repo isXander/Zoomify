@@ -66,16 +66,25 @@ object Zoomify : ClientModInitializer {
             }
         }
 
-        zoomHelper.tick(zooming, scrollSteps)
-
         if (cameraEntity is AbstractClientPlayerEntity) {
-            if (ZoomifySettings.spyglassBehaviour == SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING && !cameraEntity.isHolding(Items.SPYGLASS))
-                zooming = false
-            if (ZoomifySettings.spyglassBehaviour == SpyglassBehaviour.ONLY_ZOOM_WHILE_CARRYING && !cameraEntity.inventory.containsAny { it.isOf(Items.SPYGLASS) })
-                zooming = false
+            when (ZoomifySettings.spyglassBehaviour) {
+                SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING -> {
+                    if (!cameraEntity.isHolding(Items.SPYGLASS))
+                        zooming = false
+                }
+                SpyglassBehaviour.ONLY_ZOOM_WHILE_CARRYING ->
+                    if (!cameraEntity.inventory.containsAny { it.isOf(Items.SPYGLASS) })
+                        zooming = false
+                SpyglassBehaviour.OVERRIDE ->
+                    if (cameraEntity.isUsingSpyglass)
+                        zooming = zooming && client.options.perspective.isFirstPerson
+                else -> {}
+            }
 
             val requiresSpyglass = ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
-            zooming = zooming || (requiresSpyglass && client.options.perspective.isFirstPerson && cameraEntity.isUsingSpyglass)
+            if (requiresSpyglass && cameraEntity.isUsingSpyglass) {
+                zooming = true
+            }
 
             if (shouldPlaySound) {
                 if (!zooming && prevZooming) {
@@ -99,6 +108,8 @@ object Zoomify : ClientModInitializer {
                 }
             }
         }
+
+        zoomHelper.tick(zooming, scrollSteps)
 
         if (displayGui) {
             displayGui = false
