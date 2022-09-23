@@ -23,7 +23,7 @@ public class MouseMixin {
         cancellable = true
     )
     private void scrollStepCounter(CallbackInfo ci) {
-        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && eventDeltaWheel != 0) {
+        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && eventDeltaWheel != 0 && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
             Zoomify.mouseZoom(eventDeltaWheel);
             ci.cancel();
         }

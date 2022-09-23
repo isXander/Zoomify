@@ -6,6 +6,7 @@ import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiFileConfig
 import dev.isxander.settxi.serialization.kotlinxSerializer
 import dev.isxander.yacl.api.Option
+import dev.isxander.yacl.api.OptionFlag
 import dev.isxander.yacl.api.utils.OptionUtils
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.utils.TransitionType
@@ -169,6 +170,16 @@ object ZoomifySettings : SettxiFileConfig(
         }
     }
 
+    var keybindScrolling = false
+        private set
+
+    private var _keybindScrolling by boolean(false) {
+        name = "zoomify.gui.keybindScrolling.name"
+        description = "zoomify.gui.keybindScrolling.description"
+        category = CONTROLS
+        yaclFlags = setOf(OptionFlag.GAME_RESTART)
+    }
+
     var relativeSensitivity by int(100) {
         name = "zoomify.gui.relativeSensitivity.name"
         description = "zoomify.gui.relativeSensitivity.description"
@@ -254,7 +265,6 @@ object ZoomifySettings : SettxiFileConfig(
         val presetGroup = Group(Text.translatable("zoomify.gui.subcategory.presets"))
 
         yaclLabel(Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)) {
-            name = ""
             yaclGroup = presetGroup
             category = MISC
         }
@@ -284,6 +294,8 @@ object ZoomifySettings : SettxiFileConfig(
             export()
             needsSaving = false
         }
+
+        keybindScrolling = _keybindScrolling
     }
 
     fun gui(parent: Screen? = null): Screen =

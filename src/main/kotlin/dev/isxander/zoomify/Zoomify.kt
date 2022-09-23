@@ -20,7 +20,9 @@ import org.slf4j.LoggerFactory
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
+    private val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
+    private val scrollZoomIn = KeyBinding("zoomify.key.zoom.in", -1, "zoomify.key.category")
+    private val scrollZoomOut = KeyBinding("zoomify.key.zoom.out", -1, "zoomify.key.category")
 
     var zooming = false
     private val zoomHelper = ZoomHelper()
@@ -40,6 +42,10 @@ object Zoomify : ClientModInitializer {
         ZoomifySettings
 
         KeyBindingHelper.registerKeyBinding(zoomKey)
+        if (ZoomifySettings.keybindScrolling) {
+            KeyBindingHelper.registerKeyBinding(scrollZoomIn)
+            KeyBindingHelper.registerKeyBinding(scrollZoomOut)
+        }
 
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
             dispatcher.register(
@@ -54,7 +60,6 @@ object Zoomify : ClientModInitializer {
     }
 
     private fun tick(client: MinecraftClient) {
-        val cameraEntity = client.cameraEntity
         val prevZooming = zooming
 
         when (ZoomifySettings.zoomKeyBehaviour) {
@@ -65,6 +70,52 @@ object Zoomify : ClientModInitializer {
                 }
             }
         }
+
+        if (ZoomifySettings.keybindScrolling) {
+            while (scrollZoomIn.wasPressed()) {
+                scrollSteps++
+            }
+            while (scrollZoomOut.wasPressed()) {
+                scrollSteps--
+            }
+
+            scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+        }
+
+        handleSpyglass(client, prevZooming)
+
+        zoomHelper.tick(zooming, scrollSteps)
+
+        if (displayGui) {
+            displayGui = false
+            client.setScreen(ZoomifySettings.gui(client.currentScreen))
+        }
+    }
+
+    @JvmStatic
+    fun getZoomDivisor(tickDelta: Float): Double {
+        if (!zooming) {
+            if (!ZoomifySettings.retainZoomSteps)
+                scrollSteps = 0
+
+            zoomHelper.reset()
+        }
+
+        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it }
+    }
+
+    @JvmStatic
+    fun mouseZoom(mouseDelta: Double) {
+        if (mouseDelta > 0) {
+            scrollSteps++
+        } else if (mouseDelta < 0) {
+            scrollSteps--
+        }
+        scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+    }
+
+    private fun handleSpyglass(client: MinecraftClient, prevZooming: Boolean) {
+        val cameraEntity = client.cameraEntity
 
         if (cameraEntity is AbstractClientPlayerEntity) {
             when (ZoomifySettings.spyglassBehaviour) {
@@ -108,35 +159,6 @@ object Zoomify : ClientModInitializer {
                 }
             }
         }
-
-        zoomHelper.tick(zooming, scrollSteps)
-
-        if (displayGui) {
-            displayGui = false
-            client.setScreen(ZoomifySettings.gui(client.currentScreen))
-        }
-    }
-
-    @JvmStatic
-    fun getZoomDivisor(tickDelta: Float): Double {
-        if (!zooming) {
-            if (!ZoomifySettings.retainZoomSteps)
-                scrollSteps = 0
-
-            zoomHelper.reset()
-        }
-
-        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it }
-    }
-
-    @JvmStatic
-    fun mouseZoom(mouseDelta: Double) {
-        if (mouseDelta > 0) {
-            scrollSteps++
-        } else if (mouseDelta < 0) {
-            scrollSteps--
-        }
-        scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
     }
 
     @JvmStatic
