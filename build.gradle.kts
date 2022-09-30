@@ -1,12 +1,10 @@
 plugins {
-    val kotlinVersion: String by System.getProperties()
-
     java
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.serialization") version kotlinVersion
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.plugin.serialization)
 
-    id("fabric-loom") version "0.12.+"
-    id("io.github.juuxel.loom-quiltflower") version "1.7.+"
+    alias(libs.plugins.loom)
+    alias(libs.plugins.loom.quiltflower)
 
     id("com.modrinth.minotaur") version "2.4.+"
     id("me.hypherionmc.cursegradle") version "2.+"
