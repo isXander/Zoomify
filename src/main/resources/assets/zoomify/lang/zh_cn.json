@@ -2,10 +2,10 @@
   "zoomify.key.zoom": "放大",
   "zoomify.key.zoom.in": "滚动放大",
   "zoomify.key.zoom.out": "滚动缩小",
-  "zoomify.key.category": "Zoomify",
+  "zoomify.key.category": "缩放(Zoomify)",
   
 
-  "zoomify.gui.title": "Zoomify",
+  "zoomify.gui.title": "缩放(Zoomify)",
 
   "zoomify.gui.category.behaviour": "行为",
   "zoomify.gui.initialZoom.name": "初始缩放",
