@@ -1,6 +1,7 @@
 {
   "zoomify.key.zoom": "放大",
-  "zoomify.key.gui": "打开设置GUI",
+  "zoomify.key.zoom.in": "滚动放大",
+  "zoomify.key.zoom.out": "滚动缩小",
   "zoomify.key.category": "Zoomify",
   
 
@@ -37,6 +38,8 @@
   "zoomify.gui.category.controls": "控制",
   "zoomify.gui.zoomKeyBehaviour.name": "缩放键行为",
   "zoomify.gui.zoomKeyBehaviour.description": "按下缩放键时的行为.",
+  "zoomify.gui.keybindScrolling.name": "滚动缩放键绑定",
+  "zoomify.gui.keybindScrolling.description": "使用Minecraft键绑定来控制滚动缩放缩放而不是鼠标滚轮.",
   "zoomify.gui.relativeSensitivity.name": "相对灵敏度",
   "zoomify.gui.relativeSensitivity.description": "根据缩放级别控制灵敏度的梯度.",
   "zoomify.gui.relativeViewBobbing.name": "相对视线晃动",
