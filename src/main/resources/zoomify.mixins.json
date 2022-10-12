@@ -11,6 +11,7 @@
     "spyglass.InGameHudMixin",
     "spyglass.SpyglassItemMixin",
     "zoom.GameRendererMixin",
-    "zoom.MouseMixin"
+    "zoom.MouseMixin",
+    "zoom.secondary.GameRendererMixin"
   ]
 }
