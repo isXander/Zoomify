@@ -94,7 +94,7 @@ Languages in alphabetical order
 
 - [Xander](https://github.com/isXander) - English (United Kingdom)
 - [神枪968](https://github.com/GodGun968) - 简体中文 / Chinese (Simplified)
-- [Madis0](https://github.com/Madis0) - eestlane / Estonian
+- [Madis0](https://github.com/Madis0) - eesti keel / Estonian
 - [Rodrigo Appelt](https://github.com/Agentew04) - Português / Portuguese
 - [SyberiaK](https://github.com/SyberiaK) - Русский / Russian
 - [Felix14-v2](https://github.com/Felix14-v2) - Русский / Russian
