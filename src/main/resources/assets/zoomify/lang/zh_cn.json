@@ -3,7 +3,7 @@
   "zoomify.key.zoom.in": "滚动放大",
   "zoomify.key.zoom.out": "滚动缩小",
   "zoomify.key.category": "缩放(Zoomify)",
-  
+
 
   "zoomify.gui.title": "缩放(Zoomify)",
 
@@ -22,7 +22,7 @@
   "zoomify.gui.affectHandFov.description": "缩放时,世界视图放大且保持手部的FOV值正常.",
   "zoomify.gui.retainZoomSteps.name": "记住缩放步骤",
   "zoomify.gui.retainZoomSteps.description": "在放大和缩小之间保持滚动缩放量.",
-  
+
   "zoomify.gui.category.scrolling": "滚动",
   "zoomify.gui.scrollZoom.name": "启用滚动缩放",
   "zoomify.gui.scrollZoom.description": "允许您使用滚轮放大或缩小一些.",
@@ -46,7 +46,7 @@
   "zoomify.gui.relativeViewBobbing.description": "在放大时使视线晃动较为协调.",
   "zoomify.gui.cinematicCam.name": "电影摄像机",
   "zoomify.gui.cinematicCam.description": "使相机在缩放时平滑移动.",
-  
+
   "zoomify.gui.category.spyglass": "望远镜",
   "zoomify.gui.spyglassBehaviour.name": "缩放行为",
   "zoomify.gui.spyglassBehaviour.description": "Zoomify如何与望远镜缩放相互影响.",
@@ -54,7 +54,7 @@
   "zoomify.gui.spyglassOverlayVisibility.description": "什么时候显示望远镜覆盖层.",
   "zoomify.gui.spyglassSoundBehaviour.name": "声音行为",
   "zoomify.gui.spyglassSoundBehaviour.description": "什么时候播放望远镜放大和缩小时的声音.",
-  
+
   "zoomify.gui.category.misc": "杂项",
   "zoomify.gui.unbindConflicting.name": "解除冲突键位",
   "zoomify.gui.unbindConflicting.button": "解除",
@@ -68,8 +68,8 @@
   "zoomify.gui.preset.toast.description": "Zoomify应用了%s预设.",
   "zoomify.gui.preset.apply.description": "使Zoomify的行为像%s.",
   "zoomify.gui.preset.apply.warning": "按下按钮将立即应用更改!",
-  
-  
+
+
   "zoomify.transition.instant": "即时",
   "zoomify.transition.linear": "直线",
   "zoomify.transition.ease_in_sine": "正弦缓入",
@@ -85,11 +85,11 @@
   "zoomify.transition.ease_out_exp": "指数缓出",
   "zoomify.transition.ease_in_out_exp": "指数缓出入",
 
-  
+
   "zoomify.zoom_key_behaviour.hold": "开始放大",
   "zoomify.zoom_key_behaviour.toggle": "切换放大缩小",
-  
-  
+
+
   "zoomify.spyglass_behaviour.combine": "合并",
   "zoomify.spyglass_behaviour.override": "覆盖",
   "zoomify.spyglass_behaviour.only_zoom_while_holding": "开镜时启用",
@@ -103,12 +103,12 @@
   "zoomify.sound_behaviour.never": "从不",
   "zoomify.sound_behaviour.always": "总是",
   "zoomify.sound_behaviour.only_spyglass": "只有望远镜开镜时",
-  "zoomify.sound_behaviour.with_overlay": "匹配覆盖(只有按望远镜时)"
-  
+  "zoomify.sound_behaviour.with_overlay": "匹配覆盖(只有按望远镜时)",
+
   "zoomify.toast.conflictingKeybind.title": "Zoomify不起作用!",
   "zoomify.toast.conflictingKeybind.description": "存在冲突的按键绑定,阻止了缩放键起作用.你可以在Zoomify设置的%s类别中取消绑定.",
   "zoomify.toast.unbindConflicting.name": "解除冲突键位",
-  "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键'%s'因为它与缩放键冲突."
-  
+  "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键'%s'因为它与缩放键冲突.",
+
   "zoomify.gui.donate": "赞助我!"
 }
