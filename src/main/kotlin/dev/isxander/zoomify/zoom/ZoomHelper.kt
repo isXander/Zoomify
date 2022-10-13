@@ -5,7 +5,15 @@ import dev.isxander.zoomify.config.ZoomifySettings
 import net.minecraft.util.math.MathHelper
 import kotlin.math.pow
 
-class ZoomHelper(private val initialInterpolator: Interpolator, private val scrollInterpolator: Interpolator, private val settings: ZoomSettings) {
+class ZoomHelper(
+    private val initialInterpolator: Interpolator,
+    private val scrollInterpolator: Interpolator,
+
+    private val initialZoom: () -> Int,
+    private val scrollZoomAmount: () -> Int,
+    private val maxScrollTiers: () -> Int,
+    private val linearLikeSteps: () -> Boolean,
+) {
     private var prevInitialInterpolation = 0.0
     private var initialInterpolation = 0.0
 
@@ -41,10 +49,10 @@ class ZoomHelper(private val initialInterpolator: Interpolator, private val scro
             resetting = false
 
         var targetZoom =
-            if (settings.maxScrollTiers > 0)
+            if (maxScrollTiers() > 0)
                 scrollTiers.toDouble() / Zoomify.maxScrollTiers
             else 0.0
-        if (ZoomifySettings.linearLikeSteps) {
+        if (linearLikeSteps()) {
             val curvature = 0.3
             val exp = 1 / (1 - curvature)
             targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
@@ -72,7 +80,7 @@ class ZoomHelper(private val initialInterpolator: Interpolator, private val scro
         return MathHelper.lerp(
             initialInterpolator.modifyInterpolation(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
             1.0,
-            if (!resetting) 1 / settings.initialZoom.toDouble() else resetMultiplier
+            if (!resetting) 1 / initialZoom().toDouble() else resetMultiplier
         )
     }
 
@@ -80,7 +88,7 @@ class ZoomHelper(private val initialInterpolator: Interpolator, private val scro
         return MathHelper.lerp(
             scrollInterpolator.modifyInterpolation(MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation)),
             0.0,
-            Zoomify.maxScrollTiers * (settings.scrollZoomAmount * 3.0)
+            Zoomify.maxScrollTiers * (scrollZoomAmount() * 3.0)
         ).let { if (resetting) 0.0 else it }
     }
 
@@ -90,13 +98,5 @@ class ZoomHelper(private val initialInterpolator: Interpolator, private val scro
             scrollInterpolation = 0.0
             prevScrollInterpolation = 0.0
         }
-    }
-
-    interface ZoomSettings {
-        val initialZoom: Int
-
-        val scrollZoomAmount: Int
-        val maxScrollTiers: Int
-        val linearLikeSteps: Boolean
     }
 }

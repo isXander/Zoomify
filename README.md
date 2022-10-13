@@ -53,6 +53,10 @@ Show the spyglass overlay and play spyglass sound effects when using Zoomify.
 - [Ease out Exponential](https://easings.net/#easeOutExp)
 - [Ease in/out Exponential](https://easings.net/#easeInOutExp)
 
+You can even pick what transition you would like for zooming in and out individually!
+
+![Individual Transition Config](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/individual-transition.png)
+
 ### Relative Sensitivity
 Reduce your mouse sensitivity based on the amount of zoom,
 so you have fine control over your player.
@@ -66,7 +70,7 @@ so you can walk and zoom at the same time!
 ![Relative View Bobbing Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/relative-view-bobbing-example.gif)
 
 ### Cinematic Camera
-Make the mouse/camera smooth, like the zoom in [Optifine](https://www.optifine.net).
+Make the mouse/camera smooth, like the zoom in [OptiFine](https://www.optifine.net).
 
 ![Cinematic Cam Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/cinematic-cam-example.gif)
 
@@ -75,8 +79,22 @@ Turn off this setting to prevent your hand from also being zoomed in!
 
 ![Affect Hand FOV Turned Off Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/affect-hand-fov-disabled-example.gif)
 
+### Secondary Zoom
+
+Completely separate zoom from normal Zoomify.
+Aimed for content creators, features `Hide HUD While Zooming` option and longer zoom in times.
+
+![Secondary Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/secondary-zoom.gif)
+
 ### Presets
+
 You can reset to default, make Zoomify behave like OptiFine and others!
+
+### Smart Keybinding Detection
+
+On first launch, if a keybinding is conflicting with Zoomify's zoom, a notification will appear notifying them of this.
+
+![Keybinding Conflict Detection](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/keybind-conflict-detection.png)
 
 ### Highly configurable
 Absolutely **NO** hard-coded values. Everything about your zoom is configurable!

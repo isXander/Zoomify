@@ -41,25 +41,23 @@ object Zoomify : ClientModInitializer {
                 1.0,
                 0.1
             )
-        }, object : ZoomHelper.ZoomSettings {
-            override val initialZoom by ZoomifySettings::initialZoom
-            override val scrollZoomAmount by ZoomifySettings::scrollZoomAmount
-            override val maxScrollTiers by Zoomify::maxScrollTiers
-            override val linearLikeSteps by ZoomifySettings::linearLikeSteps
-        })
+        },
+        initialZoom = ZoomifySettings::initialZoom,
+        scrollZoomAmount = ZoomifySettings::scrollZoomAmount,
+        maxScrollTiers = Zoomify::maxScrollTiers,
+        linearLikeSteps = ZoomifySettings::linearLikeSteps,
+    )
 
     var secondaryZooming = false
         private set
     private val secondaryZoomHelper = ZoomHelper(
         TimedInterpolator(ZoomifySettings::secondaryZoomInTime, ZoomifySettings::secondaryZoomOutTime),
         InstantInterpolator,
-        object : ZoomHelper.ZoomSettings {
-            override val initialZoom by ZoomifySettings::secondaryZoomAmount
-
-            override val scrollZoomAmount = 0
-            override val maxScrollTiers = 0
-            override val linearLikeSteps = false
-        })
+        initialZoom = ZoomifySettings::secondaryZoomAmount,
+        scrollZoomAmount = { 0 },
+        maxScrollTiers = { 0 },
+        linearLikeSteps = { false },
+    )
 
     var previousZoomDivisor = 1.0
         private set
