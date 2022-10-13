@@ -55,6 +55,18 @@
   "zoomify.gui.spyglassSoundBehaviour.name": "Sound Behaviour",
   "zoomify.gui.spyglassSoundBehaviour.description": "When to play the zoom in and out sounds from the spyglass.",
 
+  "zoomify.gui.category.secondary": "Secondary Zoom",
+  "zoomify.gui.secondaryZoom.label": "Completely separate from all other settings of Zoomify. Secondary zoom is toggle-only with a separate keybinding in controls.",
+  "zoomify.gui.secondaryZoomAmount.name": "Zoom Amount",
+  "zoomify.gui.secondaryZoomAmount.description": "How many times to divide the current FOV once transition completes.",
+  "zoomify.gui.secondaryZoomInTime.name": "Zoom In Time",
+  "zoomify.gui.secondaryZoomInTime.description": "How many seconds to complete zooming in.",
+  "zoomify.gui.secondaryZoomOutTime.name": "Zoom Out Time",
+  "zoomify.gui.secondaryZoomOutTime.description": "How many seconds to complete zooming out.",
+  "zoomify.gui.secondaryZoomHideHUDOnZoom.name": "Hide HUD On Zoom",
+  "zoomify.gui.secondaryZoomHideHUDOnZoom.description": "Stops rendering the HUD whilst zooming in, much like pressing F1.",
+
+
   "zoomify.gui.category.misc": "Misc",
   "zoomify.gui.unbindConflicting.name": "Unbind Conflicting Keybind",
   "zoomify.gui.unbindConflicting.button": "Unbind",
@@ -67,6 +79,8 @@
   "zoomify.gui.preset.apply.description": "Makes Zoomify behave like %s.",
   "zoomify.gui.preset.apply.warning": "Pressing the button will immediately apply changes!",
 
+  "zoomify.gui.formatter.instant": "Instant",
+  "zoomify.gui.formatter.seconds": "%s secs",
 
   "zoomify.transition.instant": "Instant",
   "zoomify.transition.linear": "Linear",

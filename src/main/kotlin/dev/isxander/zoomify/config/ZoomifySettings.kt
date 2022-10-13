@@ -15,6 +15,7 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.toast.SystemToast
+import net.minecraft.screen.ScreenTexts
 import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 import kotlin.io.path.notExists
@@ -27,6 +28,7 @@ object ZoomifySettings : SettxiFileConfig(
     private const val SCROLLING = "zoomify.gui.category.scrolling"
     private const val CONTROLS = "zoomify.gui.category.controls"
     private const val SPYGLASS = "zoomify.gui.category.spyglass"
+    private const val SECONDARY = "zoomify.gui.category.secondary"
     private const val MISC = "zoomify.gui.category.misc"
 
     private var needsSaving = false
@@ -46,7 +48,7 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.zoomInTime.description"
         category = BEHAVIOUR
         range = 0.1..5.0
-        yaclValueFormatter = { Text.of("%.1f secs".format(it) ) }
+        yaclValueFormatter = { Text.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
         yaclSliderInterval = 0.1
     }
 
@@ -55,7 +57,7 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.zoomOutTime.description"
         category = BEHAVIOUR
         range = 0.1..5.0
-        yaclValueFormatter = { Text.of("%.1f secs".format(it) ) }
+        yaclValueFormatter = { Text.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
         yaclSliderInterval = 0.1
     }
 
@@ -144,7 +146,12 @@ object ZoomifySettings : SettxiFileConfig(
         category = SCROLLING
         range = 0..100
 
-        yaclValueFormatter = { Text.of("%d%%".format(it)) }
+        yaclValueFormatter = {
+            if (it == 0)
+                Text.translatable("zoomify.gui.formatter.instant")
+            else
+                Text.of("%d%%".format(it))
+        }
         yaclSliderInterval = 1
     }
 
@@ -186,8 +193,13 @@ object ZoomifySettings : SettxiFileConfig(
         category = CONTROLS
         range = 0..150
 
-        yaclValueFormatter = { Text.of("%d%%".format(it)) }
-        yaclSliderInterval = 1
+        yaclValueFormatter = {
+            if (it == 0)
+                ScreenTexts.OFF
+            else
+                Text.of("%d%%".format(it))
+        }
+        yaclSliderInterval = 10
 
         migrator { type ->
             if (type.isPrimitive && type.primitive.isBoolean) {
@@ -226,7 +238,12 @@ object ZoomifySettings : SettxiFileConfig(
             }
         }
 
-        yaclValueFormatter = { Text.of("%d%%".format(it)) }
+        yaclValueFormatter = {
+            if (it == 0)
+                ScreenTexts.OFF
+            else
+                Text.of("%d%%".format(it))
+        }
         yaclSliderInterval = 10
     }
 
@@ -246,6 +263,51 @@ object ZoomifySettings : SettxiFileConfig(
         name = "zoomify.gui.spyglassSoundBehaviour.name"
         description = "zoomify.gui.spyglassSoundBehaviour.description"
         category = SPYGLASS
+    }
+
+    init {
+        yaclLabel(Text.translatable("zoomify.gui.secondaryZoom.label")) {
+            category = SECONDARY
+        }
+    }
+
+    var secondaryZoomAmount by int(4) {
+        name = "zoomify.gui.secondaryZoomAmount.name"
+        description = "zoomify.gui.secondaryZoomAmount.description"
+        category = SECONDARY
+        range = 2..10
+
+        yaclValueFormatter = { Text.of("%dx".format(it)) }
+        yaclSliderInterval = 1
+    }
+
+    var secondaryZoomInTime by double(10.0) {
+        name = "zoomify.gui.secondaryZoomInTime.name"
+        description = "zoomify.gui.secondaryZoomInTime.description"
+        category = SECONDARY
+        range = 6.0..30.0
+        yaclSliderInterval = 2.0
+        yaclValueFormatter = { Text.translatable("zoomify.gui.formatter.seconds", "%.0f".format(it)) }
+    }
+
+    var secondaryZoomOutTime by double(1.0) {
+        name = "zoomify.gui.secondaryZoomOutTime.name"
+        description = "zoomify.gui.secondaryZoomOutTime.description"
+        category = SECONDARY
+        range = 0.0..5.0
+        yaclSliderInterval = 0.25
+        yaclValueFormatter = {
+            if (it == 0.0)
+                Text.translatable("zoomify.gui.formatter.instant")
+            else
+                Text.translatable("zoomify.gui.formatter.seconds", "%.2f".format(it))
+        }
+    }
+
+    var secondaryHideHUDOnZoom by boolean(true) {
+        name = "zoomify.gui.secondaryZoomHideHUDOnZoom.name"
+        description = "zoomify.gui.secondaryZoomHideHUDOnZoom.description"
+        category = SECONDARY
     }
 
     init {

@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.7.0"
+version = "2.8.0"
 
 repositories {
     mavenCentral()
@@ -26,10 +26,6 @@ repositories {
 }
 
 dependencies {
-    val kotlinVersion: String by System.getProperties()
-
-    implementation(kotlin("stdlib-jdk8", kotlinVersion))
-
     minecraft(libs.minecraft)
     mappings("net.fabricmc:yarn:${libs.versions.minecraft.get()}+build.+:v2")
     modImplementation(libs.fabric.loader)

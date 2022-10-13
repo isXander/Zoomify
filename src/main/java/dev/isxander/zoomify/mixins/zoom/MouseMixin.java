@@ -34,7 +34,7 @@ public class MouseMixin {
         at = @At(value = "FIELD", target = "Lnet/minecraft/client/option/GameOptions;smoothCameraEnabled:Z")
     )
     private boolean smoothCameraIfZoom(boolean original) {
-        return original || (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera() > 0);
+        return original || Zoomify.INSTANCE.getSecondaryZooming() || (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera() > 0);
     }
 
     @ModifyExpressionValue(
@@ -63,7 +63,14 @@ public class MouseMixin {
         return isUsingSpyglass;
     }
 
-    @ModifyArg(method = "updateMouse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/SmoothUtil;smooth(DD)D"), index = 1)
+    @ModifyArg(
+        method = "updateMouse",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/util/SmoothUtil;smooth(DD)D"
+        ),
+        index = 1
+    )
     private double modifyCinematicSmoothness(double smoother) {
         if (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera() > 0)
             return smoother / (ZoomifySettings.INSTANCE.getCinematicCamera() / 100.0);

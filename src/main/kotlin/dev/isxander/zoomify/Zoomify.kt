@@ -1,6 +1,7 @@
 package dev.isxander.zoomify
 
 import dev.isxander.zoomify.config.*
+import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
@@ -15,17 +16,48 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.sound.SoundEvents
 import net.minecraft.text.Text
+import net.minecraft.util.math.MathHelper
 import org.slf4j.LoggerFactory
 
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
     private val zoomKey = KeyBinding("zoomify.key.zoom", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_C, "zoomify.key.category")
+    private val secondaryZoomKey = KeyBinding("zoomify.key.zoom.secondary", InputUtil.Type.KEYSYM, InputUtil.GLFW_KEY_F6, "zoomify.key.category")
     private val scrollZoomIn = KeyBinding("zoomify.key.zoom.in", -1, "zoomify.key.category")
     private val scrollZoomOut = KeyBinding("zoomify.key.zoom.out", -1, "zoomify.key.category")
 
     var zooming = false
-    private val zoomHelper = ZoomHelper()
+        private set
+    private val zoomHelper = ZoomHelper(
+        TransitionInterpolator(
+            ZoomifySettings::zoomInTransition,
+            ZoomifySettings::zoomOutTransition,
+            ZoomifySettings::zoomInTime,
+            ZoomifySettings::zoomOutTime
+        ), SmoothInterpolator {
+            MathHelper.lerp(
+                ZoomifySettings.scrollZoomSmoothness / 100.0,
+                1.0,
+                0.1
+            )
+        },
+        initialZoom = ZoomifySettings::initialZoom,
+        scrollZoomAmount = ZoomifySettings::scrollZoomAmount,
+        maxScrollTiers = Zoomify::maxScrollTiers,
+        linearLikeSteps = ZoomifySettings::linearLikeSteps,
+    )
+
+    var secondaryZooming = false
+        private set
+    private val secondaryZoomHelper = ZoomHelper(
+        TimedInterpolator(ZoomifySettings::secondaryZoomInTime, ZoomifySettings::secondaryZoomOutTime),
+        InstantInterpolator,
+        initialZoom = ZoomifySettings::secondaryZoomAmount,
+        scrollZoomAmount = { 0 },
+        maxScrollTiers = { 0 },
+        linearLikeSteps = { false },
+    )
 
     var previousZoomDivisor = 1.0
         private set
@@ -42,6 +74,7 @@ object Zoomify : ClientModInitializer {
         ZoomifySettings
 
         KeyBindingHelper.registerKeyBinding(zoomKey)
+        KeyBindingHelper.registerKeyBinding(secondaryZoomKey)
         if (ZoomifySettings.keybindScrolling) {
             KeyBindingHelper.registerKeyBinding(scrollZoomIn)
             KeyBindingHelper.registerKeyBinding(scrollZoomOut)
@@ -71,6 +104,10 @@ object Zoomify : ClientModInitializer {
             }
         }
 
+        while (secondaryZoomKey.wasPressed()) {
+            secondaryZooming = !secondaryZooming
+        }
+
         if (ZoomifySettings.keybindScrolling) {
             while (scrollZoomIn.wasPressed()) {
                 scrollSteps++
@@ -85,6 +122,7 @@ object Zoomify : ClientModInitializer {
         handleSpyglass(client, prevZooming)
 
         zoomHelper.tick(zooming, scrollSteps)
+        secondaryZoomHelper.tick(secondaryZooming, scrollSteps)
 
         if (displayGui) {
             displayGui = false
@@ -101,7 +139,7 @@ object Zoomify : ClientModInitializer {
             zoomHelper.reset()
         }
 
-        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it }
+        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it } * secondaryZoomHelper.getZoomDivisor(tickDelta)
     }
 
     @JvmStatic
