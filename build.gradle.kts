@@ -32,6 +32,9 @@ dependencies {
     modImplementation(libs.fabric.api)
     modImplementation(libs.fabric.language.kotlin)
 
+    implementation(libs.ktoml.core)
+    include(libs.ktoml.core)
+
     modApi(libs.yet.another.config.lib)
 
     implementation(libs.settxi.core)

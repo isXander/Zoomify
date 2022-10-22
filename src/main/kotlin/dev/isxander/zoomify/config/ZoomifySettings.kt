@@ -180,7 +180,7 @@ object ZoomifySettings : SettxiFileConfig(
     var keybindScrolling = false
         private set
 
-    private var _keybindScrolling by boolean(false) {
+    var _keybindScrolling by boolean(false) {
         name = "zoomify.gui.keybindScrolling.name"
         description = "zoomify.gui.keybindScrolling.description"
         category = CONTROLS

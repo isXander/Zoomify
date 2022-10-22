@@ -8,11 +8,12 @@ fabric_loader = "0.14.9"
 
 fabric_api = "0.62.0+1.19.2"
 fabric_language_kotlin = "1.8.4+kotlin.1.7.20"
-yet_another_config_lib = "1.5.0"
+ktoml = "0.2.13"
+yet_another_config_lib = "1.6.0"
 mod_menu = "4.0.6"
 mixin_extras = "0.0.12"
 
-settxi = "2.10.3"
+settxi = "2.10.4"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
@@ -20,6 +21,7 @@ fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_l
 
 fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
+ktoml_core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml" }
 yet_another_config_lib = { module = "dev.isxander:yet-another-config-lib", version.ref = "yet_another_config_lib" }
 mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
 mixin_extras = { module = "com.github.llamalad7:mixinextras", version.ref = "mixin_extras" }

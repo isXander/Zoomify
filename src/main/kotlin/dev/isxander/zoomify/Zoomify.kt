@@ -1,6 +1,7 @@
 package dev.isxander.zoomify
 
 import dev.isxander.zoomify.config.*
+import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
@@ -213,8 +214,10 @@ object Zoomify : ClientModInitializer {
 
     fun onGameFinishedLoading() {
         if (ZoomifySettings.firstLaunch) {
-            LOGGER.info("Zoomify detected first launch! Detecting conflicting keybindings!")
+            LOGGER.info("Zoomify detected first launch!")
             detectConflictingToast()
+
+            Migrator.checkMigrations()
         }
     }
 
