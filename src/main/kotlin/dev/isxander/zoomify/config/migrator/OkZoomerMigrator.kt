@@ -16,7 +16,6 @@ import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Feat
 import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.SpyglassDependency
 import dev.isxander.zoomify.utils.TransitionType
 import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 object OkZoomerMigrator : Migrator {
     private val file = FabricLoader.getInstance().configDir.resolve("ok_zoomer/config.toml")
@@ -165,6 +164,7 @@ object OkZoomerMigrator : Migrator {
             @SerialName("maximum_zoom_divisor") val maxZoomDivisor: Double,
             @SerialName("upper_scroll_steps") val upperScrollSteps: Long,
             @SerialName("lower_scroll_steps") val lowerScrollSteps: Long,
+            @SerialName("smooth_multiplier") val smoothMultiplier: Double,
             @SerialName("cinematic_multiplier") val cinematicMultiplier: Double,
             @SerialName("minimum_linear_step") val minLinearStep: Double,
             @SerialName("maximum_linear_step") val maxLinearSteps: Double,
