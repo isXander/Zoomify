@@ -19,6 +19,7 @@ version = "2.8.0"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases")

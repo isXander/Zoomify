@@ -4,7 +4,7 @@ loom = "1.0.+"
 loom_quiltflower = "1.7.+"
 
 minecraft = "1.19.2"
-fabric_loader = "0.14.9"
+fabric_loader = "0.14.10"
 
 fabric_api = "0.62.0+1.19.2"
 fabric_language_kotlin = "1.8.4+kotlin.1.7.20"
@@ -13,7 +13,7 @@ yet_another_config_lib = "1.6.0"
 mod_menu = "4.0.6"
 mixin_extras = "0.0.12"
 
-settxi = "2.10.4"
+settxi = "2.10.5"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }

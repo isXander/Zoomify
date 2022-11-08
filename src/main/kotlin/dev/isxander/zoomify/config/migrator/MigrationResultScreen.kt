@@ -10,9 +10,14 @@ class MigrationResultScreen(
     migration: Migration,
     parent: Screen?,
 ) : NoticeScreen(
-    { MinecraftClient.getInstance().setScreen(parent) },
+    {
+        if (migration.requireRestart)
+            MinecraftClient.getInstance().scheduleStop()
+        else
+            MinecraftClient.getInstance().setScreen(parent)
+    },
     Text.translatable("zoomify.migrate.result.title"),
     migration.generateReport(),
-    ScreenTexts.DONE,
+    if (migration.requireRestart) Text.translatable("zoomify.migrate.result.restart_game") else ScreenTexts.DONE,
     true
 )

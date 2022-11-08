@@ -71,6 +71,9 @@
   "zoomify.gui.unbindConflicting.name": "Unbind Conflicting Keybind",
   "zoomify.gui.unbindConflicting.button": "Unbind",
   "zoomify.gui.unbindConflicting.description": "Removes the keybind that has the same key as Zoomify zoom key.",
+  "zoomify.gui.checkMigrations.name": "Check Migrations",
+  "zoomify.gui.checkMigrations.button": "Check",
+  "zoomify.gui.checkMigrations.description": "Checks for available automatic migrations.",
   "zoomify.gui.subcategory.presets": "Presets",
   "zoomify.gui.preset.default": "Default",
   "zoomify.gui.preset.optifine": "OptiFine",
@@ -126,6 +129,8 @@
 
 
   "zoomify.migrate.result.title": "Migration completed",
+  "zoomify.migrate.restart": "Restart required",
+  "zoomify.migrate.result.restart_game": "Restart Game",
   "zoomify.migrate.available.title": "Auto migration for %s is available",
   "zoomify.migrate.available.message": "Would you like to automatically migrate your %s config to Zoomify?",
 

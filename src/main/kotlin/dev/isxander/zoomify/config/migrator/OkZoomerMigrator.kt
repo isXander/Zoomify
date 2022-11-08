@@ -15,6 +15,7 @@ import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Feat
 import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.Overlay
 import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.SpyglassDependency
 import dev.isxander.zoomify.utils.TransitionType
+import net.minecraft.util.math.MathHelper
 import kotlin.math.roundToInt
 
 object OkZoomerMigrator : Migrator {
@@ -102,7 +103,17 @@ object OkZoomerMigrator : Migrator {
 
         migration.warn(Text.translatable("zoomify.migrate.okz.stepAmt"))
 
-        // TODO: figure out to convert smoothness -> seconds
+        val targetMultiplier = 1f / ZoomifySettings.initialZoom
+        var multiplier = 1f
+        var ticks = 0
+        while (multiplier != targetMultiplier) {
+            println("$multiplier - $targetMultiplier")
+            multiplier += (targetMultiplier - multiplier) * okz.values.smoothMultiplier.toFloat()
+            ticks++
+        }
+        val zoomTime = (ticks * 0.05 / 0.1).roundToInt() * 0.1
+        ZoomifySettings.zoomInTime = zoomTime
+        ZoomifySettings.zoomOutTime = zoomTime
 
         // TODO: add reset zoom steps with keybind/middle click to Zoomify
         ZoomifySettings.retainZoomSteps = !okz.tweaks.forgetZoomDivisor

@@ -9,6 +9,7 @@ import dev.isxander.yacl.api.Option
 import dev.isxander.yacl.api.OptionFlag
 import dev.isxander.yacl.api.utils.OptionUtils
 import dev.isxander.zoomify.Zoomify
+import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.TransitionType
 import kotlinx.serialization.json.Json
 import net.fabricmc.loader.api.FabricLoader
@@ -324,7 +325,16 @@ object ZoomifySettings : SettxiFileConfig(
             category = MISC
         }
 
-        val presetGroup = Group(Text.translatable("zoomify.gui.subcategory.presets"))
+        yaclButton({
+            Migrator.checkMigrations()
+        }) {
+            name = "zoomify.gui.checkMigrations.name"
+            yaclButtonText = Text.translatable("zoomify.gui.checkMigrations.button")
+            description = "zoomify.gui.checkMigrations.description"
+            category = MISC
+        }
+
+        val presetGroup = YaclGroup(Text.translatable("zoomify.gui.subcategory.presets"))
 
         yaclLabel(Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)) {
             yaclGroup = presetGroup
@@ -361,5 +371,7 @@ object ZoomifySettings : SettxiFileConfig(
     }
 
     fun gui(parent: Screen? = null): Screen =
-        yetAnotherConfigLib(Text.translatable("zoomify.gui.title"), parent)
+        yetAnotherConfigLib(Text.translatable("zoomify.gui.title"), parent) {
+
+        }
 }

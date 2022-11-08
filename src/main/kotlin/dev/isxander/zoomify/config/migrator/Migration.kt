@@ -4,8 +4,8 @@ import net.minecraft.text.Text
 import net.minecraft.util.Formatting
 
 class Migration {
-    private val warnings = arrayListOf<Text>()
-    private val errors = arrayListOf<Text>()
+    private val warnings = mutableListOf<Text>()
+    private val errors = mutableListOf<Text>()
     var requireRestart = false
         private set
 
@@ -18,6 +18,11 @@ class Migration {
 
     fun generateReport(): Text {
         val text = Text.empty()
+
+        val errors = this.errors
+        if (requireRestart) {
+            errors.add(0, Text.translatable("zoomify.migrate.restart"))
+        }
 
         for (error in errors) {
             val line = Text.empty()
