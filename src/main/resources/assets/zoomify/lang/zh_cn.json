@@ -71,6 +71,9 @@
   "zoomify.gui.unbindConflicting.name": "解除冲突键位",
   "zoomify.gui.unbindConflicting.button": "解除",
   "zoomify.gui.unbindConflicting.description": "移除与Zoomify缩放键具有相同键位的键绑定。",
+  "zoomify.gui.checkMigrations.name": "Check Migrations",
+  "zoomify.gui.checkMigrations.button": "Check",
+  "zoomify.gui.checkMigrations.description": "Checks for available automatic migrations.",
   "zoomify.gui.subcategory.presets": "预设",
   "zoomify.gui.preset.default": "默认",
   "zoomify.gui.preset.optifine": "OptiFine",
@@ -126,6 +129,8 @@
 
 
   "zoomify.migrate.result.title": "迁移完成",
+  "zoomify.migrate.restart": "需要重启",
+  "zoomify.migrate.result.restart_game": "重启游戏",
   "zoomify.migrate.available.title": "%s的自动迁移可用",
   "zoomify.migrate.available.message": "你想要自动将你的%s配置迁移到Zoomify吗？",
 
