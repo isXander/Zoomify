@@ -4,7 +4,7 @@
   "zoomify.key.zoom.in": "滚动放大",
   "zoomify.key.zoom.out": "滚动缩小",
   "zoomify.key.category": "缩放（Zoomify）",
-  
+
 
   "zoomify.gui.title": "缩放（Zoomify）",
 
@@ -55,7 +55,7 @@
   "zoomify.gui.spyglassOverlayVisibility.description": "什么时候显示望远镜覆盖层。",
   "zoomify.gui.spyglassSoundBehaviour.name": "声音行为",
   "zoomify.gui.spyglassSoundBehaviour.description": "什么时候播放望远镜放大和缩小时的声音。",
- 
+
   "zoomify.gui.category.secondary": "二次缩放",
   "zoomify.gui.secondaryZoom.label": "与Zoomify的其他所有设置完全分开。二次缩放仅在控制中使用单独的键绑定进行切换。",
   "zoomify.gui.secondaryZoomAmount.name": "缩放量",
@@ -71,6 +71,9 @@
   "zoomify.gui.unbindConflicting.name": "解除冲突键位",
   "zoomify.gui.unbindConflicting.button": "解除",
   "zoomify.gui.unbindConflicting.description": "移除与Zoomify缩放键具有相同键位的键绑定。",
+  "zoomify.gui.checkMigrations.name": "Check Migrations",
+  "zoomify.gui.checkMigrations.button": "Check",
+  "zoomify.gui.checkMigrations.description": "Checks for available automatic migrations.",
   "zoomify.gui.subcategory.presets": "预设",
   "zoomify.gui.preset.default": "默认",
   "zoomify.gui.preset.optifine": "OptiFine",
@@ -80,7 +83,7 @@
   "zoomify.gui.preset.toast.description": "Zoomify应用了%s预设。",
   "zoomify.gui.preset.apply.description": "使Zoomify的行为像%s。",
   "zoomify.gui.preset.apply.warning": "按下按钮将立即应用更改！",
-  
+
   "zoomify.gui.formatter.instant": "立即",
   "zoomify.gui.formatter.seconds": "%s秒",
 
@@ -124,5 +127,16 @@
   "zoomify.toast.unbindConflicting.name": "解除冲突键位",
   "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键‘%s’因为它与缩放键冲突。",
 
-  "zoomify.gui.donate": "赞助我！"
+
+  "zoomify.migrate.result.title": "迁移完成",
+  "zoomify.migrate.restart": "需要重启",
+  "zoomify.migrate.result.restart_game": "重启游戏",
+  "zoomify.migrate.available.title": "%s的自动迁移可用",
+  "zoomify.migrate.available.message": "你想要自动将你的%s配置迁移到Zoomify吗？",
+
+  "zoomify.migrate.okz": "OK Zoomer",
+  "zoomify.migrate.okz.persistent": "不支持持续缩放模式。",
+  "zoomify.migrate.okz.vignette": "不支持Vignette overlay。",
+  "zoomify.migrate.okz.minZoomDiv": "不支持设置最小放大倍数。",
+  "zoomify.migrate.okz.stepAmt": "不支持设置scroll step amount。"
 }
