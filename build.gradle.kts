@@ -15,12 +15,13 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.8.0"
+version = "2.9.0"
 
 repositories {
     mavenCentral()
     mavenLocal()
     maven("https://maven.isxander.dev/releases")
+    maven("https://maven.isxander.dev/snapshots")
     maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
@@ -104,7 +105,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.19", "1.19.1", "1.19.2"))
+        gameVersions.set(listOf("1.19", "1.19.1", "1.19.2", "1.19.3"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -131,6 +132,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             addGameVersion("1.19")
             addGameVersion("1.19.1")
             addGameVersion("1.19.2")
+            addGameVersion("1.19.3")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
             addGameVersion("Java 17")
@@ -160,7 +162,7 @@ githubRelease {
     owner(split[0])
     repo(split[1])
     tagName("${project.version}")
-    targetCommitish("1.19")
+    targetCommitish("1.19.3")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
 }
@@ -176,11 +178,11 @@ publishing {
     }
 
     repositories {
-        if (hasProperty("xander-repo.username") && hasProperty("xander-repo.password")) {
+        if (hasProperty("XANDER_MAVEN_USER") && hasProperty("XANDER_MAVEN_PASS")) {
             maven("https://maven.isxander.dev/releases") {
                 credentials {
-                    username = findProperty("xander-repo.username")?.toString()
-                    password = findProperty("xander-repo.password")?.toString()
+                    username = findProperty("XANDER_MAVEN_USER")?.toString()
+                    password = findProperty("XANDER_MAVEN_PASS")?.toString()
                 }
             }
         } else println("Cannot publish to https://maven.isxander.dev")

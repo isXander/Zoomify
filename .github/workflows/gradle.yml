@@ -2,16 +2,12 @@ name: Gradle CI
 
 on:
   push:
-    branches:
-      - '*'
     paths-ignore:
       - 'README.md'
       - 'LICENSE.md'
       - '.gitignore'
       - '.gitattributes'
   pull_request:
-    branches:
-      - '*'
     paths-ignore:
       - 'README.md'
       - 'LICENSE'

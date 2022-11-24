@@ -255,7 +255,7 @@ object Zoomify : ClientModInitializer {
         if (client.options.allKeys.any { it != zoomKey && it.equals(zoomKey) }) {
             val toast = SystemToast.create(
                 client,
-                SystemToast.Type.CHAT_PREVIEW_WARNING,
+                SystemToast.Type.UNSECURE_SERVER_WARNING,
                 Text.translatable("zoomify.toast.conflictingKeybind.title"),
                 Text.translatable("zoomify.toast.conflictingKeybind.description",
                     Text.translatable("zoomify.gui.category.misc")
