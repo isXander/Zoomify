@@ -1,6 +1,8 @@
 {
     "zoomify.key.zoom": "Приблизить",
-    "zoomify.key.gui": "Открыть настройки",
+    "zoomify.key.zoom.secondary": "Увеличить кадр",
+    "zoomify.key.zoom.in": "Увеличить приближение",
+    "zoomify.key.zoom.out": "Уменьшить приближение",
     "zoomify.key.category": "Zoomify",
 
 
@@ -37,6 +39,8 @@
     "zoomify.gui.category.controls": "Управление",
     "zoomify.gui.zoomKeyBehaviour.name": "Режим клавиши",
     "zoomify.gui.zoomKeyBehaviour.description": "Режим управления приближением при нажатии клавиши.",
+    "zoomify.gui.keybindScrolling.name": "Клавиши прокрутки",
+    "zoomify.gui.keybindScrolling.description": "Использовать назначенные в управлении клавиши для регулировки приближения вместо колёсика мыши.",
     "zoomify.gui.relativeSensitivity.name": "Адаптивная чувствительность",
     "zoomify.gui.relativeSensitivity.description": "Уменьшать чувствительность в зависимости от степени приближения.",
     "zoomify.gui.relativeViewBobbing.name": "Адаптивное покачивание камеры",
@@ -52,6 +56,17 @@
     "zoomify.gui.spyglassSoundBehaviour.name": "Звук приближения",
     "zoomify.gui.spyglassSoundBehaviour.description": "Воспроизведение звуков приближения/отдаления.",
 
+    "zoomify.gui.category.secondary": "Увеличение кадра",
+    "zoomify.gui.secondaryZoom.label": "Совершенно независимый от остальных функций кинематографический эффект. Задействуется переключением при помощи отдельной клавиши в настройках управления.",
+    "zoomify.gui.secondaryZoomAmount.name": "Максимальное увеличение",
+    "zoomify.gui.secondaryZoomAmount.description": "Максимальный делитель поля зрения для увеличения кадра.",
+    "zoomify.gui.secondaryZoomInTime.name": "Время увеличения",
+    "zoomify.gui.secondaryZoomInTime.description": "Максимальное время увеличения.",
+    "zoomify.gui.secondaryZoomOutTime.name": "Время возврата",
+    "zoomify.gui.secondaryZoomOutTime.description": "Время, за которое поле зрения возвращается к исходным значениям.",
+    "zoomify.gui.secondaryZoomHideHUDOnZoom.name": "Скрытие интерфейса",
+    "zoomify.gui.secondaryZoomHideHUDOnZoom.description": "Скрывать элементы граического интерфейса при увеличении, как при нажатии F1.",
+
     "zoomify.gui.category.misc": "Прочее",
     "zoomify.gui.unbindConflicting.name": "Устранить конфликт клавиш",
     "zoomify.gui.unbindConflicting.button": "",
@@ -66,6 +81,8 @@
     "zoomify.gui.preset.apply.description": "Zoomify будет имитировать поведение %s.",
     "zoomify.gui.preset.apply.warning": "Применение профиля перезаписывает все внесённые ранее изменения.",
 
+    "zoomify.gui.formatter.instant": "Мгновенно",
+    "zoomify.gui.formatter.seconds": "%s с",
 
     "zoomify.transition.instant": "Без анимации",
     "zoomify.transition.linear": "Линейное",
@@ -107,7 +124,18 @@
     "zoomify.toast.unbindConflicting.name": "Конфликт клавиш устранён",
     "zoomify.toast.unbindConflicting.description": "Zoomify отключил горячую клавишу для действия \"%s\" из-за имеющегося конфликта с клавишей приближения.",
 
-    "zoomify.gui.donate": "Угости меня кофе :)",
+
+    "zoomify.migrate.result.title": "Перенос завершён",
+    "zoomify.migrate.restart": "Требуется перезапуск",
+    "zoomify.migrate.result.restart_game": "Закрыть игру",
+    "zoomify.migrate.available.title": "Доступна автоматическая подстройка под %s",
+    "zoomify.migrate.available.message": "Перенести ваши настройки %s в Zoomify?",
+  
+    "zoomify.migrate.okz": "OK Zoomer",
+    "zoomify.migrate.okz.persistent": "\"Постоянный\" режим приближения не поддерживается.",
+    "zoomify.migrate.okz.vignette": "Эффект виньетирования не поддерживается.",
+    "zoomify.migrate.okz.minZoomDiv": "Изменение минимального делителя не поддерживается.",
+    "zoomify.migrate.okz.stepAmt": "Изменение шагов прокрутки не поддерживается.",
 
     "modmenu.summaryTranslation.zoomify": "Безгранично настраиваемое приближение.",
     "modmenu.descriptionTranslation.zoomify": "Zoomify стремится создать самое простое, самое гибкое и самое привлекательное приближение, которое вы когда-либо видели!"
