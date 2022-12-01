@@ -1,21 +1,22 @@
-package dev.isxander.zoomify.config.migrator
+package dev.isxander.zoomify.config.migrator.impl
 
 import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.TomlInputConfig
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.*
+import dev.isxander.zoomify.config.migrator.Migration
+import dev.isxander.zoomify.config.migrator.Migrator
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.text.Text
 import java.nio.file.Files
-import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.CinematicCameraState
-import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.ZoomMode
-import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.Overlay
-import dev.isxander.zoomify.config.migrator.OkZoomerMigrator.OkZoomerConfig.Features.SpyglassDependency
+import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.CinematicCameraState
+import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.ZoomMode
+import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.Overlay
+import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.SpyglassDependency
 import dev.isxander.zoomify.utils.TransitionType
-import net.minecraft.util.math.MathHelper
 import kotlin.math.roundToInt
 
 object OkZoomerMigrator : Migrator {
@@ -48,10 +49,6 @@ object OkZoomerMigrator : Migrator {
         } else {
             ZoomifySettings.relativeSensitivity = 0
         }
-
-        val transition = okz.features.zoomTransition.type
-        ZoomifySettings.zoomInTransition = transition
-        ZoomifySettings.zoomOutTransition = transition
 
         when (okz.features.zoomMode) {
             ZoomMode.HOLD ->
@@ -103,19 +100,36 @@ object OkZoomerMigrator : Migrator {
 
         migration.warn(Text.translatable("zoomify.migrate.okz.stepAmt"))
 
-        val targetMultiplier = 1f / ZoomifySettings.initialZoom
-        var multiplier = 1f
-        var ticks = 0
-        while (multiplier != targetMultiplier) {
-            println("$multiplier - $targetMultiplier")
-            multiplier += (targetMultiplier - multiplier) * okz.values.smoothMultiplier.toFloat()
-            ticks++
+        when (okz.features.zoomTransition) {
+            OkZoomerConfig.Features.TransitionMode.LINEAR -> {
+                migration.error(Text.translatable("zoomify.migrate.okz.linearNotSupported"))
+                ZoomifySettings.zoomInTransition = TransitionType.LINEAR
+                ZoomifySettings.zoomOutTransition = TransitionType.LINEAR
+            }
+            OkZoomerConfig.Features.TransitionMode.SMOOTH -> {
+                val targetMultiplier = 1f / ZoomifySettings.initialZoom
+                var multiplier = 1f
+                var ticks = 0
+                while (multiplier != targetMultiplier) {
+                    println("$multiplier - $targetMultiplier")
+                    multiplier += (targetMultiplier - multiplier) * okz.values.smoothMultiplier.toFloat()
+                    ticks++
+                }
+                val zoomTime = (ticks * 0.05 / 0.1).roundToInt() * 0.1
+                ZoomifySettings.zoomInTime = zoomTime
+                ZoomifySettings.zoomOutTime = zoomTime
+                ZoomifySettings.zoomInTransition = TransitionType.EASE_IN_EXP
+                ZoomifySettings.zoomOutTransition = TransitionType.EASE_IN_EXP
+            }
+            OkZoomerConfig.Features.TransitionMode.OFF -> {
+                ZoomifySettings.zoomInTime = 0.0
+                ZoomifySettings.zoomOutTime = 0.0
+                ZoomifySettings.zoomInTransition = TransitionType.INSTANT
+                ZoomifySettings.zoomOutTransition = TransitionType.INSTANT
+            }
         }
-        val zoomTime = (ticks * 0.05 / 0.1).roundToInt() * 0.1
-        ZoomifySettings.zoomInTime = zoomTime
-        ZoomifySettings.zoomOutTime = zoomTime
 
-        // TODO: add reset zoom steps with keybind/middle click to Zoomify
+
         ZoomifySettings.retainZoomSteps = !okz.tweaks.forgetZoomDivisor
 
         if (okz.tweaks.unbindConflictingKey) {
@@ -146,10 +160,8 @@ object OkZoomerMigrator : Migrator {
             }
 
             @Serializable
-            enum class TransitionMode(val type: TransitionType) {
-                OFF(TransitionType.INSTANT),
-                SMOOTH(TransitionType.EASE_OUT_EXP),
-                LINEAR(TransitionType.LINEAR),
+            enum class TransitionMode {
+                OFF, SMOOTH, LINEAR
             }
 
             @Serializable

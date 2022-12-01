@@ -138,5 +138,6 @@
   "zoomify.migrate.okz.persistent": "Persistent zoom mode is unsupported.",
   "zoomify.migrate.okz.vignette": "Vignette overlay is unsupported.",
   "zoomify.migrate.okz.minZoomDiv": "Setting minimum zoom divisor is unsupported.",
-  "zoomify.migrate.okz.stepAmt": "Setting scroll step amount is unsupported."
+  "zoomify.migrate.okz.stepAmt": "Setting scroll step amount is unsupported.",
+  "zoomify.migrate.okz.linearNotSupported": "Linear timings cannot be automatically calculated."
 }

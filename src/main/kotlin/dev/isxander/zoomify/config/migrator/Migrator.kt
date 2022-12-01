@@ -1,7 +1,7 @@
 package dev.isxander.zoomify.config.migrator
 
+import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator
 import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gui.screen.Screen
 import net.minecraft.text.Text
 
 interface Migrator {
