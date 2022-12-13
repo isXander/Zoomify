@@ -139,4 +139,5 @@
   "zoomify.migrate.okz.vignette": "不支持Vignette overlay。",
   "zoomify.migrate.okz.minZoomDiv": "不支持设置最小放大倍数。",
   "zoomify.migrate.okz.stepAmt": "不支持设置scroll step amount。"
+  "zoomify.migrate.okz.linearNotSupported": "无法自动计算线性时序。"
 }
