@@ -9,11 +9,11 @@ fabric_loader = "0.14.11"
 fabric_api = "0.68.1+1.19.3"
 fabric_language_kotlin = "1.8.6+kotlin.1.7.21"
 ktoml = "0.3.0"
-yet_another_config_lib = "2.0.0"
-mod_menu = "5.0.0-alpha.4"
+yet_another_config_lib = "2.1.1"
+mod_menu = "5.0.0"
 mixin_extras = "0.1.1"
 
-settxi = "2.10.5"
+settxi = "2.10.6"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }

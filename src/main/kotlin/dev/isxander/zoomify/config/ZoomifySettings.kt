@@ -371,7 +371,5 @@ object ZoomifySettings : SettxiFileConfig(
     }
 
     fun gui(parent: Screen? = null): Screen =
-        yetAnotherConfigLib(Text.translatable("zoomify.gui.title"), parent) {
-
-        }
+        yetAnotherConfigLib(Text.translatable("zoomify.gui.title"), parent)
 }

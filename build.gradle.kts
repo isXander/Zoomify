@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.9.0"
+version = "2.9.1"
 
 repositories {
     mavenCentral()
@@ -45,10 +45,10 @@ dependencies {
     include(libs.settxi.serialization.kotlinx)
     include(libs.settxi.gui)
     modImplementation(libs.settxi.gui.yacl) {
-        artifact { classifier = "fabric-1.19.2" }
+        artifact { classifier = "fabric-1.19.3" }
     }
     include(libs.settxi.gui.yacl) {
-        artifact { classifier = "fabric-1.19.2" }
+        artifact { classifier = "fabric-1.19.3" }
     }
 
     modImplementation(libs.mod.menu)
