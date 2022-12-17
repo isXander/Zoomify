@@ -21,7 +21,7 @@ fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_l
 
 fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
-ktoml_core = { module = "com.akuleshov7:ktoml-core", version.ref = "ktoml" }
+ktoml_core = { module = "com.akuleshov7:ktoml-core-jvm", version.ref = "ktoml" }
 yet_another_config_lib = { module = "dev.isxander:yet-another-config-lib", version.ref = "yet_another_config_lib" }
 mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
 mixin_extras = { module = "com.github.llamalad7:mixinextras", version.ref = "mixin_extras" }

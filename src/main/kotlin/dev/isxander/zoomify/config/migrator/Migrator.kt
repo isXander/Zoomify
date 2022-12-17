@@ -14,11 +14,11 @@ interface Migrator {
     companion object {
         val MIGRATORS = listOf<Migrator>(OkZoomerMigrator)
 
-        fun checkMigrations() {
+        fun checkMigrations(): Boolean {
             val available = MIGRATORS.filter { it.isMigrationAvailable() }
 
             if (available.isEmpty())
-                return
+                return false
 
             var lastScreen = MinecraftClient.getInstance().currentScreen
 
@@ -27,6 +27,7 @@ interface Migrator {
             }
 
             MinecraftClient.getInstance().setScreen(lastScreen)
+            return true
         }
     }
 }

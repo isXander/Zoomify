@@ -128,6 +128,7 @@
   "zoomify.toast.unbindConflicting.description": "Zoomify unbound key called '%s' because it was conflicting with the zoom key.",
 
 
+  "zoomify.migrate.no_migrations": "No migrations available.",
   "zoomify.migrate.result.title": "Migration completed",
   "zoomify.migrate.restart": "Restart required",
   "zoomify.migrate.result.restart_game": "Restart Game",

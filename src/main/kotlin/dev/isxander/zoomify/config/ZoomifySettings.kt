@@ -326,7 +326,15 @@ object ZoomifySettings : SettxiFileConfig(
         }
 
         yaclButton({
-            Migrator.checkMigrations()
+            if (!Migrator.checkMigrations()) {
+                val client = MinecraftClient.getInstance()
+                client.toastManager.add(SystemToast.create(
+                    client,
+                    SystemToast.Type.TUTORIAL_HINT,
+                    Text.translatable("zoomify.gui.title"),
+                    Text.translatable("zoomify.migrate.no_migrations")
+                ))
+            }
         }) {
             name = "zoomify.gui.checkMigrations.name"
             yaclButtonText = Text.translatable("zoomify.gui.checkMigrations.button")
