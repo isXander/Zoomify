@@ -36,15 +36,18 @@
     "zoomify.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
+    "fabric-api": "*",
     "fabricloader": ">=0.14.10",
     "fabric-language-kotlin": ">=1.8.6+kotlin.1.7.21",
-    "minecraft": "1.19.x",
+    "minecraft": "~1.19.3",
     "java": ">=17",
     "yet-another-config-lib": ">=2.1.1",
     "settxi-gui-yacl": ">=2.10.6"
   },
   "suggests": {
     "modmenu": ">=4.0.0"
+  },
+  "breaks": {
+    "optifabric": "*"
   }
 }
