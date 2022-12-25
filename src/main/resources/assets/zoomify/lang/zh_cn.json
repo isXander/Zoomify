@@ -128,6 +128,7 @@
   "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键‘%s’因为它与缩放键冲突。",
 
 
+  "zoomify.migrate.no_migrations": "No migrations available.",
   "zoomify.migrate.result.title": "迁移完成",
   "zoomify.migrate.restart": "需要重启",
   "zoomify.migrate.result.restart_game": "重启游戏",
@@ -138,6 +139,6 @@
   "zoomify.migrate.okz.persistent": "不支持持续缩放模式。",
   "zoomify.migrate.okz.vignette": "不支持Vignette overlay。",
   "zoomify.migrate.okz.minZoomDiv": "不支持设置最小放大倍数。",
-  "zoomify.migrate.okz.stepAmt": "不支持设置scroll step amount。"
+  "zoomify.migrate.okz.stepAmt": "不支持设置scroll step amount。",
   "zoomify.migrate.okz.linearNotSupported": "无法自动计算线性时序。"
 }
