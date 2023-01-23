@@ -1,6 +1,5 @@
 package dev.isxander.zoomify.config.migrator
 
-import dev.isxander.yacl.gui.RequireRestartScreen
 import dev.isxander.zoomify.config.ZoomifySettings
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.ConfirmScreen

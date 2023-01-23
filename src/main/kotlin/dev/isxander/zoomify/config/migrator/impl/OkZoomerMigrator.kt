@@ -111,7 +111,6 @@ object OkZoomerMigrator : Migrator {
                 var multiplier = 1f
                 var ticks = 0
                 while (multiplier != targetMultiplier) {
-                    println("$multiplier - $targetMultiplier")
                     multiplier += (targetMultiplier - multiplier) * okz.values.smoothMultiplier.toFloat()
                     ticks++
                 }

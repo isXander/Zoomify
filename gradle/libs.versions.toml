@@ -1,15 +1,15 @@
 [versions]
-kotlin = "1.7.21"
+kotlin = "1.8.0"
 loom = "1.0.+"
 loom_quiltflower = "1.8.+"
 
 minecraft = "1.19.3"
 fabric_loader = "0.14.11"
 
-fabric_api = "0.68.1+1.19.3"
-fabric_language_kotlin = "1.8.6+kotlin.1.7.21"
+fabric_api = "0.72.0+1.19.3"
+fabric_language_kotlin = "1.9.0+kotlin.1.8.0"
 ktoml = "0.3.0"
-yet_another_config_lib = "2.1.1"
+yet_another_config_lib = "2.2.0"
 mod_menu = "5.0.0"
 mixin_extras = "0.1.1"
 
