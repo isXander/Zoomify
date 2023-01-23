@@ -113,7 +113,7 @@ class TransitionInterpolator(val transitionIn: () -> TransitionType, val transit
     }
 
     override val isSmooth: Boolean
-        get() = !justSwappedTransition && super.isSmooth
+        get() = !justSwappedTransition && super.isSmooth && activeTransition != TransitionType.INSTANT
 }
 
 class SmoothInterpolator(val smoothness: () -> Double) : LinearInterpolator() {
