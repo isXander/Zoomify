@@ -71,9 +71,9 @@
   "zoomify.gui.unbindConflicting.name": "解除冲突键位",
   "zoomify.gui.unbindConflicting.button": "解除",
   "zoomify.gui.unbindConflicting.description": "移除与Zoomify缩放键具有相同键位的键绑定。",
-  "zoomify.gui.checkMigrations.name": "Check Migrations",
-  "zoomify.gui.checkMigrations.button": "Check",
-  "zoomify.gui.checkMigrations.description": "Checks for available automatic migrations.",
+  "zoomify.gui.checkMigrations.name": "检查迁移",
+  "zoomify.gui.checkMigrations.button": "检查",
+  "zoomify.gui.checkMigrations.description": "检查可用的自动迁移。",
   "zoomify.gui.subcategory.presets": "预设",
   "zoomify.gui.preset.default": "默认",
   "zoomify.gui.preset.optifine": "OptiFine",
@@ -128,6 +128,7 @@
   "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键‘%s’因为它与缩放键冲突。",
 
 
+  "zoomify.migrate.no_migrations": "没有可用的迁移。",
   "zoomify.migrate.result.title": "迁移完成",
   "zoomify.migrate.restart": "需要重启",
   "zoomify.migrate.result.restart_game": "重启游戏",
@@ -138,6 +139,6 @@
   "zoomify.migrate.okz.persistent": "不支持持续缩放模式。",
   "zoomify.migrate.okz.vignette": "不支持Vignette overlay。",
   "zoomify.migrate.okz.minZoomDiv": "不支持设置最小放大倍数。",
-  "zoomify.migrate.okz.stepAmt": "不支持设置scroll step amount。"
+  "zoomify.migrate.okz.stepAmt": "不支持设置scroll step amount。",
   "zoomify.migrate.okz.linearNotSupported": "无法自动计算线性时序。"
 }
