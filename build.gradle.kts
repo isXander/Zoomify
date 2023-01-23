@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.loom)
     alias(libs.plugins.loom.quiltflower)
 
-    id("com.modrinth.minotaur") version "2.4.+"
+    id("com.modrinth.minotaur") version "2.6.+"
     id("me.hypherionmc.cursegradle") version "2.+"
     id("com.github.breadmoirai.github-release") version "2.4.+"
     `maven-publish`
