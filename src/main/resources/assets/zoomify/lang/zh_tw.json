@@ -123,7 +123,7 @@
     "zoomify.sound_behaviour.with_overlay": "匹配覆蓋（只有按望遠鏡時）",
   
     "zoomify.toast.conflictingKeybind.title": "Zoomify 不起作用！",
-    "zoomify.toast.conflictingKeybind.description": "存在衝突的按鍵綁定，阻止了縮放鍵起作用。你可以在 Zoomify 設定的%s類別中取消綁定。",
+    "zoomify.toast.conflictingKeybind.description": "存在衝突的按鍵綁定，阻止了縮放鍵起作用。您可以在 Zoomify 設定的%s類別中取消綁定。",
     "zoomify.toast.unbindConflicting.name": "解除衝突按鍵",
     "zoomify.toast.unbindConflicting.description": "Zoomify 解除綁定鍵‘%s’因為它與縮放鍵冲突。",
   
@@ -133,7 +133,7 @@
     "zoomify.migrate.restart": "需要重啟",
     "zoomify.migrate.result.restart_game": "重啟遊戲",
     "zoomify.migrate.available.title": "%s的自動遷移可用",
-    "zoomify.migrate.available.message": "你想要自動將你的%s配置遷移到 Zoomify 嗎？",
+    "zoomify.migrate.available.message": "您想要自動將您的%s設定遷移到 Zoomify 嗎？",
   
     "zoomify.migrate.okz": "OK Zoomer",
     "zoomify.migrate.okz.persistent": "不支持持續縮放模式。",
