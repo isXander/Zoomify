@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.8.0"
+kotlin = "1.8.20"
 loom = "1.0.+"
 loom_quiltflower = "1.8.+"
 
