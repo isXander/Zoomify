@@ -82,7 +82,7 @@
   "zoomify.gui.preset.toast.title": "应用预设",
   "zoomify.gui.preset.toast.description": "Zoomify应用了%s预设。",
   "zoomify.gui.preset.apply.description": "使Zoomify的行为像%s。",
-  "zoomify.gui.preset.apply.warning": "按下按钮将立即应用更改！",
+  "zoomify.gui.preset.apply.warning": "应用预设将立即应用更改并撤消任何未做出决定的更改。",
 
   "zoomify.gui.formatter.instant": "立即",
   "zoomify.gui.formatter.seconds": "%s秒",
@@ -123,7 +123,7 @@
   "zoomify.sound_behaviour.with_overlay": "匹配覆盖(只有按望远镜时)",
 
   "zoomify.toast.conflictingKeybind.title": "Zoomify不起作用！",
-  "zoomify.toast.conflictingKeybind.description": "存在冲突的按键绑定,阻止了缩放键起作用.你可以在Zoomify设置的%s类别中取消绑定。",
+  "zoomify.toast.conflictingKeybind.description": "存在冲突的按键绑定，阻止了缩放键起作用。你可以在Zoomify设置的%s类别中取消绑定。",
   "zoomify.toast.unbindConflicting.name": "解除冲突键位",
   "zoomify.toast.unbindConflicting.description": "Zoomify解除绑定键‘%s’因为它与缩放键冲突。",
 
