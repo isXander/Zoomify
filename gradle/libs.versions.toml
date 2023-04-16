@@ -1,16 +1,16 @@
 [versions]
 kotlin = "1.8.20"
-loom = "1.0.+"
+loom = "1.1.+"
 loom_quiltflower = "1.8.+"
 
-minecraft = "1.19.3"
-fabric_loader = "0.14.11"
+minecraft = "1.19.4"
+fabric_loader = "0.14.18"
 
-fabric_api = "0.72.0+1.19.3"
-fabric_language_kotlin = "1.9.0+kotlin.1.8.0"
-ktoml = "0.4.1"
-yet_another_config_lib = "2.2.0"
-mod_menu = "5.0.0"
+fabric_api = "0.78.0+1.19.4"
+fabric_language_kotlin = "1.9.3+kotlin.1.8.20"
+ktoml = "0.3.0"
+yet_another_config_lib = "2.3.0"
+mod_menu = "6.1.0-rc.4"
 mixin_extras = "0.1.1"
 
 settxi = "2.10.6"
