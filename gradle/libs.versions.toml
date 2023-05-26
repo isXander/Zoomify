@@ -1,7 +1,7 @@
 [versions]
 kotlin = "1.8.20"
 loom = "1.1.+"
-loom_quiltflower = "1.8.+"
+loom_quiltflower = "1.9.+"
 
 minecraft = "1.19.4"
 fabric_loader = "0.14.18"
