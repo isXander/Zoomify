@@ -38,11 +38,10 @@
   "depends": {
     "fabric-api": "*",
     "fabricloader": ">=0.14.10",
-    "fabric-language-kotlin": ">=1.9.1+kotlin.1.8.10",
-    "minecraft": "~1.19.3",
+    "fabric-language-kotlin": ">=1.9.4+kotlin.1.8.21",
+    "minecraft": "^1.19.3",
     "java": ">=17",
-    "yet-another-config-lib": ">=2.1.1",
-    "settxi-gui-yacl": ">=2.10.6"
+    "yet_another_config_lib_v3": "*"
   },
   "suggests": {
     "modmenu": ">=4.0.0"

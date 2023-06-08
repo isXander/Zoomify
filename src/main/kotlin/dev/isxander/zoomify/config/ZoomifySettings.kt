@@ -1,36 +1,26 @@
 package dev.isxander.zoomify.config
 
-import dev.isxander.settxi.gui.yacl.*
 import dev.isxander.settxi.impl.*
 import dev.isxander.settxi.serialization.PrimitiveType
 import dev.isxander.settxi.serialization.SettxiFileConfig
 import dev.isxander.settxi.serialization.kotlinxSerializer
-import dev.isxander.yacl.api.Option
-import dev.isxander.yacl.api.OptionFlag
-import dev.isxander.yacl.api.utils.OptionUtils
 import dev.isxander.zoomify.Zoomify
-import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.TransitionType
 import kotlinx.serialization.json.Json
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.toast.SystemToast
-import net.minecraft.screen.ScreenTexts
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
 import kotlin.io.path.notExists
 
 object ZoomifySettings : SettxiFileConfig(
     FabricLoader.getInstance().configDir.resolve("zoomify.json"),
     kotlinxSerializer(Json { prettyPrint = true })
 ) {
-    private const val BEHAVIOUR = "zoomify.gui.category.behaviour"
-    private const val SCROLLING = "zoomify.gui.category.scrolling"
-    private const val CONTROLS = "zoomify.gui.category.controls"
-    private const val SPYGLASS = "zoomify.gui.category.spyglass"
-    private const val SECONDARY = "zoomify.gui.category.secondary"
-    private const val MISC = "zoomify.gui.category.misc"
+    const val BEHAVIOUR = "zoomify.gui.category.behaviour"
+    const val SCROLLING = "zoomify.gui.category.scrolling"
+    const val CONTROLS = "zoomify.gui.category.controls"
+    const val SPYGLASS = "zoomify.gui.category.spyglass"
+    const val SECONDARY = "zoomify.gui.category.secondary"
+    const val MISC = "zoomify.gui.category.misc"
 
     private var needsSaving = false
 
@@ -39,9 +29,6 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.initialZoom.description"
         category = BEHAVIOUR
         range = 1..10
-
-        yaclValueFormatter = { Text.of("%dx".format(it)) }
-        yaclSliderInterval = 1
     }
 
     var zoomInTime by double(1.0) {
@@ -49,8 +36,6 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.zoomInTime.description"
         category = BEHAVIOUR
         range = 0.1..5.0
-        yaclValueFormatter = { Text.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
-        yaclSliderInterval = 0.1
     }
 
     var zoomOutTime by double(0.5) {
@@ -58,8 +43,6 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.zoomOutTime.description"
         category = BEHAVIOUR
         range = 0.1..5.0
-        yaclValueFormatter = { Text.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
-        yaclSliderInterval = 0.1
     }
 
     var zoomInTransition by enum(TransitionType.EASE_OUT_EXP) {
@@ -138,7 +121,6 @@ object ZoomifySettings : SettxiFileConfig(
             }
             type
         }
-        yaclSliderInterval = 1
     }
 
     var scrollZoomSmoothness by int(70) {
@@ -146,14 +128,6 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.scrollZoomSmoothness.description"
         category = SCROLLING
         range = 0..100
-
-        yaclValueFormatter = {
-            if (it == 0)
-                Text.translatable("zoomify.gui.formatter.instant")
-            else
-                Text.of("%d%%".format(it))
-        }
-        yaclSliderInterval = 1
     }
 
     var linearLikeSteps by boolean(true) {
@@ -185,7 +159,6 @@ object ZoomifySettings : SettxiFileConfig(
         name = "zoomify.gui.keybindScrolling.name"
         description = "zoomify.gui.keybindScrolling.description"
         category = CONTROLS
-        yaclFlags = setOf(OptionFlag.GAME_RESTART)
     }
 
     var relativeSensitivity by int(100) {
@@ -193,14 +166,6 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.relativeSensitivity.description"
         category = CONTROLS
         range = 0..150
-
-        yaclValueFormatter = {
-            if (it == 0)
-                ScreenTexts.OFF
-            else
-                Text.of("%d%%".format(it))
-        }
-        yaclSliderInterval = 10
 
         migrator { type ->
             if (type.isPrimitive && type.primitive.isBoolean) {
@@ -238,14 +203,6 @@ object ZoomifySettings : SettxiFileConfig(
                 type
             }
         }
-
-        yaclValueFormatter = {
-            if (it == 0)
-                ScreenTexts.OFF
-            else
-                Text.of("%d%%".format(it))
-        }
-        yaclSliderInterval = 10
     }
 
     var spyglassBehaviour by enum(SpyglassBehaviour.COMBINE) {
@@ -266,20 +223,11 @@ object ZoomifySettings : SettxiFileConfig(
         category = SPYGLASS
     }
 
-    init {
-        yaclLabel(Text.translatable("zoomify.gui.secondaryZoom.label")) {
-            category = SECONDARY
-        }
-    }
-
     var secondaryZoomAmount by int(4) {
         name = "zoomify.gui.secondaryZoomAmount.name"
         description = "zoomify.gui.secondaryZoomAmount.description"
         category = SECONDARY
         range = 2..10
-
-        yaclValueFormatter = { Text.of("%dx".format(it)) }
-        yaclSliderInterval = 1
     }
 
     var secondaryZoomInTime by double(10.0) {
@@ -287,8 +235,6 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.secondaryZoomInTime.description"
         category = SECONDARY
         range = 6.0..30.0
-        yaclSliderInterval = 2.0
-        yaclValueFormatter = { Text.translatable("zoomify.gui.formatter.seconds", "%.0f".format(it)) }
     }
 
     var secondaryZoomOutTime by double(1.0) {
@@ -296,74 +242,12 @@ object ZoomifySettings : SettxiFileConfig(
         description = "zoomify.gui.secondaryZoomOutTime.description"
         category = SECONDARY
         range = 0.0..5.0
-        yaclSliderInterval = 0.25
-        yaclValueFormatter = {
-            if (it == 0.0)
-                Text.translatable("zoomify.gui.formatter.instant")
-            else
-                Text.translatable("zoomify.gui.formatter.seconds", "%.2f".format(it))
-        }
     }
 
     var secondaryHideHUDOnZoom by boolean(true) {
         name = "zoomify.gui.secondaryZoomHideHUDOnZoom.name"
         description = "zoomify.gui.secondaryZoomHideHUDOnZoom.description"
         category = SECONDARY
-    }
-
-    init {
-        for (setting in settings) {
-            if (setting is BooleanSetting) setting.yaclUseTickBox = true
-        }
-
-        yaclButton({
-            Zoomify.unbindConflicting()
-        }) {
-            name = "zoomify.gui.unbindConflicting.name"
-            yaclButtonText = Text.translatable("zoomify.gui.unbindConflicting.button")
-            description = "zoomify.gui.unbindConflicting.description"
-            category = MISC
-        }
-
-        yaclButton({
-            if (!Migrator.checkMigrations()) {
-                val client = MinecraftClient.getInstance()
-                client.toastManager.add(SystemToast.create(
-                    client,
-                    SystemToast.Type.TUTORIAL_HINT,
-                    Text.translatable("zoomify.gui.title"),
-                    Text.translatable("zoomify.migrate.no_migrations")
-                ))
-            }
-        }) {
-            name = "zoomify.gui.checkMigrations.name"
-            yaclButtonText = Text.translatable("zoomify.gui.checkMigrations.button")
-            description = "zoomify.gui.checkMigrations.description"
-            category = MISC
-        }
-
-        val presetGroup = YaclGroup(Text.translatable("zoomify.gui.subcategory.presets"))
-
-        yaclLabel(Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)) {
-            yaclGroup = presetGroup
-            category = MISC
-        }
-        for (preset in Presets.values()) {
-            yaclButton({
-                val client = MinecraftClient.getInstance()
-                preset.apply(this)
-                client.toastManager.add(SystemToast.create(client, SystemToast.Type.TUTORIAL_HINT, Text.translatable("zoomify.gui.preset.toast.title"), Text.translatable("zoomify.gui.preset.toast.description", Text.translatable(preset.displayName))))
-
-                OptionUtils.forEachOptions(it.config, Option<*>::forgetPendingValue)
-                export()
-                it.init(client, it.width, it.height)
-            }) {
-                name = preset.displayName
-                yaclGroup = presetGroup
-                category = MISC
-                yaclButtonText = Text.translatable("zoomify.gui.preset.apply")
-            }
-        }
     }
 
     val firstLaunch = filePath.notExists()
@@ -379,5 +263,5 @@ object ZoomifySettings : SettxiFileConfig(
     }
 
     fun gui(parent: Screen? = null): Screen =
-        yetAnotherConfigLib(Text.translatable("zoomify.gui.title"), parent)
+        createSettingsGui(parent)
 }

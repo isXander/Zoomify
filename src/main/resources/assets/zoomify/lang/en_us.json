@@ -9,6 +9,7 @@
   "zoomify.gui.title": "Zoomify",
 
   "zoomify.gui.category.behaviour": "Behavior",
+  "zoomify.gui.group.basic": "Basic",
   "zoomify.gui.initialZoom.name": "Initial Zoom",
   "zoomify.gui.initialZoom.description": "The zoom level when you first press the keybind.",
   "zoomify.gui.zoomInTime.name": "Zoom In Time",

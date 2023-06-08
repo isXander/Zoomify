@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.9.4"
+version = "2.10.0"
 
 repositories {
     mavenCentral()
@@ -39,17 +39,8 @@ dependencies {
 
     modApi(libs.yet.another.config.lib)
 
-    implementation(libs.settxi.core)
-    include(libs.settxi.core)
-    implementation(libs.settxi.serialization.kotlinx)
-    include(libs.settxi.serialization.kotlinx)
-    include(libs.settxi.gui)
-    modImplementation(libs.settxi.gui.yacl) {
-        artifact { classifier = "fabric-1.19.3" }
-    }
-    include(libs.settxi.gui.yacl) {
-        artifact { classifier = "fabric-1.19.3" }
-    }
+    implementation(libs.bundles.settxi)
+    include(libs.bundles.settxi)
 
     modImplementation(libs.mod.menu)
 
@@ -73,6 +64,12 @@ tasks {
         kotlinOptions {
             jvmTarget = "17"
         }
+    }
+
+    // makes Zoomify builds reproducible.
+    withType<AbstractArchiveTask> {
+        isPreserveFileTimestamps = false
+        isReproducibleFileOrder = true
     }
 
     processResources {
@@ -105,7 +102,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.19.3"))
+        gameVersions.set(listOf("1.19.3", "1.19.4", "1.20"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -130,6 +127,8 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             id = curseforgeId
             releaseType = "release"
             addGameVersion("1.19.3")
+            addGameVersion("1.19.4")
+            addGameVersion("1.20")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
             addGameVersion("Java 17")
