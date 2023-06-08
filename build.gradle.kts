@@ -184,3 +184,7 @@ publishing {
         } else println("Cannot publish to https://maven.isxander.dev")
     }
 }
+
+tasks["githubRelease"].dependsOn("optimizeOutputsOfRemapJar")
+tasks["modrinth"].dependsOn("optimizeOutputsOfRemapJar")
+tasks["generateMetadataFileForZoomifyPublication"].dependsOn("optimizeOutputsOfRemapJar")
