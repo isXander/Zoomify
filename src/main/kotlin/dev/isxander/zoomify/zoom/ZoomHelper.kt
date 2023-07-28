@@ -99,4 +99,14 @@ class ZoomHelper(
             prevScrollInterpolation = 0.0
         }
     }
+
+    fun setToZero() {
+        initialInterpolation = 0.0
+        prevInitialInterpolation = 0.0
+        scrollInterpolation = 0.0
+        prevScrollInterpolation = 0.0
+        resetting = false
+        zoomingLastTick = false
+        lastScrollTier = 0
+    }
 }

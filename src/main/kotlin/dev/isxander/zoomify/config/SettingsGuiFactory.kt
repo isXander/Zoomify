@@ -10,6 +10,9 @@ import dev.isxander.yacl3.api.utils.OptionUtils
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.TransitionType
+import dev.isxander.zoomify.zoom.InstantInterpolator
+import dev.isxander.zoomify.zoom.TransitionInterpolator
+import dev.isxander.zoomify.zoom.ZoomHelper
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.toast.SystemToast
@@ -22,7 +25,53 @@ import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.jvm.isAccessible
 
 fun createSettingsGui(parent: Screen? = null): Screen {
-    return YetAnotherConfigLib.createBuilder().apply {
+    var inTransition = ZoomifySettings.zoomInTransition
+    var outTransition = ZoomifySettings.zoomOutTransition
+    var inDuration = ZoomifySettings.zoomInTime
+    var outDuration = ZoomifySettings.zoomOutTime
+    var initialZoomAmt = ZoomifySettings.initialZoom
+    var scrollZoomAmt = ZoomifySettings.scrollZoomAmount
+    var linearLikeSteps = ZoomifySettings.linearLikeSteps
+    var demoDesc: ZoomDemoImageRenderer? = null
+
+    fun Option.Builder<*>.descriptionWithDemo(text: Text) {
+        description(OptionDescription.createBuilder().apply {
+            text(text)
+            if (demoDesc == null) {
+                demoDesc = ZoomDemoImageRenderer(
+                    ZoomHelper(
+                        TransitionInterpolator(
+                            { inTransition },
+                            { outTransition },
+                            { inDuration },
+                            { outDuration },
+                        ),
+                        InstantInterpolator,
+                        { initialZoomAmt },
+                        { scrollZoomAmt },
+                        { 5 },
+                        { linearLikeSteps }
+                    )
+                ).also {
+                    it.keepHandFov = !ZoomifySettings.affectHandFov
+                }
+            }
+            customImage(CompletableFuture.completedFuture(Optional.of(demoDesc!!)))
+        }.build())
+    }
+
+    fun <T> Option.Builder<T>.updateDemo(updateFunc: (T, ZoomDemoImageRenderer) -> Unit) {
+        listener { opt, v ->
+            val demoRenderer = opt.description()?.let { it.image().get().get() as ZoomDemoImageRenderer }
+            if (demoRenderer != null) {
+                updateFunc(v, demoRenderer)
+                demoRenderer.pause()
+            }
+
+        }
+    }
+
+    val screen = YetAnotherConfigLib.createBuilder().apply {
         title(Text.translatable("zoomify.gui.title"))
         category(ConfigCategory.createBuilder().apply {
             name(Text.translatable("zoomify.gui.category.behaviour"))
@@ -39,6 +88,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         step(1)
                         valueFormatter { Text.of("%dx".format(it)) }
                     }}
+                    updateDemo { v, _ -> initialZoomAmt = v }
                 }.build())
 
                 option(Option.createBuilder<Double>().apply {
@@ -50,6 +100,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         step(0.1)
                         formatSeconds()
                     }}
+                    updateDemo { v, _ -> inDuration = v }
                 }.build())
 
                 option(Option.createBuilder<Double>().apply {
@@ -61,6 +112,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         step(0.1)
                         formatSeconds()
                     }}
+                    updateDemo { v, _ -> outDuration = v }
                 }.build())
 
                 option(Option.createBuilder<TransitionType>().apply {
@@ -71,6 +123,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         formatSettxiEnum()
                         enumClass(TransitionType::class.java)
                     }}
+                    updateDemo { v, _ -> inTransition = v }
                 }.build())
 
                 option(Option.createBuilder<TransitionType>().apply {
@@ -81,6 +134,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         formatSettxiEnum()
                         enumClass(TransitionType::class.java)
                     }}
+                    updateDemo { v, _ -> outTransition = v.opposite() }
                 }.build())
 
                 option(Option.createBuilder<Boolean>().apply {
@@ -88,6 +142,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                     descriptionWithDemo(Text.translatable("zoomify.gui.affectHandFov.description"))
                     bindSetting(ZoomifySettings::affectHandFov)
                     controller(TickBoxControllerBuilder::create)
+                    updateDemo { v, demo -> demo.keepHandFov = !v }
                 }.build())
 
                 option(Option.createBuilder<Boolean>().apply {
@@ -341,31 +396,12 @@ fun createSettingsGui(parent: Screen? = null): Screen {
 
         save(ZoomifySettings::export)
     }.build().generateScreen(parent)
+
+    return screen
 }
 
 private fun Option.Builder<*>.useSettxiName(prop: KMutableProperty0<*>) {
     name(Text.translatable(prop.setting.name))
-}
-
-private fun Option.Builder<*>.descriptionWithDemo(text: Text) {
-    description(OptionDescription.createBuilder().apply {
-        text(text)
-//        customImage(CompletableFuture.completedFuture(Optional.of(ZoomDemoImageRenderer(
-//            ZoomHelper(
-//                TransitionInterpolator(
-//                    { TransitionType.EASE_OUT_EXP },
-//                    { TransitionType.EASE_OUT_EXP },
-//                    { 2.0 },
-//                    { 0.5 },
-//                ),
-//                InstantInterpolator,
-//                { 4 },
-//                { 4 },
-//                { 5 },
-//                { true }
-//            )
-//        ))))
-    }.build())
 }
 
 private fun <T : Any> Option.Builder<T>.bindSetting(setting: Setting<T>) {

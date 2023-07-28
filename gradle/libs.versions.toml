@@ -3,15 +3,16 @@ kotlin = "1.8.21"
 loom = "1.2.+"
 loom_quiltflower = "1.10.+"
 
-minecraft = "1.20"
+minecraft = "1.20.1"
 fabric_loader = "0.14.21"
 
-fabric_api = "0.83.0+1.20"
+fabric_api = "0.85.0+1.20.1"
 fabric_language_kotlin = "1.9.4+kotlin.1.8.21"
 ktoml = "0.4.1"
-yet_another_config_lib = "3.0.1+1.20"
+yet_another_config_lib = "3.1.0+1.20"
 mod_menu = "7.0.0"
 mixin_extras = "0.2.0-beta.8"
+controlify = "1.4.4+1.20"
 
 settxi = "2.10.6"
 
@@ -25,6 +26,7 @@ ktoml_core = { module = "com.akuleshov7:ktoml-core-jvm", version.ref = "ktoml" }
 yet_another_config_lib = { module = "dev.isxander.yacl:yet-another-config-lib-fabric", version.ref = "yet_another_config_lib" }
 mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
 mixin_extras = { module = "com.github.llamalad7.mixinextras:mixinextras-fabric", version.ref = "mixin_extras" }
+controlify = { module = "dev.isxander:controlify", version.ref = "controlify" }
 settxi_core = { module = "dev.isxander.settxi:settxi-core", version.ref = "settxi" }
 settxi_serialization_kotlinx = { module = "dev.isxander.settxi:settxi-kotlinx-serialization", version.ref = "settxi" }
 

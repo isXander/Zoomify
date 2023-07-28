@@ -25,6 +25,9 @@ repositories {
     maven("https://maven.shedaniel.me/")
     maven("https://maven.terraformersmc.com/releases")
     maven("https://jitpack.io")
+    maven("https://api.modrinth.com/maven")
+    maven("https://maven.quiltmc.org/repository/release/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots/")
 }
 
 dependencies {
@@ -43,6 +46,8 @@ dependencies {
     include(libs.bundles.settxi)
 
     modImplementation(libs.mod.menu)
+
+    //modImplementation(libs.controlify)
 
     libs.mixin.extras.let {
         implementation(it)
@@ -102,7 +107,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.19.3", "1.19.4", "1.20"))
+        gameVersions.set(listOf("1.19.3", "1.19.4", "1.20", "1.20.1"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -129,6 +134,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
             addGameVersion("1.19.3")
             addGameVersion("1.19.4")
             addGameVersion("1.20")
+            addGameVersion("1.20.1")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
             addGameVersion("Java 17")
@@ -158,7 +164,7 @@ githubRelease {
     owner(split[0])
     repo(split[1])
     tagName("${project.version}")
-    targetCommitish("1.19.3")
+    targetCommitish("1.20")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
 }
