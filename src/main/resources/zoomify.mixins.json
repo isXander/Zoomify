@@ -5,7 +5,7 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "mixins": [
+  "client": [
     "hooks.MinecraftClientMixin",
     "spyglass.AbstractClientPlayerEntityMixin",
     "spyglass.InGameHudMixin",
@@ -13,8 +13,5 @@
     "zoom.GameRendererMixin",
     "zoom.MouseMixin",
     "zoom.secondary.GameRendererMixin"
-  ],
-  "client": [
-    "text.InGameHudMixin"
   ]
 }
