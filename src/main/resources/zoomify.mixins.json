@@ -13,5 +13,8 @@
     "zoom.GameRendererMixin",
     "zoom.MouseMixin",
     "zoom.secondary.GameRendererMixin"
+  ],
+  "client": [
+    "text.InGameHudMixin"
   ]
 }

@@ -11,7 +11,7 @@ class ZoomHelper(
 
     private val initialZoom: () -> Int,
     private val scrollZoomAmount: () -> Int,
-    private val maxScrollTiers: () -> Int,
+    val maxScrollTiers: () -> Int,
     private val linearLikeSteps: () -> Boolean,
 ) {
     private var prevInitialInterpolation = 0.0
@@ -100,13 +100,22 @@ class ZoomHelper(
         }
     }
 
-    fun setToZero() {
-        initialInterpolation = 0.0
-        prevInitialInterpolation = 0.0
-        scrollInterpolation = 0.0
-        prevScrollInterpolation = 0.0
+    fun setToZero(initial: Boolean = true, scroll: Boolean = true) {
+        if (initial) {
+            initialInterpolation = 0.0
+            prevInitialInterpolation = 0.0
+            zoomingLastTick = false
+        }
+        if (scroll) {
+            scrollInterpolation = 0.0
+            prevScrollInterpolation = 0.0
+            lastScrollTier = 0
+        }
         resetting = false
-        zoomingLastTick = false
-        lastScrollTier = 0
+    }
+
+    fun skipInitial() {
+        initialInterpolation = 1.0
+        prevInitialInterpolation = 1.0
     }
 }

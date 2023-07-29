@@ -36,7 +36,8 @@ object Zoomify : ClientModInitializer {
             ZoomifySettings::zoomOutTransition,
             ZoomifySettings::zoomInTime,
             ZoomifySettings::zoomOutTime
-        ), SmoothInterpolator {
+        ),
+        SmoothInterpolator {
             MathHelper.lerp(
                 ZoomifySettings.scrollZoomSmoothness / 100.0,
                 1.0,
