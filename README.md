@@ -12,15 +12,15 @@
 [![CurseForge](https://cf.way2muchnoise.eu/full_zoomify_downloads.svg)](https://curseforge.com/minecraft/mc-mods/zoomify)
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/isxander)
-  
+
 *A zoom mod with infinite customizability.*
-  
+
 Zoomify aims to provide the easiest, most configurable and most sexy looking zoom mod you will ever find.
 
 ![Zoom Example](https://raw.githubusercontent.com/isXander/Zoomify/1.19/screenshots/zoom-example.gif)
-  
+
 [![](https://www.bisecthosting.com/partners/custom-banners/08bbd3ff-5c0d-4480-8738-de0f070a04dd.png)](https://bisecthosting.com/xander)
-  
+
 </center></div>
 
 ## How to use
@@ -124,12 +124,14 @@ the exact amount of seconds it will take to zoom in, with a separate setting for
 #### Translators
 Languages in alphabetical order
 
-- [Xander](https://github.com/isXander) - English (United Kingdom)
 - [神枪968](https://github.com/GodGun968) - 简体中文 / Chinese (Simplified)
+- [Xander](https://github.com/isXander) - English (United Kingdom)
 - [Madis0](https://github.com/Madis0) - eesti keel / Estonian
+- [co-91](https://github.com/co-91) - 日本語 / Japanese
 - [Rodrigo Appelt](https://github.com/Agentew04) - Português / Portuguese
 - [SyberiaK](https://github.com/SyberiaK) - Русский / Russian
 - [Felix14-v2](https://github.com/Felix14-v2) - Русский / Russian
 - [Zetsphiron](https://github.com/Zetsphiron) - Español (mexicano) / Spanish (Mexico)
 - [Zetsphiron](https://github.com/Zetsphiron) - Español (españa) / Spanish (Spain)
 - [localfossa](https://github.com/localfossa) - Türkçe / Turkish
+- [Im Vietnam](https://github.com/ImVietnam) - Tiếng Việt / Vietnamese
