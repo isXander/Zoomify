@@ -8,7 +8,6 @@ import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.utils.TransitionType
 import kotlinx.serialization.json.Json
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.gui.screen.Screen
 import kotlin.io.path.notExists
 
 object ZoomifySettings : SettxiFileConfig(
@@ -261,7 +260,4 @@ object ZoomifySettings : SettxiFileConfig(
 
         keybindScrolling = _keybindScrolling
     }
-
-    fun gui(parent: Screen? = null): Screen =
-        createSettingsGui(parent)
 }

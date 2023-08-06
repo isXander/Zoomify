@@ -1,11 +1,11 @@
 package dev.isxander.zoomify.config.migrator
 
 import dev.isxander.zoomify.config.ZoomifySettings
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gui.screen.ConfirmScreen
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
+import net.minecraft.ChatFormatting
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.screens.ConfirmScreen
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.Component
 
 class MigrationAvailableScreen(migrator: Migrator, parent: Screen?) : ConfirmScreen(
     { yes ->
@@ -13,11 +13,11 @@ class MigrationAvailableScreen(migrator: Migrator, parent: Screen?) : ConfirmScr
             val migration = Migration()
             migrator.migrate(migration)
             ZoomifySettings.export()
-            MinecraftClient.getInstance().setScreen(MigrationResultScreen(migration, parent))
+            Minecraft.getInstance().setScreen(MigrationResultScreen(migration, parent))
         } else {
-            MinecraftClient.getInstance().setScreen(parent)
+            Minecraft.getInstance().setScreen(parent)
         }
     },
-    Text.translatable("zoomify.migrate.available.title", migrator.name.copy().formatted(Formatting.BOLD)),
-    Text.translatable("zoomify.migrate.available.message", migrator.name)
+    Component.translatable("zoomify.migrate.available.title", migrator.name.copy().withStyle(ChatFormatting.BOLD)),
+    Component.translatable("zoomify.migrate.available.message", migrator.name)
 )

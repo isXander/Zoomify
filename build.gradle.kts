@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
 
     alias(libs.plugins.loom)
-    alias(libs.plugins.loom.quiltflower)
+    alias(libs.plugins.loom.vineflower)
 
     id("com.modrinth.minotaur") version "2.7.+"
     id("me.hypherionmc.cursegradle") version "2.+"
@@ -32,7 +32,10 @@ repositories {
 
 dependencies {
     minecraft(libs.minecraft)
-    mappings("net.fabricmc:yarn:${libs.versions.minecraft.get()}+build.+:v2")
+    mappings(loom.layered {
+        mappings("org.quiltmc:quilt-mappings:${libs.versions.minecraft.get()}+build.${libs.versions.quilt.mappings.get()}:intermediary-v2")
+        officialMojangMappings()
+    })
     modImplementation(libs.fabric.loader)
     modImplementation(libs.fabric.api)
     modImplementation(libs.fabric.language.kotlin)
@@ -47,7 +50,7 @@ dependencies {
 
     modImplementation(libs.mod.menu)
 
-    //modImplementation(libs.controlify)
+    //modCompileOnly(libs.controlify)
 
     libs.mixin.extras.let {
         implementation(it)
@@ -69,12 +72,6 @@ tasks {
         kotlinOptions {
             jvmTarget = "17"
         }
-    }
-
-    // makes Zoomify builds reproducible.
-    withType<AbstractArchiveTask> {
-        isPreserveFileTimestamps = false
-        isReproducibleFileOrder = true
     }
 
     processResources {

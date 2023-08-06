@@ -1,44 +1,44 @@
 package dev.isxander.zoomify.config.migrator
 
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
+import net.minecraft.ChatFormatting
+import net.minecraft.network.chat.Component
 
 class Migration {
-    private val warnings = mutableListOf<Text>()
-    private val errors = mutableListOf<Text>()
+    private val warnings = mutableListOf<Component>()
+    private val errors = mutableListOf<Component>()
     var requireRestart = false
         private set
 
-    fun error(text: Text) = errors.add(text)
-    fun warn(text: Text) = warnings.add(text)
+    fun error(text: Component) = errors.add(text)
+    fun warn(text: Component) = warnings.add(text)
 
     fun requireRestart() {
         requireRestart = true
     }
 
-    fun generateReport(): Text {
-        val text = Text.empty()
+    fun generateReport(): Component {
+        val text = Component.empty()
 
         val errors = this.errors
         if (requireRestart) {
-            errors.add(0, Text.translatable("zoomify.migrate.restart"))
+            errors.add(0, Component.translatable("zoomify.migrate.restart"))
         }
 
         for (error in errors) {
-            val line = Text.empty()
+            val line = Component.empty()
                 .append("\u25C6 ")
                 .append(error)
                 .append("\n")
-                .formatted(Formatting.RED)
+                .withStyle(ChatFormatting.RED)
             text.append(line)
         }
 
         for (warning in warnings) {
-            val line = Text.empty()
+            val line = Component.empty()
                 .append("\u25C6 ")
                 .append(warning)
                 .append("\n")
-                .formatted(Formatting.YELLOW)
+                .withStyle(ChatFormatting.YELLOW)
             text.append(line)
         }
 

@@ -4,22 +4,22 @@ import com.llamalad7.mixinextras.injector.WrapWithCondition;
 import dev.isxander.zoomify.config.OverlayVisibility;
 import dev.isxander.zoomify.config.SoundBehaviour;
 import dev.isxander.zoomify.config.ZoomifySettings;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.SpyglassItem;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.SpyglassItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(SpyglassItem.class)
 public class SpyglassItemMixin {
     @WrapWithCondition(
-        method = {"use", "playStopUsingSound"},
+        method = {"use", "stopUsing"},
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/entity/player/PlayerEntity;playSound(Lnet/minecraft/sound/SoundEvent;FF)V"
+            target = "Lnet/minecraft/world/entity/player/Player;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"
         )
     )
-    private boolean shouldPlaySpyglassSound(PlayerEntity instance, SoundEvent event, float volume, float pitch) {
+    private boolean shouldPlaySpyglassSound(Player instance, SoundEvent event, float volume, float pitch) {
         if (ZoomifySettings.INSTANCE.getSpyglassSoundBehaviour() == SoundBehaviour.NEVER)
             return false;
 

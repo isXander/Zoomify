@@ -1,11 +1,11 @@
 package dev.isxander.zoomify.config.migrator
 
 import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator
-import net.minecraft.client.MinecraftClient
-import net.minecraft.text.Text
+import net.minecraft.client.Minecraft
+import net.minecraft.network.chat.Component
 
 interface Migrator {
-    val name: Text
+    val name: Component
 
     fun isMigrationAvailable(): Boolean
 
@@ -20,13 +20,13 @@ interface Migrator {
             if (available.isEmpty())
                 return false
 
-            var lastScreen = MinecraftClient.getInstance().currentScreen
+            var lastScreen = Minecraft.getInstance().screen
 
             for (migrator in available) {
                 lastScreen = MigrationAvailableScreen(migrator, lastScreen)
             }
 
-            MinecraftClient.getInstance().setScreen(lastScreen)
+            Minecraft.getInstance().setScreen(lastScreen)
             return true
         }
     }

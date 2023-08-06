@@ -2,25 +2,25 @@ package dev.isxander.zoomify.mixins.spyglass;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.isxander.zoomify.Zoomify;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(InGameHud.class)
+@Mixin(Gui.class)
 public class InGameHudMixin {
-    @Shadow @Final private MinecraftClient client;
+    @Shadow @Final private Minecraft minecraft;
 
     @ModifyExpressionValue(
         method = "render",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/network/ClientPlayerEntity;isUsingSpyglass()Z"
+            target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"
         )
     )
     private boolean shouldRenderSpyglassOverlay(boolean isUsingSpyglass) {
-        return Zoomify.shouldRenderOverlay(client.player, isUsingSpyglass);
+        return Zoomify.shouldRenderOverlay(minecraft.player, isUsingSpyglass);
     }
 }

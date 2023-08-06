@@ -3,7 +3,7 @@ package dev.isxander.zoomify.mixins.zoom.secondary;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import dev.isxander.zoomify.Zoomify;
 import dev.isxander.zoomify.config.ZoomifySettings;
-import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.renderer.GameRenderer;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +14,7 @@ public class GameRendererMixin {
         method = "render",
         at = @At(
             value = "FIELD",
-            target = "Lnet/minecraft/client/option/GameOptions;hudHidden:Z",
+            target = "Lnet/minecraft/client/Options;hideGui:Z",
             opcode = Opcodes.GETFIELD
         )
     )

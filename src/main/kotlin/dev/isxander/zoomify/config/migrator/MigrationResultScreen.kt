@@ -1,23 +1,27 @@
 package dev.isxander.zoomify.config.migrator
 
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gui.screen.NoticeScreen
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.screen.ScreenTexts
-import net.minecraft.text.Text
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.screens.AlertScreen
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.CommonComponents
+import net.minecraft.network.chat.Component
+
 
 class MigrationResultScreen(
     migration: Migration,
     parent: Screen?,
-) : NoticeScreen(
+) : AlertScreen(
     {
         if (migration.requireRestart)
-            MinecraftClient.getInstance().scheduleStop()
+            Minecraft.getInstance().stop()
         else
-            MinecraftClient.getInstance().setScreen(parent)
+            Minecraft.getInstance().setScreen(parent)
     },
-    Text.translatable("zoomify.migrate.result.title"),
+    Component.translatable("zoomify.migrate.result.title"),
     migration.generateReport(),
-    if (migration.requireRestart) Text.translatable("zoomify.migrate.result.restart_game") else ScreenTexts.DONE,
+    if (migration.requireRestart)
+        Component.translatable("zoomify.migrate.result.restart_game")
+    else
+        CommonComponents.GUI_DONE,
     true
 )

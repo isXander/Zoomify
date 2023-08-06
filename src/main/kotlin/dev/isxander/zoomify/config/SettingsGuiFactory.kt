@@ -15,13 +15,13 @@ import dev.isxander.zoomify.config.demo.ZoomDemoImageRenderer
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.TransitionType
 import dev.isxander.zoomify.zoom.*
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.toast.SystemToast
-import net.minecraft.screen.ScreenTexts
-import net.minecraft.text.Text
-import net.minecraft.util.Formatting
-import net.minecraft.util.math.MathHelper
+import net.minecraft.ChatFormatting
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.components.toasts.SystemToast
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.CommonComponents
+import net.minecraft.network.chat.Component
+import net.minecraft.util.Mth
 import java.util.*
 import java.util.concurrent.CompletableFuture
 import kotlin.reflect.KMutableProperty0
@@ -49,7 +49,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             { outDuration },
         ),
         SmoothInterpolator {
-            MathHelper.lerp(
+            Mth.lerp(
                 scrollZoomSmoothness / 100.0,
                 1.0,
                 0.1
@@ -92,32 +92,32 @@ fun createSettingsGui(parent: Screen? = null): Screen {
     }
 
     val screen = YetAnotherConfigLib.createBuilder().apply {
-        title(Text.translatable("zoomify.gui.title"))
+        title(Component.translatable("zoomify.gui.title"))
         category(ConfigCategory.createBuilder().apply {
-            name(Text.translatable("zoomify.gui.category.behaviour"))
+            name(Component.translatable("zoomify.gui.category.behaviour"))
 
             group(OptionGroup.createBuilder().apply {
-                name(Text.translatable("zoomify.gui.group.basic"))
+                name(Component.translatable("zoomify.gui.group.basic"))
 
                 option(Option.createBuilder<Int>().apply {
-                    name(Text.translatable("zoomify.gui.initialZoom.name"))
+                    name(Component.translatable("zoomify.gui.initialZoom.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.initialZoom.description"))
+                        text(Component.translatable("zoomify.gui.initialZoom.description"))
                         demo(initialOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::initialZoom)
                     controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
                         range(ZoomifySettings::initialZoom.asSetting<Int, IntSetting>().range!!)
                         step(1)
-                        valueFormatter { Text.of("%dx".format(it)) }
+                        valueFormatter { Component.literal("%dx".format(it)) }
                     }}
                     updateDemo { v, _ -> initialZoomAmt = v }
                 }.build())
 
                 option(Option.createBuilder<Double>().apply {
-                    name(Text.translatable("zoomify.gui.zoomInTime.name"))
+                    name(Component.translatable("zoomify.gui.zoomInTime.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.zoomInTime.description"))
+                        text(Component.translatable("zoomify.gui.zoomInTime.description"))
                         demo(initialOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::zoomInTime)
@@ -130,9 +130,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build())
 
                 option(Option.createBuilder<Double>().apply {
-                    name(Text.translatable("zoomify.gui.zoomOutTime.name"))
+                    name(Component.translatable("zoomify.gui.zoomOutTime.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.zoomOutTime.description"))
+                        text(Component.translatable("zoomify.gui.zoomOutTime.description"))
                         demo(initialOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::zoomOutTime)
@@ -145,9 +145,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build())
 
                 option(Option.createBuilder<TransitionType>().apply {
-                    name(Text.translatable("zoomify.gui.zoomInTransition.name"))
+                    name(Component.translatable("zoomify.gui.zoomInTransition.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.zoomInTransition.description"))
+                        text(Component.translatable("zoomify.gui.zoomInTransition.description"))
                         demo(initialOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::zoomInTransition)
@@ -159,9 +159,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build())
 
                 option(Option.createBuilder<TransitionType>().apply {
-                    name(Text.translatable("zoomify.gui.zoomOutTransition.name"))
+                    name(Component.translatable("zoomify.gui.zoomOutTransition.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.zoomOutTransition.description"))
+                        text(Component.translatable("zoomify.gui.zoomOutTransition.description"))
                         demo(initialOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::zoomOutTransition)
@@ -173,9 +173,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build())
 
                 option(Option.createBuilder<Boolean>().apply {
-                    name(Text.translatable("zoomify.gui.affectHandFov.name"))
+                    name(Component.translatable("zoomify.gui.affectHandFov.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.affectHandFov.description"))
+                        text(Component.translatable("zoomify.gui.affectHandFov.description"))
                         demo(scrollOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::affectHandFov)
@@ -185,14 +185,14 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             }.build())
 
             group(OptionGroup.createBuilder().apply {
-                name(Text.translatable(ZoomifySettings.SCROLLING))
+                name(Component.translatable(ZoomifySettings.SCROLLING))
 
                 val scrollOpts = mutableListOf<Option<*>>()
 
                 option(Option.createBuilder<Boolean>().apply {
-                    name(Text.translatable("zoomify.gui.scrollZoom.name"))
+                    name(Component.translatable("zoomify.gui.scrollZoom.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.scrollZoom.description"))
+                        text(Component.translatable("zoomify.gui.scrollZoom.description"))
                         demo(scrollOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::scrollZoom)
@@ -202,9 +202,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build())
 
                 option(Option.createBuilder<Int>().apply {
-                    name(Text.translatable("zoomify.gui.scrollZoomAmount.name"))
+                    name(Component.translatable("zoomify.gui.scrollZoomAmount.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.scrollZoomAmount.description"))
+                        text(Component.translatable("zoomify.gui.scrollZoomAmount.description"))
                         demo(scrollOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::scrollZoomAmount)
@@ -216,9 +216,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build().also { scrollOpts.add(it) })
 
                 option(Option.createBuilder<Int>().apply {
-                    name(Text.translatable("zoomify.gui.scrollZoomSmoothness.name"))
+                    name(Component.translatable("zoomify.gui.scrollZoomSmoothness.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.scrollZoomSmoothness.description"))
+                        text(Component.translatable("zoomify.gui.scrollZoomSmoothness.description"))
                         demo(scrollOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::scrollZoomSmoothness)
@@ -227,18 +227,18 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         step(1)
                         valueFormatter {
                             if (it == 0)
-                                Text.translatable("zoomify.gui.formatter.instant")
+                                Component.translatable("zoomify.gui.formatter.instant")
                             else
-                                Text.of("%d%%".format(it))
+                                Component.literal("%d%%".format(it))
                         }
                     }}
                     updateDemo { v, _ -> scrollZoomSmoothness = v }
                 }.build().also { scrollOpts.add(it) })
 
                 option(Option.createBuilder<Boolean>().apply {
-                    name(Text.translatable("zoomify.gui.linearLikeSteps.name"))
+                    name(Component.translatable("zoomify.gui.linearLikeSteps.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.linearLikeSteps.description"))
+                        text(Component.translatable("zoomify.gui.linearLikeSteps.description"))
                         demo(scrollOnlyDemo)
                     }
                     bindSetting(ZoomifySettings::linearLikeSteps)
@@ -247,9 +247,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 }.build().also { scrollOpts.add(it) })
 
                 option(Option.createBuilder<Boolean>().apply {
-                    name(Text.translatable("zoomify.gui.retainZoomSteps.name"))
+                    name(Component.translatable("zoomify.gui.retainZoomSteps.name"))
                     desc {
-                        text(Text.translatable("zoomify.gui.retainZoomSteps.description"))
+                        text(Component.translatable("zoomify.gui.retainZoomSteps.description"))
                     }
                     bindSetting(ZoomifySettings::retainZoomSteps)
                     controller(TickBoxControllerBuilder::create)
@@ -257,11 +257,11 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             }.build())
 
             group(OptionGroup.createBuilder().apply {
-                name(Text.translatable(ZoomifySettings.SPYGLASS))
+                name(Component.translatable(ZoomifySettings.SPYGLASS))
 
                 option(Option.createBuilder<SpyglassBehaviour>().apply {
                     useSettxiName(ZoomifySettings::spyglassBehaviour)
-                    description(OptionDescription.of(Text.translatable(ZoomifySettings::spyglassBehaviour.setting.description)))
+                    description(OptionDescription.of(Component.translatable(ZoomifySettings::spyglassBehaviour.setting.description)))
                     bindSetting(ZoomifySettings::spyglassBehaviour)
                     controller { opt -> EnumControllerBuilder.create(opt).apply {
                         enumClass(SpyglassBehaviour::class.java)
@@ -272,7 +272,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 option(Option.createBuilder<OverlayVisibility>().apply {
                     useSettxiName(ZoomifySettings::spyglassOverlayVisibility)
                     desc {
-                        text(Text.translatable(ZoomifySettings::spyglassOverlayVisibility.setting.description))
+                        text(Component.translatable(ZoomifySettings::spyglassOverlayVisibility.setting.description))
                     }
                     bindSetting(ZoomifySettings::spyglassOverlayVisibility)
                     controller { opt -> EnumControllerBuilder.create(opt).apply {
@@ -284,7 +284,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 option(Option.createBuilder<SoundBehaviour>().apply {
                     useSettxiName(ZoomifySettings::spyglassSoundBehaviour)
                     desc {
-                        text(Text.translatable(ZoomifySettings::spyglassSoundBehaviour.setting.description))
+                        text(Component.translatable(ZoomifySettings::spyglassSoundBehaviour.setting.description))
                     }
                     bindSetting(ZoomifySettings::spyglassSoundBehaviour)
                     controller { opt -> EnumControllerBuilder.create(opt).apply {
@@ -296,12 +296,12 @@ fun createSettingsGui(parent: Screen? = null): Screen {
         }.build())
 
         category(ConfigCategory.createBuilder().apply {
-            name(Text.translatable(ZoomifySettings.CONTROLS))
+            name(Component.translatable(ZoomifySettings.CONTROLS))
 
             option(Option.createBuilder<ZoomKeyBehaviour>().apply {
                 useSettxiName(ZoomifySettings::zoomKeyBehaviour)
                 desc {
-                    text(Text.translatable(ZoomifySettings::zoomKeyBehaviour.setting.description))
+                    text(Component.translatable(ZoomifySettings::zoomKeyBehaviour.setting.description))
                 }
                 bindSetting(ZoomifySettings::zoomKeyBehaviour)
                 controller { opt -> EnumControllerBuilder.create(opt).apply {
@@ -313,7 +313,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Boolean>().apply {
                 useSettxiName(ZoomifySettings::_keybindScrolling)
                 desc {
-                    text(Text.translatable(ZoomifySettings::_keybindScrolling.setting.description))
+                    text(Component.translatable(ZoomifySettings::_keybindScrolling.setting.description))
                 }
                 bindSetting(ZoomifySettings::_keybindScrolling)
                 controller(TickBoxControllerBuilder::create)
@@ -323,7 +323,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Int>().apply {
                 useSettxiName(ZoomifySettings::relativeSensitivity)
                 desc {
-                    text(Text.translatable(ZoomifySettings::relativeSensitivity.setting.description))
+                    text(Component.translatable(ZoomifySettings::relativeSensitivity.setting.description))
                 }
                 bindSetting(ZoomifySettings::relativeSensitivity)
                 controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
@@ -331,9 +331,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                     step(10)
                     valueFormatter {
                         if (it == 0)
-                            ScreenTexts.OFF
+                            CommonComponents.OPTION_OFF
                         else
-                            Text.of("%d%%".format(it))
+                            Component.literal("%d%%".format(it))
                     }
                 }}
             }.build())
@@ -341,7 +341,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Boolean>().apply {
                 useSettxiName(ZoomifySettings::relativeViewBobbing)
                 desc {
-                    text(Text.translatable(ZoomifySettings::relativeViewBobbing.setting.description))
+                    text(Component.translatable(ZoomifySettings::relativeViewBobbing.setting.description))
                 }
                 bindSetting(ZoomifySettings::relativeViewBobbing)
                 controller(TickBoxControllerBuilder::create)
@@ -350,7 +350,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Int>().apply {
                 useSettxiName(ZoomifySettings::cinematicCamera)
                 desc {
-                    text(Text.translatable(ZoomifySettings::cinematicCamera.setting.description))
+                    text(Component.translatable(ZoomifySettings::cinematicCamera.setting.description))
                 }
                 bindSetting(ZoomifySettings::cinematicCamera)
                 controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
@@ -358,30 +358,30 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                     step(10)
                     valueFormatter {
                         if (it == 0)
-                            ScreenTexts.OFF
+                            CommonComponents.OPTION_OFF
                         else
-                            Text.of("%d%%".format(it))
+                            Component.literal("%d%%".format(it))
                     }
                 }}
             }.build())
         }.build())
 
         category(ConfigCategory.createBuilder().apply {
-            name(Text.translatable(ZoomifySettings.SECONDARY))
+            name(Component.translatable(ZoomifySettings.SECONDARY))
 
-            option(LabelOption.create(Text.translatable("zoomify.gui.secondaryZoom.label")))
+            option(LabelOption.create(Component.translatable("zoomify.gui.secondaryZoom.label")))
 
             option(Option.createBuilder<Int>().apply {
                 useSettxiName(ZoomifySettings::secondaryZoomAmount)
                 desc {
-                    text(Text.translatable(ZoomifySettings::secondaryZoomAmount.setting.description))
+                    text(Component.translatable(ZoomifySettings::secondaryZoomAmount.setting.description))
                     demo(secondaryZoomDemo)
                 }
                 bindSetting(ZoomifySettings::secondaryZoomAmount)
                 controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
                     range(ZoomifySettings::secondaryZoomAmount.asSetting<Int, IntSetting>().range!!)
                     step(1)
-                    valueFormatter { Text.of("%dx".format(it)) }
+                    valueFormatter { Component.literal("%dx".format(it)) }
                 }}
                 updateDemo { v, _ -> secondaryZoomAmount = v }
             }.build())
@@ -389,14 +389,14 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Double>().apply {
                 useSettxiName(ZoomifySettings::secondaryZoomInTime)
                 desc {
-                    text(Text.translatable(ZoomifySettings::secondaryZoomInTime.setting.description))
+                    text(Component.translatable(ZoomifySettings::secondaryZoomInTime.setting.description))
                     demo(secondaryZoomDemo)
                 }
                 bindSetting(ZoomifySettings::secondaryZoomInTime)
                 controller { opt -> DoubleSliderControllerBuilder.create(opt).apply {
                     range(ZoomifySettings::secondaryZoomInTime.asSetting<Double, DoubleSetting>().range!!)
                     step(2.0)
-                    valueFormatter { Text.translatable("zoomify.gui.formatter.seconds", "%.0f".format(it)) }
+                    valueFormatter { Component.translatable("zoomify.gui.formatter.seconds", "%.0f".format(it)) }
                 }}
                 updateDemo { v, _ -> secondaryZoomInTime = v }
             }.build())
@@ -404,7 +404,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Double>().apply {
                 useSettxiName(ZoomifySettings::secondaryZoomOutTime)
                 desc {
-                    text(Text.translatable(ZoomifySettings::secondaryZoomOutTime.setting.description))
+                    text(Component.translatable(ZoomifySettings::secondaryZoomOutTime.setting.description))
                     demo(secondaryZoomDemo)
                 }
                 bindSetting(ZoomifySettings::secondaryZoomOutTime)
@@ -413,9 +413,9 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                     step(0.25)
                     valueFormatter {
                         if (it == 0.0)
-                            Text.translatable("zoomify.gui.formatter.instant")
+                            Component.translatable("zoomify.gui.formatter.instant")
                         else
-                            Text.translatable("zoomify.gui.formatter.seconds", "%.2f".format(it))
+                            Component.translatable("zoomify.gui.formatter.seconds", "%.2f".format(it))
                     }
                 }}
                 updateDemo { v, _ -> secondaryZoomOutTime = v }
@@ -424,7 +424,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Boolean>().apply {
                 useSettxiName(ZoomifySettings::secondaryHideHUDOnZoom)
                 desc {
-                    text(Text.translatable(ZoomifySettings::secondaryHideHUDOnZoom.setting.description))
+                    text(Component.translatable(ZoomifySettings::secondaryHideHUDOnZoom.setting.description))
                     demo(secondaryZoomDemo)
                 }
                 bindSetting(ZoomifySettings::secondaryHideHUDOnZoom)
@@ -434,49 +434,49 @@ fun createSettingsGui(parent: Screen? = null): Screen {
         }.build())
 
         category(ConfigCategory.createBuilder().apply {
-            name(Text.translatable(ZoomifySettings.MISC))
+            name(Component.translatable(ZoomifySettings.MISC))
 
             option(ButtonOption.createBuilder().apply {
-                name(Text.translatable("zoomify.gui.unbindConflicting.name"))
-                description(OptionDescription.of(Text.translatable("zoomify.gui.unbindConflicting.description")))
+                name(Component.translatable("zoomify.gui.unbindConflicting.name"))
+                description(OptionDescription.of(Component.translatable("zoomify.gui.unbindConflicting.description")))
 
                 action { _, _ -> Zoomify.unbindConflicting() }
             }.build())
 
             option(ButtonOption.createBuilder().apply {
-                name(Text.translatable("zoomify.gui.checkMigrations.name"))
-                description(OptionDescription.of(Text.translatable("zoomify.gui.checkMigrations.description")))
+                name(Component.translatable("zoomify.gui.checkMigrations.name"))
+                description(OptionDescription.of(Component.translatable("zoomify.gui.checkMigrations.description")))
 
                 action { _, _ ->
                     if (!Migrator.checkMigrations()) {
-                        val client = MinecraftClient.getInstance()
-                        client.toastManager.add(SystemToast.create(
-                            client,
-                            SystemToast.Type.TUTORIAL_HINT,
-                            Text.translatable("zoomify.gui.title"),
-                            Text.translatable("zoomify.migrate.no_migrations")
+                        val minecraft = Minecraft.getInstance()
+                        minecraft.toasts.addToast(SystemToast.multiline(
+                            minecraft,
+                            SystemToast.SystemToastIds.TUTORIAL_HINT,
+                            Component.translatable("zoomify.gui.title"),
+                            Component.translatable("zoomify.migrate.no_migrations")
                         ))
                     }
                 }
             }.build())
 
             group(OptionGroup.createBuilder().apply {
-                name(Text.translatable("zoomify.gui.subcategory.presets"))
+                name(Component.translatable("zoomify.gui.subcategory.presets"))
 
-                option(LabelOption.create(Text.translatable("zoomify.gui.preset.apply.warning").formatted(Formatting.RED)))
+                option(LabelOption.create(Component.translatable("zoomify.gui.preset.apply.warning").withStyle(ChatFormatting.RED)))
 
-                for (preset in Presets.values()) {
+                for (preset in Presets.entries) {
                     option(ButtonOption.createBuilder().apply {
-                        name(Text.translatable(preset.displayName))
+                        name(Component.translatable(preset.displayName))
 
                         action { screen, _ ->
-                            val client = MinecraftClient.getInstance()
+                            val minecraft = Minecraft.getInstance()
                             preset.apply(ZoomifySettings)
-                            client.toastManager.add(SystemToast.create(client, SystemToast.Type.TUTORIAL_HINT, Text.translatable("zoomify.gui.preset.toast.title"), Text.translatable("zoomify.gui.preset.toast.description", Text.translatable(preset.displayName))))
+                            minecraft.toasts.addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastIds.TUTORIAL_HINT, Component.translatable("zoomify.gui.preset.toast.title"), Component.translatable("zoomify.gui.preset.toast.description", Component.translatable(preset.displayName))))
 
                             OptionUtils.forEachOptions(screen.config, Option<*>::forgetPendingValue)
                             ZoomifySettings.export()
-                            screen.init(client, screen.width, screen.height)
+                            screen.init(minecraft, screen.width, screen.height)
                         }
                     }.build())
                 }
@@ -498,7 +498,7 @@ private fun OptionDescription.Builder.demo(demo: ZoomDemoImageRenderer) {
 }
 
 private fun Option.Builder<*>.useSettxiName(prop: KMutableProperty0<*>) {
-    name(Text.translatable(prop.setting.name))
+    name(Component.translatable(prop.setting.name))
 }
 
 private fun <T : Any> Option.Builder<T>.bindSetting(setting: Setting<T>) {
@@ -522,9 +522,9 @@ private fun <T> SliderControllerBuilder<T, *>.range(range: ClosedRange<T>) where
 }
 
 private fun ValueFormattableController<*, *>.formatSeconds() {
-    valueFormatter { Text.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
+    valueFormatter { Component.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
 }
 
 private fun <T> EnumControllerBuilder<T>.formatSettxiEnum() where T : Enum<T>, T : SettingDisplayName {
-    valueFormatter { Text.translatable(it.displayName) }
+    valueFormatter { Component.translatable(it.displayName) }
 }

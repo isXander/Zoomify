@@ -1,8 +1,7 @@
 package dev.isxander.zoomify.zoom
 
 import dev.isxander.zoomify.Zoomify
-import dev.isxander.zoomify.config.ZoomifySettings
-import net.minecraft.util.math.MathHelper
+import net.minecraft.util.Mth
 import kotlin.math.pow
 
 class ZoomHelper(
@@ -77,16 +76,16 @@ class ZoomHelper(
     }
 
     private fun getInitialZoomMultiplier(tickDelta: Float): Double {
-        return MathHelper.lerp(
-            initialInterpolator.modifyInterpolation(MathHelper.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
+        return Mth.lerp(
+            initialInterpolator.modifyInterpolation(Mth.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
             1.0,
             if (!resetting) 1 / initialZoom().toDouble() else resetMultiplier
         )
     }
 
     private fun getScrollZoomDivisor(tickDelta: Float): Double {
-        return MathHelper.lerp(
-            scrollInterpolator.modifyInterpolation(MathHelper.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation)),
+        return Mth.lerp(
+            scrollInterpolator.modifyInterpolation(Mth.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation)),
             0.0,
             Zoomify.maxScrollTiers * (scrollZoomAmount() * 3.0)
         ).let { if (resetting) 0.0 else it }

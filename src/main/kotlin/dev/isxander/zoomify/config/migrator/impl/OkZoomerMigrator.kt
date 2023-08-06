@@ -10,13 +10,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.text.Text
 import java.nio.file.Files
 import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.CinematicCameraState
 import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.ZoomMode
 import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.Overlay
 import dev.isxander.zoomify.config.migrator.impl.OkZoomerMigrator.OkZoomerConfig.Features.SpyglassDependency
 import dev.isxander.zoomify.utils.TransitionType
+import net.minecraft.network.chat.Component
 import kotlin.math.roundToInt
 
 object OkZoomerMigrator : Migrator {
@@ -27,7 +27,7 @@ object OkZoomerMigrator : Migrator {
         )
     )
 
-    override val name: Text = Text.translatable("zoomify.migrate.okz")
+    override val name: Component = Component.translatable("zoomify.migrate.okz")
 
     override fun isMigrationAvailable(): Boolean =
         Files.exists(file)
@@ -56,7 +56,7 @@ object OkZoomerMigrator : Migrator {
             ZoomMode.TOGGLE ->
                 ZoomifySettings.zoomKeyBehaviour = ZoomKeyBehaviour.TOGGLE
             ZoomMode.PERSISTENT -> {
-                migration.error(Text.translatable("zoomify.migrate.okz.persistent"))
+                migration.error(Component.translatable("zoomify.migrate.okz.persistent"))
             }
         }
 
@@ -73,7 +73,7 @@ object OkZoomerMigrator : Migrator {
                     SpyglassDependency.OFF -> OverlayVisibility.ALWAYS
                 }
             Overlay.VIGNETTE -> {
-                migration.error(Text.translatable("zoomify.migrate.okz.vignette"))
+                migration.error(Component.translatable("zoomify.migrate.okz.vignette"))
             }
         }
 
@@ -95,14 +95,14 @@ object OkZoomerMigrator : Migrator {
                 SoundBehaviour.NEVER
 
         ZoomifySettings.initialZoom = okz.values.zoomDivisor.roundToInt()
-        migration.warn(Text.translatable("zoomify.migrate.okz.minZoomDiv"))
+        migration.warn(Component.translatable("zoomify.migrate.okz.minZoomDiv"))
         ZoomifySettings.scrollZoomAmount = ((okz.values.maxZoomDivisor - ZoomifySettings.initialZoom) / Zoomify.maxScrollTiers).roundToInt()
 
-        migration.warn(Text.translatable("zoomify.migrate.okz.stepAmt"))
+        migration.warn(Component.translatable("zoomify.migrate.okz.stepAmt"))
 
         when (okz.features.zoomTransition) {
             OkZoomerConfig.Features.TransitionMode.LINEAR -> {
-                migration.error(Text.translatable("zoomify.migrate.okz.linearNotSupported"))
+                migration.error(Component.translatable("zoomify.migrate.okz.linearNotSupported"))
                 ZoomifySettings.zoomInTransition = TransitionType.LINEAR
                 ZoomifySettings.zoomOutTransition = TransitionType.LINEAR
             }

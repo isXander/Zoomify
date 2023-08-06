@@ -30,6 +30,12 @@
         "adapter": "kotlin",
         "value": "dev.isxander.zoomify.integrations.ModMenuIntegration"
       }
+    ],
+    "controlify": [
+        {
+            "adapter": "kotlin",
+            "value": "dev.isxander.zoomify.integrations.ControlifyIntegration"
+        }
     ]
   },
   "mixins": [
