@@ -47,7 +47,7 @@
     "fabric-language-kotlin": ">=1.10.8+kotlin.1.9.0",
     "minecraft": "1.20.x",
     "java": ">=17",
-    "yet_another_config_lib_v3": "*"
+    "yet_another_config_lib_v3": ">=3.1.1+1.20"
   },
   "suggests": {
     "modmenu": ">=4.0.0"

@@ -1,7 +1,8 @@
 package dev.isxander.zoomify.config.demo
 
-import dev.isxander.yacl3.gui.ImageRenderer
-import dev.isxander.yacl3.gui.ImageRenderer.AnimatedNativeImageBacked
+import dev.isxander.yacl3.gui.image.ImageRenderer
+import dev.isxander.yacl3.gui.image.ImageRendererManager
+import dev.isxander.yacl3.gui.image.impl.AnimatedDynamicTextureImage
 import dev.isxander.zoomify.utils.popPose
 import dev.isxander.zoomify.utils.pushPose
 import dev.isxander.zoomify.utils.scale
@@ -21,7 +22,7 @@ abstract class ZoomDemoImageRenderer(val zoomHelper: ZoomHelper, private val zoo
         zoomControl.setup(this)
     }
 
-    abstract override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int): Int
+    abstract override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int
 
     override fun tick() {
         zoomHelper.tick(keyDown, scrollTiers)
@@ -35,8 +36,8 @@ abstract class ZoomDemoImageRenderer(val zoomHelper: ZoomHelper, private val zoo
 
     companion object {
         @JvmStatic
-        protected fun makeWebp(id: ResourceLocation): CompletableFuture<Optional<ImageRenderer>> {
-            return ImageRenderer.getOrMakeAsync(id) { Optional.of(AnimatedNativeImageBacked.createWEBPFromTexture(id)) }
+        protected fun makeWebp(id: ResourceLocation): CompletableFuture<AnimatedDynamicTextureImage> {
+            return ImageRendererManager.registerImage(id, AnimatedDynamicTextureImage.createWEBPFromTexture(id))
         }
     }
 
@@ -48,9 +49,7 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
     private val handRenderer = makeWebp(HAND_TEXTURE)
     private val worldRenderer = makeWebp(WORLD_TEXTURE)
 
-    override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int): Int {
-        val tickDelta = Minecraft.getInstance().frameTime
-
+    override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int {
         val ratio = renderWidth / TEX_WIDTH.toDouble()
         val renderHeight = (TEX_HEIGHT * ratio).toInt()
         if (!handRenderer.isDone || !worldRenderer.isDone) {
@@ -63,16 +62,16 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
         graphics.translate(x.toDouble(), y.toDouble(), 0.0)
         graphics.scale(ratio.toFloat(), ratio.toFloat(), 1f)
 
-        val zoomScale = zoomHelper.getZoomDivisor(tickDelta).toFloat()
+        val zoomScale = zoomHelper.getZoomDivisor(deltaTime).toFloat()
         graphics.pushPose()
         graphics.translate(TEX_WIDTH / 2f, TEX_HEIGHT / 2f, 0.0F)
         graphics.scale(zoomScale, zoomScale, 1.0F)
         graphics.translate(-TEX_WIDTH / 2f, -TEX_HEIGHT / 2f, 0.0F)
 
-        worldRenderer.get().get().render(graphics, 0, 0, TEX_WIDTH)
+        worldRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
         if (keepHandFov) graphics.popPose()
-        handRenderer.get().get().render(graphics, 0, 0, TEX_WIDTH)
+        handRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
         if (!keepHandFov) graphics.popPose()
 
         graphics.popPose()
@@ -83,8 +82,8 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
     }
 
     override fun close() {
-        worldRenderer.getNow(Optional.empty()).map { it.close() }
-        handRenderer.getNow(Optional.empty()).map { it.close() }
+        Optional.ofNullable(worldRenderer.getNow(null)).map { it.close() }
+        Optional.ofNullable(handRenderer.getNow(null)).map { it.close() }
     }
 
     companion object {
@@ -103,9 +102,7 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
 
     var renderHud = true
 
-    override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int): Int {
-        val tickDelta = Minecraft.getInstance().frameTime
-
+    override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int {
         val ratio = renderWidth / TEX_WIDTH.toDouble()
         val renderHeight = (TEX_HEIGHT * ratio).toInt()
         if (!thirdPersonViewRenderer.isDone || !hudRenderer.isDone) {
@@ -118,18 +115,18 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
         graphics.translate(x.toDouble(), y.toDouble(), 0.0)
         graphics.scale(ratio.toFloat(), ratio.toFloat(), 1f)
 
-        val zoomScale = zoomHelper.getZoomDivisor(tickDelta).toFloat()
+        val zoomScale = zoomHelper.getZoomDivisor(deltaTime).toFloat()
         graphics.pushPose()
         graphics.translate(FirstPersonDemo.TEX_WIDTH / 2f, FirstPersonDemo.TEX_HEIGHT / 2f, 0.0F)
         graphics.scale(zoomScale, zoomScale, 1.0F)
         graphics.translate(-FirstPersonDemo.TEX_WIDTH / 2f, -FirstPersonDemo.TEX_HEIGHT / 2f, 0.0F)
 
-        thirdPersonViewRenderer.get().get().render(graphics, 0, 0, TEX_WIDTH)
+        thirdPersonViewRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
         graphics.popPose()
 
         if (renderHud)
-            hudRenderer.get().get().render(graphics, 0, 0, TEX_WIDTH)
+            hudRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
         graphics.popPose()
         graphics.disableScissor()
@@ -138,8 +135,8 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
     }
 
     override fun close() {
-        thirdPersonViewRenderer.getNow(Optional.empty()).map { it.close() }
-        hudRenderer.getNow(Optional.empty()).map { it.close() }
+        Optional.ofNullable(thirdPersonViewRenderer.getNow(null)).map { it.close() }
+        Optional.ofNullable(hudRenderer.getNow(null)).map { it.close() }
     }
 
     companion object {
