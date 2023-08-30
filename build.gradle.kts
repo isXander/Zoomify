@@ -15,7 +15,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.11.1"
+version = "2.11.2"
 
 repositories {
     mavenCentral()
@@ -50,7 +50,7 @@ dependencies {
 
     modImplementation(libs.mod.menu)
 
-    //modCompileOnly(libs.controlify)
+    modImplementation(libs.controlify)
 
     libs.mixin.extras.let {
         implementation(it)
