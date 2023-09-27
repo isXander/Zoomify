@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
 
     alias(libs.plugins.loom)
-    alias(libs.plugins.loom.vineflower)
 
     id("com.modrinth.minotaur") version "2.7.+"
     id("me.hypherionmc.cursegradle") version "2.+"
@@ -15,7 +14,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.11.2"
+version = "2.12.0"
 
 repositories {
     mavenCentral()
@@ -104,7 +103,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.20", "1.20.1"))
+        gameVersions.set(listOf("1.20.2"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -128,8 +127,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
 
             id = curseforgeId
             releaseType = "release"
-            addGameVersion("1.20")
-            addGameVersion("1.20.1")
+            addGameVersion("1.20.2")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
             addGameVersion("Java 17")
@@ -159,7 +157,7 @@ githubRelease {
     owner(split[0])
     repo(split[1])
     tagName("${project.version}")
-    targetCommitish("1.20")
+    targetCommitish("1.20.2")
     body(changelogText)
     releaseAssets(tasks["remapJar"].outputs.files)
 }

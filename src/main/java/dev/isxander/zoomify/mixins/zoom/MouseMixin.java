@@ -15,16 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MouseHandler.class)
 public class MouseMixin {
-    @Shadow private double accumulatedScroll;
+    @Shadow private double accumulatedScrollY;
 
     @Inject(
         method = "onScroll",
-        at = @At(value = "FIELD", target = "Lnet/minecraft/client/MouseHandler;accumulatedScroll:D", ordinal = 7),
+        at = @At(value = "FIELD", target = "Lnet/minecraft/client/MouseHandler;accumulatedScrollX:D", ordinal = 7),
         cancellable = true
     )
     private void scrollStepCounter(CallbackInfo ci) {
-        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && accumulatedScroll != 0 && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
-            Zoomify.mouseZoom(accumulatedScroll);
+        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && accumulatedScrollY != 0 && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
+            Zoomify.mouseZoom(accumulatedScrollY);
             ci.cancel();
         }
     }
