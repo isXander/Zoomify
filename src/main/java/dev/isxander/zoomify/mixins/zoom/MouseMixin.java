@@ -1,6 +1,7 @@
 package dev.isxander.zoomify.mixins.zoom;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.isxander.zoomify.Zoomify;
 import dev.isxander.zoomify.config.SpyglassBehaviour;
 import dev.isxander.zoomify.config.ZoomifySettings;
@@ -15,16 +16,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MouseHandler.class)
 public class MouseMixin {
-    @Shadow private double accumulatedScroll;
-
     @Inject(
         method = "onScroll",
-        at = @At(value = "FIELD", target = "Lnet/minecraft/client/MouseHandler;accumulatedScroll:D", ordinal = 7),
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isSpectator()Z"),
         cancellable = true
     )
-    private void scrollStepCounter(CallbackInfo ci) {
-        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && accumulatedScroll != 0 && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
-            Zoomify.mouseZoom(accumulatedScroll);
+    private void scrollStepCounter(CallbackInfo ci, @Local(ordinal = 1) int scrollY) {
+        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && scrollY != 0 && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
+            Zoomify.mouseZoom(scrollY);
             ci.cancel();
         }
     }

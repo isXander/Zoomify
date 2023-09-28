@@ -15,11 +15,10 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.11.2"
+version = "2.12.0"
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.isxander.dev/snapshots")
     maven("https://maven.shedaniel.me/")
@@ -104,7 +103,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.20", "1.20.1"))
+        gameVersions.set(listOf("1.20.2"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -128,8 +127,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
 
             id = curseforgeId
             releaseType = "release"
-            addGameVersion("1.20")
-            addGameVersion("1.20.1")
+            addGameVersion("1.20.2")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
             addGameVersion("Java 17")

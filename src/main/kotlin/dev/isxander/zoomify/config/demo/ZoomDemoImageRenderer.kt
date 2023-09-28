@@ -8,7 +8,6 @@ import dev.isxander.zoomify.utils.pushPose
 import dev.isxander.zoomify.utils.scale
 import dev.isxander.zoomify.utils.translate
 import dev.isxander.zoomify.zoom.ZoomHelper
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
 import java.util.Optional

@@ -1,19 +1,19 @@
 [versions]
-kotlin = "1.9.0"
+kotlin = "1.9.10"
 loom = "1.3.+"
 loom_vineflower = "1.11.+"
 
-minecraft = "1.20.1"
-fabric_loader = "0.14.21"
-quilt_mappings = "23"
+minecraft = "1.20.2"
+fabric_loader = "0.14.22"
+quilt_mappings = "2"
 
-fabric_api = "0.86.1+1.20.1"
-fabric_language_kotlin = "1.10.8+kotlin.1.9.0"
-ktoml = "0.4.1"
-yet_another_config_lib = "3.1.1+1.20"
-mod_menu = "7.0.0"
-mixin_extras = "0.2.0-beta.9"
-controlify = "1.6.0+1.20"
+fabric_api = "0.89.1+1.20.2"
+fabric_language_kotlin = "1.10.10+kotlin.1.9.10"
+ktoml = "0.5.0"
+yet_another_config_lib = "3.2.1+1.20.2"
+mod_menu = "8.0.0-beta.2"
+mixin_extras = "0.2.0-rc.4"
+controlify = "1.7.0-beta.2+1.20"
 
 settxi = "2.10.6"
 
