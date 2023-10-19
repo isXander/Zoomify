@@ -36,7 +36,8 @@ class ZoomHelper(
 
         val targetZoom = if (zooming) 1.0 else 0.0
         prevInitialInterpolation = initialInterpolation
-        initialInterpolation = initialInterpolator.tickInterpolation(targetZoom, initialInterpolation, lastFrameDuration)
+        initialInterpolation =
+            initialInterpolator.tickInterpolation(targetZoom, initialInterpolation, lastFrameDuration)
         prevInitialInterpolation = initialInterpolator.modifyPrevInterpolation(prevInitialInterpolation)
         if (!initialInterpolator.isSmooth)
             prevInitialInterpolation = initialInterpolation
@@ -77,7 +78,13 @@ class ZoomHelper(
 
     private fun getInitialZoomMultiplier(tickDelta: Float): Double {
         return Mth.lerp(
-            initialInterpolator.modifyInterpolation(Mth.lerp(tickDelta.toDouble(), prevInitialInterpolation, initialInterpolation)),
+            if (initialInterpolator.isSmooth) initialInterpolator.modifyInterpolation(
+                Mth.lerp(
+                    tickDelta.toDouble(),
+                    prevInitialInterpolation,
+                    initialInterpolation
+                )
+            ) else initialInterpolation,
             1.0,
             if (!resetting) 1 / initialZoom().toDouble() else resetMultiplier
         )
@@ -85,7 +92,14 @@ class ZoomHelper(
 
     private fun getScrollZoomDivisor(tickDelta: Float): Double {
         return Mth.lerp(
-            scrollInterpolator.modifyInterpolation(Mth.lerp(tickDelta.toDouble(), prevScrollInterpolation, scrollInterpolation)),
+            if (scrollInterpolator.isSmooth) scrollInterpolator.modifyInterpolation(
+                Mth.lerp(
+                    tickDelta.toDouble(),
+                    prevScrollInterpolation,
+                    scrollInterpolation
+                )
+            )
+            else scrollInterpolation,
             0.0,
             Zoomify.maxScrollTiers * (scrollZoomAmount() * 3.0)
         ).let { if (resetting) 0.0 else it }
