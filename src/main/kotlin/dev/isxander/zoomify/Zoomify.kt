@@ -231,7 +231,7 @@ object Zoomify : ClientModInitializer {
 
                     val toast = SystemToast.multiline(
                         minecraft,
-                        SystemToast.SystemToastIds.TUTORIAL_HINT, // doesn't do anything except toast duration
+                        SystemToast.SystemToastId.PERIODIC_NOTIFICATION, // doesn't do anything except toast duration
                         Component.translatable("zoomify.toast.unbindConflicting.name"),
                         Component.translatable("zoomify.toast.unbindConflicting.description",
                             Component.translatable(key.name)
@@ -256,7 +256,7 @@ object Zoomify : ClientModInitializer {
         if (minecraft.options.keyMappings.any { it != zoomKey && it.equals(zoomKey) }) {
             val toast = SystemToast.multiline(
                 minecraft,
-                SystemToast.SystemToastIds.UNSECURE_SERVER_WARNING,
+                SystemToast.SystemToastId.UNSECURE_SERVER_WARNING,
                 Component.translatable("zoomify.toast.conflictingKeybind.title"),
                 Component.translatable("zoomify.toast.conflictingKeybind.description",
                     Component.translatable("zoomify.gui.category.misc")

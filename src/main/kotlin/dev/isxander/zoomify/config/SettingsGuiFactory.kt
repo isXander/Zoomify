@@ -452,7 +452,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         val minecraft = Minecraft.getInstance()
                         minecraft.toasts.addToast(SystemToast.multiline(
                             minecraft,
-                            SystemToast.SystemToastIds.TUTORIAL_HINT,
+                            SystemToast.SystemToastId.PERIODIC_NOTIFICATION,
                             Component.translatable("zoomify.gui.title"),
                             Component.translatable("zoomify.migrate.no_migrations")
                         ))
@@ -472,7 +472,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         action { screen, _ ->
                             val minecraft = Minecraft.getInstance()
                             preset.apply(ZoomifySettings)
-                            minecraft.toasts.addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastIds.TUTORIAL_HINT, Component.translatable("zoomify.gui.preset.toast.title"), Component.translatable("zoomify.gui.preset.toast.description", Component.translatable(preset.displayName))))
+                            minecraft.toasts.addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.PERIODIC_NOTIFICATION, Component.translatable("zoomify.gui.preset.toast.title"), Component.translatable("zoomify.gui.preset.toast.description", Component.translatable(preset.displayName))))
 
                             OptionUtils.forEachOptions(screen.config, Option<*>::forgetPendingValue)
                             ZoomifySettings.export()

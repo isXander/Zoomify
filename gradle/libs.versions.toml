@@ -1,19 +1,18 @@
 [versions]
-kotlin = "1.9.10"
-loom = "1.3.+"
-loom_vineflower = "1.11.+"
+kotlin = "1.9.22"
+loom = "1.5.+"
 
-minecraft = "1.20.2"
-fabric_loader = "0.14.22"
-quilt_mappings = "2"
+minecraft = "1.20.4"
+fabric_loader = "0.15.5"
+quilt_mappings = "0"
 
-fabric_api = "0.89.1+1.20.2"
-fabric_language_kotlin = "1.10.10+kotlin.1.9.10"
-ktoml = "0.5.0"
-yet_another_config_lib = "3.2.1+1.20.2"
-mod_menu = "8.0.0-beta.2"
-mixin_extras = "0.2.0-rc.4"
-controlify = "1.7.0-beta.2+1.20"
+fabric_api = "0.94.0+1.20.4"
+fabric_language_kotlin = "1.10.17+kotlin.1.9.22"
+ktoml = "0.5.1"
+yet_another_config_lib = "3.3.1+1.20.4"
+mod_menu = "9.0.0"
+mixin_extras = "0.3.2"
+controlify = "1.7.0+1.20.4"
 
 settxi = "2.10.6"
 
@@ -26,7 +25,7 @@ fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", versi
 ktoml_core = { module = "com.akuleshov7:ktoml-core-jvm", version.ref = "ktoml" }
 yet_another_config_lib = { module = "dev.isxander.yacl:yet-another-config-lib-fabric", version.ref = "yet_another_config_lib" }
 mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
-mixin_extras = { module = "com.github.llamalad7.mixinextras:mixinextras-fabric", version.ref = "mixin_extras" }
+mixin_extras = { module = "io.github.llamalad7:mixinextras-fabric", version.ref = "mixin_extras" }
 controlify = { module = "dev.isxander:controlify", version.ref = "controlify" }
 settxi_core = { module = "dev.isxander.settxi:settxi-core", version.ref = "settxi" }
 settxi_serialization_kotlinx = { module = "dev.isxander.settxi:settxi-kotlinx-serialization", version.ref = "settxi" }
@@ -42,7 +41,6 @@ kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin_plugin_serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 loom = { id = "fabric-loom", version.ref = "loom" }
-loom_vineflower = { id = "io.github.juuxel.loom-vineflower", version.ref = "loom_vineflower" }
 
 
 

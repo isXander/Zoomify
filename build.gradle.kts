@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
 
     alias(libs.plugins.loom)
-    alias(libs.plugins.loom.vineflower)
 
     id("com.modrinth.minotaur") version "2.7.+"
     id("me.hypherionmc.cursegradle") version "2.+"
@@ -15,7 +14,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.12.0"
+version = "2.13.0"
 
 repositories {
     mavenCentral()
@@ -32,7 +31,9 @@ repositories {
 dependencies {
     minecraft(libs.minecraft)
     mappings(loom.layered {
-        mappings("org.quiltmc:quilt-mappings:${libs.versions.minecraft.get()}+build.${libs.versions.quilt.mappings.get()}:intermediary-v2")
+        val quiltMappings = libs.versions.quilt.mappings.get()
+        if (quiltMappings != "0")
+            mappings("org.quiltmc:quilt-mappings:${libs.versions.minecraft.get()}+build.$quiltMappings:intermediary-v2")
         officialMojangMappings()
     })
     modImplementation(libs.fabric.loader)
@@ -103,7 +104,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.20.2"))
+        gameVersions.set(listOf("1.20.3", "1.20.2"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -127,6 +128,7 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
 
             id = curseforgeId
             releaseType = "release"
+            addGameVersion("1.20.3")
             addGameVersion("1.20.2")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
