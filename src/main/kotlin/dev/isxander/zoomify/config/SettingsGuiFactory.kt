@@ -109,7 +109,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                     controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
                         range(ZoomifySettings::initialZoom.asSetting<Int, IntSetting>().range!!)
                         step(1)
-                        valueFormatter { Component.literal("%dx".format(it)) }
+                        formatValue { Component.literal("%dx".format(it)) }
                     }}
                     updateDemo { v, _ -> initialZoomAmt = v }
                 }.build())
@@ -522,9 +522,9 @@ private fun <T> SliderControllerBuilder<T, *>.range(range: ClosedRange<T>) where
 }
 
 private fun ValueFormattableController<*, *>.formatSeconds() {
-    valueFormatter { Component.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
+    formatValue { Component.translatable("zoomify.gui.formatter.seconds", "%.1f".format(it)) }
 }
 
 private fun <T> EnumControllerBuilder<T>.formatSettxiEnum() where T : Enum<T>, T : SettingDisplayName {
-    valueFormatter { Component.translatable(it.displayName) }
+    formatValue { Component.translatable(it.displayName) }
 }

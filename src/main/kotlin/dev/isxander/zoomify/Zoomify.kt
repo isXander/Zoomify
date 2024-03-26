@@ -3,6 +3,7 @@ package dev.isxander.zoomify
 import com.mojang.blaze3d.platform.InputConstants
 import dev.isxander.zoomify.config.*
 import dev.isxander.zoomify.config.migrator.Migrator
+import dev.isxander.zoomify.integrations.constrainModVersionIfLoaded
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
@@ -72,6 +73,8 @@ object Zoomify : ClientModInitializer {
     private var displayGui = false
 
     override fun onInitializeClient() {
+        constrainModVersionIfLoaded("controlify", "1.x.x")
+
         // imports on <init>
         ZoomifySettings
 
