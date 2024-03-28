@@ -73,7 +73,7 @@ object Zoomify : ClientModInitializer {
     private var displayGui = false
 
     override fun onInitializeClient() {
-        constrainModVersionIfLoaded("controlify", "1.x.x")
+        constrainModVersionIfLoaded("controlify", "2.x.x")
 
         // imports on <init>
         ZoomifySettings
