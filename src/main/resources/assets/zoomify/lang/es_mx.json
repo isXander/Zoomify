@@ -3,7 +3,6 @@
   "zoomify.key.gui": "Abrir interfaz",
   "zoomify.key.category": "Zoomify",
 
-
   "zoomify.gui.title": "Zoomify",
 
   "zoomify.gui.category.behaviour": "Comportamiento",
@@ -57,7 +56,7 @@
   "zoomify.gui.unbindConflicting.button": "Desvincular",
   "zoomify.gui.unbindConflicting.description": "Desvincula la(s) tecla(s) que está(n) asignada(s) igual que la tecla de zoom de Zoomify.",
   "zoomify.gui.subcategory.presets": "Preajustes",
-  "zoomify.gui.preset.default": "Default",
+  "zoomify.gui.preset.default": "Por defecto",
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
   "zoomify.gui.preset.apply": "Aplicar preajuste",
@@ -67,23 +66,21 @@
 
   "zoomify.transition.instant": "Instantánea",
   "zoomify.transition.linear": "Linear",
-  "zoomify.transition.ease_in_sine": "Ease In (Seno)",
-  "zoomify.transition.ease_out_sine": "Ease Out (Seno)",
-  "zoomify.transition.ease_in_out_sine": "Ease In Out (Seno)",
-  "zoomify.transition.ease_in_quad": "Ease In (Quad)",
-  "zoomify.transition.ease_out_quad": "Ease Out (Quad)",
-  "zoomify.transition.ease_in_out_quad": "Ease In Out (Quad)",
-  "zoomify.transition.ease_in_cubic": "Ease In (Cúbico)",
-  "zoomify.transition.ease_out_cubic": "Ease Out (Cúbico)",
-  "zoomify.transition.ease_in_out_cubic": "Ease In Out (Cúbico)",
-  "zoomify.transition.ease_in_exp": "Ease In (Exponencial)",
-  "zoomify.transition.ease_out_exp": "Ease Out (Exponencial)",
-  "zoomify.transition.ease_in_out_exp": "Ease In Out (Exponencial)",
-
+  "zoomify.transition.ease_in_sine": "Entrada suave (Seno)",
+  "zoomify.transition.ease_out_sine": "Salida suave (Seno)",
+  "zoomify.transition.ease_in_out_sine": "Entrada y salida suave (Seno)",
+  "zoomify.transition.ease_in_quad": "Entrada suave (Cuadrática)",
+  "zoomify.transition.ease_out_quad": "Salida suave (Cuadrática)",
+  "zoomify.transition.ease_in_out_quad": "Entrada y salida suave (Cuadrática)",
+  "zoomify.transition.ease_in_cubic": "Entrada suave (Cúbica)",
+  "zoomify.transition.ease_out_cubic": "Salida suave (Cúbica)",
+  "zoomify.transition.ease_in_out_cubic": "Entrada y salida suave (Cúbica)",
+  "zoomify.transition.ease_in_exp": "Entrada suave (Exponencial)",
+  "zoomify.transition.ease_out_exp": "Salida suave (Exponencial)",
+  "zoomify.transition.ease_in_out_exp": "Entrada y salida suave (Exponencial)",
 
   "zoomify.zoom_key_behaviour.hold": "Mantener",
   "zoomify.zoom_key_behaviour.toggle": "Alternar",
-
 
   "zoomify.spyglass_behaviour.combine": "Combinar",
   "zoomify.spyglass_behaviour.override": "Sobreescribir",
@@ -105,5 +102,46 @@
   "zoomify.toast.unbindConflicting.name": "La tecla en conflicto ha sido desvinculada",
   "zoomify.toast.unbindConflicting.description": "Zoomify desvinculó la tecla llamada '%s' porque estaba en conflicto con la tecla de zoom.",
 
-  "zoomify.gui.donate": "Apóyame!"
+  "zoomify.key.zoom.secondary": "Zoom Secundario",
+  "zoomify.key.zoom.in": "Acercar con Scroll",
+  "zoomify.key.zoom.out": "Alejar con Scroll",
+
+  "zoomify.gui.group.basic": "Básico",
+
+  "zoomify.gui.keybindScrolling.name": "Asignación de teclas para desplazamiento",
+  "zoomify.gui.keybindScrolling.description": "Usar las teclas de Minecraft para controlar el desplazamiento con el scroll en lugar de la rueda de scroll.",
+
+  "zoomify.gui.category.secondary": "Zoom Secundario",
+  "zoomify.gui.secondaryZoom.label": "Completamente separado de todas las demás configuraciones de Zoomify. El zoom secundario solo se puede alternar con una tecla de asignación separada en los controles.",
+  "zoomify.gui.secondaryZoomAmount.name": "Cantidad de Zoom",
+  "zoomify.gui.secondaryZoomAmount.description": "Cuántas veces dividir el campo de visión actual una vez que se complete la transición.",
+  "zoomify.gui.secondaryZoomInTime.name": "Tiempo de Acercamiento",
+  "zoomify.gui.secondaryZoomInTime.description": "Cuántos segundos para completar el acercamiento.",
+  "zoomify.gui.secondaryZoomOutTime.name": "Tiempo de Alejamiento",
+  "zoomify.gui.secondaryZoomOutTime.description": "Cuántos segundos para completar el alejamiento.",
+  "zoomify.gui.secondaryZoomHideHUDOnZoom.name": "Ocultar HUD al hacer zoom",
+  "zoomify.gui.secondaryZoomHideHUDOnZoom.description": "Deja de renderizar el HUD mientras se hace zoom, similar a presionar F1.",
+
+  "zoomify.gui.checkMigrations.name": "Verificar Migraciones",
+  "zoomify.gui.checkMigrations.button": "Verificar",
+  "zoomify.gui.checkMigrations.description": "Verifica si hay migraciones automáticas disponibles.",
+  "zoomify.gui.preset.toast.title": "Preajuste Aplicado",
+  "zoomify.gui.preset.toast.description": "Zoomify aplicó el preajuste %s.",
+
+  "zoomify.gui.formatter.instant": "Instantáneo",
+  "zoomify.gui.formatter.seconds": "%s segundos",
+
+  "zoomify.migrate.no_migrations": "No hay migraciones disponibles.",
+  "zoomify.migrate.result.title": "Migración completada",
+  "zoomify.migrate.restart": "Reinicio requerido",
+  "zoomify.migrate.result.restart_game": "Reiniciar Juego",
+  "zoomify.migrate.available.title": "Hay una migración automática disponible para %s",
+  "zoomify.migrate.available.message": "¿Deseas migrar automáticamente la configuración de %s a Zoomify?",
+
+  "zoomify.migrate.okz": "OK Zoomer",
+  "zoomify.migrate.okz.persistent": "El modo de zoom persistente no es compatible.",
+  "zoomify.migrate.okz.vignette": "La superposición de viñeta no es compatible.",
+  "zoomify.migrate.okz.minZoomDiv": "No se admite la configuración del divisor de zoom mínimo.",
+  "zoomify.migrate.okz.stepAmt": "No se admite la configuración de la cantidad de desplazamiento del scroll.",
+  "zoomify.migrate.okz.linearNotSupported": "No se pueden calcular automáticamente los tiempos lineales."
 }
