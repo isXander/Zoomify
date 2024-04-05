@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.InputConstants
 import dev.isxander.zoomify.config.*
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.integrations.constrainModVersionIfLoaded
+import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
@@ -232,15 +233,13 @@ object Zoomify : ClientModInitializer {
                 if (key != zoomKey && key.equals(zoomKey)) {
                     minecraft.options.setKey(key, InputConstants.UNKNOWN)
 
-                    val toast = SystemToast.multiline(
-                        minecraft,
-                        SystemToast.SystemToastId.PERIODIC_NOTIFICATION, // doesn't do anything except toast duration
+                    toast(
                         Component.translatable("zoomify.toast.unbindConflicting.name"),
                         Component.translatable("zoomify.toast.unbindConflicting.description",
                             Component.translatable(key.name)
-                        )
+                        ),
+                        longer = false
                     )
-                    minecraft.toasts.addToast(toast)
 
                     return true
                 }
@@ -257,15 +256,13 @@ object Zoomify : ClientModInitializer {
             return
 
         if (minecraft.options.keyMappings.any { it != zoomKey && it.equals(zoomKey) }) {
-            val toast = SystemToast.multiline(
-                minecraft,
-                SystemToast.SystemToastId.UNSECURE_SERVER_WARNING,
+            toast(
                 Component.translatable("zoomify.toast.conflictingKeybind.title"),
                 Component.translatable("zoomify.toast.conflictingKeybind.description",
                     Component.translatable("zoomify.gui.category.misc")
-                )
+                ),
+                longer = true
             )
-            minecraft.toasts.addToast(toast)
         }
     }
 }

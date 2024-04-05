@@ -1,6 +1,6 @@
 /.idea
-/.gradle
-/build
+.gradle
+build
 /run
 !*/.gitkeep
 /.fleet

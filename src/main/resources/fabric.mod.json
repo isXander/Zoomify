@@ -43,11 +43,11 @@
   ],
   "depends": {
     "fabric-api": "*",
-    "fabricloader": ">=0.14.22",
+    "fabricloader": ">=0.15.0",
     "fabric-language-kotlin": ">=1.10.10+kotlin.1.9.10",
-    "minecraft": "~1.20.2",
+    "minecraft": "${mc}",
     "java": ">=17",
-    "yet_another_config_lib_v3": ">=3.2.1+1.20.2"
+    "yet_another_config_lib_v3": "${yacl}"
   },
   "suggests": {
     "modmenu": ">=4.0.0"

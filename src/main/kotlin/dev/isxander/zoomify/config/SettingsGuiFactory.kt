@@ -14,6 +14,7 @@ import dev.isxander.zoomify.config.demo.ThirdPersonDemo
 import dev.isxander.zoomify.config.demo.ZoomDemoImageRenderer
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.TransitionType
+import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.zoom.*
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -261,7 +262,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
 
                 option(Option.createBuilder<SpyglassBehaviour>().apply {
                     useSettxiName(ZoomifySettings::spyglassBehaviour)
-                    description(OptionDescription.of(Component.translatable(ZoomifySettings::spyglassBehaviour.setting.description)))
+                    description(OptionDescription.of(Component.translatable(ZoomifySettings::spyglassBehaviour.setting.description!!)))
                     bindSetting(ZoomifySettings::spyglassBehaviour)
                     controller { opt -> EnumControllerBuilder.create(opt).apply {
                         enumClass(SpyglassBehaviour::class.java)
@@ -272,7 +273,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 option(Option.createBuilder<OverlayVisibility>().apply {
                     useSettxiName(ZoomifySettings::spyglassOverlayVisibility)
                     desc {
-                        text(Component.translatable(ZoomifySettings::spyglassOverlayVisibility.setting.description))
+                        text(Component.translatable(ZoomifySettings::spyglassOverlayVisibility.setting.description!!))
                     }
                     bindSetting(ZoomifySettings::spyglassOverlayVisibility)
                     controller { opt -> EnumControllerBuilder.create(opt).apply {
@@ -284,7 +285,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                 option(Option.createBuilder<SoundBehaviour>().apply {
                     useSettxiName(ZoomifySettings::spyglassSoundBehaviour)
                     desc {
-                        text(Component.translatable(ZoomifySettings::spyglassSoundBehaviour.setting.description))
+                        text(Component.translatable(ZoomifySettings::spyglassSoundBehaviour.setting.description!!))
                     }
                     bindSetting(ZoomifySettings::spyglassSoundBehaviour)
                     controller { opt -> EnumControllerBuilder.create(opt).apply {
@@ -301,7 +302,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<ZoomKeyBehaviour>().apply {
                 useSettxiName(ZoomifySettings::zoomKeyBehaviour)
                 desc {
-                    text(Component.translatable(ZoomifySettings::zoomKeyBehaviour.setting.description))
+                    text(Component.translatable(ZoomifySettings::zoomKeyBehaviour.setting.description!!))
                 }
                 bindSetting(ZoomifySettings::zoomKeyBehaviour)
                 controller { opt -> EnumControllerBuilder.create(opt).apply {
@@ -313,7 +314,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Boolean>().apply {
                 useSettxiName(ZoomifySettings::_keybindScrolling)
                 desc {
-                    text(Component.translatable(ZoomifySettings::_keybindScrolling.setting.description))
+                    text(Component.translatable(ZoomifySettings::_keybindScrolling.setting.description!!))
                 }
                 bindSetting(ZoomifySettings::_keybindScrolling)
                 controller(TickBoxControllerBuilder::create)
@@ -323,7 +324,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Int>().apply {
                 useSettxiName(ZoomifySettings::relativeSensitivity)
                 desc {
-                    text(Component.translatable(ZoomifySettings::relativeSensitivity.setting.description))
+                    text(Component.translatable(ZoomifySettings::relativeSensitivity.setting.description!!))
                 }
                 bindSetting(ZoomifySettings::relativeSensitivity)
                 controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
@@ -341,7 +342,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Boolean>().apply {
                 useSettxiName(ZoomifySettings::relativeViewBobbing)
                 desc {
-                    text(Component.translatable(ZoomifySettings::relativeViewBobbing.setting.description))
+                    text(Component.translatable(ZoomifySettings::relativeViewBobbing.setting.description!!))
                 }
                 bindSetting(ZoomifySettings::relativeViewBobbing)
                 controller(TickBoxControllerBuilder::create)
@@ -350,7 +351,7 @@ fun createSettingsGui(parent: Screen? = null): Screen {
             option(Option.createBuilder<Int>().apply {
                 useSettxiName(ZoomifySettings::cinematicCamera)
                 desc {
-                    text(Component.translatable(ZoomifySettings::cinematicCamera.setting.description))
+                    text(Component.translatable(ZoomifySettings::cinematicCamera.setting.description!!))
                 }
                 bindSetting(ZoomifySettings::cinematicCamera)
                 controller { opt -> IntegerSliderControllerBuilder.create(opt).apply {
@@ -449,13 +450,11 @@ fun createSettingsGui(parent: Screen? = null): Screen {
 
                 action { _, _ ->
                     if (!Migrator.checkMigrations()) {
-                        val minecraft = Minecraft.getInstance()
-                        minecraft.toasts.addToast(SystemToast.multiline(
-                            minecraft,
-                            SystemToast.SystemToastId.PERIODIC_NOTIFICATION,
+                        toast(
                             Component.translatable("zoomify.gui.title"),
-                            Component.translatable("zoomify.migrate.no_migrations")
-                        ))
+                            Component.translatable("zoomify.migrate.no_migrations"),
+                            longer = false
+                        )
                     }
                 }
             }.build())
@@ -472,7 +471,12 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         action { screen, _ ->
                             val minecraft = Minecraft.getInstance()
                             preset.apply(ZoomifySettings)
-                            minecraft.toasts.addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.PERIODIC_NOTIFICATION, Component.translatable("zoomify.gui.preset.toast.title"), Component.translatable("zoomify.gui.preset.toast.description", Component.translatable(preset.displayName))))
+                            toast(
+                                Component.translatable("zoomify.gui.preset.toast.title"),
+                                Component.translatable("zoomify.gui.preset.toast.description",
+                                    Component.translatable(preset.displayName)
+                                )
+                            )
 
                             OptionUtils.forEachOptions(screen.config, Option<*>::forgetPendingValue)
                             ZoomifySettings.export()

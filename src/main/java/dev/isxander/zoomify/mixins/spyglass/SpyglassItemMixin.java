@@ -1,6 +1,6 @@
 package dev.isxander.zoomify.mixins.spyglass;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import dev.isxander.zoomify.config.OverlayVisibility;
 import dev.isxander.zoomify.config.SoundBehaviour;
 import dev.isxander.zoomify.config.ZoomifySettings;
