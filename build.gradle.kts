@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "dev.isxander"
-version = "2.13.2"
+version = "2.13.3"
 
 repositories {
     mavenCentral()
@@ -37,8 +37,18 @@ dependencies {
         officialMojangMappings()
     })
     modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.api)
-    modImplementation(libs.fabric.language.kotlin)
+
+    listOf(
+        "fabric-key-binding-api-v1",
+        "fabric-lifecycle-events-v1",
+        "fabric-command-api-v2",
+    ).forEach {
+        modImplementation(fabricApi.module(it, libs.versions.fabric.api.get()))
+    }
+
+    modImplementation(libs.fabric.language.kotlin) {
+        exclude(module = "fabric-api")
+    }
 
     implementation(libs.ktoml.core)
     include(libs.ktoml.core)
@@ -50,12 +60,8 @@ dependencies {
 
     modImplementation(libs.mod.menu)
 
-    modImplementation(libs.controlify)
-
-    libs.mixin.extras.let {
-        implementation(it)
-        annotationProcessor(it)
-        include(it)
+    modImplementation(libs.controlify) {
+        exclude(group = "net.fabricmc.fabric-api")
     }
 }
 
@@ -65,12 +71,12 @@ java {
 
 tasks {
     withType<JavaCompile> {
-        options.release.set(17)
+        options.release.set(21)
     }
 
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "21"
         }
     }
 
@@ -104,7 +110,7 @@ if (modrinthId.isNotEmpty()) {
         versionNumber.set("${project.version}")
         versionType.set("release")
         uploadFile.set(tasks["remapJar"])
-        gameVersions.set(listOf("1.20.3", "1.20.2"))
+        gameVersions.set(listOf("1.20.5"))
         loaders.set(listOf("fabric", "quilt"))
         changelog.set(changelogText)
         syncBodyFrom.set(file("README.md").readText())
@@ -128,11 +134,10 @@ if (hasProperty("curseforge.token") && curseforgeId.isNotEmpty()) {
 
             id = curseforgeId
             releaseType = "release"
-            addGameVersion("1.20.3")
-            addGameVersion("1.20.2")
+            addGameVersion("1.20.5")
             addGameVersion("Fabric")
             addGameVersion("Quilt")
-            addGameVersion("Java 17")
+            addGameVersion("Java 21")
 
             relations(closureOf<me.hypherionmc.cursegradle.CurseRelation> {
                 requiredDependency("fabric-api")

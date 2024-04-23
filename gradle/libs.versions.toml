@@ -1,18 +1,17 @@
 [versions]
-kotlin = "1.9.22"
-loom = "1.5.+"
+kotlin = "1.9.23"
+loom = "1.6.+"
 
-minecraft = "1.20.4"
-fabric_loader = "0.15.5"
+minecraft = "1.20.5"
+fabric_loader = "0.15.10"
 quilt_mappings = "0"
 
-fabric_api = "0.94.0+1.20.4"
-fabric_language_kotlin = "1.10.17+kotlin.1.9.22"
+fabric_api = "0.97.5+1.20.5"
+fabric_language_kotlin = "1.10.19+kotlin.1.9.23"
 ktoml = "0.5.1"
-yet_another_config_lib = "3.3.1+1.20.4"
-mod_menu = "9.0.0"
-mixin_extras = "0.3.2"
-controlify = "2.0.0-beta.1+1.20.4"
+yet_another_config_lib = "3.4.0+1.20.5-fabric"
+mod_menu = "10.0.0-beta.1"
+controlify = "2.0.0-beta.5+1.20.5-rc2"
 
 settxi = "2.10.6"
 
@@ -23,9 +22,8 @@ fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_l
 fabric_api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric_api" }
 fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
 ktoml_core = { module = "com.akuleshov7:ktoml-core-jvm", version.ref = "ktoml" }
-yet_another_config_lib = { module = "dev.isxander.yacl:yet-another-config-lib-fabric", version.ref = "yet_another_config_lib" }
+yet_another_config_lib = { module = "dev.isxander:yet-another-config-lib", version.ref = "yet_another_config_lib" }
 mod_menu = { module = "com.terraformersmc:modmenu", version.ref = "mod_menu" }
-mixin_extras = { module = "io.github.llamalad7:mixinextras-fabric", version.ref = "mixin_extras" }
 controlify = { module = "dev.isxander:controlify", version.ref = "controlify" }
 settxi_core = { module = "dev.isxander.settxi:settxi-core", version.ref = "settxi" }
 settxi_serialization_kotlinx = { module = "dev.isxander.settxi:settxi-kotlinx-serialization", version.ref = "settxi" }

@@ -14,7 +14,7 @@ public class InGameHudMixin {
     @Shadow @Final private Minecraft minecraft;
 
     @ModifyExpressionValue(
-        method = "render",
+        method = "renderCameraOverlays",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"

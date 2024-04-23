@@ -2,6 +2,7 @@ package dev.isxander.zoomify.mixins.zoom;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.isxander.zoomify.Zoomify;
 import dev.isxander.zoomify.config.ZoomifySettings;
@@ -43,7 +44,7 @@ public class GameRendererMixin {
             target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
         )
     )
-    private double keepHandFov(double fov, PoseStack pose, Camera camera, float tickDelta) {
+    private double keepHandFov(double fov, @Local(argsOnly=true) float tickDelta) {
         if (!ZoomifySettings.INSTANCE.getAffectHandFov())
             return fov * Zoomify.getZoomDivisor(tickDelta);
         return fov;
