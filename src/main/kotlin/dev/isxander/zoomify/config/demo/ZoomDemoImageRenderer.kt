@@ -36,7 +36,7 @@ abstract class ZoomDemoImageRenderer(val zoomHelper: ZoomHelper, private val zoo
     companion object {
         @JvmStatic
         protected fun makeWebp(id: ResourceLocation): CompletableFuture<AnimatedDynamicTextureImage> {
-            return ImageRendererManager.registerImage(id, AnimatedDynamicTextureImage.createWEBPFromTexture(id))
+            return ImageRendererManager.registerOrGetImage(id) { AnimatedDynamicTextureImage.createWEBPFromTexture(id) }
         }
     }
 

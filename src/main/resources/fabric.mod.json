@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "zoomify",
+  "id": "${id}",
   "version": "${version}",
-  "name": "Zoomify",
-  "description": "A zoom mod with infinite customizability.",
+  "name": "${name}",
+  "description": "${description}",
   "authors": [
     "isXander"
   ],
@@ -45,12 +45,12 @@
     "fabric-api": "*",
     "fabricloader": ">=0.14.22",
     "fabric-language-kotlin": ">=1.10.19+kotlin.1.9.23",
-    "minecraft": "~1.20.4",
+    "minecraft": "${mc}",
     "java": ">=17",
-    "yet_another_config_lib_v3": ">=3.2.1+1.20.2"
+    "yet_another_config_lib_v3": ">=3.2.1"
   },
   "suggests": {
-    "modmenu": ">=4.0.0"
+    "modmenu": "*"
   },
   "breaks": {
     "optifabric": "*"

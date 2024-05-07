@@ -14,6 +14,7 @@ import dev.isxander.zoomify.config.demo.ThirdPersonDemo
 import dev.isxander.zoomify.config.demo.ZoomDemoImageRenderer
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.TransitionType
+import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.zoom.*
 import net.minecraft.ChatFormatting
 import net.minecraft.client.Minecraft
@@ -449,13 +450,10 @@ fun createSettingsGui(parent: Screen? = null): Screen {
 
                 action { _, _ ->
                     if (!Migrator.checkMigrations()) {
-                        val minecraft = Minecraft.getInstance()
-                        minecraft.toasts.addToast(SystemToast.multiline(
-                            minecraft,
-                            SystemToast.SystemToastId.PERIODIC_NOTIFICATION,
+                        toast(
                             Component.translatable("zoomify.gui.title"),
                             Component.translatable("zoomify.migrate.no_migrations")
-                        ))
+                        )
                     }
                 }
             }.build())
@@ -472,7 +470,11 @@ fun createSettingsGui(parent: Screen? = null): Screen {
                         action { screen, _ ->
                             val minecraft = Minecraft.getInstance()
                             preset.apply(ZoomifySettings)
-                            minecraft.toasts.addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.PERIODIC_NOTIFICATION, Component.translatable("zoomify.gui.preset.toast.title"), Component.translatable("zoomify.gui.preset.toast.description", Component.translatable(preset.displayName))))
+
+                            toast(
+                                Component.translatable("zoomify.gui.preset.toast.title"),
+                                Component.translatable("zoomify.gui.preset.toast.description", Component.translatable(preset.displayName))
+                            )
 
                             OptionUtils.forEachOptions(screen.config, Option<*>::forgetPendingValue)
                             ZoomifySettings.export()

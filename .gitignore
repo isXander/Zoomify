@@ -1,6 +1,5 @@
+run
+build
 /.idea
-/.gradle
-/build
-/run
-!*/.gitkeep
-/.fleet
+.gradle
+!.gitkeep
