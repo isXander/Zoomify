@@ -299,18 +299,6 @@ fun createSettingsGui(parent: Screen? = null): Screen {
         category(ConfigCategory.createBuilder().apply {
             name(Component.translatable(ZoomifySettings.CONTROLS))
 
-            option(Option.createBuilder<ZoomKeyBehaviour>().apply {
-                useSettxiName(ZoomifySettings::zoomKeyBehaviour)
-                desc {
-                    text(Component.translatable(ZoomifySettings::zoomKeyBehaviour.setting.description))
-                }
-                bindSetting(ZoomifySettings::zoomKeyBehaviour)
-                controller { opt -> EnumControllerBuilder.create(opt).apply {
-                    enumClass(ZoomKeyBehaviour::class.java)
-                    formatSettxiEnum()
-                }}
-            }.build())
-
             option(Option.createBuilder<Boolean>().apply {
                 useSettxiName(ZoomifySettings::_keybindScrolling)
                 desc {

@@ -18,7 +18,7 @@ val mcSemverVersion = stonecutter.current.version
 val mcDep = property("fmj.mcDep").toString()
 
 group = "dev.isxander"
-val versionWithoutMC = "2.13.4"
+val versionWithoutMC = "2.13.5"
 version = "$versionWithoutMC+${stonecutter.current.project}"
 
 val isAlpha = "alpha" in version.toString()

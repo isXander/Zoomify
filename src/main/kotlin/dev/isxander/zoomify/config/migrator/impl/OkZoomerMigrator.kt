@@ -50,16 +50,6 @@ object OkZoomerMigrator : Migrator {
             ZoomifySettings.relativeSensitivity = 0
         }
 
-        when (okz.features.zoomMode) {
-            ZoomMode.HOLD ->
-                ZoomifySettings.zoomKeyBehaviour = ZoomKeyBehaviour.HOLD
-            ZoomMode.TOGGLE ->
-                ZoomifySettings.zoomKeyBehaviour = ZoomKeyBehaviour.TOGGLE
-            ZoomMode.PERSISTENT -> {
-                migration.error(Component.translatable("zoomify.migrate.okz.persistent"))
-            }
-        }
-
         ZoomifySettings._keybindScrolling = okz.features.extraKeyBinds
         migration.requireRestart()
 

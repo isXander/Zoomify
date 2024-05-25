@@ -1,5 +1,6 @@
 {
-  "zoomify.key.zoom": "Zoom",
+  "zoomify.key.zoom": "Zoom (Hold)",
+  "zoomify.key.zoom_toggle": "Zoom (Toggle)",
   "zoomify.key.zoom.secondary": "Secondary Zoom",
   "zoomify.key.zoom.in": "Scroll Zoom In",
   "zoomify.key.zoom.out": "Scroll Zoom Out",

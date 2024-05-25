@@ -135,22 +135,6 @@ object ZoomifySettings : SettxiFileConfig(
         category = SCROLLING
     }
 
-    var zoomKeyBehaviour by enum(ZoomKeyBehaviour.HOLD) {
-        name = "zoomify.gui.zoomKeyBehaviour.name"
-        description = "zoomify.gui.zoomKeyBehaviour.description"
-        category = CONTROLS
-        migrator { type ->
-            if (type.primitive.isString) {
-                Zoomify.LOGGER.info("Migrating transition type from string to int")
-                PrimitiveType.of(ZoomKeyBehaviour.values().find { keyBehaviour ->
-                    keyBehaviour.displayName.lowercase()
-                        .replace(Regex("\\W+"), "_")
-                        .trim { it == '_' || it.isWhitespace() } == type.primitive.string
-                }!!.ordinal).also { needsSaving = true }
-            } else type
-        }
-    }
-
     var keybindScrolling = false
         private set
 
