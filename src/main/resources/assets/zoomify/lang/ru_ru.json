@@ -140,7 +140,7 @@
   "zoomify.migrate.okz.vignette": "Эффект виньетирования не поддерживается.",
   "zoomify.migrate.okz.minZoomDiv": "Изменение минимального делителя не поддерживается.",
   "zoomify.migrate.okz.stepAmt": "Изменение шагов прокрутки не поддерживается.",
-  "zoomify.migrate.okz.linearNotSupported": "Линейные тайминги не могут быть рассчитаны автоматически."
+  "zoomify.migrate.okz.linearNotSupported": "Линейные тайминги не могут быть рассчитаны автоматически.",
 
   "modmenu.summaryTranslation.zoomify": "Безгранично настраиваемое приближение.",
   "modmenu.descriptionTranslation.zoomify": "Zoomify стремится создать самое простое, самое гибкое и самое привлекательное приближение, которое вы когда-либо видели!"
