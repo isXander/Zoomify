@@ -1,5 +1,6 @@
 {
-  "zoomify.key.zoom": "放大",
+  "zoomify.key.zoom": "缩放（按住）",
+  "zoomify.key.zoom_toggle": "缩放（切换）",
   "zoomify.key.zoom.secondary": "二次缩放",
   "zoomify.key.zoom.in": "滚动放大",
   "zoomify.key.zoom.out": "滚动缩小",
@@ -23,7 +24,7 @@
   "zoomify.gui.affectHandFov.name": "影响手部FOV值",
   "zoomify.gui.affectHandFov.description": "缩放时,世界视图放大且保持手部的FOV值正常。",
   "zoomify.gui.retainZoomSteps.name": "记住缩放步骤",
-  "zoomify.gui.retainZoomSteps.description": "在放大和缩小之间保持滚动缩放量。",
+  "zoomify.gui.retainZoomSteps.description": "在放大和缩小之间固定滚动缩放量。",
 
   "zoomify.gui.category.scrolling": "滚动",
   "zoomify.gui.scrollZoom.name": "启用滚动缩放",
