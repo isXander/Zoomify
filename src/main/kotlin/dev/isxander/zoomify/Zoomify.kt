@@ -1,12 +1,10 @@
 package dev.isxander.zoomify
 
 import com.mojang.blaze3d.platform.InputConstants
-import dev.isxander.controlify.platform.client.PlatformClientUtil
+import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.config.*
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.integrations.constrainModVersionIfLoaded
-import dev.isxander.zoomify.utils.MultiKeySource
-import dev.isxander.zoomify.utils.toKeySource
 import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
@@ -28,58 +26,39 @@ import org.slf4j.LoggerFactory
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    val zoomHoldKey = MultiKeySource()
-    val zoomToggleKey = MultiKeySource()
-    val secondaryZoomKey = MultiKeySource()
-
-    val zoomHoldKeyMapping = KeyMapping(
-        "zoomify.key.zoom",
-        InputConstants.KEY_C,
-        "zoomify.key.category"
-    )
-    val zoomToggleKeyMapping = KeyMapping(
-        "zoomify.key.zoom_toggle",
-        -1,
-        "zoomify.key.category"
-    )
-    val secondaryZoomKeyMapping = KeyMapping(
-        "zoomify.key.zoom.secondary",
-        InputConstants.KEY_F6,
-        "zoomify.key.category"
-    )
+    private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_C, "zoomify.key.category")
+    private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, "zoomify.key.category")
     private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", -1, "zoomify.key.category")
     private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", -1, "zoomify.key.category")
 
     var zooming = false
         private set
-    private var zoomToggled = false
-
     private val zoomHelper = ZoomHelper(
         TransitionInterpolator(
-            ZoomifySettings::zoomInTransition,
-            ZoomifySettings::zoomOutTransition,
-            ZoomifySettings::zoomInTime,
-            ZoomifySettings::zoomOutTime
+            ZoomifySettings.zoomInTransition::value,
+            ZoomifySettings.zoomOutTransition::value,
+            ZoomifySettings.zoomInTime::value,
+            ZoomifySettings.zoomOutTime::value
         ),
         SmoothInterpolator {
             Mth.lerp(
-                ZoomifySettings.scrollZoomSmoothness / 100.0,
+                ZoomifySettings.scrollZoomSmoothness.value / 100.0,
                 1.0,
                 0.1
             )
         },
-        initialZoom = ZoomifySettings::initialZoom,
-        scrollZoomAmount = ZoomifySettings::scrollZoomAmount,
+        initialZoom = ZoomifySettings.initialZoom::value,
+        scrollZoomAmount = ZoomifySettings.scrollZoomAmount::value,
         maxScrollTiers = Zoomify::maxScrollTiers,
-        linearLikeSteps = ZoomifySettings::linearLikeSteps,
+        linearLikeSteps = ZoomifySettings.linearLikeSteps::value,
     )
 
     var secondaryZooming = false
         private set
     private val secondaryZoomHelper = ZoomHelper(
-        TimedInterpolator(ZoomifySettings::secondaryZoomInTime, ZoomifySettings::secondaryZoomOutTime),
+        TimedInterpolator(ZoomifySettings.secondaryZoomInTime::value, ZoomifySettings.secondaryZoomOutTime::value),
         InstantInterpolator,
-        initialZoom = ZoomifySettings::secondaryZoomAmount,
+        initialZoom = ZoomifySettings.secondaryZoomAmount::value,
         scrollZoomAmount = { 0 },
         maxScrollTiers = { 0 },
         linearLikeSteps = { false },
@@ -96,13 +75,14 @@ object Zoomify : ClientModInitializer {
     private var displayGui = false
 
     override fun onInitializeClient() {
+        // controlify compat only works on 2.x
+        constrainModVersionIfLoaded("controlify", "2.x.x")
+
         // imports on <init>
         ZoomifySettings
 
-        zoomHoldKey.addSource(zoomHoldKeyMapping.toKeySource(register = true))
-        zoomToggleKey.addSource(zoomToggleKeyMapping.toKeySource(register = true))
-        secondaryZoomKey.addSource(secondaryZoomKeyMapping.toKeySource(register = true))
-
+        KeyBindingHelper.registerKeyBinding(zoomKey)
+        KeyBindingHelper.registerKeyBinding(secondaryZoomKey)
         if (ZoomifySettings.keybindScrolling) {
             KeyBindingHelper.registerKeyBinding(scrollZoomIn)
             KeyBindingHelper.registerKeyBinding(scrollZoomOut)
@@ -123,12 +103,16 @@ object Zoomify : ClientModInitializer {
     private fun tick(minecraft: Minecraft) {
         val prevZooming = zooming
 
-        if (zoomToggleKey.justPressed) {
-            zoomToggled = !zoomToggled
+        when (ZoomifySettings.zoomKeyBehaviour.value) {
+            ZoomKeyBehaviour.HOLD -> zooming = zoomKey.isDown
+            ZoomKeyBehaviour.TOGGLE -> {
+                while (zoomKey.consumeClick()) {
+                    zooming = !zooming
+                }
+            }
         }
-        zooming = zoomHoldKey.isDown || zoomToggled
 
-        if (secondaryZoomKey.justPressed) {
+        while (secondaryZoomKey.consumeClick()) {
             secondaryZooming = !secondaryZooming
         }
 
@@ -157,7 +141,7 @@ object Zoomify : ClientModInitializer {
     @JvmStatic
     fun getZoomDivisor(tickDelta: Float): Double {
         if (!zooming) {
-            if (!ZoomifySettings.retainZoomSteps)
+            if (!ZoomifySettings.retainZoomSteps.value)
                 scrollSteps = 0
 
             zoomHelper.reset()
@@ -180,7 +164,7 @@ object Zoomify : ClientModInitializer {
         val cameraEntity = minecraft.cameraEntity
 
         if (cameraEntity is AbstractClientPlayer) {
-            when (ZoomifySettings.spyglassBehaviour) {
+            when (ZoomifySettings.spyglassBehaviour.value) {
                 SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING -> {
                     if (!cameraEntity.isHolding(Items.SPYGLASS))
                         zooming = false
@@ -194,7 +178,7 @@ object Zoomify : ClientModInitializer {
                 else -> {}
             }
 
-            val requiresSpyglass = ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
+            val requiresSpyglass = ZoomifySettings.spyglassBehaviour.value != SpyglassBehaviour.COMBINE
             if (requiresSpyglass && cameraEntity.isScoping) {
                 zooming = true
             }
@@ -205,7 +189,7 @@ object Zoomify : ClientModInitializer {
                 }
             }
 
-            shouldPlaySound = when (ZoomifySettings.spyglassSoundBehaviour) {
+            shouldPlaySound = when (ZoomifySettings.spyglassSoundBehaviour.value) {
                 SoundBehaviour.NEVER -> false
                 SoundBehaviour.ALWAYS -> true
                 SoundBehaviour.ONLY_SPYGLASS -> cameraEntity.isScoping || (requiresSpyglass && zooming && cameraEntity.isHolding(Items.SPYGLASS))
@@ -225,12 +209,12 @@ object Zoomify : ClientModInitializer {
 
     @JvmStatic
     fun shouldRenderOverlay(player: AbstractClientPlayer, isUsingSpyglass: Boolean) =
-        when (ZoomifySettings.spyglassOverlayVisibility) {
+        when (ZoomifySettings.spyglassOverlayVisibility.value) {
             OverlayVisibility.NEVER -> false
             OverlayVisibility.ALWAYS -> zooming
             OverlayVisibility.HOLDING -> isUsingSpyglass
                     || (zooming && player.isHolding(Items.SPYGLASS))
-                    && ZoomifySettings.spyglassBehaviour != SpyglassBehaviour.COMBINE
+                    && ZoomifySettings.spyglassBehaviour.value != SpyglassBehaviour.COMBINE
             OverlayVisibility.CARRYING -> zooming
                     && player.inventory.hasAnyMatching { stack: ItemStack -> stack.`is`(Items.SPYGLASS) }
         }
@@ -246,9 +230,9 @@ object Zoomify : ClientModInitializer {
 
     fun unbindConflicting(): Boolean {
         val minecraft = Minecraft.getInstance()
-        if (!zoomHoldKeyMapping.isUnbound) {
+        if (!zoomKey.isUnbound) {
             for (key in minecraft.options.keyMappings) {
-                if (key != zoomHoldKeyMapping && key.same(zoomHoldKeyMapping)) {
+                if (key != zoomKey && key.equals(zoomKey)) {
                     minecraft.options.setKey(key, InputConstants.UNKNOWN)
 
                     toast(
@@ -270,10 +254,10 @@ object Zoomify : ClientModInitializer {
     private fun detectConflictingToast() {
         val minecraft = Minecraft.getInstance()
 
-        if (zoomHoldKeyMapping.isUnbound)
+        if (zoomKey.isUnbound)
             return
 
-        if (minecraft.options.keyMappings.any { it != zoomHoldKeyMapping && it.same(zoomHoldKeyMapping) }) {
+        if (minecraft.options.keyMappings.any { it != zoomKey && it.equals(zoomKey) }) {
             toast(
                 Component.translatable("zoomify.toast.conflictingKeybind.title"),
                 Component.translatable("zoomify.toast.conflictingKeybind.description",

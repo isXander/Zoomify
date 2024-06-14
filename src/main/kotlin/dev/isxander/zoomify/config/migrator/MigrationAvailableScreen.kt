@@ -12,7 +12,7 @@ class MigrationAvailableScreen(migrator: Migrator, parent: Screen?) : ConfirmScr
         if (yes) {
             val migration = Migration()
             migrator.migrate(migration)
-            ZoomifySettings.export()
+            ZoomifySettings.saveToFile()
             Minecraft.getInstance().setScreen(MigrationResultScreen(migration, parent))
         } else {
             Minecraft.getInstance().setScreen(parent)

@@ -14,7 +14,7 @@ public class AbstractClientPlayerEntityMixin {
         at = @At(value = "CONSTANT", args = "floatValue=0.1f")
     )
     private float modifySpyglassFovMultiplier(float multiplier) {
-        if (ZoomifySettings.INSTANCE.getSpyglassBehaviour() != SpyglassBehaviour.COMBINE)
+        if (ZoomifySettings.INSTANCE.getSpyglassBehaviour().get() != SpyglassBehaviour.COMBINE)
             return 1f;
         return multiplier;
     }

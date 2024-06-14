@@ -1,9 +1,11 @@
 package dev.isxander.zoomify.utils
 
-import dev.isxander.settxi.impl.SettingDisplayName
+import dev.isxander.yacl3.api.NameableEnum
+import net.minecraft.network.chat.Component
+import net.minecraft.util.StringRepresentable
 import kotlin.math.*
 
-enum class TransitionType(override val displayName: String) : Transition, SettingDisplayName {
+enum class TransitionType(val localisedName: Component) : Transition, NameableEnum, StringRepresentable {
     INSTANT("zoomify.transition.instant") {
         override fun apply(t: Double) =
             t
@@ -121,6 +123,11 @@ enum class TransitionType(override val displayName: String) : Transition, Settin
             }
     };
 
+    constructor(name: String) : this(Component.translatable(name))
+
+    override fun getSerializedName(): String = name.lowercase()
+    override fun getDisplayName(): Component = localisedName
+
     fun opposite(): TransitionType = when (this) {
         INSTANT -> INSTANT
         LINEAR -> LINEAR
@@ -136,6 +143,10 @@ enum class TransitionType(override val displayName: String) : Transition, Settin
         EASE_IN_EXP -> EASE_OUT_EXP
         EASE_OUT_EXP -> EASE_IN_EXP
         EASE_IN_OUT_EXP -> EASE_IN_OUT_EXP
+    }
+
+    companion object {
+        val CODEC = StringRepresentable.fromEnum(::values)
     }
 }
 

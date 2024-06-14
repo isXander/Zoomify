@@ -36,7 +36,9 @@ public class MouseMixin {
         double scrollY = accumulatedScroll;
         *//*? } */
 
-        if (ZoomifySettings.INSTANCE.getScrollZoom() && Zoomify.INSTANCE.getZooming() && scrollY != 0 && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
+        if (ZoomifySettings.INSTANCE.getScrollZoom().get()
+                && Zoomify.INSTANCE.getZooming() && scrollY != 0
+                && !ZoomifySettings.INSTANCE.getKeybindScrolling()) {
             Zoomify.mouseZoom(scrollY);
             ci.cancel();
         }
@@ -47,7 +49,9 @@ public class MouseMixin {
         at = @At(value = "FIELD", target = "Lnet/minecraft/client/Options;smoothCamera:Z")
     )
     private boolean smoothCameraIfZoom(boolean original) {
-        return original || Zoomify.INSTANCE.getSecondaryZooming() || (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera() > 0);
+        return original
+                || Zoomify.INSTANCE.getSecondaryZooming()
+                || (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera().get() > 0);
     }
 
     @ModifyExpressionValue(
@@ -60,7 +64,11 @@ public class MouseMixin {
     )
     private Object applyRelativeSensitivity(Object genericValue) {
         double value = (Double) genericValue;
-        return value / Mth.lerp(ZoomifySettings.INSTANCE.getRelativeSensitivity() / 100.0, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor());
+        return value / Mth.lerp(
+                ZoomifySettings.INSTANCE.getRelativeSensitivity().get() / 100.0,
+                1.0,
+                Zoomify.INSTANCE.getPreviousZoomDivisor()
+        );
     }
 
     @ModifyExpressionValue(
@@ -71,7 +79,7 @@ public class MouseMixin {
         )
     )
     private boolean shouldApplySpyglassSensitivity(boolean isUsingSpyglass) {
-        if (ZoomifySettings.INSTANCE.getSpyglassBehaviour() != SpyglassBehaviour.COMBINE)
+        if (ZoomifySettings.INSTANCE.getSpyglassBehaviour().get() != SpyglassBehaviour.COMBINE)
             return false;
         return isUsingSpyglass;
     }
@@ -85,8 +93,8 @@ public class MouseMixin {
         index = 1
     )
     private double modifyCinematicSmoothness(double smoother) {
-        if (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera() > 0)
-            return smoother / (ZoomifySettings.INSTANCE.getCinematicCamera() / 100.0);
+        if (Zoomify.INSTANCE.getZooming() && ZoomifySettings.INSTANCE.getCinematicCamera().get() > 0)
+            return smoother / (ZoomifySettings.INSTANCE.getCinematicCamera().get() / 100.0);
 
         return smoother;
     }

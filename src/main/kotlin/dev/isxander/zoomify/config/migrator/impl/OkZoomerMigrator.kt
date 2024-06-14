@@ -2,6 +2,7 @@ package dev.isxander.zoomify.config.migrator.impl
 
 import com.akuleshov7.ktoml.Toml
 import com.akuleshov7.ktoml.TomlInputConfig
+import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.Zoomify
 import dev.isxander.zoomify.config.*
 import dev.isxander.zoomify.config.migrator.Migration
@@ -37,27 +38,37 @@ object OkZoomerMigrator : Migrator {
 
         when (okz.features.cinematicCamera) {
             CinematicCameraState.VANILLA ->
-                ZoomifySettings.cinematicCamera = 100
+                ZoomifySettings.cinematicCamera.value = 100
             CinematicCameraState.MULTIPLIED ->
-                ZoomifySettings.cinematicCamera = (1 / okz.values.cinematicMultiplier * 100).toInt()
+                ZoomifySettings.cinematicCamera.value = (1 / okz.values.cinematicMultiplier * 100).toInt()
             CinematicCameraState.OFF ->
-                ZoomifySettings.cinematicCamera = 0
+                ZoomifySettings.cinematicCamera.value = 0
         }
 
         if (okz.features.reduceSensitivity) {
-            ZoomifySettings.relativeSensitivity = 100
+            ZoomifySettings.relativeSensitivity.value = 100
         } else {
-            ZoomifySettings.relativeSensitivity = 0
+            ZoomifySettings.relativeSensitivity.value = 0
         }
 
-        ZoomifySettings._keybindScrolling = okz.features.extraKeyBinds
+        when (okz.features.zoomMode) {
+            ZoomMode.HOLD ->
+                ZoomifySettings.zoomKeyBehaviour.value = ZoomKeyBehaviour.HOLD
+            ZoomMode.TOGGLE ->
+                ZoomifySettings.zoomKeyBehaviour.value = ZoomKeyBehaviour.TOGGLE
+            ZoomMode.PERSISTENT -> {
+                migration.error(Component.translatable("zoomify.migrate.okz.persistent"))
+            }
+        }
+
+        ZoomifySettings._keybindScrolling.value = okz.features.extraKeyBinds
         migration.requireRestart()
 
         when (okz.features.zoomOverlay) {
             Overlay.OFF ->
-                ZoomifySettings.spyglassOverlayVisibility = OverlayVisibility.NEVER
+                ZoomifySettings.spyglassOverlayVisibility.value = OverlayVisibility.NEVER
             Overlay.SPYGLASS ->
-                ZoomifySettings.spyglassOverlayVisibility = when (okz.features.spyglassDependency) {
+                ZoomifySettings.spyglassOverlayVisibility.value = when (okz.features.spyglassDependency) {
                     SpyglassDependency.REPLACE_ZOOM -> OverlayVisibility.ALWAYS
                     SpyglassDependency.REQUIRE_ITEM, SpyglassDependency.BOTH -> OverlayVisibility.HOLDING
                     SpyglassDependency.OFF -> OverlayVisibility.ALWAYS
@@ -69,35 +80,35 @@ object OkZoomerMigrator : Migrator {
 
         when (okz.features.spyglassDependency) {
             SpyglassDependency.OFF ->
-                ZoomifySettings.spyglassBehaviour = SpyglassBehaviour.COMBINE
+                ZoomifySettings.spyglassBehaviour.value = SpyglassBehaviour.COMBINE
             SpyglassDependency.REPLACE_ZOOM ->
-                ZoomifySettings.spyglassBehaviour = SpyglassBehaviour.OVERRIDE
+                ZoomifySettings.spyglassBehaviour.value = SpyglassBehaviour.OVERRIDE
             SpyglassDependency.REQUIRE_ITEM ->
-                ZoomifySettings.spyglassBehaviour = SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING
+                ZoomifySettings.spyglassBehaviour.value = SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING
             SpyglassDependency.BOTH ->
-                ZoomifySettings.spyglassBehaviour = SpyglassBehaviour.ONLY_ZOOM_WHILE_CARRYING // FIXME: idk what this does
+                ZoomifySettings.spyglassBehaviour.value = SpyglassBehaviour.ONLY_ZOOM_WHILE_CARRYING // FIXME: idk what this does
         }
 
-        ZoomifySettings.spyglassSoundBehaviour =
+        ZoomifySettings.spyglassSoundBehaviour.value =
             if (okz.tweaks.useSpyglassSounds)
                 SoundBehaviour.ALWAYS
             else
                 SoundBehaviour.NEVER
 
-        ZoomifySettings.initialZoom = okz.values.zoomDivisor.roundToInt()
+        ZoomifySettings.initialZoom.value = okz.values.zoomDivisor.roundToInt()
         migration.warn(Component.translatable("zoomify.migrate.okz.minZoomDiv"))
-        ZoomifySettings.scrollZoomAmount = ((okz.values.maxZoomDivisor - ZoomifySettings.initialZoom) / Zoomify.maxScrollTiers).roundToInt()
+        ZoomifySettings.scrollZoomAmount.value = ((okz.values.maxZoomDivisor - ZoomifySettings.initialZoom.value) / Zoomify.maxScrollTiers).roundToInt()
 
         migration.warn(Component.translatable("zoomify.migrate.okz.stepAmt"))
 
         when (okz.features.zoomTransition) {
             OkZoomerConfig.Features.TransitionMode.LINEAR -> {
                 migration.error(Component.translatable("zoomify.migrate.okz.linearNotSupported"))
-                ZoomifySettings.zoomInTransition = TransitionType.LINEAR
-                ZoomifySettings.zoomOutTransition = TransitionType.LINEAR
+                ZoomifySettings.zoomInTransition.value = TransitionType.LINEAR
+                ZoomifySettings.zoomOutTransition.value = TransitionType.LINEAR
             }
             OkZoomerConfig.Features.TransitionMode.SMOOTH -> {
-                val targetMultiplier = 1f / ZoomifySettings.initialZoom
+                val targetMultiplier = 1f / ZoomifySettings.initialZoom.value
                 var multiplier = 1f
                 var ticks = 0
                 while (multiplier != targetMultiplier) {
@@ -105,21 +116,21 @@ object OkZoomerMigrator : Migrator {
                     ticks++
                 }
                 val zoomTime = (ticks * 0.05 / 0.1).roundToInt() * 0.1
-                ZoomifySettings.zoomInTime = zoomTime
-                ZoomifySettings.zoomOutTime = zoomTime
-                ZoomifySettings.zoomInTransition = TransitionType.EASE_IN_EXP
-                ZoomifySettings.zoomOutTransition = TransitionType.EASE_IN_EXP
+                ZoomifySettings.zoomInTime.value = zoomTime
+                ZoomifySettings.zoomOutTime.value = zoomTime
+                ZoomifySettings.zoomInTransition.value = TransitionType.EASE_IN_EXP
+                ZoomifySettings.zoomOutTransition.value = TransitionType.EASE_IN_EXP
             }
             OkZoomerConfig.Features.TransitionMode.OFF -> {
-                ZoomifySettings.zoomInTime = 0.0
-                ZoomifySettings.zoomOutTime = 0.0
-                ZoomifySettings.zoomInTransition = TransitionType.INSTANT
-                ZoomifySettings.zoomOutTransition = TransitionType.INSTANT
+                ZoomifySettings.zoomInTime.value = 0.0
+                ZoomifySettings.zoomOutTime.value = 0.0
+                ZoomifySettings.zoomInTransition.value = TransitionType.INSTANT
+                ZoomifySettings.zoomOutTransition.value = TransitionType.INSTANT
             }
         }
 
 
-        ZoomifySettings.retainZoomSteps = !okz.tweaks.forgetZoomDivisor
+        ZoomifySettings.retainZoomSteps.value = !okz.tweaks.forgetZoomDivisor
 
         if (okz.tweaks.unbindConflictingKey) {
             Zoomify.unbindConflicting()

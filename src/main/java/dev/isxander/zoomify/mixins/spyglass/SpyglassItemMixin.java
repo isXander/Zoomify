@@ -20,11 +20,13 @@ public class SpyglassItemMixin {
         )
     )
     private boolean shouldPlaySpyglassSound(Player instance, SoundEvent event, float volume, float pitch) {
-        if (ZoomifySettings.INSTANCE.getSpyglassSoundBehaviour() == SoundBehaviour.NEVER)
+        if (ZoomifySettings.INSTANCE.getSpyglassSoundBehaviour().get() == SoundBehaviour.NEVER)
             return false;
 
-        if (ZoomifySettings.INSTANCE.getSpyglassSoundBehaviour() == SoundBehaviour.WITH_OVERLAY && ZoomifySettings.INSTANCE.getSpyglassOverlayVisibility() == OverlayVisibility.NEVER)
+        if (ZoomifySettings.INSTANCE.getSpyglassSoundBehaviour().get() == SoundBehaviour.WITH_OVERLAY
+                && ZoomifySettings.INSTANCE.getSpyglassOverlayVisibility().get() == OverlayVisibility.NEVER) {
             return false;
+        }
 
         return true;
     }

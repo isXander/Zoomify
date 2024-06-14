@@ -31,7 +31,7 @@ public class GameRendererMixin {
         }
     )
     private float modifyBobbingIntensity(float p) {
-        if (!ZoomifySettings.INSTANCE.getRelativeViewBobbing())
+        if (!ZoomifySettings.INSTANCE.getRelativeViewBobbing().get())
             return p;
 
         return (float) (p / Mth.lerp(0.2, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()));
@@ -45,7 +45,7 @@ public class GameRendererMixin {
         )
     )
     private double keepHandFov(double fov, @Local(argsOnly=true) float tickDelta) {
-        if (!ZoomifySettings.INSTANCE.getAffectHandFov())
+        if (!ZoomifySettings.INSTANCE.getAffectHandFov().get())
             return fov * Zoomify.getZoomDivisor(tickDelta);
         return fov;
     }
