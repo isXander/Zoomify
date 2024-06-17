@@ -44,10 +44,10 @@
   "depends": {
     "fabric-api": "*",
     "fabricloader": ">=0.14.22",
-    "fabric-language-kotlin": ">=1.10.19+kotlin.1.9.23",
+    "fabric-language-kotlin": ">=1.11.0+kotlin.2.0.0",
     "minecraft": "${mc}",
     "java": ">=17",
-    "yet_another_config_lib_v3": ">=3.2.1"
+    "yet_another_config_lib_v3": ">=3.5.0"
   },
   "suggests": {
     "modmenu": "*"

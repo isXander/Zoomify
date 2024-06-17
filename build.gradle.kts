@@ -1,9 +1,7 @@
-import net.fabricmc.loom.task.RemapJarTask
-
 plugins {
     `java-library`
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.serialization") version "1.9.23"
+    kotlin("jvm") version "2.0.0"
+    kotlin("plugin.serialization") version "2.0.0"
 
     id("fabric-loom") version "1.6.+"
 
@@ -26,14 +24,6 @@ val isBeta = "beta" in version.toString()
 
 base {
     archivesName.set(property("modName").toString())
-}
-
-// add custom expressions to stonecutter to allow optional dependencies at build-time
-stonecutter.expression {
-    when (it) {
-        "mod-menu" -> isPropDefined("deps.modMenu")
-        else -> null
-    }
 }
 
 loom {
@@ -108,13 +98,6 @@ dependencies {
     }
 
     modImplementation(include("com.akuleshov7:ktoml-core-jvm:${property("deps.ktoml")}")!!)
-
-    listOf(
-        "core",
-        "kotlinx-serialization"
-    ).forEach {
-        modImplementation(include("dev.isxander.settxi:settxi-$it:${property("deps.settxi")}")!!)
-    }
 }
 
 tasks {

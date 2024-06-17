@@ -7,7 +7,7 @@ import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.utils.TransitionType
 import net.fabricmc.loader.api.FabricLoader
 
-object ZoomifySettings : JsonFileCodecConfig<ZoomifySettings>(
+open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
     FabricLoader.getInstance().configDir.resolve("zoomify.json")
 ) {
     val initialZoom by register<Int>(default = 4, Codec.INT)
@@ -47,9 +47,9 @@ object ZoomifySettings : JsonFileCodecConfig<ZoomifySettings>(
     val secondaryHideHUDOnZoom by register<Boolean>(default = true, Codec.BOOL)
 
     var firstLaunch = false
-    private val _firstLaunch by register<Boolean>(default = true, Codec.BOOL)
+    val _firstLaunch by register<Boolean>(default = true, Codec.BOOL)
 
-    val allSettings = arrayOf(
+    final val allSettings = arrayOf(
         initialZoom,
         zoomInTime,
         zoomOutTime,
@@ -74,17 +74,37 @@ object ZoomifySettings : JsonFileCodecConfig<ZoomifySettings>(
         secondaryHideHUDOnZoom
     )
 
-    init {
-        if (!loadFromFile()) {
-            saveToFile()
+    constructor(settings: ZoomifySettings) : this() {
+        repeat(allSettings.size) { i ->
+            allSettings[i].value = settings.allSettings[i].value
         }
 
-        if (_firstLaunch.value) {
-            firstLaunch = true
-            _firstLaunch.value = false
-            saveToFile()
-        }
+        this.initialZoom.value = settings.initialZoom.value
+        this.zoomInTime.value = settings.zoomInTime.value
+        this.zoomOutTime.value = settings.zoomOutTime.value
+        this.zoomInTransition.value = settings.zoomInTransition.value
+        this.zoomOutTransition.value = settings.zoomOutTransition.value
+        this.affectHandFov.value = settings.affectHandFov.value
+        this.retainZoomSteps.value = settings.retainZoomSteps.value
+        this.linearLikeSteps.value = settings.linearLikeSteps.value
+        this.scrollZoom.value = settings.scrollZoom.value
+        this.scrollZoomAmount.value = settings.scrollZoomAmount.value
 
-        _keybindScrolling.value = keybindScrolling
+    }
+
+    companion object : ZoomifySettings() {
+        init {
+            if (!loadFromFile()) {
+                saveToFile()
+            }
+
+            if (_firstLaunch.value) {
+                firstLaunch = true
+                _firstLaunch.value = false
+                saveToFile()
+            }
+
+            _keybindScrolling.value = keybindScrolling
+        }
     }
 }

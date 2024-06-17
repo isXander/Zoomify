@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.toasts.SystemToast
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 
 val minecraft: Minecraft = Minecraft.getInstance()
 
@@ -15,11 +16,11 @@ fun GuiGraphics.scale(x: Float, y: Float, z: Float) = pose().scale(x, y, z)
 
 // i love kotlin
 typealias ToastTypes =
-        /*? if >1.20.1 { */
+        /*? if >1.20.1 {*/
         SystemToast.SystemToastId
-        /*? } else { *//*
+        /*?} else {*//*
         SystemToast.SystemToastIds
-        *//*? } */
+        *//*?}*/
 
 fun toast(
     title: Component,
@@ -33,3 +34,10 @@ fun toast(
 ).also {
     minecraft.toasts.addToast(it)
 }
+
+fun zoomifyRl(path: String) =
+    //? if >=1.21 {
+    /*ResourceLocation.fromNamespaceAndPath("zoomify", path)
+    *///?} else {
+    ResourceLocation("zoomify", path)
+    //?}

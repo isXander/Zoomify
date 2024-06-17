@@ -14,7 +14,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.components.toasts.SystemToast
 import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
@@ -33,36 +32,11 @@ object Zoomify : ClientModInitializer {
 
     var zooming = false
         private set
-    private val zoomHelper = ZoomHelper(
-        TransitionInterpolator(
-            ZoomifySettings.zoomInTransition::value,
-            ZoomifySettings.zoomOutTransition::value,
-            ZoomifySettings.zoomInTime::value,
-            ZoomifySettings.zoomOutTime::value
-        ),
-        SmoothInterpolator {
-            Mth.lerp(
-                ZoomifySettings.scrollZoomSmoothness.value / 100.0,
-                1.0,
-                0.1
-            )
-        },
-        initialZoom = ZoomifySettings.initialZoom::value,
-        scrollZoomAmount = ZoomifySettings.scrollZoomAmount::value,
-        maxScrollTiers = Zoomify::maxScrollTiers,
-        linearLikeSteps = ZoomifySettings.linearLikeSteps::value,
-    )
+    private val zoomHelper = RegularZoomHelper(ZoomifySettings)
 
     var secondaryZooming = false
         private set
-    private val secondaryZoomHelper = ZoomHelper(
-        TimedInterpolator(ZoomifySettings.secondaryZoomInTime::value, ZoomifySettings.secondaryZoomOutTime::value),
-        InstantInterpolator,
-        initialZoom = ZoomifySettings.secondaryZoomAmount::value,
-        scrollZoomAmount = { 0 },
-        maxScrollTiers = { 0 },
-        linearLikeSteps = { false },
-    )
+    private val secondaryZoomHelper = SecondaryZoomHelper(ZoomifySettings)
 
     var previousZoomDivisor = 1.0
         private set
@@ -261,7 +235,7 @@ object Zoomify : ClientModInitializer {
             toast(
                 Component.translatable("zoomify.toast.conflictingKeybind.title"),
                 Component.translatable("zoomify.toast.conflictingKeybind.description",
-                    Component.translatable("zoomify.gui.category.misc")
+                    Component.translatable("yacl3.config.zoomify.category.misc")
                 ),
                 longer = true
             )

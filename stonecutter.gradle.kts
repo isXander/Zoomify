@@ -3,6 +3,14 @@ plugins {
 }
 stonecutter active "1.20.6" /* [SC] DO NOT EDIT */
 
+stonecutter.configureEach {
+    fun String.propDefined() = project.findProperty(this)?.toString()?.isNotBlank() ?: false
+
+    consts(listOf(
+        "mod-menu" to "deps.modMenu".propDefined()
+    ))
+}
+
 stonecutter registerChiseled tasks.register("buildAllVersions", stonecutter.chiseled) {
     group = "mod"
     ofTask("build")

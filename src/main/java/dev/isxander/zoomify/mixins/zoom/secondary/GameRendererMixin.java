@@ -19,6 +19,6 @@ public class GameRendererMixin {
         )
     )
     private boolean shouldHideHUD(boolean hideHUD) {
-        return hideHUD || (Zoomify.INSTANCE.getSecondaryZooming() && ZoomifySettings.INSTANCE.getSecondaryHideHUDOnZoom().get());
+        return hideHUD || (Zoomify.INSTANCE.getSecondaryZooming() && ZoomifySettings.Companion.getSecondaryHideHUDOnZoom().get());
     }
 }

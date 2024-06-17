@@ -3,6 +3,7 @@ package dev.isxander.zoomify.config
 import dev.isxander.yacl3.api.*
 import dev.isxander.yacl3.api.controller.*
 import dev.isxander.yacl3.api.utils.OptionUtils
+import dev.isxander.yacl3.config.v3.ConfigEntry
 import dev.isxander.yacl3.config.v3.register
 import dev.isxander.yacl3.config.v3.value
 import dev.isxander.yacl3.dsl.*
@@ -18,62 +19,24 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.CommonComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.util.Mth
 import kotlin.reflect.KMutableProperty0
 
 fun createSettingsGui(parent: Screen?) = SettingsGuiFactory().createSettingsGui(parent)
 
 private class SettingsGuiFactory {
-    var inTransition = ZoomifySettings.zoomInTransition.value
-    var outTransition = ZoomifySettings.zoomOutTransition.value
-    var inDuration = ZoomifySettings.zoomInTime.value
-    var outDuration = ZoomifySettings.zoomOutTime.value
-    var initialZoomAmt = ZoomifySettings.initialZoom.value
-    var scrollZoomAmt = ZoomifySettings.scrollZoomAmount.value
-    var linearLikeSteps = ZoomifySettings.linearLikeSteps.value
-    var scrollZoomSmoothness = ZoomifySettings.scrollZoomSmoothness.value
-    var canScrollZoom = ZoomifySettings.scrollZoom.value
-    var secondaryZoomInTime = ZoomifySettings.secondaryZoomInTime.value
-    var secondaryZoomOutTime = ZoomifySettings.secondaryZoomOutTime.value
-    var secondaryZoomAmount = ZoomifySettings.secondaryZoomAmount.value
+    val settings = ZoomifySettings(ZoomifySettings)
 
-    val zoomHelperFactory = { ZoomHelper(
-        TransitionInterpolator(
-            { inTransition },
-            { outTransition },
-            { inDuration },
-            { outDuration },
-        ),
-        SmoothInterpolator {
-            Mth.lerp(
-                scrollZoomSmoothness / 100.0,
-                1.0,
-                0.1
-            )
-        },
-        { initialZoomAmt },
-        { scrollZoomAmt },
-        { if (canScrollZoom) 10 else 0 },
-        { linearLikeSteps }
-    )}
-    val initialOnlyDemo = FirstPersonDemo(zoomHelperFactory(), ControlEmulation.InitialOnly).also {
-        it.keepHandFov = !ZoomifySettings.affectHandFov.value
+    val initialOnlyDemo = FirstPersonDemo(RegularZoomHelper(settings), ControlEmulation.InitialOnly).also {
+        it.keepHandFov = !settings.affectHandFov.value
     }
-    val scrollOnlyDemo = FirstPersonDemo(zoomHelperFactory(), ControlEmulation.ScrollOnly).also {
-        it.keepHandFov = !ZoomifySettings.affectHandFov.value
+    val scrollOnlyDemo = FirstPersonDemo(RegularZoomHelper(settings), ControlEmulation.ScrollOnly).also {
+        it.keepHandFov = !settings.affectHandFov.value
     }
     val secondaryZoomDemo = ThirdPersonDemo(
-        ZoomHelper(
-            TimedInterpolator({ secondaryZoomInTime }, { secondaryZoomOutTime }),
-            InstantInterpolator,
-            initialZoom = { secondaryZoomAmount },
-            scrollZoomAmount = { 0 },
-            maxScrollTiers = { 0 },
-            linearLikeSteps = { false },
-        ),
+        SecondaryZoomHelper(settings),
         ControlEmulation.InitialOnly
     ).also {
-        it.renderHud = !ZoomifySettings.secondaryHideHUDOnZoom.value
+        it.renderHud = !settings.secondaryHideHUDOnZoom.value
     }
 
     fun <T> Option.Builder<T>.updateDemo(updateFunc: (T, ZoomDemoImageRenderer) -> Unit) {
@@ -91,36 +54,46 @@ private class SettingsGuiFactory {
         updateDemo { v, _ -> prop.set(v) }
     }
 
+    fun <T : Any> OptionRegistrar.registerDemo(entryGetter: (ZoomifySettings) -> ConfigEntry<T>, demo: ZoomDemoImageRenderer, block: OptionDsl<T>.() -> Unit): Option<T> {
+        val globalSettingsEntry = entryGetter(ZoomifySettings)
+        val demoSettingsEntry = entryGetter(settings)
+        return this.register(globalSettingsEntry) {
+            descriptionBuilder {
+                addDefaultText()
+                customImage(demo)
+            }
+
+            updateDemo { v, _ -> demoSettingsEntry.value = v }
+
+            block()
+        }
+    }
+
     fun createSettingsGui(parent: Screen?) = YetAnotherConfigLib("zoomify") {
         save(ZoomifySettings::saveToFile)
 
         val behaviour by categories.registering {
             val basic by groups.registering {
-                options.register(ZoomifySettings.initialZoom) {
+                options.registerDemo(ZoomifySettings::initialZoom, initialOnlyDemo) {
                     controller = slider(range = 1..10, step = 1, formatter = { v: Int ->
                         Component.literal("%dx".format(v))
                     })
-                    demoDefaults(initialOnlyDemo, ::initialZoomAmt)
                 }
 
-                options.register(ZoomifySettings.zoomInTime) {
+                options.registerDemo(ZoomifySettings::zoomInTime, initialOnlyDemo) {
                     controller = slider(range = 0.1..5.0, step = 0.1, formatter = formatSeconds())
-                    demoDefaults(initialOnlyDemo, ::inDuration)
                 }
 
-                options.register(ZoomifySettings.zoomOutTime) {
+                options.registerDemo(ZoomifySettings::zoomOutTime, initialOnlyDemo) {
                     controller = slider(range = 0.1..5.0, step = 0.1, formatter = formatSeconds())
-                    demoDefaults(initialOnlyDemo, ::outDuration)
                 }
 
-                options.register(ZoomifySettings.zoomInTransition) {
+                options.registerDemo(ZoomifySettings::zoomInTransition, initialOnlyDemo) {
                     controller = enumSwitch()
-                    demoDefaults(initialOnlyDemo, ::inTransition)
                 }
 
-                options.register(ZoomifySettings.zoomOutTransition) {
+                options.registerDemo(ZoomifySettings::zoomOutTransition, initialOnlyDemo) {
                     controller = enumSwitch()
-                    demoDefaults(initialOnlyDemo, ::outTransition)
                 }
 
                 options.register(ZoomifySettings.affectHandFov) {
@@ -138,40 +111,34 @@ private class SettingsGuiFactory {
             val scrolling by groups.registering {
                 val innerScrollOpts = mutableListOf<Option<*>>()
 
-                options.register(ZoomifySettings.scrollZoom) {
+                val scrollZoomOpt = options.registerDemo(ZoomifySettings::scrollZoom, scrollOnlyDemo) {
                     controller = tickBox()
-
-                    demoDefaults(scrollOnlyDemo, ::canScrollZoom)
 
                     listener { _, v -> innerScrollOpts.forEach { it.setAvailable(v) } }
                 }
 
-                options.register(ZoomifySettings.scrollZoomAmount) {
+                options.registerDemo(ZoomifySettings::scrollZoomAmount, scrollOnlyDemo) {
                     controller = slider(range = 1..10)
-                    demoDefaults(scrollOnlyDemo, ::scrollZoomAmt)
                 }.also { innerScrollOpts.add(it) }
 
-                options.register(ZoomifySettings.scrollZoomSmoothness) {
+                options.registerDemo(ZoomifySettings::scrollZoomSmoothness, scrollOnlyDemo) {
                     controller = slider(range = 0..100, step = 1, formatter = { v: Int ->
                         if (v == 0)
                             Component.translatable("zoomify.gui.formatter.instant")
                         else
                             Component.literal("%d%%".format(v))
                     })
-                    demoDefaults(scrollOnlyDemo, ::scrollZoomSmoothness)
                 }.also { innerScrollOpts.add(it) }
 
-                options.register(ZoomifySettings.linearLikeSteps) {
+                options.registerDemo(ZoomifySettings::linearLikeSteps, scrollOnlyDemo) {
                     controller = tickBox()
-                    demoDefaults(scrollOnlyDemo, ::linearLikeSteps)
                 }.also { innerScrollOpts.add(it) }
 
-                options.register(ZoomifySettings.retainZoomSteps) {
+                options.registerDemo(ZoomifySettings::retainZoomSteps, scrollOnlyDemo) {
                     controller = tickBox()
-                    demoDefaults(scrollOnlyDemo)
                 }.also { innerScrollOpts.add(it) }
 
-                innerScrollOpts.forEach { it.setAvailable(canScrollZoom) }
+                innerScrollOpts.forEach { it.setAvailable(scrollZoomOpt.pendingValue()) }
             }
 
             val spyglass by groups.registering {
@@ -233,24 +200,21 @@ private class SettingsGuiFactory {
         val secondary by categories.registering {
             val infoLabel by rootOptions.registeringLabel
 
-            rootOptions.register(ZoomifySettings.secondaryZoomAmount) {
+            rootOptions.registerDemo(ZoomifySettings::secondaryZoomAmount, secondaryZoomDemo) {
                 controller = slider(range = 2..10, step = 1, formatter = formatPercent())
-                demoDefaults(secondaryZoomDemo, ::secondaryZoomAmount)
             }
 
-            rootOptions.register(ZoomifySettings.secondaryZoomInTime) {
+            rootOptions.registerDemo(ZoomifySettings::secondaryZoomInTime, secondaryZoomDemo) {
                 controller = slider(range = 6.0..30.0, step = 2.0, formatter = formatSeconds())
-                demoDefaults(secondaryZoomDemo, ::secondaryZoomInTime)
             }
 
-            rootOptions.register(ZoomifySettings.secondaryZoomOutTime) {
+            rootOptions.registerDemo(ZoomifySettings::secondaryZoomOutTime, secondaryZoomDemo) {
                 controller = slider(range = 0.0..5.0, step = 0.25, formatter = {
                     if (it == 0.0)
                         Component.translatable("zoomify.gui.formatter.instant")
                     else
                         Component.translatable("zoomify.gui.formatter.seconds", "%.2f".format(it))
                 })
-                demoDefaults(secondaryZoomDemo, ::secondaryZoomOutTime)
             }
 
             rootOptions.register(ZoomifySettings.secondaryHideHUDOnZoom) {
@@ -288,9 +252,25 @@ private class SettingsGuiFactory {
             val presets by groups.registering {
                 val applyWarning by options.registeringLabel
 
+                val buttonKey = "$groupKey.presetBtn"
                 for (preset in Presets.entries) {
+                    // create a new settings and apply the preset to it
+                    val settings = ZoomifySettings()
+                    preset.apply(settings)
+
+                    // create a demo with the new settings
+                    val zoomHelper = RegularZoomHelper(settings)
+                    val demo = FirstPersonDemo(zoomHelper, ControlEmulation.InitialOnly)
+
                     options.registerButton(preset.name.lowercase()) {
                         name(preset.displayName)
+
+                        descriptionBuilder {
+                            text(Component.translatable("$buttonKey.description", preset.displayName))
+                            customImage(demo)
+                        }
+
+                        text(Component.translatable("$buttonKey.button"))
 
                         action { screen, _ ->
                             val minecraft = Minecraft.getInstance()
@@ -310,15 +290,6 @@ private class SettingsGuiFactory {
             }
         }
     }.generateScreen(parent)
-
-    private fun <T> OptionDsl<T>.demoDefaults(demo: ZoomDemoImageRenderer, prop: KMutableProperty0<T>? = null) {
-        descriptionBuilder {
-            addDefaultText()
-            customImage(demo)
-        }
-
-        prop?.let { updateDemo(it) }
-    }
 }
 
 private fun <T : Number> formatSeconds() = ValueFormatter<T> {

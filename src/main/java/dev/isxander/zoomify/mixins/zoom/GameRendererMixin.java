@@ -3,7 +3,6 @@ package dev.isxander.zoomify.mixins.zoom;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import com.mojang.blaze3d.vertex.PoseStack;
 import dev.isxander.zoomify.Zoomify;
 import dev.isxander.zoomify.config.ZoomifySettings;
 import net.minecraft.client.Camera;
@@ -31,7 +30,7 @@ public class GameRendererMixin {
         }
     )
     private float modifyBobbingIntensity(float p) {
-        if (!ZoomifySettings.INSTANCE.getRelativeViewBobbing().get())
+        if (!ZoomifySettings.Companion.getRelativeViewBobbing().get())
             return p;
 
         return (float) (p / Mth.lerp(0.2, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()));
@@ -45,7 +44,7 @@ public class GameRendererMixin {
         )
     )
     private double keepHandFov(double fov, @Local(argsOnly=true) float tickDelta) {
-        if (!ZoomifySettings.INSTANCE.getAffectHandFov().get())
+        if (!ZoomifySettings.Companion.getAffectHandFov().get())
             return fov * Zoomify.getZoomDivisor(tickDelta);
         return fov;
     }

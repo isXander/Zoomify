@@ -61,7 +61,8 @@ open class TimedInterpolator(val timeIn: () -> Double, val timeOut: () -> Double
         get() = (goingIn && timeIn() > 0.0) || (!goingIn && timeOut() > 0.0)
 }
 
-class TransitionInterpolator(val transitionIn: () -> TransitionType, val transitionOut: () -> TransitionType, timeIn: () -> Double, timeOut: () -> Double) : TimedInterpolator(timeIn, timeOut) {
+class TransitionInterpolator(val transitionIn: () -> TransitionType, transitionOut: () -> TransitionType, timeIn: () -> Double, timeOut: () -> Double) : TimedInterpolator(timeIn, timeOut) {
+    val transitionOut = { transitionOut().opposite() }
     private var activeTransition: TransitionType = transitionIn()
     private var inactiveTransition: TransitionType = transitionOut()
     private var prevTargetInterpolation: Double = 0.0

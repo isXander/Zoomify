@@ -16,9 +16,9 @@ public class InGameHudMixin {
     @ModifyExpressionValue(
         /*? if >1.20.4 {*/
         method = "renderCameraOverlays",
-        /*? } else { *//*
+        /*?} else {*//*
         method = "render",
-        *//*? } */
+        *//*?}*/
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"

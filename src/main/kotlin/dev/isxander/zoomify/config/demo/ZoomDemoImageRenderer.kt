@@ -3,10 +3,7 @@ package dev.isxander.zoomify.config.demo
 import dev.isxander.yacl3.gui.image.ImageRenderer
 import dev.isxander.yacl3.gui.image.ImageRendererManager
 import dev.isxander.yacl3.gui.image.impl.AnimatedDynamicTextureImage
-import dev.isxander.zoomify.utils.popPose
-import dev.isxander.zoomify.utils.pushPose
-import dev.isxander.zoomify.utils.scale
-import dev.isxander.zoomify.utils.translate
+import dev.isxander.zoomify.utils.*
 import dev.isxander.zoomify.zoom.ZoomHelper
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
@@ -89,8 +86,8 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
         const val TEX_WIDTH = 1916
         const val TEX_HEIGHT = 910
 
-        val WORLD_TEXTURE = ResourceLocation("zoomify", "textures/demo/zoom-world.webp")
-        val HAND_TEXTURE = ResourceLocation("zoomify", "textures/demo/zoom-hand.webp")
+        val WORLD_TEXTURE = zoomifyRl("textures/demo/zoom-world.webp")
+        val HAND_TEXTURE = zoomifyRl("textures/demo/zoom-hand.webp")
 
     }
 }
@@ -142,7 +139,7 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
         const val TEX_WIDTH = 1915
         const val TEX_HEIGHT = 910
 
-        val PLAYER_VIEW = ResourceLocation("zoomify", "textures/demo/third-person-view.webp")
-        val HUD_TEXTURE = ResourceLocation("zoomify", "textures/demo/third-person-hud.webp")
+        val PLAYER_VIEW = zoomifyRl("textures/demo/third-person-view.webp")
+        val HUD_TEXTURE = zoomifyRl("textures/demo/third-person-hud.webp")
     }
 }
