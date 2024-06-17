@@ -62,6 +62,7 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         scrollZoomAmount,
         scrollZoomSmoothness,
         zoomKeyBehaviour,
+        _keybindScrolling,
         relativeSensitivity,
         relativeViewBobbing,
         cinematicCamera,
@@ -71,14 +72,11 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         secondaryZoomAmount,
         secondaryZoomInTime,
         secondaryZoomOutTime,
-        secondaryHideHUDOnZoom
+        secondaryHideHUDOnZoom,
+        _firstLaunch,
     )
 
     constructor(settings: ZoomifySettings) : this() {
-        repeat(allSettings.size) { i ->
-            allSettings[i].value = settings.allSettings[i].value
-        }
-
         this.initialZoom.value = settings.initialZoom.value
         this.zoomInTime.value = settings.zoomInTime.value
         this.zoomOutTime.value = settings.zoomOutTime.value
@@ -89,7 +87,22 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         this.linearLikeSteps.value = settings.linearLikeSteps.value
         this.scrollZoom.value = settings.scrollZoom.value
         this.scrollZoomAmount.value = settings.scrollZoomAmount.value
-
+        this.scrollZoomSmoothness.value = settings.scrollZoomSmoothness.value
+        this.zoomKeyBehaviour.value = settings.zoomKeyBehaviour.value
+        this.keybindScrolling = settings.keybindScrolling
+        this._keybindScrolling.value = settings._keybindScrolling.value
+        this.relativeSensitivity.value = settings.relativeSensitivity.value
+        this.relativeViewBobbing.value = settings.relativeViewBobbing.value
+        this.cinematicCamera.value = settings.cinematicCamera.value
+        this.spyglassBehaviour.value = settings.spyglassBehaviour.value
+        this.spyglassOverlayVisibility.value = settings.spyglassOverlayVisibility.value
+        this.spyglassSoundBehaviour.value = settings.spyglassSoundBehaviour.value
+        this.secondaryZoomAmount.value = settings.secondaryZoomAmount.value
+        this.secondaryZoomInTime.value = settings.secondaryZoomInTime.value
+        this.secondaryZoomOutTime.value = settings.secondaryZoomOutTime.value
+        this.secondaryHideHUDOnZoom.value = settings.secondaryHideHUDOnZoom.value
+        this.firstLaunch = settings.firstLaunch
+        this._firstLaunch.value = settings._firstLaunch.value
     }
 
     companion object : ZoomifySettings() {
