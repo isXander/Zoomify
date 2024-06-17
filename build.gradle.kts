@@ -7,7 +7,7 @@ plugins {
 
     id("com.modrinth.minotaur") version "2.7.+"
     id("me.hypherionmc.cursegradle") version "2.+"
-    id("com.github.breadmoirai.github-release") version "2.4.+"
+    id("com.github.breadmoirai.github-release") version "2.5.+"
     `maven-publish`
 
     id("io.github.p03w.machete") version "2.0.+"
