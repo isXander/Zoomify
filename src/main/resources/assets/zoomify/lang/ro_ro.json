@@ -2,16 +2,16 @@
   "zoomify.key.zoom": "Zoom (Țineți apăsat)",
   "zoomify.key.zoom_toggle": "Zoom (Comutare)",
   "zoomify.key.zoom.secondary": "Zoom Secundar",
-  "zoomify.key.zoom.in": "Scroll Zoom In",
-  "zoomify.key.zoom.out": "Scroll Zoom Out",
+  "zoomify.key.zoom.in": " Mărire zoom prin scroll",
+  "zoomify.key.zoom.out": "Micșorare zoom prin scroll",
   "zoomify.key.category": "Zoomify",
 
 
   "yacl3.config.zoomify.title": "Zoomify",
 
   "yacl3.config.zoomify.category.behaviour": "Behavior",
-  "yacl3.config.zoomify.category.behaviour.group.basic": "Basic",
-  "yacl3.config.zoomify.category.behaviour.group.basic.option.initialZoom": "Initial Zoom",
+  "yacl3.config.zoomify.category.behaviour.group.basic": "De bază",
+  "yacl3.config.zoomify.category.behaviour.group.basic.option.initialZoom": "Zoom inițial",
   "yacl3.config.zoomify.category.behaviour.group.basic.option.initialZoom.description.1": "The zoom level when you first press the keybind.",
   "yacl3.config.zoomify.category.behaviour.group.basic.option.zoomInTime": "Zoom In Time",
   "yacl3.config.zoomify.category.behaviour.group.basic.option.zoomInTime.description.1": "How many seconds to complete zooming in.",
