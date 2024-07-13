@@ -1,12 +1,13 @@
 {
-  "zoomify.key.zoom": "放大",
+  "zoomify.key.zoom": "放大（按住）",
+  "zoomify.key.zoom_toggle": "放大（切换）",
   "zoomify.key.zoom.secondary": "二次缩放",
   "zoomify.key.zoom.in": "滚动放大",
   "zoomify.key.zoom.out": "滚动缩小",
   "zoomify.key.category": "缩放（Zoomify）",
 
 
-  "zoomify.gui.title": "缩放（Zoomify）",
+  "yacl3.config.zoomify.title": "Zoomify",
 
   "yacl3.config.zoomify.category.behaviour": "行为",
   "yacl3.config.zoomify.category.behaviour.group.basic": "基本",
@@ -22,8 +23,6 @@
   "yacl3.config.zoomify.category.behaviour.group.basic.option.zoomOutTransition.description.1": "缩小时使用的过渡类型。",
   "yacl3.config.zoomify.category.behaviour.group.basic.option.affectHandFov": "影响手部FOV值",
   "yacl3.config.zoomify.category.behaviour.group.basic.option.affectHandFov.description.1": "缩放时,世界视图放大且保持手部的FOV值正常。",
-  "yacl3.config.zoomify.category.behaviour.group.scrolling.option.retainZoomSteps": "记住缩放步骤",
-  "yacl3.config.zoomify.category.behaviour.group.scrolling.option.retainZoomSteps.description.1": "在放大和缩小之间保持滚动缩放量。",
 
   "yacl3.config.zoomify.category.behaviour.group.scrolling": "滚动",
   "yacl3.config.zoomify.category.behaviour.group.scrolling.option.scrollZoom": "启用滚动缩放",
@@ -36,6 +35,16 @@
   "yacl3.config.zoomify.category.behaviour.group.scrolling.option.smoothScrollZoom.description.1": "使滚入和滚出更平滑。",
   "yacl3.config.zoomify.category.behaviour.group.scrolling.option.linearLikeSteps": "类似线性步骤",
   "yacl3.config.zoomify.category.behaviour.group.scrolling.option.linearLikeSteps.description.1": "将曲线应用于增量以让他们感觉起来更像线性。",
+  "yacl3.config.zoomify.category.behaviour.group.scrolling.option.retainZoomSteps": "记住缩放步骤",
+  "yacl3.config.zoomify.category.behaviour.group.scrolling.option.retainZoomSteps.description.1": "在放大和缩小之间保持滚动缩放量。",
+
+  "yacl3.config.zoomify.category.behaviour.group.spyglass": "望远镜",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassBehaviour": "缩放行为",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassBehaviour.description.1": "Zoomify如何与望远镜缩放相互影响。",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassOverlayVisibility": "覆盖可视",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassOverlayVisibility.description.1": "什么时候显示望远镜覆盖层。",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassSoundBehaviour": "声音行为",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassSoundBehaviour.description.1": "什么时候播放望远镜放大和缩小时的声音。",
 
   "yacl3.config.zoomify.category.controls": "控制",
   "yacl3.config.zoomify.category.controls.root.option.zoomKeyBehaviour": "缩放键行为",
@@ -48,14 +57,6 @@
   "yacl3.config.zoomify.category.controls.root.option.relativeViewBobbing.description.1": "在放大时使视线晃动较为协调。",
   "yacl3.config.zoomify.category.controls.root.option.cinematicCamera": "电影摄像机",
   "yacl3.config.zoomify.category.controls.root.option.cinematicCamera.description.1": "使相机在缩放时平滑移动。",
-
-  "yacl3.config.zoomify.category.behaviour.group.spyglass": "望远镜",
-  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassBehaviour": "缩放行为",
-  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassBehaviour.description.1": "Zoomify如何与望远镜缩放相互影响。",
-  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassOverlayVisibility": "覆盖可视",
-  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassOverlayVisibility.description.1": "什么时候显示望远镜覆盖层。",
-  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassSoundBehaviour": "声音行为",
-  "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassSoundBehaviour.description.1": "什么时候播放望远镜放大和缩小时的声音。",
 
   "yacl3.config.zoomify.category.secondary": "二次缩放",
   "yacl3.config.zoomify.category.secondary.root.label.infoLabel": "与Zoomify的其他所有设置完全分开。二次缩放仅在控制中使用单独的键绑定进行切换。",
@@ -76,14 +77,15 @@
   "yacl3.config.zoomify.category.misc.root.option.checkMigrations.button": "检查",
   "yacl3.config.zoomify.category.misc.root.option.checkMigrations.description.1": "检查可用的自动迁移。",
   "yacl3.config.zoomify.category.misc.group.presets": "预设",
+  "yacl3.config.zoomify.category.misc.group.presets.label.applyWarning": "应用预设将立即应用更改并撤消任何未做出决定的更改。",
+  "yacl3.config.zoomify.category.misc.group.presets.presetBtn.button": "应用预设",
+  "yacl3.config.zoomify.category.misc.group.presets.presetBtn.description": "使Zoomify的行为像%s。",
+
   "zoomify.gui.preset.default": "默认",
   "zoomify.gui.preset.optifine": "OptiFine",
   "zoomify.gui.preset.ok_zoomer": "OK Zoomer",
-  "yacl3.config.zoomify.category.misc.group.presets.presetBtn.button": "应用预设",
   "zoomify.gui.preset.toast.title": "应用预设",
   "zoomify.gui.preset.toast.description": "Zoomify应用了%s预设。",
-  "yacl3.config.zoomify.category.misc.group.presets.presetBtn.description": "使Zoomify的行为像%s。",
-  "yacl3.config.zoomify.category.misc.group.presets.label.applyWarning": "应用预设将立即应用更改并撤消任何未做出决定的更改。",
 
   "zoomify.gui.formatter.instant": "立即",
   "zoomify.gui.formatter.seconds": "%s秒",
