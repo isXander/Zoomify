@@ -1,9 +1,9 @@
 plugins {
     `java-library`
-    kotlin("jvm") version "2.0.0"
-    kotlin("plugin.serialization") version "2.0.0"
+    kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "2.0.21"
 
-    id("fabric-loom") version "1.6.+"
+    id("fabric-loom") version "1.8.+"
 
     id("me.modmuss50.mod-publish-plugin") version "0.5.+"
     `maven-publish`
@@ -16,7 +16,7 @@ val mcSemverVersion = stonecutter.current.version
 val mcDep = property("fmj.mcDep").toString()
 
 group = "dev.isxander"
-val versionWithoutMC = "2.14.0"
+val versionWithoutMC = "2.14.2"
 version = "$versionWithoutMC+${stonecutter.current.project}"
 
 val isAlpha = "alpha" in version.toString()
@@ -37,6 +37,14 @@ loom {
     mixin {
         useLegacyMixinAp.set(false)
     }
+}
+
+stonecutter {
+    swap(
+        "fov-precision",
+        if (stonecutter.eval(stonecutter.current.version, ">=1.21.2"))
+            "float" else "double"
+    )
 }
 
 repositories {

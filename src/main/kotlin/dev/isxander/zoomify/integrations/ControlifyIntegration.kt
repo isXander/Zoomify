@@ -11,8 +11,8 @@ import net.minecraft.util.Mth
 object ControlifyIntegration : ControlifyEntrypoint {
     override fun onControlifyInit(controlify: ControlifyApi) {
         ControlifyEvents.LOOK_INPUT_MODIFIER.register {
-            it.lookInput.x *= Mth.lerp(ZoomifySettings.relativeSensitivity.value / 100.0, 1.0, Zoomify.previousZoomDivisor).toFloat()
-            it.lookInput.y *= Mth.lerp(ZoomifySettings.relativeSensitivity.value / 100.0, 1.0, Zoomify.previousZoomDivisor).toFloat()
+            it.lookInput.x /= Mth.lerp(ZoomifySettings.relativeSensitivity.value / 100.0, 1.0, Zoomify.previousZoomDivisor).toFloat()
+            it.lookInput.y /= Mth.lerp(ZoomifySettings.relativeSensitivity.value / 100.0, 1.0, Zoomify.previousZoomDivisor).toFloat()
         }
     }
 

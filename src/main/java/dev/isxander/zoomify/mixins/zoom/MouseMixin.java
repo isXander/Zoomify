@@ -7,6 +7,7 @@ import dev.isxander.zoomify.config.SpyglassBehaviour;
 import dev.isxander.zoomify.config.ZoomifySettings;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.util.Mth;
+import org.joml.Vector2i;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,8 +32,17 @@ public class MouseMixin {
         *//*?}*/
         cancellable = true
     )
-    private void scrollStepCounter(CallbackInfo ci /*? if >1.20.1 {*/, @Local(ordinal = 1) int scrollY /*?}*/) {
-        /*? if <=1.20.1 {*/
+    private void scrollStepCounter(
+            CallbackInfo ci
+            //? if >=1.21.2 {
+            , @Local Vector2i scroll
+            //?} elif >1.20.1 {
+            /*, @Local(ordinal = 1) int scrollY
+            *///?}
+    ) {
+        //? if >=1.21.2 {
+        int scrollY = scroll.y;
+        /*?} elif <=1.20.1 {*/
         /*double scrollY = accumulatedScroll;
         *//*?}*/
 

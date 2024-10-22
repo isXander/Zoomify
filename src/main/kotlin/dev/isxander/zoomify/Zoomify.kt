@@ -113,7 +113,7 @@ object Zoomify : ClientModInitializer {
     }
 
     @JvmStatic
-    fun getZoomDivisor(tickDelta: Float): Double {
+    fun getZoomDivisor(tickDelta: Float): Float {
         if (!zooming) {
             if (!ZoomifySettings.retainZoomSteps.value)
                 scrollSteps = 0
@@ -121,7 +121,7 @@ object Zoomify : ClientModInitializer {
             zoomHelper.reset()
         }
 
-        return zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it } * secondaryZoomHelper.getZoomDivisor(tickDelta)
+        return (zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it } * secondaryZoomHelper.getZoomDivisor(tickDelta)).toFloat()
     }
 
     @JvmStatic
@@ -207,7 +207,8 @@ object Zoomify : ClientModInitializer {
         if (!zoomKey.isUnbound) {
             for (key in minecraft.options.keyMappings) {
                 if (key != zoomKey && key.equals(zoomKey)) {
-                    minecraft.options.setKey(key, InputConstants.UNKNOWN)
+                    key.setKey(InputConstants.UNKNOWN)
+                    minecraft.options.save()
 
                     toast(
                         Component.translatable("zoomify.toast.unbindConflicting.name"),

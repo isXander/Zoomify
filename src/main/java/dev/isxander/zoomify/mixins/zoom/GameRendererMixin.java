@@ -18,15 +18,34 @@ public class GameRendererMixin {
         method = "getFov",
         at = @At("RETURN")
     )
-    private double modifyFovWithZoom(double fov, Camera camera, float tickDelta, boolean changingFov) {
+    private /*$ fov-precision >>*/ float modifyFovWithZoom(
+            /*$ fov-precision >>*/ float fov,
+            @Local(argsOnly = true) float tickDelta
+    ) {
         return fov / Zoomify.getZoomDivisor(tickDelta);
     }
 
     @ModifyExpressionValue(
         method = "bobView",
         at = {
-            @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;oBob:F", opcode = Opcodes.GETFIELD),
-            @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Player;bob:F", opcode = Opcodes.GETFIELD),
+            @At(
+                    value = "FIELD",
+                    //? if >=1.21.2 {
+                    target = "Lnet/minecraft/client/player/AbstractClientPlayer;oBob:F",
+                    //?} else {
+                    /*target = "Lnet/minecraft/world/entity/player/Player;oBob:F",
+                    *///?}
+                    opcode = Opcodes.GETFIELD
+            ),
+            @At(
+                    value = "FIELD",
+                    //? if >=1.21.2 {
+                    target = "Lnet/minecraft/client/player/AbstractClientPlayer;bob:F",
+                    //?} else {
+                    /*target = "Lnet/minecraft/world/entity/player/Player;bob:F",
+                    *///?}
+                    opcode = Opcodes.GETFIELD
+            ),
         }
     )
     private float modifyBobbingIntensity(float p) {
@@ -40,10 +59,17 @@ public class GameRendererMixin {
         method = "renderItemInHand",
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
+            //? if >=1.21.2 {
+            target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)F"
+            //?} else {
+            /*target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
+            *///?}
         )
     )
-    private double keepHandFov(double fov, @Local(argsOnly=true) float tickDelta) {
+    private /*$ fov-precision >>*/ float keepHandFov(
+            /*$ fov-precision >>*/ float fov,
+            @Local(argsOnly=true) float tickDelta
+    ) {
         if (!ZoomifySettings.Companion.getAffectHandFov().get())
             return fov * Zoomify.getZoomDivisor(tickDelta);
         return fov;

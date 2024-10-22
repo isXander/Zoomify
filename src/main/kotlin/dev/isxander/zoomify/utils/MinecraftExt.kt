@@ -18,8 +18,8 @@ fun GuiGraphics.scale(x: Float, y: Float, z: Float) = pose().scale(x, y, z)
 typealias ToastTypes =
         /*? if >1.20.1 {*/
         SystemToast.SystemToastId
-        /*?} else {*//*
-        SystemToast.SystemToastIds
+        /*?} else {*/
+        /*SystemToast.SystemToastIds
         *//*?}*/
 
 fun toast(
@@ -32,12 +32,13 @@ fun toast(
     title,
     description
 ).also {
-    minecraft.toasts.addToast(it)
+    val toastManager = /*? if >=1.21.2 {*/ minecraft.toastManager /*?} else {*/ /*minecraft.toasts }*//*?}*/
+    toastManager.addToast(it)
 }
 
 fun zoomifyRl(path: String) =
     //? if >=1.21 {
-    /*ResourceLocation.fromNamespaceAndPath("zoomify", path)
-    *///?} else {
-    ResourceLocation("zoomify", path)
-    //?}
+    ResourceLocation.fromNamespaceAndPath("zoomify", path)
+    //?} else {
+    /*ResourceLocation("zoomify", path)
+    *///?}

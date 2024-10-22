@@ -16,8 +16,8 @@ public class InGameHudMixin {
     @ModifyExpressionValue(
         /*? if >1.20.4 {*/
         method = "renderCameraOverlays",
-        /*?} else {*//*
-        method = "render",
+        /*?} else {*/
+        /*method = "render",
         *//*?}*/
         at = @At(
             value = "INVOKE",
