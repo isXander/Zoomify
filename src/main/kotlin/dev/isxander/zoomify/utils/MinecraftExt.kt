@@ -16,11 +16,11 @@ fun GuiGraphics.scale(x: Float, y: Float, z: Float) = pose().scale(x, y, z)
 
 // i love kotlin
 typealias ToastTypes =
-        /*? if >1.20.1 {*/
+        //? if >1.20.1 {
         SystemToast.SystemToastId
-        /*?} else {*/
+        //?} else {
         /*SystemToast.SystemToastIds
-        *//*?}*/
+        *///?}
 
 fun toast(
     title: Component,
@@ -32,7 +32,7 @@ fun toast(
     title,
     description
 ).also {
-    val toastManager = /*? if >=1.21.2 {*/ minecraft.toastManager /*?} else {*/ /*minecraft.toasts }*//*?}*/
+    val toastManager = /*? if >=1.21.2 {*/ minecraft.toastManager /*?} else {*/ /*minecraft.toasts *//*?}*/
     toastManager.addToast(it)
 }
 
