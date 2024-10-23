@@ -1,7 +1,7 @@
 plugins {
     id("dev.kikugie.stonecutter")
 }
-stonecutter active "1.21.2" /* [SC] DO NOT EDIT */
+stonecutter active "1.21.3" /* [SC] DO NOT EDIT */
 
 stonecutter.configureEach {
     fun String.propDefined() = project.findProperty(this)?.toString()?.isNotBlank() ?: false
