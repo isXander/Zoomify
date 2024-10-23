@@ -232,7 +232,7 @@ publishing {
     publications {
         create<MavenPublication>("mod") {
             groupId = "dev.isxander"
-            artifactId = "controlify"
+            artifactId = "zoomify"
 
             from(components["java"])
         }
