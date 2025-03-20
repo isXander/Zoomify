@@ -1,11 +1,13 @@
 plugins {
     `java-library`
-    kotlin("jvm") version "2.0.21"
-    kotlin("plugin.serialization") version "2.0.21"
 
-    id("fabric-loom") version "1.8.+"
+    val kotlinVersion = "2.1.10"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
 
-    id("me.modmuss50.mod-publish-plugin") version "0.5.+"
+    id("fabric-loom") version "1.10.+"
+
+    id("me.modmuss50.mod-publish-plugin") version "0.8.4"
     `maven-publish`
 
     id("org.ajoberstar.grgit") version "5.0.+"
@@ -16,7 +18,7 @@ val mcSemverVersion = stonecutter.current.version
 val mcDep = property("fmj.mcDep").toString()
 
 group = "dev.isxander"
-val versionWithoutMC = "2.14.2"
+val versionWithoutMC = "2.14.3"
 version = "$versionWithoutMC+${stonecutter.current.project}"
 
 val isAlpha = "alpha" in version.toString()
