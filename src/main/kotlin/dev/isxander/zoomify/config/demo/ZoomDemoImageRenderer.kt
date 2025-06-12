@@ -55,14 +55,14 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
         graphics.enableScissor(x, y, x + renderWidth, y + renderHeight)
 
         graphics.pushPose()
-        graphics.translate(x.toDouble(), y.toDouble(), 0.0)
-        graphics.scale(ratio.toFloat(), ratio.toFloat(), 1f)
+        graphics.translate(x.toFloat(), y.toFloat())
+        graphics.scale(ratio.toFloat(), ratio.toFloat())
 
         val zoomScale = zoomHelper.getZoomDivisor(deltaTime).toFloat()
         graphics.pushPose()
-        graphics.translate(TEX_WIDTH / 2f, TEX_HEIGHT / 2f, 0.0F)
-        graphics.scale(zoomScale, zoomScale, 1.0F)
-        graphics.translate(-TEX_WIDTH / 2f, -TEX_HEIGHT / 2f, 0.0F)
+        graphics.translate(TEX_WIDTH / 2f, TEX_HEIGHT / 2f)
+        graphics.scale(zoomScale, zoomScale)
+        graphics.translate(-TEX_WIDTH / 2f, -TEX_HEIGHT / 2f)
 
         worldRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
@@ -108,14 +108,14 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
         graphics.enableScissor(x, y, x + renderWidth, y + renderHeight)
 
         graphics.pushPose()
-        graphics.translate(x.toDouble(), y.toDouble(), 0.0)
-        graphics.scale(ratio.toFloat(), ratio.toFloat(), 1f)
+        graphics.translate(x.toFloat(), y.toFloat())
+        graphics.scale(ratio.toFloat(), ratio.toFloat())
 
         val zoomScale = zoomHelper.getZoomDivisor(deltaTime).toFloat()
         graphics.pushPose()
-        graphics.translate(FirstPersonDemo.TEX_WIDTH / 2f, FirstPersonDemo.TEX_HEIGHT / 2f, 0.0F)
-        graphics.scale(zoomScale, zoomScale, 1.0F)
-        graphics.translate(-FirstPersonDemo.TEX_WIDTH / 2f, -FirstPersonDemo.TEX_HEIGHT / 2f, 0.0F)
+        graphics.translate(FirstPersonDemo.TEX_WIDTH / 2f, FirstPersonDemo.TEX_HEIGHT / 2f)
+        graphics.scale(zoomScale, zoomScale)
+        graphics.translate(-FirstPersonDemo.TEX_WIDTH / 2f, -FirstPersonDemo.TEX_HEIGHT / 2f)
 
         thirdPersonViewRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 

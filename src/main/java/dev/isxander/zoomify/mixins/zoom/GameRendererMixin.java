@@ -55,23 +55,42 @@ public class GameRendererMixin {
         return (float) (p / Mth.lerp(0.2, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()));
     }
 
+    //? if >=1.21.6 {
     @ModifyExpressionValue(
+            method = "renderLevel",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)F",
+                    ordinal = 1
+            )
+    )
+    private float keepHandFov(
+            float fov,
+            @Local(ordinal = 0) float tickDelta
+    ) {
+        if (!ZoomifySettings.Companion.getAffectHandFov().get())
+            return fov * Zoomify.getZoomDivisor(tickDelta);
+        return fov;
+    }
+    //?} else {
+    /*@ModifyExpressionValue(
         method = "renderItemInHand",
         at = @At(
             value = "INVOKE",
             //? if >=1.21.2 {
-            target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)F"
-            //?} else {
-            /*target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
-            *///?}
+            /^target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)F"
+            ^///?} else {
+            target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
+            //?}
         )
     )
-    private /*$ fov-precision >>*/ float keepHandFov(
-            /*$ fov-precision >>*/ float fov,
+    private /^$ fov-precision >>^/ double keepHandFov(
+            /^$ fov-precision >>^/ double fov,
             @Local(argsOnly=true) float tickDelta
     ) {
         if (!ZoomifySettings.Companion.getAffectHandFov().get())
             return fov * Zoomify.getZoomDivisor(tickDelta);
         return fov;
     }
+    *///?}
 }

@@ -8,11 +8,20 @@ import net.minecraft.resources.ResourceLocation
 
 val minecraft: Minecraft = Minecraft.getInstance()
 
-fun GuiGraphics.pushPose() = pose().pushPose()
-fun GuiGraphics.popPose() = pose().popPose()
-fun GuiGraphics.translate(x: Double, y: Double, z: Double) = pose().translate(x, y, z)
-fun GuiGraphics.translate(x: Float, y: Float, z: Float) = pose().translate(x, y, z)
-fun GuiGraphics.scale(x: Float, y: Float, z: Float) = pose().scale(x, y, z)
+fun GuiGraphics.pushPose() =
+    //? if >=1.21.6 {
+    pose().pushMatrix()
+    //?} else {
+    /*pose().pushPose()
+    *///?}
+fun GuiGraphics.popPose() =
+    //? if >=1.21.6 {
+    pose().popMatrix()
+    //?} else {
+    /*pose().popPose()
+    *///?}
+fun GuiGraphics.translate(x: Float, y: Float) = pose().translate(x, y, /*? if <1.21.6 >>*/ /*0*/ )
+fun GuiGraphics.scale(x: Float, y: Float) = pose().scale(x, y, /*? if <1.21.6 >>*/ /*1*/ )
 
 // i love kotlin
 typealias ToastTypes =

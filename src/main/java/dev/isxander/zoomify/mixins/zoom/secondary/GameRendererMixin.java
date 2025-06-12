@@ -10,7 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
-    @ModifyExpressionValue(
+    //? if <1.21.6 {
+    /*@ModifyExpressionValue(
         method = "render",
         at = @At(
             value = "FIELD",
@@ -21,4 +22,5 @@ public class GameRendererMixin {
     private boolean shouldHideHUD(boolean hideHUD) {
         return hideHUD || (Zoomify.INSTANCE.getSecondaryZooming() && ZoomifySettings.Companion.getSecondaryHideHUDOnZoom().get());
     }
+    *///?}
 }

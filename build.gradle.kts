@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
 
-    id("fabric-loom") version "1.10.+"
+    id("fabric-loom") version "1.10-SNAPSHOT"
 
     id("me.modmuss50.mod-publish-plugin") version "0.8.4"
     `maven-publish`
@@ -18,7 +18,7 @@ val mcSemverVersion = stonecutter.current.version
 val mcDep = property("fmj.mcDep").toString()
 
 group = "dev.isxander"
-val versionWithoutMC = "2.14.3"
+val versionWithoutMC = "2.14.4"
 version = "$versionWithoutMC+${stonecutter.current.project}"
 
 val isAlpha = "alpha" in version.toString()
@@ -52,10 +52,10 @@ stonecutter {
 repositories {
     mavenCentral()
     maven("https://maven.terraformersmc.com")
+    maven("https://maven.quiltmc.org/repository/release")
     maven("https://maven.isxander.dev/releases")
     maven("https://maven.isxander.dev/snapshots")
     maven("https://maven.parchmentmc.org")
-    maven("https://maven.quiltmc.org/repository/release")
     exclusiveContent {
         forRepository { maven("https://api.modrinth.com/maven") }
         filter { includeGroup("maven.modrinth") }
@@ -100,11 +100,11 @@ dependencies {
 
     // mod menu compat
     optionalProp("deps.modMenu") {
-        modImplementation("com.terraformersmc:modmenu:$it")
+        modCompileOnly("com.terraformersmc:modmenu:$it")
     }
 
     optionalProp("deps.controlify") {
-        modImplementation("dev.isxander:controlify:$it")
+        modCompileOnly("dev.isxander:controlify:$it")
     }
 
     modImplementation(include("com.akuleshov7:ktoml-core-jvm:${property("deps.ktoml")}")!!)
