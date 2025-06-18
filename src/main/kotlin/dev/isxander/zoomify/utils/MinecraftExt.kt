@@ -20,8 +20,8 @@ fun GuiGraphics.popPose() =
     //?} else {
     /*pose().popPose()
     *///?}
-fun GuiGraphics.translate(x: Float, y: Float) = pose().translate(x, y, /*? if <1.21.6 >>*/ /*0*/ )
-fun GuiGraphics.scale(x: Float, y: Float) = pose().scale(x, y, /*? if <1.21.6 >>*/ /*1*/ )
+fun GuiGraphics.translate(x: Float, y: Float) = pose().translate(x, y, /*? if <1.21.6 >>*/ /*0.0F*/ )
+fun GuiGraphics.scale(x: Float, y: Float) = pose().scale(x, y, /*? if <1.21.6 >>*/ /*1.0F*/ )
 
 // i love kotlin
 typealias ToastTypes =

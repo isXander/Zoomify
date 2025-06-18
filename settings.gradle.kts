@@ -1,20 +1,18 @@
-import dev.kikugie.stonecutter.StonecutterSettings
-
 pluginManagement {
     repositories {
         mavenCentral()
         gradlePluginPortal()
         maven("https://maven.fabricmc.net")
         maven("https://maven.quiltmc.org/repository/release")
-        maven("https://maven.kikugie.dev/releases")
+        maven("https://maven.kikugie.dev/snapshots")
     }
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.4.5"
+    id("dev.kikugie.stonecutter") version "0.7-alpha.22"
 }
 
-extensions.configure<StonecutterSettings> {
+stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
     shared {

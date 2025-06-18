@@ -29,11 +29,9 @@ base {
 }
 
 loom {
-    if (stonecutter.current.isActive) {
-        runConfigs.all {
-            ideConfigGenerated(true)
-            runDir("../../run")
-        }
+    runConfigs.all {
+        ideConfigGenerated(true)
+        runDir("../../run")
     }
 
     mixin {
@@ -42,11 +40,12 @@ loom {
 }
 
 stonecutter {
-    swap(
+    swaps.put(
         "fov-precision",
         if (stonecutter.eval(stonecutter.current.version, ">=1.21.2"))
             "float" else "double"
     )
+
 }
 
 repositories {
@@ -100,7 +99,7 @@ dependencies {
 
     // mod menu compat
     optionalProp("deps.modMenu") {
-        modCompileOnly("com.terraformersmc:modmenu:$it")
+        modImplementation("com.terraformersmc:modmenu:$it")
     }
 
     optionalProp("deps.controlify") {

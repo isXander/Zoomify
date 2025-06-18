@@ -78,14 +78,14 @@ public class GameRendererMixin {
         at = @At(
             value = "INVOKE",
             //? if >=1.21.2 {
-            /^target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)F"
-            ^///?} else {
-            target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
-            //?}
+            target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)F"
+            //?} else {
+            /^target = "Lnet/minecraft/client/renderer/GameRenderer;getFov(Lnet/minecraft/client/Camera;FZ)D"
+            ^///?}
         )
     )
-    private /^$ fov-precision >>^/ double keepHandFov(
-            /^$ fov-precision >>^/ double fov,
+    private /^$ fov-precision >>^/ float keepHandFov(
+            /^$ fov-precision >>^/ float fov,
             @Local(argsOnly=true) float tickDelta
     ) {
         if (!ZoomifySettings.Companion.getAffectHandFov().get())
