@@ -85,15 +85,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabricLoader")}")
 
     val fapiVersion = property("deps.fabricApi").toString()
-    listOf(
-        "fabric-resource-loader-v0",
-        "fabric-lifecycle-events-v1",
-        "fabric-key-binding-api-v1",
-        "fabric-command-api-v2",
-    ).forEach {
-        modImplementation(fabricApi.module(it, fapiVersion))
-    }
-    modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:$fapiVersion") // so you can do `depends: fabric-api` in FMJ
+    modImplementation("net.fabricmc.fabric-api:fabric-api:$fapiVersion") // so you can do `depends: fabric-api` in FMJ
     modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}")
 
     modApi("dev.isxander:yet-another-config-lib:${property("deps.yacl")}") {
