@@ -1,16 +1,16 @@
 plugins {
     `java-library`
 
-    val kotlinVersion = "2.1.10"
+    val kotlinVersion = "2.2.0"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
 
-    id("fabric-loom") version "1.10-SNAPSHOT"
+    id("fabric-loom") version "1.11.4"
 
     id("me.modmuss50.mod-publish-plugin") version "0.8.4"
     `maven-publish`
 
-    id("org.ajoberstar.grgit") version "5.0.+"
+    id("org.ajoberstar.grgit") version "5.3.2"
 }
 
 val mcVersion = property("mcVersion")!!.toString()
@@ -18,7 +18,7 @@ val mcSemverVersion = stonecutter.current.version
 val mcDep = property("fmj.mcDep").toString()
 
 group = "dev.isxander"
-val versionWithoutMC = "2.14.4"
+val versionWithoutMC = "2.14.5"
 version = "$versionWithoutMC+${stonecutter.current.project}"
 
 val isAlpha = "alpha" in version.toString()
@@ -50,11 +50,19 @@ stonecutter {
 
 repositories {
     mavenCentral()
-    maven("https://maven.terraformersmc.com")
-    maven("https://maven.quiltmc.org/repository/release")
+    exclusiveContent {
+        forRepository { maven("https://maven.terraformersmc.com") }
+        filter { includeGroup("com.terraformersmc") }
+    }
+    exclusiveContent {
+        forRepository { maven("https://maven.quiltmc.org/repository/release") }
+        filter { includeGroupAndSubgroups("org.quiltmc") }
+    }
     maven("https://maven.isxander.dev/releases")
-    maven("https://maven.isxander.dev/snapshots")
-    maven("https://maven.parchmentmc.org")
+    exclusiveContent {
+        forRepository { maven("https://maven.parchmentmc.org") }
+        filter { includeGroup("org.parchmentmc.data") }
+    }
     exclusiveContent {
         forRepository { maven("https://api.modrinth.com/maven") }
         filter { includeGroup("maven.modrinth") }
@@ -63,15 +71,11 @@ repositories {
         forRepository { maven("https://cursemaven.com") }
         filter { includeGroup("curse.maven") }
     }
-    maven("https://jitpack.io")
-    maven("https://maven.flashyreese.me/snapshots")
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:$mcVersion")
     mappings(loom.layered {
-        // quilt does not support pre-releases so it is necessary to only layer if they exist
         optionalProp("deps.parchment") {
             parchment("org.parchmentmc.data:parchment-$it@zip")
         }
@@ -201,6 +205,7 @@ publishMods {
 
             requires { slug.set("fabric-api") }
             requires { slug.set("yacl") }
+            requires { slug.set("fabric-language-kotlin") }
             optional { slug.set("modmenu") }
         }
     }
@@ -215,6 +220,7 @@ publishMods {
 
             requires { slug.set("fabric-api") }
             requires { slug.set("yacl") }
+            requires { slug.set("fabric-language-kotlin") }
             optional { slug.set("modmenu") }
         }
     }
