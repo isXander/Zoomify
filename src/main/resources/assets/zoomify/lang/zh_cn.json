@@ -4,7 +4,7 @@
   "zoomify.key.zoom.secondary": "二次缩放",
   "zoomify.key.zoom.in": "滚动放大",
   "zoomify.key.zoom.out": "滚动缩小",
-  "zoomify.key.category": "缩放（Zoomify）",
+  "key.category.zoomify.category": "缩放（Zoomify）",
 
 
   "yacl3.config.zoomify.title": "缩放（Zoomify）",

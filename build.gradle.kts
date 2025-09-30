@@ -93,28 +93,26 @@ dependencies {
     })
     modImplementation("net.fabricmc:fabric-loader:${property("deps.fabricLoader")}")
 
-    val fapiVersion = property("deps.fabricApi").toString()
-    modImplementation("net.fabricmc.fabric-api:fabric-api-base:0.4.64+local")
-    modImplementation("net.fabricmc.fabric-api:fabric-resource-loader-v0:3.1.11+local")
-    modImplementation("net.fabricmc.fabric-api:fabric-lifecycle-events-v1:2.6.3+local").jij()
-    modImplementation("net.fabricmc.fabric-api:fabric-command-api-v2:2.3.0+local").jij()
-    modImplementation("net.fabricmc.fabric-api:fabric-screen-api-v1:2.1.0+local").jij()
-    modImplementation("net.fabricmc.fabric-api:fabric-key-binding-api-v1:1.0.65+local").jij()
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabricApi")}")
 
     modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}")
 
     modApi("dev.isxander:yet-another-config-lib:${property("deps.yacl")}") {
         // was including old fapi version that broke things at runtime
-        exclude(group = "net.fabricmc.fabric-api", module = "fabric-api")
+        exclude(group = "net.fabricmc.fabric-api")
     }.jij()
 
     // mod menu compat
     optionalProp("deps.modMenu") {
-        modImplementation("com.terraformersmc:modmenu:$it")
+        modCompileOnly("com.terraformersmc:modmenu:$it") {
+            exclude(group = "net.fabricmc.fabric-api")
+        }
     }
 
     optionalProp("deps.controlify") {
-        modCompileOnly("dev.isxander:controlify:$it")
+        modCompileOnly("dev.isxander:controlify:$it")  {
+            exclude(group = "net.fabricmc.fabric-api")
+        }
     }
 
     modImplementation(include("com.akuleshov7:ktoml-core-jvm:${property("deps.ktoml")}")!!)

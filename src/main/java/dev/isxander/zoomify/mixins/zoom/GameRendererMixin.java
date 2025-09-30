@@ -28,24 +28,31 @@ public class GameRendererMixin {
     @ModifyExpressionValue(
         method = "bobView",
         at = {
-            @At(
-                    value = "FIELD",
-                    //? if >=1.21.2 {
-                    target = "Lnet/minecraft/client/player/AbstractClientPlayer;oBob:F",
-                    //?} else {
-                    /*target = "Lnet/minecraft/world/entity/player/Player;oBob:F",
-                    *///?}
-                    opcode = Opcodes.GETFIELD
-            ),
-            @At(
-                    value = "FIELD",
-                    //? if >=1.21.2 {
-                    target = "Lnet/minecraft/client/player/AbstractClientPlayer;bob:F",
-                    //?} else {
-                    /*target = "Lnet/minecraft/world/entity/player/Player;bob:F",
-                    *///?}
-                    opcode = Opcodes.GETFIELD
-            ),
+                //? if >=1.21.9 {
+                @At(
+                        value = "INVOKE",
+                        target = "Lnet/minecraft/client/entity/ClientAvatarState;getInterpolatedBob(F)F"
+                ),
+                //?} else {
+                /*@At(
+                        value = "FIELD",
+                        //? if >=1.21.2 {
+                        target = "Lnet/minecraft/client/player/AbstractClientPlayer;oBob:F",
+                        //?} else {
+                        /^target = "Lnet/minecraft/world/entity/player/Player;oBob:F",
+                        ^///?}
+                        opcode = Opcodes.GETFIELD
+                ),
+                @At(
+                        value = "FIELD",
+                        //? if >=1.21.2 {
+                        target = "Lnet/minecraft/client/player/AbstractClientPlayer;bob:F",
+                        //?} else {
+                        /^target = "Lnet/minecraft/world/entity/player/Player;bob:F",
+                        ^///?}
+                        opcode = Opcodes.GETFIELD
+                ),
+                *///?}
         }
     )
     private float modifyBobbingIntensity(float p) {

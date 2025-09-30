@@ -6,6 +6,7 @@ import dev.isxander.zoomify.config.*
 import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.integrations.constrainModVersionIfLoaded
 import dev.isxander.zoomify.utils.toast
+import dev.isxander.zoomify.utils.zoomifyRl
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
@@ -25,10 +26,16 @@ import org.slf4j.LoggerFactory
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_C, "zoomify.key.category")
-    private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, "zoomify.key.category")
-    private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", -1, "zoomify.key.category")
-    private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", -1, "zoomify.key.category")
+    //? if >=1.21.9 {
+    private val zoomKeyCategory = KeyMapping.Category.register(zoomifyRl("category"))
+    //?} else {
+    /*private val zoomKeyCategory = "key.category.zoomify.category"
+    *///?}
+
+    private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_C, zoomKeyCategory)
+    private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, zoomKeyCategory)
+    private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", -1, zoomKeyCategory)
+    private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", -1, zoomKeyCategory)
 
     var zooming = false
         private set
