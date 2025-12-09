@@ -6,7 +6,6 @@ import dev.isxander.yacl3.gui.image.impl.AnimatedDynamicTextureImage
 import dev.isxander.zoomify.utils.*
 import dev.isxander.zoomify.zoom.ZoomHelper
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.resources.ResourceLocation
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
@@ -32,7 +31,7 @@ abstract class ZoomDemoImageRenderer(val zoomHelper: ZoomHelper, private val zoo
 
     companion object {
         @JvmStatic
-        protected fun makeWebp(id: ResourceLocation): CompletableFuture<AnimatedDynamicTextureImage> {
+        protected fun makeWebp(id: Identifier): CompletableFuture<AnimatedDynamicTextureImage> {
             return ImageRendererManager.registerOrGetImage(id) { AnimatedDynamicTextureImage.createWEBPFromTexture(id) }
         }
     }

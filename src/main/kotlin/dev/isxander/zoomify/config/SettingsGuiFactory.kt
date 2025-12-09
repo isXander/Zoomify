@@ -283,7 +283,7 @@ private class SettingsGuiFactory {
 
                             OptionUtils.forEachOptions(screen.config, Option<*>::forgetPendingValue)
                             ZoomifySettings.saveToFile()
-                            screen.init(minecraft, screen.width, screen.height)
+                            screen.init(screen.width, screen.height)
                         }
                     }
                 }

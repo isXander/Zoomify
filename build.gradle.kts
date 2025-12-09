@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
 
-    id("fabric-loom") version "1.11.4"
+    id("fabric-loom") version "1.14-SNAPSHOT"
 
     id("me.modmuss50.mod-publish-plugin") version "0.8.4"
     `maven-publish`

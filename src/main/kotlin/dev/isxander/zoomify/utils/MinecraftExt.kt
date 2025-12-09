@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.toasts.SystemToast
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 
 val minecraft: Minecraft = Minecraft.getInstance()
 
@@ -45,9 +44,16 @@ fun toast(
     toastManager.addToast(it)
 }
 
-fun zoomifyRl(path: String) =
-    //? if >=1.21 {
-    ResourceLocation.fromNamespaceAndPath("zoomify", path)
+typealias Identifier =
+    //? if >=1.21.11 {
+    net.minecraft.resources.Identifier
     //?} else {
-    /*ResourceLocation("zoomify", path)
+    /*net.minecraft.resources.ResourceLocation
+    *///?}
+
+fun zoomifyRl(path: String) =
+    //? >=1.21 {
+    Identifier.fromNamespaceAndPath("zoomify", path)
+    //?} else {
+    /*Identifier("zoomify", path)
     *///?}
