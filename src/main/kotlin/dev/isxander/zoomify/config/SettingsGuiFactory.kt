@@ -117,8 +117,14 @@ private class SettingsGuiFactory {
                     listener { _, v -> innerScrollOpts.forEach { it.setAvailable(v) } }
                 }
 
-                options.registerDemo(ZoomifySettings::scrollZoomAmount, scrollOnlyDemo) {
-                    controller = slider(range = 1..10)
+                options.registerDemo(ZoomifySettings::scrollStepCount, scrollOnlyDemo) {
+                    controller = slider(range = 3..30)
+                }.also { innerScrollOpts.add(it) }
+
+                options.registerDemo(ZoomifySettings::zoomPerStep, scrollOnlyDemo) {
+                    controller = slider(range = 110..300, step = 10, formatter = { v: Int ->
+                        Component.literal("%.1fx".format(v / 100.0))
+                    })
                 }.also { innerScrollOpts.add(it) }
 
                 options.registerDemo(ZoomifySettings::scrollZoomSmoothness, scrollOnlyDemo) {

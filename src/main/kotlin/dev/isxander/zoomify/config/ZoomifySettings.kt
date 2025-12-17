@@ -24,7 +24,8 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
     val linearLikeSteps by register<Boolean>(default = true, Codec.BOOL)
 
     val scrollZoom by register<Boolean>(default = true, Codec.BOOL)
-    val scrollZoomAmount by register<Int>(default = 3, Codec.INT)
+    val scrollStepCount by register<Int>(default = 10, Codec.INT)
+    val zoomPerStep by register<Int>(default = 150, Codec.INT)
     val scrollZoomSmoothness by register<Int>(default = 70, Codec.INT)
 
     val zoomKeyBehaviour by register<ZoomKeyBehaviour>(default = ZoomKeyBehaviour.HOLD, ZoomKeyBehaviour.CODEC)
@@ -59,7 +60,8 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         retainZoomSteps,
         linearLikeSteps,
         scrollZoom,
-        scrollZoomAmount,
+        scrollStepCount,
+        zoomPerStep,
         scrollZoomSmoothness,
         zoomKeyBehaviour,
         _keybindScrolling,
@@ -86,7 +88,8 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         this.retainZoomSteps.value = settings.retainZoomSteps.value
         this.linearLikeSteps.value = settings.linearLikeSteps.value
         this.scrollZoom.value = settings.scrollZoom.value
-        this.scrollZoomAmount.value = settings.scrollZoomAmount.value
+        this.scrollStepCount.value = settings.scrollStepCount.value
+        this.zoomPerStep.value = settings.zoomPerStep.value
         this.scrollZoomSmoothness.value = settings.scrollZoomSmoothness.value
         this.zoomKeyBehaviour.value = settings.zoomKeyBehaviour.value
         this.keybindScrolling = settings.keybindScrolling

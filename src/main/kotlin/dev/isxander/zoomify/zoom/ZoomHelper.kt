@@ -9,7 +9,7 @@ class ZoomHelper(
     private val scrollInterpolator: Interpolator,
 
     private val initialZoom: () -> Int,
-    private val scrollZoomAmount: () -> Int,
+    private val zoomPerStep: () -> Int,
     val maxScrollTiers: () -> Int,
     private val linearLikeSteps: () -> Boolean,
 ) {
@@ -76,21 +76,22 @@ class ZoomHelper(
             ) else scrollInterpolation
         }
 
-        val maxScrollDivisor = Zoomify.maxScrollTiers * (scrollZoomAmount() * 3.0)
+        // zoomPerStep is stored as percentage (e.g., 150 = 1.5x per step)
+        val stepMultiplier = zoomPerStep() / 100.0
+        val maxSteps = maxScrollTiers()
+        // Current step number (interpolated for smooth animation)
+        val currentStep = scrollT * maxSteps
 
-        val finalDivisor = if (linearLikeSteps() && scrollT > 0 && maxScrollDivisor > 0) {
+        val finalDivisor = if (linearLikeSteps() && scrollT > 0 && maxSteps > 0) {
             // Geometric interpolation for perceptually uniform zoom steps
-            // Each scroll step produces a constant multiplicative change to the divisor
-            // scrollZoomAmount scales how fast you reach max zoom:
-            // - scrollZoomAmount=1: reach max at step 30 (subtle, ~15% per step)
-            // - scrollZoomAmount=3: reach max at step 10 (moderate, ~52% per step)
-            // - scrollZoomAmount=10: reach max at step 3 (aggressive, ~300% per step)
-            val effectiveT = (scrollT * scrollZoomAmount()).coerceAtMost(1.0)
-            val maxDivisor = baseDivisor + maxScrollDivisor
-            baseDivisor.pow(1 - effectiveT) * maxDivisor.pow(effectiveT)
+            // Each step multiplies the divisor by stepMultiplier
+            // divisor = baseDivisor × stepMultiplier^currentStep
+            baseDivisor * stepMultiplier.pow(currentStep)
         } else {
-            // Linear interpolation (original behavior)
-            baseDivisor + scrollT * maxScrollDivisor
+            // Linear interpolation (non-uniform perception, legacy behavior)
+            // Same endpoints but linear interpolation between them
+            val maxDivisor = baseDivisor * stepMultiplier.pow(maxSteps.toDouble())
+            Mth.lerp(scrollT, baseDivisor, maxDivisor)
         }
 
         return finalDivisor.also {
