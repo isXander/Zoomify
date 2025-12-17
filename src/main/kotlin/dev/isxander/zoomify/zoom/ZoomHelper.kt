@@ -54,10 +54,10 @@ class ZoomHelper(
             else 0.0
         if (linearLikeSteps()) {
             // Use logarithmic scaling to make each zoom step feel equally significant
-            // Maps linear input (0 to 1) to exponential output using natural logarithm
+            // Maps linear input (0 to 1) to exponential output
             // This ensures each scroll step represents a constant multiplicative change in zoom
             if (targetZoom > 0.0) {
-                val base = 10.0 // Base for exponential growth
+                val base = 4.0 // Base for exponential growth (balances early vs late zoom steps)
                 targetZoom = (base.pow(targetZoom) - 1.0) / (base - 1.0)
             }
         }
