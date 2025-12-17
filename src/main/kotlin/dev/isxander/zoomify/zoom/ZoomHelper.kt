@@ -81,10 +81,13 @@ class ZoomHelper(
         val finalDivisor = if (linearLikeSteps() && scrollT > 0 && maxScrollDivisor > 0) {
             // Geometric interpolation for perceptually uniform zoom steps
             // Each scroll step produces a constant multiplicative change to the divisor
-            // Formula: baseDivisor * (maxDivisor / baseDivisor)^t
-            // Which equals: baseDivisor^(1-t) * maxDivisor^t
+            // scrollZoomAmount scales how fast you reach max zoom:
+            // - scrollZoomAmount=1: reach max at step 30 (subtle, ~15% per step)
+            // - scrollZoomAmount=3: reach max at step 10 (moderate, ~52% per step)
+            // - scrollZoomAmount=10: reach max at step 3 (aggressive, ~300% per step)
+            val effectiveT = (scrollT * scrollZoomAmount()).coerceAtMost(1.0)
             val maxDivisor = baseDivisor + maxScrollDivisor
-            baseDivisor.pow(1 - scrollT) * maxDivisor.pow(scrollT)
+            baseDivisor.pow(1 - effectiveT) * maxDivisor.pow(effectiveT)
         } else {
             // Linear interpolation (original behavior)
             baseDivisor + scrollT * maxScrollDivisor
