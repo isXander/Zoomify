@@ -53,9 +53,13 @@ class ZoomHelper(
                 scrollTiers.toDouble() / Zoomify.maxScrollTiers
             else 0.0
         if (linearLikeSteps()) {
-            val curvature = 0.3
-            val exp = 1 / (1 - curvature)
-            targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
+            // Use logarithmic scaling to make each zoom step feel equally significant
+            // Maps linear input (0 to 1) to exponential output using natural logarithm
+            // This ensures each scroll step represents a constant multiplicative change in zoom
+            if (targetZoom > 0.0) {
+                val base = 10.0 // Base for exponential growth
+                targetZoom = (base.pow(targetZoom) - 1.0) / (base - 1.0)
+            }
         }
 
         prevScrollInterpolation = scrollInterpolation
