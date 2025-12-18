@@ -22,7 +22,6 @@ fun RegularZoomHelper(settings: ZoomifySettings) = ZoomHelper(
     initialZoom = settings.initialZoom::value,
     zoomPerStep = settings.zoomPerStep::value,
     maxScrollTiers = settings.scrollStepCount::value,
-    linearLikeSteps = settings.linearLikeSteps::value,
 )
 
 fun SecondaryZoomHelper(settings: ZoomifySettings) = ZoomHelper(
@@ -31,5 +30,4 @@ fun SecondaryZoomHelper(settings: ZoomifySettings) = ZoomHelper(
     initialZoom = settings.secondaryZoomAmount::value,
     zoomPerStep = { 100 },
     maxScrollTiers = { 0 },
-    linearLikeSteps = { false },
 )

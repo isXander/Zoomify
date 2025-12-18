@@ -21,7 +21,6 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
     val affectHandFov by register<Boolean>(default = true, Codec.BOOL)
 
     val retainZoomSteps by register<Boolean>(default = false, Codec.BOOL)
-    val linearLikeSteps by register<Boolean>(default = true, Codec.BOOL)
 
     val scrollZoom by register<Boolean>(default = true, Codec.BOOL)
     val scrollStepCount by register<Int>(default = 10, Codec.INT)
@@ -58,7 +57,6 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         zoomOutTransition,
         affectHandFov,
         retainZoomSteps,
-        linearLikeSteps,
         scrollZoom,
         scrollStepCount,
         zoomPerStep,
@@ -86,7 +84,6 @@ open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
         this.zoomOutTransition.value = settings.zoomOutTransition.value
         this.affectHandFov.value = settings.affectHandFov.value
         this.retainZoomSteps.value = settings.retainZoomSteps.value
-        this.linearLikeSteps.value = settings.linearLikeSteps.value
         this.scrollZoom.value = settings.scrollZoom.value
         this.scrollStepCount.value = settings.scrollStepCount.value
         this.zoomPerStep.value = settings.zoomPerStep.value

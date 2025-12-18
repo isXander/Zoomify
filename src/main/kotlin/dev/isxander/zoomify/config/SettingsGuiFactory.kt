@@ -118,11 +118,11 @@ private class SettingsGuiFactory {
                 }
 
                 options.registerDemo(ZoomifySettings::scrollStepCount, scrollOnlyDemo) {
-                    controller = slider(range = 3..30)
+                    controller = slider(range = 3..20)
                 }.also { innerScrollOpts.add(it) }
 
                 options.registerDemo(ZoomifySettings::zoomPerStep, scrollOnlyDemo) {
-                    controller = slider(range = 110..300, step = 10, formatter = { v: Int ->
+                    controller = slider(range = 110..200, step = 10, formatter = { v: Int ->
                         Component.literal("%.1fx".format(v / 100.0))
                     })
                 }.also { innerScrollOpts.add(it) }
@@ -134,10 +134,6 @@ private class SettingsGuiFactory {
                         else
                             Component.literal("%d%%".format(v))
                     })
-                }.also { innerScrollOpts.add(it) }
-
-                options.registerDemo(ZoomifySettings::linearLikeSteps, scrollOnlyDemo) {
-                    controller = tickBox()
                 }.also { innerScrollOpts.add(it) }
 
                 options.registerDemo(ZoomifySettings::retainZoomSteps, scrollOnlyDemo) {

@@ -106,7 +106,8 @@ object Zoomify : ClientModInitializer {
                 scrollSteps--
             }
 
-            scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+            // Allow negative steps for zooming out below initial zoom
+            scrollSteps = scrollSteps.coerceIn(-maxScrollTiers..maxScrollTiers)
         }
 
         handleSpyglass(minecraft, prevZooming)
@@ -139,7 +140,8 @@ object Zoomify : ClientModInitializer {
         } else if (mouseDelta < 0) {
             scrollSteps--
         }
-        scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+        // Allow negative steps for zooming out below initial zoom
+        scrollSteps = scrollSteps.coerceIn(-maxScrollTiers..maxScrollTiers)
     }
 
     private fun handleSpyglass(minecraft: Minecraft, prevZooming: Boolean) {

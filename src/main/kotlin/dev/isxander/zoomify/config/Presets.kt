@@ -28,7 +28,6 @@ enum class Presets(val displayName: Component, val apply: ZoomifySettings.() -> 
         this.relativeSensitivity.value = 50
         this.relativeViewBobbing.value = false
         this.scrollZoomSmoothness.value = 25
-        this.linearLikeSteps.value = false
     });
 
     constructor(displayName: String, apply: ZoomifySettings.() -> Unit)

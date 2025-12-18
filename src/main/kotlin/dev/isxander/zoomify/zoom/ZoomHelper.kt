@@ -11,7 +11,6 @@ class ZoomHelper(
     private val initialZoom: () -> Int,
     private val zoomPerStep: () -> Int,
     val maxScrollTiers: () -> Int,
-    private val linearLikeSteps: () -> Boolean,
 ) {
     private var prevInitialInterpolation = 0.0
     private var initialInterpolation = 0.0
@@ -48,9 +47,11 @@ class ZoomHelper(
         if (scrollTiers > lastScrollTier)
             resetting = false
 
+        // scrollTiers can be negative (zoom out) or positive (zoom in)
+        // Normalize to -1..1 range where 0 is initial zoom
         val targetZoom =
             if (maxScrollTiers() > 0)
-                scrollTiers.toDouble() / Zoomify.maxScrollTiers
+                scrollTiers.toDouble() / maxScrollTiers()
             else 0.0
 
         prevScrollInterpolation = scrollInterpolation
@@ -65,7 +66,8 @@ class ZoomHelper(
         val initialMultiplier = getInitialZoomMultiplier(tickDelta)
         val baseDivisor = 1 / initialMultiplier
 
-        // Get the smoothed scroll interpolation value (0 to 1)
+        // Get the smoothed scroll interpolation value (-1 to 1)
+        // Negative = zoom out, Positive = zoom in
         val scrollT = if (resetting) 0.0 else {
             if (scrollInterpolator.isSmooth) scrollInterpolator.modifyInterpolation(
                 Mth.lerp(
@@ -80,19 +82,18 @@ class ZoomHelper(
         val stepMultiplier = zoomPerStep() / 100.0
         val maxSteps = maxScrollTiers()
         // Current step number (interpolated for smooth animation)
+        // Can be negative for zooming out below initial zoom
         val currentStep = scrollT * maxSteps
 
-        val finalDivisor = if (linearLikeSteps() && scrollT > 0 && maxSteps > 0) {
-            // Geometric interpolation for perceptually uniform zoom steps
-            // Each step multiplies the divisor by stepMultiplier
-            // divisor = baseDivisor × stepMultiplier^currentStep
-            baseDivisor * stepMultiplier.pow(currentStep)
-        } else {
-            // Linear interpolation (non-uniform perception, legacy behavior)
-            // Same endpoints but linear interpolation between them
-            val maxDivisor = baseDivisor * stepMultiplier.pow(maxSteps.toDouble())
-            Mth.lerp(scrollT, baseDivisor, maxDivisor)
-        }
+        // Geometric interpolation for perceptually uniform zoom steps
+        // Each step multiplies the divisor by stepMultiplier
+        // divisor = baseDivisor × stepMultiplier^currentStep
+        // When currentStep is negative, this zooms out (divisor < baseDivisor)
+        val rawDivisor = baseDivisor * stepMultiplier.pow(currentStep)
+
+        // Safety limits to prevent rendering issues
+        // Min 0.5x zoom (divisor 0.5), max 500x zoom (divisor 500)
+        val finalDivisor = rawDivisor.coerceIn(0.5, 500.0)
 
         return finalDivisor.also {
             if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
