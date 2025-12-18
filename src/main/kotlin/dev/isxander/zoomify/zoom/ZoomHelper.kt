@@ -9,9 +9,8 @@ class ZoomHelper(
     private val scrollInterpolator: Interpolator,
 
     private val initialZoom: () -> Int,
-    private val scrollZoomAmount: () -> Int,
+    private val zoomPerStep: () -> Int,
     val maxScrollTiers: () -> Int,
-    private val linearLikeSteps: () -> Boolean,
 ) {
     private var prevInitialInterpolation = 0.0
     private var initialInterpolation = 0.0
@@ -48,15 +47,12 @@ class ZoomHelper(
         if (scrollTiers > lastScrollTier)
             resetting = false
 
-        var targetZoom =
+        // scrollTiers can be negative (zoom out) or positive (zoom in)
+        // Normalize to -1..1 range where 0 is initial zoom
+        val targetZoom =
             if (maxScrollTiers() > 0)
-                scrollTiers.toDouble() / Zoomify.maxScrollTiers
+                scrollTiers.toDouble() / maxScrollTiers()
             else 0.0
-        if (linearLikeSteps()) {
-            val curvature = 0.3
-            val exp = 1 / (1 - curvature)
-            targetZoom = 2 * (targetZoom.pow(exp) / (targetZoom.pow(exp) + (2 - targetZoom).pow(exp)))
-        }
 
         prevScrollInterpolation = scrollInterpolation
         scrollInterpolation = scrollInterpolator.tickInterpolation(targetZoom, scrollInterpolation, lastFrameDuration)
@@ -68,9 +64,38 @@ class ZoomHelper(
 
     fun getZoomDivisor(tickDelta: Float = 1f): Double {
         val initialMultiplier = getInitialZoomMultiplier(tickDelta)
-        val scrollDivisor = getScrollZoomDivisor(tickDelta)
+        val baseDivisor = 1 / initialMultiplier
 
-        return (1 / initialMultiplier + scrollDivisor).also {
+        // Get the smoothed scroll interpolation value (-1 to 1)
+        // Negative = zoom out, Positive = zoom in
+        val scrollT = if (resetting) 0.0 else {
+            if (scrollInterpolator.isSmooth) scrollInterpolator.modifyInterpolation(
+                Mth.lerp(
+                    tickDelta.toDouble(),
+                    prevScrollInterpolation,
+                    scrollInterpolation
+                )
+            ) else scrollInterpolation
+        }
+
+        // zoomPerStep is stored as percentage (e.g., 150 = 1.5x per step)
+        val stepMultiplier = zoomPerStep() / 100.0
+        val maxSteps = maxScrollTiers()
+        // Current step number (interpolated for smooth animation)
+        // Can be negative for zooming out below initial zoom
+        val currentStep = scrollT * maxSteps
+
+        // Geometric interpolation for perceptually uniform zoom steps
+        // Each step multiplies the divisor by stepMultiplier
+        // divisor = baseDivisor × stepMultiplier^currentStep
+        // When currentStep is negative, this zooms out (divisor < baseDivisor)
+        val rawDivisor = baseDivisor * stepMultiplier.pow(currentStep)
+
+        // Safety limits to prevent rendering issues
+        // Min 0.5x zoom (divisor 0.5), max 500x zoom (divisor 500)
+        val finalDivisor = rawDivisor.coerceIn(0.5, 500.0)
+
+        return finalDivisor.also {
             if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
             if (!resetting) resetMultiplier = 1 / it
         }
@@ -88,21 +113,6 @@ class ZoomHelper(
             1.0,
             if (!resetting) 1 / initialZoom().toDouble() else resetMultiplier
         )
-    }
-
-    private fun getScrollZoomDivisor(tickDelta: Float): Double {
-        return Mth.lerp(
-            if (scrollInterpolator.isSmooth) scrollInterpolator.modifyInterpolation(
-                Mth.lerp(
-                    tickDelta.toDouble(),
-                    prevScrollInterpolation,
-                    scrollInterpolation
-                )
-            )
-            else scrollInterpolation,
-            0.0,
-            Zoomify.maxScrollTiers * (scrollZoomAmount() * 3.0)
-        ).let { if (resetting) 0.0 else it }
     }
 
     fun reset() {

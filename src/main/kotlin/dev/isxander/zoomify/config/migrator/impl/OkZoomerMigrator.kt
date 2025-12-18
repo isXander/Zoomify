@@ -97,7 +97,7 @@ object OkZoomerMigrator : Migrator {
 
         ZoomifySettings.initialZoom.value = okz.values.zoomDivisor.roundToInt()
         migration.warn(Component.translatable("zoomify.migrate.okz.minZoomDiv"))
-        ZoomifySettings.scrollZoomAmount.value = ((okz.values.maxZoomDivisor - ZoomifySettings.initialZoom.value) / Zoomify.maxScrollTiers).roundToInt()
+        //ZoomifySettings.scrollZoomAmount.value = ((okz.values.maxZoomDivisor - ZoomifySettings.initialZoom.value) / Zoomify.maxScrollTiers).roundToInt()
 
         migration.warn(Component.translatable("zoomify.migrate.okz.stepAmt"))
 

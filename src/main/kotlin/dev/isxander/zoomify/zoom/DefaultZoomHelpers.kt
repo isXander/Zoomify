@@ -20,16 +20,14 @@ fun RegularZoomHelper(settings: ZoomifySettings) = ZoomHelper(
         )
     },
     initialZoom = settings.initialZoom::value,
-    scrollZoomAmount = settings.scrollZoomAmount::value,
-    maxScrollTiers = Zoomify::maxScrollTiers,
-    linearLikeSteps = settings.linearLikeSteps::value,
+    zoomPerStep = settings.zoomPerStep::value,
+    maxScrollTiers = settings.scrollStepCount::value,
 )
 
 fun SecondaryZoomHelper(settings: ZoomifySettings) = ZoomHelper(
     TimedInterpolator(settings.secondaryZoomInTime::value, settings.secondaryZoomOutTime::value),
     InstantInterpolator,
     initialZoom = settings.secondaryZoomAmount::value,
-    scrollZoomAmount = { 0 },
+    zoomPerStep = { 100 },
     maxScrollTiers = { 0 },
-    linearLikeSteps = { false },
 )
