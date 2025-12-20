@@ -78,7 +78,7 @@
   "zoomify.gui.formatter.instant": "Instant",
   "zoomify.gui.formatter.seconds": "%s secs",
   "zoomify.transition.instant": "Instant",
-  "zoomify.transition.linear": "Linear",
+  "zoomify.transition.linear": "Tuyến tính",
   "zoomify.transition.ease_in_sine": "Ease In Sine",
   "zoomify.transition.ease_out_sine": "Ease Out Sine",
   "zoomify.transition.ease_in_out_sine": "Ease In Out Sine",
