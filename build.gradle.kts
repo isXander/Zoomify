@@ -10,7 +10,8 @@ plugins {
     id("me.modmuss50.mod-publish-plugin") version "0.8.4"
     `maven-publish`
     signing
-    id("dev.isxander.secrets") version "0.1.0"
+    id("dev.isxander.secrets")
+    id("com.gradleup.nmcp")
     id("org.ajoberstar.grgit") version "5.3.2"
 }
 
@@ -59,6 +60,13 @@ stonecutter {
             "float" else "double"
     )
 
+    fun String.propDefined() = project.findProperty(this)?.toString()?.isNotBlank() ?: false
+
+    constants {
+        put("mod-menu", "deps.modMenu".propDefined())
+        put("controlify", "deps.controlify".propDefined())
+    }
+
 }
 
 repositories {
@@ -75,14 +83,6 @@ repositories {
     exclusiveContent {
         forRepository { maven("https://maven.parchmentmc.org") }
         filter { includeGroup("org.parchmentmc.data") }
-    }
-    exclusiveContent {
-        forRepository { maven("https://api.modrinth.com/maven") }
-        filter { includeGroup("maven.modrinth") }
-    }
-    exclusiveContent {
-        forRepository { maven("https://cursemaven.com") }
-        filter { includeGroup("curse.maven") }
     }
 }
 
@@ -115,7 +115,9 @@ tasks.javadoc {
 }
 
 kotlin {
-    //jvmToolchain(modstitch.javaVersion)
+    jvmToolchain {
+        languageVersion = modstitch.javaVersion.map { JavaLanguageVersion.of(it) }
+    }
 }
 
 tasks.register("releaseMod") {
@@ -186,26 +188,58 @@ publishMods {
 publishing {
     publications {
         create<MavenPublication>("mod") {
+            from(components["java"])
+
             groupId = "dev.isxander"
             artifactId = "zoomify"
+            version = modstitch.metadata.modVersion.get()
 
-            from(components["java"])
-        }
-    }
-
-    repositories {
-        val username = "XANDER_MAVEN_USER".let { System.getenv(it) ?: findProperty(it) }?.toString()
-        val password = "XANDER_MAVEN_PASS".let { System.getenv(it) ?: findProperty(it) }?.toString()
-        if (username != null && password != null) {
-            maven(url = "https://maven.isxander.dev/releases") {
-                name = "XanderReleases"
-                credentials {
-                    this.username = username
-                    this.password = password
+            pom {
+                name = modstitch.metadata.modName
+                description = modstitch.metadata.modDescription
+                url = "https://www.isxander.dev/projects/zoomify"
+                licenses {
+                    license {
+                        name = "LGPL-3.0-or-later"
+                        url = "https://www.gnu.org/licenses/lgpl-3.0.en.html"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "isXander"
+                        name = "Xander"
+                        email = "business@isxander.dev"
+                    }
+                }
+                scm {
+                    url = "https://github.com/isXander/Zoomify"
+                    connection = "scm:git:git//github.com/isXander/Zoomify.git"
+                    developerConnection = "scm:git:ssh://git@github.com/isXander/Zoomify.git"
                 }
             }
-        } else {
-            println("Xander Maven credentials not satisfied.")
+        }
+    }
+}
+val signingKeyProvider = secrets.gradleProperty("signing.secretKey")
+val signingPasswordProvider = secrets.gradleProperty("signing.password")
+signing {
+    sign(publishing.publications["mod"])
+}
+// not configuration cache friendly, but neither is the whole of signing plugin
+// this plugin does not support lazy configuration of signing keys
+gradle.taskGraph.whenReady {
+    val willSign = allTasks.any { it.name.startsWith("sign") }
+    if (willSign) {
+        signing {
+            val signingKey = signingKeyProvider.orNull
+            val signingPassword = signingPasswordProvider.orNull
+
+            isRequired = signingKey != null && signingPassword != null
+            if (isRequired) {
+                useInMemoryPgpKeys(signingKey, signingPassword)
+            } else {
+                logger.error("Signing keys not found; skipping signing!")
+            }
         }
     }
 }

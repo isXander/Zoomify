@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "id": "${id}",
-  "version": "${version}",
-  "name": "${name}",
-  "description": "${description}",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
   "authors": [
-    "isXander"
+    "${mod_author}"
   ],
   "contact": {
     "homepage": "https://isxander.dev",
@@ -13,7 +13,7 @@
     "sources": "https://github.com/isXander/Zoomify"
   },
   "icon": "assets/zoomify/zoomify.png",
-  "license": "LGPLv3",
+  "license": "${mod_license}",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -39,9 +39,9 @@
     "zoomify.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.0",
-    "fabric-language-kotlin": ">=1.13.4+kotlin.2.2.0",
-    "minecraft": "${mc}",
+    "fabricloader": ">=0.18.0",
+    "fabric-language-kotlin": ">=1.13.8+kotlin.2.3.0",
+    "minecraft": "${minecraft_version}",
     "java": ">=17",
     "yet_another_config_lib_v3": ">=3.6.6"
   },
@@ -49,7 +49,6 @@
     "modmenu": "*"
   },
   "breaks": {
-    "optifabric": "*",
-    "controlify": "<2.0.0-beta.9"
+    "optifabric": "*"
   }
 }
