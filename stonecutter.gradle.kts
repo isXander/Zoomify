@@ -5,12 +5,14 @@ plugins {
 }
 stonecutter active file("versions/current")
 
+version = property("modVersion").toString()
+
 nmcpAggregation {
     centralPortal {
         username = secrets.gradleProperty("mcentral.username")
         password = secrets.gradleProperty("mcentral.password")
 
-        publicationName = "yet-another-config-lib:$version"
+        publicationName = "zoomify:$version"
     }
 }
 dependencies {
