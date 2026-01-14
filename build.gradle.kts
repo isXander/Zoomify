@@ -1,43 +1,56 @@
 plugins {
     `java-library`
 
-    val kotlinVersion = "2.2.0"
+    val kotlinVersion = "2.3.0"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.serialization") version kotlinVersion
 
-    id("fabric-loom") version "1.14-SNAPSHOT"
+    id("dev.isxander.modstitch.base") version "0.8.4"
 
     id("me.modmuss50.mod-publish-plugin") version "0.8.4"
     `maven-publish`
-
+    signing
+    id("dev.isxander.secrets") version "0.1.0"
     id("org.ajoberstar.grgit") version "5.3.2"
 }
 
-val mcVersion = property("mcVersion")!!.toString()
-val mcSemverVersion = stonecutter.current.version
-val mcDep = property("fmj.mcDep").toString()
+modstitch {
+    minecraftVersion = property("mcVersion").toString()
 
-group = "dev.isxander"
-val versionWithoutMC = "2.14.6"
-version = "$versionWithoutMC+${stonecutter.current.project}"
+    parchment {
+        mappingsVersion = providers.gradleProperty("parchment.version")
+        minecraftVersion = providers.gradleProperty("parchment.minecraft")
+    }
 
-val isAlpha = "alpha" in version.toString()
-val isBeta = "beta" in version.toString()
+    metadata {
+        modId = providers.gradleProperty("modId")
+        modName = providers.gradleProperty("modName")
+        modVersion = providers.gradleProperty("modVersion").map { "$it+${stonecutter.current.project}" }
+        modDescription = providers.gradleProperty("modDescription")
+        modGroup = "dev.isxander"
+        modLicense = "LGPL-3.0-or-later"
+        modAuthor = "isXander"
+    }
 
-base {
-    archivesName.set(property("modName").toString())
-}
+    loom {
+        fabricLoaderVersion = providers.gradleProperty("deps.fabricLoader")
 
-loom {
-    runConfigs.all {
-        ideConfigGenerated(true)
-        runDir("../../run")
+        configureLoom {
+            runConfigs.all {
+                runDir("../../run")
+            }
+        }
     }
 
     mixin {
-        useLegacyMixinAp.set(false)
+        addMixinsToModManifest = true
+        configs.register("zoomify")
     }
 }
+
+
+val isAlpha = "alpha" in modstitch.metadata.modVersion.get()
+val isBeta = "beta" in modstitch.metadata.modVersion.get()
 
 stonecutter {
     swaps.put(
@@ -71,120 +84,56 @@ repositories {
         forRepository { maven("https://cursemaven.com") }
         filter { includeGroup("curse.maven") }
     }
-    exclusiveContent {
-        forRepository { mavenLocal() }
-        filter {
-            includeVersionByRegex("net\\.fabricmc\\.fabric-api", "fabric.*", ".*local")
-            includeVersion("dev.isxander", "yet-another-config-lib", "3.7.1+1.21.9-fabric")
-        }
-    }
 }
 
 dependencies {
-    fun Dependency?.jij() = this?.also(::include)
+    fun Dependency?.jij() = this?.also(::modstitchJiJ)
 
-    minecraft("com.mojang:minecraft:$mcVersion")
-    mappings(loom.layered {
-        optionalProp("deps.parchment") {
-            parchment("org.parchmentmc.data:parchment-$it@zip")
-        }
-
-        officialMojangMappings()
-    })
-    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabricLoader")}")
-
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabricApi")}")
-
-    modImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}")
-
-    modApi("dev.isxander:yet-another-config-lib:${property("deps.yacl")}") {
-        // was including old fapi version that broke things at runtime
-        exclude(group = "net.fabricmc.fabric-api")
-    }.jij()
+    modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabricApi")}")
+    modstitchModImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}")
+    modstitchModApi("dev.isxander:yet-another-config-lib:${property("deps.yacl")}")
 
     // mod menu compat
     optionalProp("deps.modMenu") {
-        modCompileOnly("com.terraformersmc:modmenu:$it") {
-            exclude(group = "net.fabricmc.fabric-api")
-        }
+        modstitchModCompileOnly("com.terraformersmc:modmenu:$it")
     }
 
     optionalProp("deps.controlify") {
-        modCompileOnly("dev.isxander:controlify:$it")  {
-            exclude(group = "net.fabricmc.fabric-api")
-        }
+        modstitchModCompileOnly("dev.isxander:controlify:$it")
     }
 
-    modImplementation(include("com.akuleshov7:ktoml-core-jvm:${property("deps.ktoml")}")!!)
+    modstitchImplementation("com.akuleshov7:ktoml-core-jvm:${property("deps.ktoml")}").jij()
 }
 
-tasks {
-    processResources {
-        val modId: String by project
-        val modName: String by project
-        val modDescription: String by project
-        val githubProject: String by project
-
-        val props = mapOf(
-            "id" to modId,
-            "group" to project.group,
-            "name" to modName,
-            "description" to modDescription,
-            "version" to project.version,
-            "github" to githubProject,
-            "mc" to mcDep
-        )
-
-        props.forEach(inputs::property)
-
-        filesMatching("fabric.mod.json") {
-            expand(props)
-        }
-
-        eachFile {
-            // don't include photoshop files for the textures for development
-            if (name.endsWith(".psd")) {
-                exclude()
-            }
-        }
-    }
-
-    register("releaseMod") {
-        group = "mod"
-
-        dependsOn("publishMods")
-        dependsOn("publish")
-    }
-}
-
-val javaMajorVersion = property("java.version").toString().toInt()
 java {
     withSourcesJar()
-
-    javaMajorVersion
-        .let { JavaVersion.values()[it - 1] }
-        .let {
-            sourceCompatibility = it
-            targetCompatibility = it
-        }
+    withJavadocJar()
 }
 
-tasks.withType<JavaCompile> {
-    options.release = javaMajorVersion
+tasks.javadoc {
+    isFailOnError = false
 }
+
 kotlin {
-    jvmToolchain(javaMajorVersion)
+    //jvmToolchain(modstitch.javaVersion)
+}
+
+tasks.register("releaseMod") {
+    group = "mod"
+
+    dependsOn("publishMods")
+    dependsOn("publish")
 }
 
 publishMods {
-    displayName.set("Zoomify $versionWithoutMC for MC $mcVersion")
-    file.set(tasks.remapJar.get().archiveFile)
-    changelog.set(
-        rootProject.file("changelogs/${versionWithoutMC}.md")
+    displayName = modstitch.metadata.modVersion.map { "Zoomify $it" }
+    file = modstitch.finalJarTask.flatMap { it.archiveFile }
+    changelog = providers.provider {
+        rootProject.file("changelog.md")
             .takeIf { it.exists() }
             ?.readText()
             ?: "No changelog provided."
-    )
+    }
     type.set(when {
         isAlpha -> ALPHA
         isBeta -> BETA
@@ -200,43 +149,37 @@ publishMods {
     // modrinth and curseforge use different formats for snapshots. this can be expressed globally
     val stableMCVersions = versionList("pub.stableMC")
 
-    val modrinthId: String by project
-    if (modrinthId.isNotBlank() && hasProperty("modrinth.token")) {
-        modrinth {
-            projectId.set(modrinthId)
-            accessToken.set(findProperty("modrinth.token")?.toString())
-            minecraftVersions.addAll(stableMCVersions)
-            minecraftVersions.addAll(versionList("pub.modrinthMC"))
+    modrinth {
+        accessToken = secrets.gradleProperty("modrinth.accessToken")
+        projectId = providers.gradleProperty("pub.modrinthId")
 
-            requires { slug.set("fabric-api") }
-            requires { slug.set("yacl") }
-            requires { slug.set("fabric-language-kotlin") }
-            optional { slug.set("modmenu") }
-        }
+        minecraftVersions.addAll(stableMCVersions)
+        minecraftVersions.addAll(versionList("pub.modrinthMC"))
+
+        requires { slug.set("fabric-api") }
+        requires { slug.set("yacl") }
+        requires { slug.set("fabric-language-kotlin") }
+        optional { slug.set("modmenu") }
     }
 
-    val curseforgeId: String by project
-    if (curseforgeId.isNotBlank() && hasProperty("curseforge.token")) {
-        curseforge {
-            projectId.set(curseforgeId)
-            accessToken.set(findProperty("curseforge.token")?.toString())
-            minecraftVersions.addAll(stableMCVersions)
-            minecraftVersions.addAll(versionList("pub.curseMC"))
+    curseforge {
+        accessToken = secrets.gradleProperty("curseforge.accessToken")
+        projectId = providers.gradleProperty("pub.curseforgeId")
+        projectSlug = providers.gradleProperty("pub.curseforgeSlug")
 
-            requires { slug.set("fabric-api") }
-            requires { slug.set("yacl") }
-            requires { slug.set("fabric-language-kotlin") }
-            optional { slug.set("modmenu") }
-        }
+        minecraftVersions.addAll(stableMCVersions)
+        minecraftVersions.addAll(versionList("pub.curseMC"))
+
+        requires { slug.set("fabric-api") }
+        requires { slug.set("yacl") }
+        requires { slug.set("fabric-language-kotlin") }
+        optional { slug.set("modmenu") }
     }
 
-    val githubProject: String by project
-    if (githubProject.isNotBlank() && hasProperty("github.token")) {
-        github {
-            repository.set(githubProject)
-            accessToken.set(findProperty("github.token")?.toString())
-            commitish.set(grgit.branch.current().name)
-        }
+    github {
+        accessToken = secrets.gradleProperty("github.accessToken")
+        repository = providers.gradleProperty("githubProject")
+        commitish = grgit.branch.current().name
     }
 }
 

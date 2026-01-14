@@ -9,16 +9,15 @@ pluginManagement {
 }
 
 plugins {
-    id("dev.kikugie.stonecutter") version "0.7.6"
+    id("dev.kikugie.stonecutter") version "0.8.2"
 }
 
 stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
-    shared {
-        versions("1.20.1", "1.20.4", "1.20.6", "1.21.1", "1.21.3", "1.21.6", "1.21.9", "1.21.11")
+    create(rootProject) {
+        versions("1.20.1", "1.20.4", "1.20.6", "1.21.1", "1.21.5", "1.21.6", "1.21.9", "1.21.11")
     }
-    create(rootProject)
 }
 
 rootProject.name = "Zoomify"
