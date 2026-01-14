@@ -7,6 +7,10 @@ stonecutter active file("versions/current")
 
 version = property("modVersion").toString()
 
+repositories {
+    mavenCentral()
+}
+
 nmcpAggregation {
     centralPortal {
         username = secrets.gradleProperty("mcentral.username")
