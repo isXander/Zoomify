@@ -31,6 +31,11 @@ modstitch {
         modGroup = "dev.isxander"
         modLicense = "LGPL-3.0-or-later"
         modAuthor = "isXander"
+
+        replacementProperties.put(
+            "minecraft_dependency",
+            findProperty("fmj.mcDep")?.toString()!!
+        )
     }
 
     loom {
