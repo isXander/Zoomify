@@ -1,6 +1,5 @@
-# Zoomify 2.15.0
+# Zoomify 2.15.1
 
 ## Changes
 
-- Overhaul scroll zoom so each scroll step zooms in by the same perceived amount.
-- Translation updates
+- Fix minecraft dependency in fabric.mod.json
