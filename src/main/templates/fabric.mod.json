@@ -49,6 +49,7 @@
     "modmenu": "*"
   },
   "breaks": {
-    "optifabric": "*"
+    "optifabric": "*",
+    "controlify": "<2"
   }
 }

@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.InputConstants
 import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.config.*
 import dev.isxander.zoomify.config.migrator.Migrator
-import dev.isxander.zoomify.integrations.constrainModVersionIfLoaded
 import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.utils.zoomifyRl
 import dev.isxander.zoomify.zoom.*
@@ -57,9 +56,6 @@ object Zoomify : ClientModInitializer {
     private var displayGui = false
 
     override fun onInitializeClient() {
-        // controlify compat only works on 2.x
-        constrainModVersionIfLoaded("controlify", "2.x.x")
-
         // imports on <init>
         ZoomifySettings
 
