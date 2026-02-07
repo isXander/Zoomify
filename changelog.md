@@ -1,5 +1,5 @@
-# Zoomify 2.15.1
+# Zoomify 2.15.2
 
 ## Changes
 
-- Fix minecraft dependency in fabric.mod.json
+- Add compatibility for Controlify 3.x
