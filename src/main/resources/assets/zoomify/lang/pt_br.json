@@ -1,6 +1,7 @@
 {
   "yacl3.config.zoomify.category.behaviour.group.basic": "Básico",
   "yacl3.config.zoomify.category.controls": "Controles",
+  "zoomify.gui.preset.default": "Padrão",
   "zoomify.zoom_key_behaviour.hold": "Em espera",
   "zoomify.zoom_key_behaviour.toggle": "Alternar"
 }
