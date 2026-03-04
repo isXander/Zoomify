@@ -55,12 +55,18 @@
   "zoomify.sound_behaviour.only_spyglass": "Chỉ khi giữ kính lúp",
   "zoomify.sound_behaviour.with_overlay": "Hợp với lớp biểu thị",
   "zoomify.toast.conflictingKeybind.title": "Zoomify sẽ không hoạt động!",
+  "zoomify.toast.conflictingKeybind.description": "Hiện đang có nút xung đột, khiến bạn không thể sử dụng nút thu phóng. Bạn có thể bỏ gán nút trong phần %s của cài đặt Zoomify.",
   "zoomify.toast.unbindConflicting.name": "Đã bỏ gán nút xung đột",
   "zoomify.toast.unbindConflicting.description": "Zoomify đã bỏ gán nút '%s' vì có xung đột với nút thu phóng.",
   "zoomify.migrate.no_migrations": "Không có di chuyển khả dụng.",
   "zoomify.migrate.result.title": "Di chuyển hoàn tất",
   "zoomify.migrate.restart": "Yêu cầu khởi động lại",
   "zoomify.migrate.result.restart_game": "Khởi động lại trò chơi",
+  "zoomify.migrate.available.title": "Tự động di chuyển cho %s hiện khả dụng",
+  "zoomify.migrate.available.message": "Bạn có muốn tự động di chuyển thiết đặt %s sang Zoomify không?",
+  "zoomify.migrate.okz.persistent": "Chế độ thu phóng cố định không được hỗ trợ.",
+  "zoomify.migrate.okz.vignette": "Lớp biểu thị tối viền không được hỗ trợ.",
+  "zoomify.migrate.okz.minZoomDiv": "Thiết đặt số chia nhỏ nhất không được hỗ trợ.",
   "zoomify.migrate.okz.stepAmt": "Đặt số nấc cuộn không được hỗ trợ.",
   "zoomify.migrate.okz.linearNotSupported": "Thời gian tuyến tính không thể được tự động tính toán."
 }
