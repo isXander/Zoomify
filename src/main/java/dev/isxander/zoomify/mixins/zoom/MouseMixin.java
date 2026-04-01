@@ -8,6 +8,7 @@ import dev.isxander.zoomify.config.ZoomifySettings;
 import net.minecraft.client.MouseHandler;
 import net.minecraft.util.Mth;
 import org.joml.Vector2i;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,33 +19,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MouseHandler.class)
 public class MouseMixin {
 
-    /*? if <=1.20.1 {*/
-    /*@Shadow
-    private double accumulatedScroll;
-    *//*?}*/
-
     @Inject(
         method = "onScroll",
-        /*? if >1.20.1 {*/
         at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isSpectator()Z"),
-        /*?} else {*/
-        /*at = @At(value = "FIELD", target = "Lnet/minecraft/client/MouseHandler;accumulatedScroll:D", ordinal = 7),
-        *//*?}*/
         cancellable = true
     )
     private void scrollStepCounter(
-            CallbackInfo ci
-            //? if >=1.21.2 {
-            , @Local Vector2i scroll
-            //?} elif >1.20.1 {
-            /*, @Local(ordinal = 1) int scrollY
-            *///?}
+            CallbackInfo ci,
+            @Local Vector2i scroll
     ) {
-        //? if >=1.21.2 {
         int scrollY = scroll.y;
-        /*?} elif <=1.20.1 {*/
-        /*double scrollY = accumulatedScroll;
-        *//*?}*/
 
         if (ZoomifySettings.Companion.getScrollZoom().get()
                 && Zoomify.INSTANCE.getZooming() && scrollY != 0
@@ -56,7 +40,7 @@ public class MouseMixin {
 
     @ModifyExpressionValue(
         method = "turnPlayer",
-        at = @At(value = "FIELD", target = "Lnet/minecraft/client/Options;smoothCamera:Z")
+        at = @At(value = "FIELD", target = "Lnet/minecraft/client/Options;smoothCamera:Z", opcode = Opcodes.GETFIELD)
     )
     private boolean smoothCameraIfZoom(boolean original) {
         return original

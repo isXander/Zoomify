@@ -1,6 +1,5 @@
 package dev.isxander.zoomify.zoom
 
-import dev.isxander.zoomify.Zoomify
 import net.minecraft.util.Mth
 import kotlin.math.pow
 

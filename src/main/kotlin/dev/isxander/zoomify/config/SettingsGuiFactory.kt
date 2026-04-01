@@ -12,7 +12,6 @@ import dev.isxander.zoomify.config.demo.ControlEmulation
 import dev.isxander.zoomify.config.demo.FirstPersonDemo
 import dev.isxander.zoomify.config.demo.ThirdPersonDemo
 import dev.isxander.zoomify.config.demo.ZoomDemoImageRenderer
-import dev.isxander.zoomify.config.migrator.Migrator
 import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.zoom.*
 import net.minecraft.client.Minecraft
@@ -232,25 +231,6 @@ private class SettingsGuiFactory {
         }
 
         val misc by categories.registering {
-            val unbindConflicting by rootOptions.registeringButton {
-                defaultDescription()
-                action { _, _ ->
-                    Zoomify.unbindConflicting()
-                }
-            }
-
-            val checkMigrations by rootOptions.registeringButton {
-                defaultDescription()
-                action { _, _ ->
-                    if (!Migrator.checkMigrations()) {
-                        toast(
-                            Component.translatable("zoomify.gui.title"),
-                            Component.translatable("zoomify.migrate.no_migrations")
-                        )
-                    }
-                }
-            }
-
             val presets by groups.registering {
                 val applyWarning by options.registeringLabel
 

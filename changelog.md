@@ -1,5 +1,5 @@
-# Zoomify 2.15.2
+# Zoomify 2.16.0
 
 ## Changes
 
-- Add compatibility for Controlify 3.x
+- Port to 26.1

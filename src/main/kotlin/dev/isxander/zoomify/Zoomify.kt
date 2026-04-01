@@ -3,21 +3,17 @@ package dev.isxander.zoomify
 import com.mojang.blaze3d.platform.InputConstants
 import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.config.*
-import dev.isxander.zoomify.config.migrator.Migrator
-import dev.isxander.zoomify.utils.toast
 import dev.isxander.zoomify.utils.zoomifyRl
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
-import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import org.slf4j.LoggerFactory
@@ -25,11 +21,7 @@ import org.slf4j.LoggerFactory
 object Zoomify : ClientModInitializer {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    //? if >=1.21.9 {
     private val zoomKeyCategory = KeyMapping.Category.register(zoomifyRl("category"))
-    //?} else {
-    /*private val zoomKeyCategory = "key.category.zoomify.category"
-    *///?}
 
     private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_C, zoomKeyCategory)
     private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, zoomKeyCategory)
@@ -59,11 +51,11 @@ object Zoomify : ClientModInitializer {
         // imports on <init>
         ZoomifySettings
 
-        KeyBindingHelper.registerKeyBinding(zoomKey)
-        KeyBindingHelper.registerKeyBinding(secondaryZoomKey)
+        KeyMappingHelper.registerKeyMapping(zoomKey)
+        KeyMappingHelper.registerKeyMapping(secondaryZoomKey)
         if (ZoomifySettings.keybindScrolling) {
-            KeyBindingHelper.registerKeyBinding(scrollZoomIn)
-            KeyBindingHelper.registerKeyBinding(scrollZoomOut)
+            KeyMappingHelper.registerKeyMapping(scrollZoomIn)
+            KeyMappingHelper.registerKeyMapping(scrollZoomOut)
         }
 
         ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
@@ -197,54 +189,4 @@ object Zoomify : ClientModInitializer {
             OverlayVisibility.CARRYING -> zooming
                     && player.inventory.hasAnyMatching { stack: ItemStack -> stack.`is`(Items.SPYGLASS) }
         }
-
-    fun onGameFinishedLoading() {
-        if (ZoomifySettings.firstLaunch) {
-            LOGGER.info("Zoomify detected first launch!")
-            detectConflictingToast()
-
-            Migrator.checkMigrations()
-        }
-    }
-
-    fun unbindConflicting(): Boolean {
-        val minecraft = Minecraft.getInstance()
-        if (!zoomKey.isUnbound) {
-            for (key in minecraft.options.keyMappings) {
-                if (key != zoomKey && key.equals(zoomKey)) {
-                    key.setKey(InputConstants.UNKNOWN)
-                    minecraft.options.save()
-
-                    toast(
-                        Component.translatable("zoomify.toast.unbindConflicting.name"),
-                        Component.translatable("zoomify.toast.unbindConflicting.description",
-                            Component.translatable(key.name)
-                        ),
-                        longer = false
-                    )
-
-                    return true
-                }
-            }
-        }
-
-        return false
-    }
-
-    private fun detectConflictingToast() {
-        val minecraft = Minecraft.getInstance()
-
-        if (zoomKey.isUnbound)
-            return
-
-        if (minecraft.options.keyMappings.any { it != zoomKey && it.equals(zoomKey) }) {
-            toast(
-                Component.translatable("zoomify.toast.conflictingKeybind.title"),
-                Component.translatable("zoomify.toast.conflictingKeybind.description",
-                    Component.translatable("yacl3.config.zoomify.category.misc")
-                ),
-                longer = true
-            )
-        }
-    }
 }

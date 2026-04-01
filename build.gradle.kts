@@ -18,11 +18,6 @@ plugins {
 modstitch {
     minecraftVersion = property("mcVersion").toString()
 
-    parchment {
-        mappingsVersion = providers.gradleProperty("parchment.version")
-        minecraftVersion = providers.gradleProperty("parchment.minecraft")
-    }
-
     metadata {
         modId = providers.gradleProperty("modId")
         modName = providers.gradleProperty("modName")
@@ -92,8 +87,6 @@ repositories {
 }
 
 dependencies {
-    fun Dependency?.jij() = this?.also(::modstitchJiJ)
-
     modstitchModImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabricApi")}")
     modstitchModImplementation("net.fabricmc:fabric-language-kotlin:${property("deps.flk")}")
     modstitchModApi("dev.isxander:yet-another-config-lib:${property("deps.yacl")}")
@@ -107,7 +100,6 @@ dependencies {
         modstitchModCompileOnly("dev.isxander:controlify:$it")
     }
 
-    modstitchImplementation("com.akuleshov7:ktoml-core-jvm:${property("deps.ktoml")}").jij()
 }
 
 java {

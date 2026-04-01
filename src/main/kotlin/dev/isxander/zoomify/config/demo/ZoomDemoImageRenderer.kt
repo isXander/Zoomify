@@ -5,7 +5,8 @@ import dev.isxander.yacl3.gui.image.ImageRendererManager
 import dev.isxander.yacl3.gui.image.impl.AnimatedDynamicTextureImage
 import dev.isxander.zoomify.utils.*
 import dev.isxander.zoomify.zoom.ZoomHelper
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.resources.Identifier
 import java.util.Optional
 import java.util.concurrent.CompletableFuture
 
@@ -17,7 +18,7 @@ abstract class ZoomDemoImageRenderer(val zoomHelper: ZoomHelper, private val zoo
         zoomControl.setup(this)
     }
 
-    abstract override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int
+    abstract override fun render(graphics: GuiGraphicsExtractor, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int
 
     override fun tick() {
         zoomHelper.tick(keyDown, scrollTiers)
@@ -44,7 +45,7 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
     private val handRenderer = makeWebp(HAND_TEXTURE)
     private val worldRenderer = makeWebp(WORLD_TEXTURE)
 
-    override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int {
+    override fun render(graphics: GuiGraphicsExtractor, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int {
         val ratio = renderWidth / TEX_WIDTH.toDouble()
         val renderHeight = (TEX_HEIGHT * ratio).toInt()
         if (!handRenderer.isDone || !worldRenderer.isDone) {
@@ -53,23 +54,23 @@ class FirstPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
 
         graphics.enableScissor(x, y, x + renderWidth, y + renderHeight)
 
-        graphics.pushPose()
-        graphics.translate(x.toFloat(), y.toFloat())
-        graphics.scale(ratio.toFloat(), ratio.toFloat())
+        graphics.pose().pushMatrix()
+        graphics.pose().translate(x.toFloat(), y.toFloat())
+        graphics.pose().scale(ratio.toFloat(), ratio.toFloat())
 
         val zoomScale = zoomHelper.getZoomDivisor(deltaTime).toFloat()
-        graphics.pushPose()
-        graphics.translate(TEX_WIDTH / 2f, TEX_HEIGHT / 2f)
-        graphics.scale(zoomScale, zoomScale)
-        graphics.translate(-TEX_WIDTH / 2f, -TEX_HEIGHT / 2f)
+        graphics.pose().pushMatrix()
+        graphics.pose().translate(TEX_WIDTH / 2f, TEX_HEIGHT / 2f)
+        graphics.pose().scale(zoomScale, zoomScale)
+        graphics.pose().translate(-TEX_WIDTH / 2f, -TEX_HEIGHT / 2f)
 
         worldRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
-        if (keepHandFov) graphics.popPose()
+        if (keepHandFov) graphics.pose().popMatrix()
         handRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
-        if (!keepHandFov) graphics.popPose()
+        if (!keepHandFov) graphics.pose().popMatrix()
 
-        graphics.popPose()
+        graphics.pose().popMatrix()
 
         graphics.disableScissor()
 
@@ -97,7 +98,7 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
 
     var renderHud = true
 
-    override fun render(graphics: GuiGraphics, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int {
+    override fun render(graphics: GuiGraphicsExtractor, x: Int, y: Int, renderWidth: Int, deltaTime: Float): Int {
         val ratio = renderWidth / TEX_WIDTH.toDouble()
         val renderHeight = (TEX_HEIGHT * ratio).toInt()
         if (!thirdPersonViewRenderer.isDone || !hudRenderer.isDone) {
@@ -106,24 +107,24 @@ class ThirdPersonDemo(zoomHelper: ZoomHelper, zoomControl: ControlEmulation) : Z
 
         graphics.enableScissor(x, y, x + renderWidth, y + renderHeight)
 
-        graphics.pushPose()
-        graphics.translate(x.toFloat(), y.toFloat())
-        graphics.scale(ratio.toFloat(), ratio.toFloat())
+        graphics.pose().pushMatrix()
+        graphics.pose().translate(x.toFloat(), y.toFloat())
+        graphics.pose().scale(ratio.toFloat(), ratio.toFloat())
 
         val zoomScale = zoomHelper.getZoomDivisor(deltaTime).toFloat()
-        graphics.pushPose()
-        graphics.translate(FirstPersonDemo.TEX_WIDTH / 2f, FirstPersonDemo.TEX_HEIGHT / 2f)
-        graphics.scale(zoomScale, zoomScale)
-        graphics.translate(-FirstPersonDemo.TEX_WIDTH / 2f, -FirstPersonDemo.TEX_HEIGHT / 2f)
+        graphics.pose().pushMatrix()
+        graphics.pose().translate(FirstPersonDemo.TEX_WIDTH / 2f, FirstPersonDemo.TEX_HEIGHT / 2f)
+        graphics.pose().scale(zoomScale, zoomScale)
+        graphics.pose().translate(-FirstPersonDemo.TEX_WIDTH / 2f, -FirstPersonDemo.TEX_HEIGHT / 2f)
 
         thirdPersonViewRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
-        graphics.popPose()
+        graphics.pose().popMatrix()
 
         if (renderHud)
             hudRenderer.get().render(graphics, 0, 0, TEX_WIDTH, deltaTime)
 
-        graphics.popPose()
+        graphics.pose().popMatrix()
         graphics.disableScissor()
 
         return renderHeight
