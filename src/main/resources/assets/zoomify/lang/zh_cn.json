@@ -38,7 +38,7 @@
   "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassOverlayVisibility.description.1": "何时显示望远镜遮罩。",
   "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassSoundBehaviour": "声音行为",
   "yacl3.config.zoomify.category.behaviour.group.spyglass.option.spyglassSoundBehaviour.description.1": "何时播放望远镜的放大和缩小音效。",
-  "yacl3.config.zoomify.category.controls": "控制",
+  "yacl3.config.zoomify.category.controls": "按键控制",
   "yacl3.config.zoomify.category.controls.root.option.zoomKeyBehaviour": "缩放按键行为",
   "yacl3.config.zoomify.category.controls.root.option.zoomKeyBehaviour.description.1": "缩放按键的操作行为。",
   "yacl3.config.zoomify.category.controls.root.option._keybindScrolling": "按键绑定滚动",
