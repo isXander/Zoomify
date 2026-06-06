@@ -10,7 +10,7 @@ import net.fabricmc.loader.api.FabricLoader
 open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
     FabricLoader.getInstance().configDir.resolve("zoomify.json")
 ) {
-    val initialZoom by register<Double>(default = 4, Codec.DOUBLE)
+    val initialZoom by register<Double>(default = 4.0, Codec.DOUBLE)
 
     val zoomInTime by register<Double>(default = 1.0, Codec.DOUBLE)
     val zoomOutTime by register<Double>(default = 0.5, Codec.DOUBLE)
