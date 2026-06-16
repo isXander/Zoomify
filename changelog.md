@@ -1,7 +1,5 @@
-# Zoomify 2.16.0
+# Zoomify 2.16.1
 
 ## Changes
 
-- Port to 26.1
-- Remove OK Zoomer migration tool
-- Remove keybind conflict resolver as 26.1 can handle it
+- Port to 26.2
