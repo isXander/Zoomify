@@ -3,7 +3,7 @@ package dev.isxander.zoomify
 import com.mojang.blaze3d.platform.InputConstants
 import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.config.*
-import dev.isxander.zoomify.utils.zoomifyRl
+import dev.isxander.zoomify.utils.*
 import dev.isxander.zoomify.zoom.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
