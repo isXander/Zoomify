@@ -30,8 +30,8 @@ object Zoomify : ClientModInitializer {
     /*private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_V, zoomKeyCategory)
     private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, zoomKeyCategory)
     *///?}
-    private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", -1, zoomKeyCategory)
-    private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", -1, zoomKeyCategory)
+    private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", InputConstants.UNKNOWN.getValue(), zoomKeyCategory)
+    private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", InputConstants.UNKNOWN.getValue(), zoomKeyCategory)
 
     var zooming = false
         private set

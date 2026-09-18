@@ -9,7 +9,6 @@
     "minVersion": "0.5.0"
   },
   "client": [
-    "fix.InputConstantsMixin",
     "spyglass.AbstractClientPlayerEntityMixin",
     "spyglass.HudMixin",
     "spyglass.SpyglassItemMixin",
