@@ -1,5 +1,7 @@
-//? if controlify {
-package dev.isxander.zoomify.integrations
+// No public Controlify build exists for 26.3 yet, so the integration is
+// version-gated off for >=26.3 (the `controlify` dep is also absent there).
+//? if <26.3 {
+/*package dev.isxander.zoomify.integrations
 
 import dev.isxander.controlify.api.ControlifyApi
 import dev.isxander.controlify.api.entrypoint.ControlifyEntrypoint
@@ -29,4 +31,4 @@ object ControlifyIntegration : ControlifyEntrypoint {
     }
 
 }
-//?}
+*///?}

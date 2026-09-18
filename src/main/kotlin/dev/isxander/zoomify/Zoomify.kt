@@ -23,8 +23,13 @@ object Zoomify : ClientModInitializer {
 
     private val zoomKeyCategory = KeyMapping.Category.register(zoomifyRl("category"))
 
-    private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_C, zoomKeyCategory)
+    //? if >=26.3 {
+    private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYBOARD, InputConstants.KEY_V, zoomKeyCategory)
+    private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYBOARD, InputConstants.KEY_F6, zoomKeyCategory)
+    //?} else {
+    /*private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYSYM, InputConstants.KEY_V, zoomKeyCategory)
     private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYSYM, InputConstants.KEY_F6, zoomKeyCategory)
+    *///?}
     private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", -1, zoomKeyCategory)
     private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", -1, zoomKeyCategory)
 
