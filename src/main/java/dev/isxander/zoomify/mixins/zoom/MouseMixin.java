@@ -28,12 +28,12 @@ public class MouseMixin {
             CallbackInfo ci,
             @Local Vector2i scroll
     ) {
-        int scrollY = scroll.y;
+        int scrollDelta = scroll.y + scroll.x;
 
         if (ZoomifySettings.Companion.getScrollZoom().get()
-                && Zoomify.INSTANCE.getZooming() && scrollY != 0
+                && Zoomify.INSTANCE.getZooming() && scrollDelta != 0
                 && !ZoomifySettings.Companion.getKeybindScrolling()) {
-            Zoomify.mouseZoom(scrollY);
+            Zoomify.mouseZoom(scrollDelta);
             ci.cancel();
         }
     }
