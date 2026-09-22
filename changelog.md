@@ -1,4 +1,4 @@
-# Zoomify 2.16.1
+# Zoomify 2.16.2
 
 ## Changes
 
