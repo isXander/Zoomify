@@ -186,6 +186,9 @@ publishMods {
         requires { slug.set("yacl") }
         requires { slug.set("fabric-language-kotlin") }
         optional { slug.set("modmenu") }
+
+        clientRequired = true
+        serverRequired = false
     }
 
     github {
