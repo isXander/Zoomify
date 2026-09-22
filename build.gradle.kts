@@ -11,7 +11,6 @@ plugins {
     `maven-publish`
     signing
     id("dev.isxander.secrets")
-    id("com.gradleup.nmcp")
     id("org.ajoberstar.grgit") version "5.3.2"
 }
 
@@ -229,6 +228,15 @@ publishing {
                     connection = "scm:git:git//github.com/isXander/Zoomify.git"
                     developerConnection = "scm:git:ssh://git@github.com/isXander/Zoomify.git"
                 }
+            }
+        }
+    }
+    repositories {
+        maven(url = "https://maven.isxander.dev/releases") {
+            name = "Xander"
+            credentials {
+                username = secrets.gradleProperty("maven.username").orNull
+                password = secrets.gradleProperty("maven.password").orNull
             }
         }
     }
