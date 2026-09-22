@@ -93,7 +93,7 @@ dependencies {
 
     // mod menu compat
     optionalProp("deps.modMenu") {
-        modstitchModCompileOnly("com.terraformersmc:modmenu:$it")
+        modstitchModImplementation("com.terraformersmc:modmenu:$it")
     }
 
     optionalProp("deps.controlify") {
@@ -109,6 +109,19 @@ java {
 
 tasks.javadoc {
     isFailOnError = false
+}
+
+val modLoader = Attribute.of(
+    "io.github.mcgradleconventions.loader",
+    String::class.java
+)
+
+configurations.configureEach {
+    if (isCanBeResolved) {
+        attributes {
+            attribute(modLoader, "fabric")
+        }
+    }
 }
 
 kotlin {
