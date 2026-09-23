@@ -1,5 +1,5 @@
 //? if controlify {
-/*package dev.isxander.zoomify.integrations
+package dev.isxander.zoomify.integrations
 
 import dev.isxander.controlify.api.ControlifyApi
 import dev.isxander.controlify.api.entrypoint.ControlifyEntrypoint
@@ -29,4 +29,4 @@ object ControlifyIntegration : ControlifyEntrypoint {
     }
 
 }
-*///?}
+//?}
