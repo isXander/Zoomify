@@ -1,5 +1,5 @@
-# Zoomify 2.16.2
+# Zoomify 2.16.3
 
 ## Changes
 
-- Port to 26.3
+- Fix Controlify integration not being correctly enabled causing a crash when Controlify is installed
