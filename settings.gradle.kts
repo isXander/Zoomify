@@ -10,14 +10,14 @@ pluginManagement {
 
 plugins {
     id("dev.kikugie.stonecutter") version "0.9.8"
-    id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT" apply false
+    id("net.fabricmc.fabric-loom") version "1.18-SNAPSHOT" apply false
 }
 
 stonecutter {
     kotlinController = true
     centralScript = "build.gradle.kts"
     create(rootProject) {
-        versions("26.1", "26.2", "26.3")
+        versions("26.1", "26.2", "26.3", "26.4")
     }
 }
 
