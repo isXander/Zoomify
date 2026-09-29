@@ -1,0 +1,90 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.editorconfig'
+      - 'CHANGELOG.md'
+      - 'docs/**'
+  pull_request:
+
+permissions:
+  id-token: write
+  attestations: write
+  artifact-metadata: write
+
+jobs:
+  generate-build-matrix:
+    runs-on: ubuntu-latest
+    name: Generate build matrix
+
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Get potential versions
+        id: generate-matrix
+        run: |
+          MATRIX=$(jq -c '{include: (.branches[""] | map({target: ., experimental: (test("exp"))}))}' ./versions/versions.json)
+          echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+
+  build:
+    needs: generate-build-matrix
+    runs-on: ubuntu-latest
+    name: Build with gradle
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.generate-build-matrix.outputs.matrix) }}
+
+    continue-on-error: ${{ matrix.experimental == 'true' }}
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: 25
+          distribution: microsoft
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - name: Overwrite current version
+        run: printf "%s" "${{ matrix.target }}" | cut -d':' -f1 | tr -d '\n' > ./versions/current
+
+      - name: Setup stonecutter
+        run: ./gradlew "Refresh active project"
+        env:
+          CI_SINGLE_BUILD: ${{ matrix.target }}
+
+      - name: Check build
+        run: ./gradlew check
+        env:
+          CI_SINGLE_BUILD: ${{ matrix.target }}
+
+      - name: Build ${{ matrix.target }}
+        run: ./gradlew build --stacktrace
+        env:
+          CI_SINGLE_BUILD: ${{ matrix.target }}
+
+      - name: Attest build artifacts
+        if: github.event_name == 'push'
+        uses: actions/attest@v4
+        with:
+          subject-path: versions/**/build/libs/*.jar
+
+      - uses: actions/upload-artifact@v7
+        with:
+          path: versions/**/build/libs/*
+          name: ${{ matrix.target }}

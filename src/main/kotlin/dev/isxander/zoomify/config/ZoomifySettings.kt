@@ -4,11 +4,12 @@ import com.mojang.serialization.Codec
 import dev.isxander.yacl3.config.v3.JsonFileCodecConfig
 import dev.isxander.yacl3.config.v3.register
 import dev.isxander.yacl3.config.v3.value
+import dev.isxander.zoomify.platform.ZoomifyPlatform
 import dev.isxander.zoomify.utils.TransitionType
-import net.fabricmc.loader.api.FabricLoader
+import java.nio.file.Path
 
 open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
-    FabricLoader.getInstance().configDir.resolve("zoomify.json")
+    ZoomifyPlatform.instance.configDir.resolve("zoomify.json")
 ) {
     val initialZoom by register<Int>(default = 4, Codec.INT)
 

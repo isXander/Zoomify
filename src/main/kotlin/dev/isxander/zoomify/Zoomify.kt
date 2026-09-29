@@ -3,13 +3,9 @@ package dev.isxander.zoomify
 import com.mojang.blaze3d.platform.InputConstants
 import dev.isxander.yacl3.config.v3.value
 import dev.isxander.zoomify.config.*
+import dev.isxander.zoomify.platform.ZoomifyPlatform
 import dev.isxander.zoomify.utils.*
 import dev.isxander.zoomify.zoom.*
-import net.fabricmc.api.ClientModInitializer
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
-import net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
-import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 import net.minecraft.client.player.AbstractClientPlayer
@@ -18,7 +14,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import org.slf4j.LoggerFactory
 
-object Zoomify : ClientModInitializer {
+object Zoomify {
     val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
     private val zoomKeyCategory = KeyMapping.Category.register(zoomifyRl("category"))
@@ -49,27 +45,22 @@ object Zoomify : ClientModInitializer {
 
     private var displayGui = false
 
-    override fun onInitializeClient() {
+    fun onInitializeClient(platform: ZoomifyPlatform) {
         // imports on <init>
         ZoomifySettings
 
-        KeyMappingHelper.registerKeyMapping(zoomKey)
-        KeyMappingHelper.registerKeyMapping(secondaryZoomKey)
+        platform.registerKeyMapping(zoomKey)
+        platform.registerKeyMapping(secondaryZoomKey)
         if (ZoomifySettings.keybindScrolling) {
-            KeyMappingHelper.registerKeyMapping(scrollZoomIn)
-            KeyMappingHelper.registerKeyMapping(scrollZoomOut)
+            platform.registerKeyMapping(scrollZoomIn)
+            platform.registerKeyMapping(scrollZoomOut)
         }
 
-        ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
-            dispatcher.register(
-                literal("zoomify").executes {
-                    displayGui = true
-                    0
-                }
-            )
+        platform.registerSimpleClientCommand("zoomify") {
+            displayGui = true
         }
 
-        ClientTickEvents.END_CLIENT_TICK.register(this::tick)
+        platform.onClientTickEnd(this::tick)
     }
 
     private fun tick(minecraft: Minecraft) {

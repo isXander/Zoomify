@@ -6,7 +6,8 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 
-val minecraft: Minecraft = Minecraft.getInstance()
+val minecraft: Minecraft
+    get() = Minecraft.getInstance()
 
 fun toast(
     title: Component,

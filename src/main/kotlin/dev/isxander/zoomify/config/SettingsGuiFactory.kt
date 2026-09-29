@@ -39,7 +39,8 @@ private class SettingsGuiFactory {
     }
 
     fun <T> Option.Builder<T>.updateDemo(updateFunc: (T, ZoomDemoImageRenderer) -> Unit) {
-        listener { opt, v ->
+        addListener { opt, _ ->
+            val v = opt.pendingValue()
             updateFunc(v, initialOnlyDemo)
             updateFunc(v, scrollOnlyDemo)
             updateFunc(v, secondaryZoomDemo)

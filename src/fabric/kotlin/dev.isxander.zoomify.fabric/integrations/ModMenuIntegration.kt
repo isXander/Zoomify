@@ -1,4 +1,4 @@
-package dev.isxander.zoomify.integrations
+package dev.isxander.zoomify.fabric.integrations
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory
 import com.terraformersmc.modmenu.api.ModMenuApi

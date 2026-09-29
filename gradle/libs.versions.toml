@@ -1,0 +1,26 @@
+[versions]
+fabric_loader = "0.19.5"
+fabric_language_kotlin = "1.14.1+kotlin.2.4.20"
+
+modstitch_manifests = "0.1.5"
+modstitch_multiloader = "0.1.11"
+modstitch_modrepos = "0.1.2"
+fabric_loom = "1.18.2"
+neoforged_gradle = "7.1.39"
+spotless = "8.6.0"
+mod_publish_plugin = "2.1.1"
+kotlin_jvm = "2.4.20"
+
+[libraries]
+fabric_loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric_loader" }
+fabric_language_kotlin = { module = "net.fabricmc:fabric-language-kotlin", version.ref = "fabric_language_kotlin" }
+
+[plugins]
+modstitch_manifests = { id = "dev.isxander.mtk.manifests", version.ref = "modstitch_manifests" }
+modstitch_multiloader = { id = "dev.isxander.mtk.multiloader", version.ref = "modstitch_multiloader" }
+modstitch_modrepos = { id = "dev.isxander.mtk.modrepos", version.ref = "modstitch_modrepos" }
+fabric_loom = { id = "net.fabricmc.fabric-loom", version.ref = "fabric_loom" }
+neoforged_gradle_userdev = { id = "net.neoforged.gradle.userdev", version.ref = "neoforged_gradle" }
+mod_publish_plugin = { id = "me.modmuss50.mod-publish-plugin", version.ref = "mod_publish_plugin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+kotlin_jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin_jvm" }
