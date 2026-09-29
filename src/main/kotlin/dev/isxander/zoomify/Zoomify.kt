@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify
 
 import com.mojang.blaze3d.platform.InputConstants
@@ -15,171 +21,171 @@ import net.minecraft.world.item.Items
 import org.slf4j.LoggerFactory
 
 object Zoomify {
-    val LOGGER = LoggerFactory.getLogger("Zoomify")!!
+	val LOGGER = LoggerFactory.getLogger("Zoomify")!!
 
-    private val zoomKeyCategory = KeyMapping.Category.register(zoomifyRl("category"))
+	private val zoomKeyCategory = KeyMapping.Category.register(zoomifyRl("category"))
 
-    //~ if >=26.3 'KEYSYM' -> 'KEYBOARD' {
-    private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYBOARD, InputConstants.KEY_C, zoomKeyCategory)
-    private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYBOARD, InputConstants.KEY_F6, zoomKeyCategory)
-    //~ }
-    private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", InputConstants.UNKNOWN.getValue(), zoomKeyCategory)
-    private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", InputConstants.UNKNOWN.getValue(), zoomKeyCategory)
+	//~ if >=26.3 'KEYSYM' -> 'KEYBOARD' {
+	private val zoomKey = KeyMapping("zoomify.key.zoom", InputConstants.Type.KEYBOARD, InputConstants.KEY_C, zoomKeyCategory)
+	private val secondaryZoomKey = KeyMapping("zoomify.key.zoom.secondary", InputConstants.Type.KEYBOARD, InputConstants.KEY_F6, zoomKeyCategory)
+	//~ }
+	private val scrollZoomIn = KeyMapping("zoomify.key.zoom.in", InputConstants.UNKNOWN.getValue(), zoomKeyCategory)
+	private val scrollZoomOut = KeyMapping("zoomify.key.zoom.out", InputConstants.UNKNOWN.getValue(), zoomKeyCategory)
 
-    var zooming = false
-        private set
-    private val zoomHelper = RegularZoomHelper(ZoomifySettings)
+	var zooming = false
+		private set
+	private val zoomHelper = RegularZoomHelper(ZoomifySettings)
 
-    var secondaryZooming = false
-        private set
-    private val secondaryZoomHelper = SecondaryZoomHelper(ZoomifySettings)
+	var secondaryZooming = false
+		private set
+	private val secondaryZoomHelper = SecondaryZoomHelper(ZoomifySettings)
 
-    var previousZoomDivisor = 1.0
-        private set
+	var previousZoomDivisor = 1.0
+		private set
 
-    val maxScrollTiers: Int
-        get() = ZoomifySettings.scrollStepCount.value
-    private var scrollSteps = 0
+	val maxScrollTiers: Int
+		get() = ZoomifySettings.scrollStepCount.value
+	private var scrollSteps = 0
 
-    private var shouldPlaySound = false
+	private var shouldPlaySound = false
 
-    private var displayGui = false
+	private var displayGui = false
 
-    fun onInitializeClient(platform: ZoomifyPlatform) {
-        // imports on <init>
-        ZoomifySettings
+	fun onInitializeClient(platform: ZoomifyPlatform) {
+		// imports on <init>
+		ZoomifySettings
 
-        platform.registerKeyMapping(zoomKey)
-        platform.registerKeyMapping(secondaryZoomKey)
-        if (ZoomifySettings.keybindScrolling) {
-            platform.registerKeyMapping(scrollZoomIn)
-            platform.registerKeyMapping(scrollZoomOut)
-        }
+		platform.registerKeyMapping(zoomKey)
+		platform.registerKeyMapping(secondaryZoomKey)
+		if (ZoomifySettings.keybindScrolling) {
+			platform.registerKeyMapping(scrollZoomIn)
+			platform.registerKeyMapping(scrollZoomOut)
+		}
 
-        platform.registerSimpleClientCommand("zoomify") {
-            displayGui = true
-        }
+		platform.registerSimpleClientCommand("zoomify") {
+			displayGui = true
+		}
 
-        platform.onClientTickEnd(this::tick)
-    }
+		platform.onClientTickEnd(this::tick)
+	}
 
-    private fun tick(minecraft: Minecraft) {
-        val prevZooming = zooming
+	private fun tick(minecraft: Minecraft) {
+		val prevZooming = zooming
 
-        when (ZoomifySettings.zoomKeyBehaviour.value) {
-            ZoomKeyBehaviour.HOLD -> zooming = zoomKey.isDown
-            ZoomKeyBehaviour.TOGGLE -> {
-                while (zoomKey.consumeClick()) {
-                    zooming = !zooming
-                }
-            }
-        }
+		when (ZoomifySettings.zoomKeyBehaviour.value) {
+			ZoomKeyBehaviour.HOLD -> zooming = zoomKey.isDown
+			ZoomKeyBehaviour.TOGGLE -> {
+				while (zoomKey.consumeClick()) {
+					zooming = !zooming
+				}
+			}
+		}
 
-        while (secondaryZoomKey.consumeClick()) {
-            secondaryZooming = !secondaryZooming
-        }
+		while (secondaryZoomKey.consumeClick()) {
+			secondaryZooming = !secondaryZooming
+		}
 
-        if (ZoomifySettings.keybindScrolling) {
-            while (scrollZoomIn.consumeClick()) {
-                scrollSteps++
-            }
-            while (scrollZoomOut.consumeClick()) {
-                scrollSteps--
-            }
+		if (ZoomifySettings.keybindScrolling) {
+			while (scrollZoomIn.consumeClick()) {
+				scrollSteps++
+			}
+			while (scrollZoomOut.consumeClick()) {
+				scrollSteps--
+			}
 
-            scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
-        }
+			scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+		}
 
-        handleSpyglass(minecraft, prevZooming)
+		handleSpyglass(minecraft, prevZooming)
 
-        zoomHelper.tick(zooming, scrollSteps)
-        secondaryZoomHelper.tick(secondaryZooming, scrollSteps)
+		zoomHelper.tick(zooming, scrollSteps)
+		secondaryZoomHelper.tick(secondaryZooming, scrollSteps)
 
-        if (displayGui) {
-            displayGui = false
-            minecraft.setScreen(createSettingsGui(minecraft.screen))
-        }
-    }
+		if (displayGui) {
+			displayGui = false
+			minecraft.setScreen(createSettingsGui(minecraft.screen))
+		}
+	}
 
-    @JvmStatic
-    fun getZoomDivisor(tickDelta: Float): Float {
-        if (!zooming) {
-            if (!ZoomifySettings.retainZoomSteps.value)
-                scrollSteps = 0
+	@JvmStatic
+	fun getZoomDivisor(tickDelta: Float): Float {
+		if (!zooming) {
+			if (!ZoomifySettings.retainZoomSteps.value)
+				scrollSteps = 0
 
-            zoomHelper.reset()
-        }
+			zoomHelper.reset()
+		}
 
-        return (zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it } * secondaryZoomHelper.getZoomDivisor(tickDelta)).toFloat()
-    }
+		return (zoomHelper.getZoomDivisor(tickDelta).also { previousZoomDivisor = it } * secondaryZoomHelper.getZoomDivisor(tickDelta)).toFloat()
+	}
 
-    @JvmStatic
-    fun mouseZoom(mouseDelta: Double) {
-        if (mouseDelta > 0) {
-            scrollSteps++
-        } else if (mouseDelta < 0) {
-            scrollSteps--
-        }
+	@JvmStatic
+	fun mouseZoom(mouseDelta: Double) {
+		if (mouseDelta > 0) {
+			scrollSteps++
+		} else if (mouseDelta < 0) {
+			scrollSteps--
+		}
 
-        scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
-    }
+		scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+	}
 
-    private fun handleSpyglass(minecraft: Minecraft, prevZooming: Boolean) {
-        val cameraEntity = minecraft.cameraEntity
+	private fun handleSpyglass(minecraft: Minecraft, prevZooming: Boolean) {
+		val cameraEntity = minecraft.cameraEntity
 
-        if (cameraEntity is AbstractClientPlayer) {
-            when (ZoomifySettings.spyglassBehaviour.value) {
-                SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING -> {
-                    if (!cameraEntity.isHolding(Items.SPYGLASS))
-                        zooming = false
-                }
-                SpyglassBehaviour.ONLY_ZOOM_WHILE_CARRYING ->
-                    if (!cameraEntity.inventory.hasAnyMatching { it.`is`(Items.SPYGLASS) })
-                        zooming = false
-                SpyglassBehaviour.OVERRIDE ->
-                    if (cameraEntity.isScoping)
-                        zooming = zooming && minecraft.options.cameraType.isFirstPerson
-                else -> {}
-            }
+		if (cameraEntity is AbstractClientPlayer) {
+			when (ZoomifySettings.spyglassBehaviour.value) {
+				SpyglassBehaviour.ONLY_ZOOM_WHILE_HOLDING -> {
+					if (!cameraEntity.isHolding(Items.SPYGLASS))
+						zooming = false
+				}
+				SpyglassBehaviour.ONLY_ZOOM_WHILE_CARRYING ->
+					if (!cameraEntity.inventory.hasAnyMatching { it.`is`(Items.SPYGLASS) })
+						zooming = false
+				SpyglassBehaviour.OVERRIDE ->
+					if (cameraEntity.isScoping)
+						zooming = zooming && minecraft.options.cameraType.isFirstPerson
+				else -> {}
+			}
 
-            val requiresSpyglass = ZoomifySettings.spyglassBehaviour.value != SpyglassBehaviour.COMBINE
-            if (requiresSpyglass && cameraEntity.isScoping) {
-                zooming = true
-            }
+			val requiresSpyglass = ZoomifySettings.spyglassBehaviour.value != SpyglassBehaviour.COMBINE
+			if (requiresSpyglass && cameraEntity.isScoping) {
+				zooming = true
+			}
 
-            if (shouldPlaySound) {
-                if (!zooming && prevZooming) {
-                    cameraEntity.playSound(SoundEvents.SPYGLASS_STOP_USING, 1f, 1f)
-                }
-            }
+			if (shouldPlaySound) {
+				if (!zooming && prevZooming) {
+					cameraEntity.playSound(SoundEvents.SPYGLASS_STOP_USING, 1f, 1f)
+				}
+			}
 
-            shouldPlaySound = when (ZoomifySettings.spyglassSoundBehaviour.value) {
-                SoundBehaviour.NEVER -> false
-                SoundBehaviour.ALWAYS -> true
-                SoundBehaviour.ONLY_SPYGLASS -> cameraEntity.isScoping || (requiresSpyglass && zooming && cameraEntity.isHolding(Items.SPYGLASS))
-                SoundBehaviour.WITH_OVERLAY -> shouldRenderOverlay(
-                    cameraEntity,
-                    minecraft.options.cameraType.isFirstPerson && cameraEntity.isScoping
-                ) && requiresSpyglass
-            }
+			shouldPlaySound = when (ZoomifySettings.spyglassSoundBehaviour.value) {
+				SoundBehaviour.NEVER -> false
+				SoundBehaviour.ALWAYS -> true
+				SoundBehaviour.ONLY_SPYGLASS -> cameraEntity.isScoping || (requiresSpyglass && zooming && cameraEntity.isHolding(Items.SPYGLASS))
+				SoundBehaviour.WITH_OVERLAY -> shouldRenderOverlay(
+					cameraEntity,
+					minecraft.options.cameraType.isFirstPerson && cameraEntity.isScoping
+				) && requiresSpyglass
+			}
 
-            if (shouldPlaySound) {
-                if (zooming && !prevZooming) {
-                    cameraEntity.playSound(SoundEvents.SPYGLASS_USE, 1f, 1f)
-                }
-            }
-        }
-    }
+			if (shouldPlaySound) {
+				if (zooming && !prevZooming) {
+					cameraEntity.playSound(SoundEvents.SPYGLASS_USE, 1f, 1f)
+				}
+			}
+		}
+	}
 
-    @JvmStatic
-    fun shouldRenderOverlay(player: AbstractClientPlayer, isUsingSpyglass: Boolean) =
-        when (ZoomifySettings.spyglassOverlayVisibility.value) {
-            OverlayVisibility.NEVER -> false
-            OverlayVisibility.ALWAYS -> zooming
-            OverlayVisibility.HOLDING -> isUsingSpyglass
-                    || (zooming && player.isHolding(Items.SPYGLASS))
-                    && ZoomifySettings.spyglassBehaviour.value != SpyglassBehaviour.COMBINE
-            OverlayVisibility.CARRYING -> zooming
-                    && player.inventory.hasAnyMatching { stack: ItemStack -> stack.`is`(Items.SPYGLASS) }
-        }
+	@JvmStatic
+	fun shouldRenderOverlay(player: AbstractClientPlayer, isUsingSpyglass: Boolean) =
+		when (ZoomifySettings.spyglassOverlayVisibility.value) {
+			OverlayVisibility.NEVER -> false
+			OverlayVisibility.ALWAYS -> zooming
+			OverlayVisibility.HOLDING -> isUsingSpyglass
+					|| (zooming && player.isHolding(Items.SPYGLASS))
+					&& ZoomifySettings.spyglassBehaviour.value != SpyglassBehaviour.COMBINE
+			OverlayVisibility.CARRYING -> zooming
+					&& player.inventory.hasAnyMatching { stack: ItemStack -> stack.`is`(Items.SPYGLASS) }
+		}
 }

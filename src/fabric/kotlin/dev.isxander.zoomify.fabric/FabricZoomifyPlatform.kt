@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.fabric
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -12,23 +18,23 @@ import net.minecraft.client.Minecraft
 import java.nio.file.Path
 
 object FabricZoomifyPlatform : ZoomifyPlatform {
-    override val configDir: Path
-        get() = FabricLoader.getInstance().configDir
+	override val configDir: Path
+		get() = FabricLoader.getInstance().configDir
 
-    override fun registerKeyMapping(keyMapping: KeyMapping) {
-        KeyMappingHelper.registerKeyMapping(keyMapping)
-    }
+	override fun registerKeyMapping(keyMapping: KeyMapping) {
+		KeyMappingHelper.registerKeyMapping(keyMapping)
+	}
 
-    override fun onClientTickEnd(block: (Minecraft) -> Unit) {
-        ClientTickEvents.END_CLIENT_TICK.register(block::invoke)
-    }
+	override fun onClientTickEnd(block: (Minecraft) -> Unit) {
+		ClientTickEvents.END_CLIENT_TICK.register(block::invoke)
+	}
 
-    override fun registerSimpleClientCommand(literal: String, executor: () -> Unit) {
-        ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
-            dispatcher.register(LiteralArgumentBuilder.literal<FabricClientCommandSource>(literal).executes {
-                executor()
-                0
-            })
-        }
-    }
+	override fun registerSimpleClientCommand(literal: String, executor: () -> Unit) {
+		ClientCommandRegistrationCallback.EVENT.register { dispatcher, _ ->
+			dispatcher.register(LiteralArgumentBuilder.literal<FabricClientCommandSource>(literal).executes {
+				executor()
+				0
+			})
+		}
+	}
 }

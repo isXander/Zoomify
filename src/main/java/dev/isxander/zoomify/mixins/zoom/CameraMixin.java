@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.mixins.zoom;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -12,29 +18,29 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(Camera.class)
 public class CameraMixin {
-    @ModifyReturnValue(method = "calculateFov", at = @At("RETURN"))
-    private float modifyFovWithZoom(float fov, @Local(name = "partialTicks", argsOnly = true) float partialTicks) {
-        return fov / Zoomify.getZoomDivisor(partialTicks);
-    }
+	@ModifyReturnValue(method = "calculateFov", at = @At("RETURN"))
+	private float modifyFovWithZoom(float fov, @Local(name = "partialTicks", argsOnly = true) float partialTicks) {
+		return fov / Zoomify.getZoomDivisor(partialTicks);
+	}
 
-    @ModifyReturnValue(method = "calculateHudFov", at = @At("RETURN"))
-    private float modifyHudFovWithZoom(float fov, @Local(name = "partialTicks", argsOnly = true) float partialTicks) {
-        if (ZoomifySettings.Companion.getAffectHandFov().get())
-            return fov / Zoomify.getZoomDivisor(partialTicks);
-        return fov;
-    }
+	@ModifyReturnValue(method = "calculateHudFov", at = @At("RETURN"))
+	private float modifyHudFovWithZoom(float fov, @Local(name = "partialTicks", argsOnly = true) float partialTicks) {
+		if (ZoomifySettings.Companion.getAffectHandFov().get())
+			return fov / Zoomify.getZoomDivisor(partialTicks);
+		return fov;
+	}
 
-    @ModifyExpressionValue(
-            method = "extractRenderState",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/entity/ClientAvatarState;getInterpolatedBob(F)F"
-            )
-    )
-    private float modifyBobbingIntensity(float interpolatedBob) {
-        if (!ZoomifySettings.Companion.getRelativeViewBobbing().get())
-            return interpolatedBob;
+	@ModifyExpressionValue(
+			method = "extractRenderState",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/client/entity/ClientAvatarState;getInterpolatedBob(F)F"
+			)
+	)
+	private float modifyBobbingIntensity(float interpolatedBob) {
+		if (!ZoomifySettings.Companion.getRelativeViewBobbing().get())
+			return interpolatedBob;
 
-        return (float) (interpolatedBob / Mth.lerp(0.2, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()));
-    }
+		return (float) (interpolatedBob / Mth.lerp(0.2, 1.0, Zoomify.INSTANCE.getPreviousZoomDivisor()));
+	}
 }

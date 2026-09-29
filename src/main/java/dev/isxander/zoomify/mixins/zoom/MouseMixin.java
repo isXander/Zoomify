@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.mixins.zoom;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -19,78 +25,78 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(MouseHandler.class)
 public class MouseMixin {
 
-    @Inject(
-        method = "onScroll",
-        at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isSpectator()Z"),
-        cancellable = true
-    )
-    private void scrollStepCounter(
-            CallbackInfo ci,
-            @Local Vector2i scroll
-    ) {
-        int scrollDelta = scroll.y + scroll.x;
+	@Inject(
+		method = "onScroll",
+		at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isSpectator()Z"),
+		cancellable = true
+	)
+	private void scrollStepCounter(
+			CallbackInfo ci,
+			@Local Vector2i scroll
+	) {
+		int scrollDelta = scroll.y + scroll.x;
 
-        if (ZoomifySettings.Companion.getScrollZoom().get()
-                && Zoomify.INSTANCE.getZooming() && scrollDelta != 0
-                && !ZoomifySettings.Companion.getKeybindScrolling()) {
-            Zoomify.mouseZoom(scrollDelta);
-            ci.cancel();
-        }
-    }
+		if (ZoomifySettings.Companion.getScrollZoom().get()
+				&& Zoomify.INSTANCE.getZooming() && scrollDelta != 0
+				&& !ZoomifySettings.Companion.getKeybindScrolling()) {
+			Zoomify.mouseZoom(scrollDelta);
+			ci.cancel();
+		}
+	}
 
-    @ModifyExpressionValue(
-        method = "turnPlayer",
-        at = @At(value = "FIELD", target = "Lnet/minecraft/client/Options;smoothCamera:Z", opcode = Opcodes.GETFIELD)
-    )
-    private boolean smoothCameraIfZoom(boolean original) {
-        return original
-                || Zoomify.INSTANCE.getSecondaryZooming()
-                || (Zoomify.INSTANCE.getZooming() && ZoomifySettings.Companion.getCinematicCamera().get() > 0);
-    }
+	@ModifyExpressionValue(
+		method = "turnPlayer",
+		at = @At(value = "FIELD", target = "Lnet/minecraft/client/Options;smoothCamera:Z", opcode = Opcodes.GETFIELD)
+	)
+	private boolean smoothCameraIfZoom(boolean original) {
+		return original
+				|| Zoomify.INSTANCE.getSecondaryZooming()
+				|| (Zoomify.INSTANCE.getZooming() && ZoomifySettings.Companion.getCinematicCamera().get() > 0);
+	}
 
-    @ModifyExpressionValue(
-        method = "turnPlayer",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/OptionInstance;get()Ljava/lang/Object;",
-            ordinal = 0
-        )
-    )
-    private Object applyRelativeSensitivity(Object genericValue) {
-        double value = (Double) genericValue;
-        return value / Mth.lerp(
-                ZoomifySettings.Companion.getRelativeSensitivity().get() / 100.0,
-                1.0,
-                Zoomify.INSTANCE.getPreviousZoomDivisor()
-        );
-    }
+	@ModifyExpressionValue(
+		method = "turnPlayer",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/OptionInstance;get()Ljava/lang/Object;",
+			ordinal = 0
+		)
+	)
+	private Object applyRelativeSensitivity(Object genericValue) {
+		double value = (Double) genericValue;
+		return value / Mth.lerp(
+				ZoomifySettings.Companion.getRelativeSensitivity().get() / 100.0,
+				1.0,
+				Zoomify.INSTANCE.getPreviousZoomDivisor()
+		);
+	}
 
-    @ModifyExpressionValue(
-        method = "turnPlayer",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"
-        )
-    )
-    private boolean shouldApplySpyglassSensitivity(boolean isUsingSpyglass) {
-        if (ZoomifySettings.Companion.getSpyglassBehaviour().get() != SpyglassBehaviour.COMBINE)
-            return false;
-        return isUsingSpyglass;
-    }
+	@ModifyExpressionValue(
+		method = "turnPlayer",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"
+		)
+	)
+	private boolean shouldApplySpyglassSensitivity(boolean isUsingSpyglass) {
+		if (ZoomifySettings.Companion.getSpyglassBehaviour().get() != SpyglassBehaviour.COMBINE)
+			return false;
+		return isUsingSpyglass;
+	}
 
-    @ModifyArg(
-        method = "turnPlayer",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/util/SmoothDouble;getNewDeltaValue(DD)D"
-        ),
-        index = 1
-    )
-    private double modifyCinematicSmoothness(double smoother) {
-        if (Zoomify.INSTANCE.getZooming() && ZoomifySettings.Companion.getCinematicCamera().get() > 0)
-            return smoother / (ZoomifySettings.Companion.getCinematicCamera().get() / 100.0);
+	@ModifyArg(
+		method = "turnPlayer",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/util/SmoothDouble;getNewDeltaValue(DD)D"
+		),
+		index = 1
+	)
+	private double modifyCinematicSmoothness(double smoother) {
+		if (Zoomify.INSTANCE.getZooming() && ZoomifySettings.Companion.getCinematicCamera().get() > 0)
+			return smoother / (ZoomifySettings.Companion.getCinematicCamera().get() / 100.0);
 
-        return smoother;
-    }
+		return smoother;
+	}
 
 }

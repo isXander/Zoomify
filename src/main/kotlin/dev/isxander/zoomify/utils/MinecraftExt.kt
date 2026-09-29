@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.utils
 
 import net.minecraft.client.Minecraft
@@ -7,41 +13,41 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 
 val minecraft: Minecraft
-    get() = Minecraft.getInstance()
+	get() = Minecraft.getInstance()
 
 fun toast(
-    title: Component,
-    description: Component,
-    longer: Boolean = false
+	title: Component,
+	description: Component,
+	longer: Boolean = false
 ) {
-    val toastId = if (longer) SystemToast.SystemToastId.UNSECURE_SERVER_WARNING else SystemToast.SystemToastId.PERIODIC_NOTIFICATION
+	val toastId = if (longer) SystemToast.SystemToastId.UNSECURE_SERVER_WARNING else SystemToast.SystemToastId.PERIODIC_NOTIFICATION
 
-    //? if >=26.2 {
-    SystemToast.add(
-        minecraft.gui.toastManager(),
-        toastId,
-        title,
-        description
-    )
-    //?} else {
-    /*minecraft.toastManager.addToast(
-        SystemToast.multiline(
-            minecraft,
-            toastId,
-            title,
-            description
-        )
-    )
-    *///?}
+	//? if >=26.2 {
+	SystemToast.add(
+		minecraft.gui.toastManager(),
+		toastId,
+		title,
+		description
+	)
+	//?} else {
+	/*minecraft.toastManager.addToast(
+		SystemToast.multiline(
+			minecraft,
+			toastId,
+			title,
+			description
+		)
+	)
+	*///?}
 }
 
 fun zoomifyRl(path: String) =
-    Identifier.fromNamespaceAndPath("zoomify", path)
+	Identifier.fromNamespaceAndPath("zoomify", path)
 
 //? if >=26.2 {
 fun Minecraft.setScreen(screen: Screen?) =
-    gui.setScreen(screen)
+	gui.setScreen(screen)
 
 val Minecraft.screen: Screen?
-    get() = gui.screen()
+	get() = gui.screen()
 //?}

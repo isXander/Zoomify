@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.config
 
 import com.mojang.serialization.Codec
@@ -9,116 +15,116 @@ import dev.isxander.zoomify.utils.TransitionType
 import java.nio.file.Path
 
 open class ZoomifySettings() : JsonFileCodecConfig<ZoomifySettings>(
-    ZoomifyPlatform.instance.configDir.resolve("zoomify.json")
+	ZoomifyPlatform.instance.configDir.resolve("zoomify.json")
 ) {
-    val initialZoom by register<Int>(default = 4, Codec.INT)
+	val initialZoom by register<Int>(default = 4, Codec.INT)
 
-    val zoomInTime by register<Double>(default = 1.0, Codec.DOUBLE)
-    val zoomOutTime by register<Double>(default = 0.5, Codec.DOUBLE)
+	val zoomInTime by register<Double>(default = 1.0, Codec.DOUBLE)
+	val zoomOutTime by register<Double>(default = 0.5, Codec.DOUBLE)
 
-    val zoomInTransition by register<TransitionType>(default = TransitionType.EASE_OUT_EXP, TransitionType.CODEC)
-    val zoomOutTransition by register<TransitionType>(default = TransitionType.EASE_OUT_EXP, TransitionType.CODEC)
+	val zoomInTransition by register<TransitionType>(default = TransitionType.EASE_OUT_EXP, TransitionType.CODEC)
+	val zoomOutTransition by register<TransitionType>(default = TransitionType.EASE_OUT_EXP, TransitionType.CODEC)
 
-    val affectHandFov by register<Boolean>(default = true, Codec.BOOL)
+	val affectHandFov by register<Boolean>(default = true, Codec.BOOL)
 
-    val retainZoomSteps by register<Boolean>(default = false, Codec.BOOL)
+	val retainZoomSteps by register<Boolean>(default = false, Codec.BOOL)
 
-    val scrollZoom by register<Boolean>(default = true, Codec.BOOL)
-    val scrollStepCount by register<Int>(default = 10, Codec.INT)
-    val zoomPerStep by register<Int>(default = 150, Codec.INT)
-    val scrollZoomSmoothness by register<Int>(default = 70, Codec.INT)
+	val scrollZoom by register<Boolean>(default = true, Codec.BOOL)
+	val scrollStepCount by register<Int>(default = 10, Codec.INT)
+	val zoomPerStep by register<Int>(default = 150, Codec.INT)
+	val scrollZoomSmoothness by register<Int>(default = 70, Codec.INT)
 
-    val zoomKeyBehaviour by register<ZoomKeyBehaviour>(default = ZoomKeyBehaviour.HOLD, ZoomKeyBehaviour.CODEC)
+	val zoomKeyBehaviour by register<ZoomKeyBehaviour>(default = ZoomKeyBehaviour.HOLD, ZoomKeyBehaviour.CODEC)
 
-    var keybindScrolling = false
-    val _keybindScrolling by register<Boolean>(default = keybindScrolling, codec = Codec.BOOL)
+	var keybindScrolling = false
+	val _keybindScrolling by register<Boolean>(default = keybindScrolling, codec = Codec.BOOL)
 
-    val relativeSensitivity by register<Int>(default = 100, Codec.INT)
-    val relativeViewBobbing by register<Boolean>(default = true, Codec.BOOL)
+	val relativeSensitivity by register<Int>(default = 100, Codec.INT)
+	val relativeViewBobbing by register<Boolean>(default = true, Codec.BOOL)
 
-    val cinematicCamera by register<Int>(default = 0, Codec.INT)
+	val cinematicCamera by register<Int>(default = 0, Codec.INT)
 
-    val spyglassBehaviour by register<SpyglassBehaviour>(default = SpyglassBehaviour.COMBINE, SpyglassBehaviour.CODEC)
-    val spyglassOverlayVisibility by register<OverlayVisibility>(default = OverlayVisibility.HOLDING, OverlayVisibility.CODEC)
-    val spyglassSoundBehaviour by register<SoundBehaviour>(default = SoundBehaviour.WITH_OVERLAY, SoundBehaviour.CODEC)
+	val spyglassBehaviour by register<SpyglassBehaviour>(default = SpyglassBehaviour.COMBINE, SpyglassBehaviour.CODEC)
+	val spyglassOverlayVisibility by register<OverlayVisibility>(default = OverlayVisibility.HOLDING, OverlayVisibility.CODEC)
+	val spyglassSoundBehaviour by register<SoundBehaviour>(default = SoundBehaviour.WITH_OVERLAY, SoundBehaviour.CODEC)
 
-    val secondaryZoomAmount by register<Int>(default = 4, Codec.INT)
-    val secondaryZoomInTime by register<Double>(default = 10.0, Codec.DOUBLE)
-    val secondaryZoomOutTime by register<Double>(default = 1.0, Codec.DOUBLE)
-    val secondaryHideHUDOnZoom by register<Boolean>(default = true, Codec.BOOL)
+	val secondaryZoomAmount by register<Int>(default = 4, Codec.INT)
+	val secondaryZoomInTime by register<Double>(default = 10.0, Codec.DOUBLE)
+	val secondaryZoomOutTime by register<Double>(default = 1.0, Codec.DOUBLE)
+	val secondaryHideHUDOnZoom by register<Boolean>(default = true, Codec.BOOL)
 
-    var firstLaunch = false
-    val _firstLaunch by register<Boolean>(default = true, Codec.BOOL)
+	var firstLaunch = false
+	val _firstLaunch by register<Boolean>(default = true, Codec.BOOL)
 
-    final val allSettings = arrayOf(
-        initialZoom,
-        zoomInTime,
-        zoomOutTime,
-        zoomInTransition,
-        zoomOutTransition,
-        affectHandFov,
-        retainZoomSteps,
-        scrollZoom,
-        scrollStepCount,
-        zoomPerStep,
-        scrollZoomSmoothness,
-        zoomKeyBehaviour,
-        _keybindScrolling,
-        relativeSensitivity,
-        relativeViewBobbing,
-        cinematicCamera,
-        spyglassBehaviour,
-        spyglassOverlayVisibility,
-        spyglassSoundBehaviour,
-        secondaryZoomAmount,
-        secondaryZoomInTime,
-        secondaryZoomOutTime,
-        secondaryHideHUDOnZoom,
-        _firstLaunch,
-    )
+	final val allSettings = arrayOf(
+		initialZoom,
+		zoomInTime,
+		zoomOutTime,
+		zoomInTransition,
+		zoomOutTransition,
+		affectHandFov,
+		retainZoomSteps,
+		scrollZoom,
+		scrollStepCount,
+		zoomPerStep,
+		scrollZoomSmoothness,
+		zoomKeyBehaviour,
+		_keybindScrolling,
+		relativeSensitivity,
+		relativeViewBobbing,
+		cinematicCamera,
+		spyglassBehaviour,
+		spyglassOverlayVisibility,
+		spyglassSoundBehaviour,
+		secondaryZoomAmount,
+		secondaryZoomInTime,
+		secondaryZoomOutTime,
+		secondaryHideHUDOnZoom,
+		_firstLaunch,
+	)
 
-    constructor(settings: ZoomifySettings) : this() {
-        this.initialZoom.value = settings.initialZoom.value
-        this.zoomInTime.value = settings.zoomInTime.value
-        this.zoomOutTime.value = settings.zoomOutTime.value
-        this.zoomInTransition.value = settings.zoomInTransition.value
-        this.zoomOutTransition.value = settings.zoomOutTransition.value
-        this.affectHandFov.value = settings.affectHandFov.value
-        this.retainZoomSteps.value = settings.retainZoomSteps.value
-        this.scrollZoom.value = settings.scrollZoom.value
-        this.scrollStepCount.value = settings.scrollStepCount.value
-        this.zoomPerStep.value = settings.zoomPerStep.value
-        this.scrollZoomSmoothness.value = settings.scrollZoomSmoothness.value
-        this.zoomKeyBehaviour.value = settings.zoomKeyBehaviour.value
-        this.keybindScrolling = settings.keybindScrolling
-        this._keybindScrolling.value = settings._keybindScrolling.value
-        this.relativeSensitivity.value = settings.relativeSensitivity.value
-        this.relativeViewBobbing.value = settings.relativeViewBobbing.value
-        this.cinematicCamera.value = settings.cinematicCamera.value
-        this.spyglassBehaviour.value = settings.spyglassBehaviour.value
-        this.spyglassOverlayVisibility.value = settings.spyglassOverlayVisibility.value
-        this.spyglassSoundBehaviour.value = settings.spyglassSoundBehaviour.value
-        this.secondaryZoomAmount.value = settings.secondaryZoomAmount.value
-        this.secondaryZoomInTime.value = settings.secondaryZoomInTime.value
-        this.secondaryZoomOutTime.value = settings.secondaryZoomOutTime.value
-        this.secondaryHideHUDOnZoom.value = settings.secondaryHideHUDOnZoom.value
-        this.firstLaunch = settings.firstLaunch
-        this._firstLaunch.value = settings._firstLaunch.value
-    }
+	constructor(settings: ZoomifySettings) : this() {
+		this.initialZoom.value = settings.initialZoom.value
+		this.zoomInTime.value = settings.zoomInTime.value
+		this.zoomOutTime.value = settings.zoomOutTime.value
+		this.zoomInTransition.value = settings.zoomInTransition.value
+		this.zoomOutTransition.value = settings.zoomOutTransition.value
+		this.affectHandFov.value = settings.affectHandFov.value
+		this.retainZoomSteps.value = settings.retainZoomSteps.value
+		this.scrollZoom.value = settings.scrollZoom.value
+		this.scrollStepCount.value = settings.scrollStepCount.value
+		this.zoomPerStep.value = settings.zoomPerStep.value
+		this.scrollZoomSmoothness.value = settings.scrollZoomSmoothness.value
+		this.zoomKeyBehaviour.value = settings.zoomKeyBehaviour.value
+		this.keybindScrolling = settings.keybindScrolling
+		this._keybindScrolling.value = settings._keybindScrolling.value
+		this.relativeSensitivity.value = settings.relativeSensitivity.value
+		this.relativeViewBobbing.value = settings.relativeViewBobbing.value
+		this.cinematicCamera.value = settings.cinematicCamera.value
+		this.spyglassBehaviour.value = settings.spyglassBehaviour.value
+		this.spyglassOverlayVisibility.value = settings.spyglassOverlayVisibility.value
+		this.spyglassSoundBehaviour.value = settings.spyglassSoundBehaviour.value
+		this.secondaryZoomAmount.value = settings.secondaryZoomAmount.value
+		this.secondaryZoomInTime.value = settings.secondaryZoomInTime.value
+		this.secondaryZoomOutTime.value = settings.secondaryZoomOutTime.value
+		this.secondaryHideHUDOnZoom.value = settings.secondaryHideHUDOnZoom.value
+		this.firstLaunch = settings.firstLaunch
+		this._firstLaunch.value = settings._firstLaunch.value
+	}
 
-    companion object : ZoomifySettings() {
-        init {
-            if (!loadFromFile()) {
-                saveToFile()
-            }
+	companion object : ZoomifySettings() {
+		init {
+			if (!loadFromFile()) {
+				saveToFile()
+			}
 
-            if (_firstLaunch.value) {
-                firstLaunch = true
-                _firstLaunch.value = false
-                saveToFile()
-            }
+			if (_firstLaunch.value) {
+				firstLaunch = true
+				_firstLaunch.value = false
+				saveToFile()
+			}
 
-            _keybindScrolling.value = keybindScrolling
-        }
-    }
+			_keybindScrolling.value = keybindScrolling
+		}
+	}
 }

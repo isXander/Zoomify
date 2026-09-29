@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.mixins.spyglass;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
@@ -14,16 +20,16 @@ import org.spongepowered.asm.mixin.injection.At;
 /*@Mixin(net.minecraft.client.gui.Gui.class)
 *///?}
 public class HudMixin {
-    @Shadow @Final private Minecraft minecraft;
+	@Shadow @Final private Minecraft minecraft;
 
-    @ModifyExpressionValue(
-        method = "extractCameraOverlays",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"
-        )
-    )
-    private boolean shouldRenderSpyglassOverlay(boolean isUsingSpyglass) {
-        return Zoomify.shouldRenderOverlay(minecraft.player, isUsingSpyglass);
-    }
+	@ModifyExpressionValue(
+		method = "extractCameraOverlays",
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/client/player/LocalPlayer;isScoping()Z"
+		)
+	)
+	private boolean shouldRenderSpyglassOverlay(boolean isUsingSpyglass) {
+		return Zoomify.shouldRenderOverlay(minecraft.player, isUsingSpyglass);
+	}
 }

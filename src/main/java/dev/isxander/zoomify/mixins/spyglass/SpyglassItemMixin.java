@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 2026 isXander
+ * This file is part of Zoomify.
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
 package dev.isxander.zoomify.mixins.spyglass;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
@@ -12,22 +18,22 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(SpyglassItem.class)
 public class SpyglassItemMixin {
-    @WrapWithCondition(
-        method = {"use", "stopUsing"},
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/player/Player;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"
-        )
-    )
-    private boolean shouldPlaySpyglassSound(Player instance, SoundEvent event, float volume, float pitch) {
-        if (ZoomifySettings.Companion.getSpyglassSoundBehaviour().get() == SoundBehaviour.NEVER)
-            return false;
+	@WrapWithCondition(
+		method = {"use", "stopUsing"},
+		at = @At(
+			value = "INVOKE",
+			target = "Lnet/minecraft/world/entity/player/Player;playSound(Lnet/minecraft/sounds/SoundEvent;FF)V"
+		)
+	)
+	private boolean shouldPlaySpyglassSound(Player instance, SoundEvent event, float volume, float pitch) {
+		if (ZoomifySettings.Companion.getSpyglassSoundBehaviour().get() == SoundBehaviour.NEVER)
+			return false;
 
-        if (ZoomifySettings.Companion.getSpyglassSoundBehaviour().get() == SoundBehaviour.WITH_OVERLAY
-                && ZoomifySettings.Companion.getSpyglassOverlayVisibility().get() == OverlayVisibility.NEVER) {
-            return false;
-        }
+		if (ZoomifySettings.Companion.getSpyglassSoundBehaviour().get() == SoundBehaviour.WITH_OVERLAY
+				&& ZoomifySettings.Companion.getSpyglassOverlayVisibility().get() == OverlayVisibility.NEVER) {
+			return false;
+		}
 
-        return true;
-    }
+		return true;
+	}
 }

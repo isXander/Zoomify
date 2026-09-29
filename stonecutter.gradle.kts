@@ -87,4 +87,13 @@ spotless {
         formatAnnotations()
         leadingSpacesToTabs(4)
     }
+
+    kotlin {
+        target("src/**/*.kt")
+        licenseHeaderFile(rootProject.layout.projectDirectory.file("HEADER"))
+
+        trimTrailingWhitespace()
+        endWithNewline()
+        leadingSpacesToTabs(4)
+    }
 }
