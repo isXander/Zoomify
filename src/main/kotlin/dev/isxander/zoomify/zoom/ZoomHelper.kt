@@ -7,6 +7,9 @@
 package dev.isxander.zoomify.zoom
 
 import net.minecraft.util.Mth
+import kotlin.math.abs
+import kotlin.math.ceil
+import kotlin.math.log
 import kotlin.math.pow
 
 class ZoomHelper(
@@ -17,6 +20,16 @@ class ZoomHelper(
 	private val zoomPerStep: () -> Int,
 	val maxScrollTiers: () -> Int,
 ) {
+	// Scrolling out stops at normal FOV
+	val minScrollTiers: Int
+		get() {
+			val stepMultiplier = zoomPerStep() / 100.0
+			if (stepMultiplier <= 1.0) return 0
+
+			val stepsToNormalFov = ceil(log(initialZoom().toDouble(), stepMultiplier)).toInt()
+			return -stepsToNormalFov.coerceIn(0, maxScrollTiers())
+		}
+
 	private var prevInitialInterpolation = 0.0
 	private var initialInterpolation = 0.0
 
@@ -49,7 +62,7 @@ class ZoomHelper(
 	}
 
 	private fun tickScroll(scrollTiers: Int, lastFrameDuration: Double) {
-		if (scrollTiers > lastScrollTier)
+		if (abs(scrollTiers) > abs(lastScrollTier))
 			resetting = false
 
 		// scrollTiers can be negative (zoom out) or positive (zoom in)
@@ -97,8 +110,8 @@ class ZoomHelper(
 		val rawDivisor = baseDivisor * stepMultiplier.pow(currentStep)
 
 		// Safety limits to prevent rendering issues
-		// Min 0.5x zoom (divisor 0.5), max 500x zoom (divisor 500)
-		val finalDivisor = rawDivisor.coerceIn(0.5, 500.0)
+		// Min 1x zoom (divisor 1), max 500x zoom (divisor 500)
+		val finalDivisor = rawDivisor.coerceIn(1.0, 500.0)
 
 		return finalDivisor.also {
 			if (initialInterpolation == 0.0 && scrollInterpolation == 0.0) resetting = false
@@ -121,7 +134,7 @@ class ZoomHelper(
 	}
 
 	fun reset() {
-		if (!resetting && scrollInterpolation > 0.0) {
+		if (!resetting && scrollInterpolation != 0.0) {
 			resetting = true
 			scrollInterpolation = 0.0
 			prevScrollInterpolation = 0.0
