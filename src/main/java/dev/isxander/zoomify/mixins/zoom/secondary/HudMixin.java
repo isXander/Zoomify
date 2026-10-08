@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(net.minecraft.client.gui.Hud.class)
 //?} else {
 /*@Mixin(net.minecraft.client.gui.Gui.class)
- *///?}
+*///?}
 public class HudMixin {
 	@WrapMethod(method = "extractRenderState")
 	private void preventHudRender(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, Operation<Void> original) {
