@@ -4,6 +4,9 @@
  *
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
+package dev.isxander.zoomify.integrations
+
+//? if controlify {
 import dev.isxander.controlify.api.ControlifyApi
 import dev.isxander.controlify.api.entrypoint.ControlifyEntrypoint
 import dev.isxander.controlify.api.entrypoint.InitContext
@@ -32,4 +35,4 @@ object ControlifyIntegration : ControlifyEntrypoint {
 	}
 
 }
-*///?}
+//?}
