@@ -1,3 +1,5 @@
+import org.gradle.api.attributes.Attribute
+
 plugins {
     `java-library`
     alias(libs.plugins.kotlin.jvm)
@@ -28,6 +30,10 @@ repositories {
     isxander()
     modrinthApi.exclusive()
     exclusiveContent {
+        forRepository { maven("https://maven.quiltmc.org/repository/release") }
+        filter { includeGroupAndSubgroups("org.quiltmc") }
+    }
+    exclusiveContent {
         forRepository { maven(url = "https://repo.nyon.dev/releases") }
         filter {
             includeGroupAndSubgroups("dev.nyon")
@@ -44,6 +50,34 @@ configurations.neoforgeCompileOnly { extendsFrom(neoforgeModDependency) }
 configurations.neoforgeLocalRuntime { extendsFrom(neoforgeModDependency) }
 
 val fabricApiBom = dependencies.platform("net.fabricmc.fabric-api:fabric-api-bom:${property("dep.fapi")}")
+
+// Tests exercise the common source set and inherit its dependencies.
+sourceSets.test {
+    listOf(compileClasspathConfigurationName, runtimeClasspathConfigurationName).forEach { classpathName ->
+        configurations.named(classpathName) {
+            attributes.attribute(Attribute.of("io.github.mcgradleconventions.loader", String::class.java), "common")
+        }
+    }
+}
+
+// NeoGradle's discovery configurations inherit dependencies but omit
+// classpath attributes, including Modstitch's loader attribute.
+sourceSets.configureEach {
+    val sourceSetName = name
+    mapOf(
+        "Compile" to compileClasspathConfigurationName,
+        "Runtime" to runtimeClasspathConfigurationName,
+    ).forEach { (kind, classpathName) ->
+        val classpath = configurations.named(classpathName)
+        configurations.matching { it.name == "${sourceSetName}${kind}DependencyResolve" }.configureEach {
+            val classpathAttributes = classpath.get().attributes
+            fun <T : Any> copyAttribute(key: Attribute<T>) {
+                attributes.attribute(key, classpathAttributes.getAttribute(key)!!)
+            }
+            classpathAttributes.keySet().forEach { copyAttribute(it) }
+        }
+    }
+}
 
 dependencies {
     minecraft("com.mojang:minecraft:$minecraftVersion")
@@ -72,12 +106,28 @@ dependencies {
     }
 
     ifPresent("dep.mod-menu") {
-        fabricCompileOnly("maven.modrinth:modmenu:$it")
+        fabricModDependency("maven.modrinth:modmenu:$it")
     }
 
     ifPresent("dep.klf") {
         neoforgeImplementation("dev.nyon:KotlinLangForge:${property("dep.klf")}")
     }
+
+    ifPresent("dep.controlify") {
+        commonCompileOnly("dev.isxander:controlify:$it")
+    }
+}
+
+// Versions without NeoForge cannot compile its platform sources or run the
+// common-source verification against a NeoForge Minecraft classpath.
+if (!hasProperty("dep.neoforge")) {
+    sourceSets.neoforge {
+        java.setSrcDirs(emptyList<String>())
+        kotlin.setSrcDirs(emptyList<String>())
+    }
+    tasks.named("compileCommonNeoforgeCheckJava") { enabled = false }
+    tasks.named("compileCommonNeoforgeCheckKotlin") { enabled = false }
+    tasks.named("verifyCommonNeoforgeOutput") { enabled = false }
 }
 
 /// Stonecutter
@@ -95,9 +145,6 @@ ifPresent("dep.neoforge") {
         runType("client")
     }
 }
-
-/// Metadata file generation
-
 
 /// Metadata file generation
 
@@ -154,10 +201,8 @@ tasks.withType<JavaCompile>().configureEach {
 // Mixin 0.17.4 changed ModifyArg/ModifyVariable.at from At to At[]. Align the
 // compile APIs so common annotation encoding matches in the NeoForge check.
 // Existing Mixin runtimes accept both encodings; leave runtime dependencies unchanged.
-if (minecraftVersion == "26.3") {
-    configurations.named("neoforgeCompileClasspath") {
-        resolutionStrategy.force("net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7")
-    }
+configurations.named("neoforgeCompileClasspath") {
+    resolutionStrategy.force("net.fabricmc:sponge-mixin:0.17.4+mixin.0.8.7")
 }
 
 /// Publishing
