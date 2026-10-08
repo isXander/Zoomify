@@ -1,5 +1,6 @@
-# Zoomify 2.16.3
+# Zoomify {version}
 
 ## Changes
 
-- Fix Controlify integration not being correctly enabled causing a crash when Controlify is installed
+- Support NeoForge
+- Allow scrolling out past the initial zoom (#308 -- thank you Saadndm)
