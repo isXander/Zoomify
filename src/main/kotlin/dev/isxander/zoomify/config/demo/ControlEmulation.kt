@@ -62,7 +62,7 @@ fun interface ControlEmulation {
 					}
 				} else {
 					imageRenderer.scrollTiers--
-					if (imageRenderer.scrollTiers <= 0) {
+					if (imageRenderer.scrollTiers <= imageRenderer.zoomHelper.minScrollTiers) {
 						reverse = false
 						scrollPauseTicks = 20
 					}

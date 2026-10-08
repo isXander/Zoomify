@@ -45,6 +45,8 @@ object Zoomify {
 
 	val maxScrollTiers: Int
 		get() = ZoomifySettings.scrollStepCount.value
+	val minScrollTiers: Int
+		get() = zoomHelper.minScrollTiers
 	private var scrollSteps = 0
 
 	private var shouldPlaySound = false
@@ -93,7 +95,7 @@ object Zoomify {
 				scrollSteps--
 			}
 
-			scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+			scrollSteps = scrollSteps.coerceIn(minScrollTiers..maxScrollTiers)
 		}
 
 		handleSpyglass(minecraft, prevZooming)
@@ -127,7 +129,7 @@ object Zoomify {
 			scrollSteps--
 		}
 
-		scrollSteps = scrollSteps.coerceIn(0..maxScrollTiers)
+		scrollSteps = scrollSteps.coerceIn(minScrollTiers..maxScrollTiers)
 	}
 
 	private fun handleSpyglass(minecraft: Minecraft, prevZooming: Boolean) {
