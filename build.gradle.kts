@@ -157,7 +157,7 @@ val commonManifest = manifests.manifest {
     displayName = providers.gradleProperty("mod.name")
     description = providers.gradleProperty("mod.description")
     authors.add("isXander")
-    iconPath = "icon.png"
+    iconPath = "assets/zoomify/zoomify.png"
     licenses.add("LGPL-3.0-or-later")
     issueTrackerUrl = providers.gradleProperty("mod.issuesUrl")
     sourcesUrl = providers.gradleProperty("mod.sourcesUrl")
