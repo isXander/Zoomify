@@ -1,5 +1,8 @@
 {
+  "key.category.zoomify.category": "Zoomify",
+  "yacl3.config.zoomify.title": "Zoomify",
   "yacl3.config.zoomify.category.behaviour.group.basic": "基本",
+  "yacl3.config.zoomify.category.behaviour.group.spyglass": "望遠鏡",
   "yacl3.config.zoomify.category.controls": "控制",
   "yacl3.config.zoomify.category.misc": "雜項",
   "zoomify.gui.preset.default": "預設",
