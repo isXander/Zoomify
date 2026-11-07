@@ -2,6 +2,7 @@
   "yacl3.config.zoomify.category.behaviour.group.basic": "Основные",
   "yacl3.config.zoomify.category.controls": "Управление",
   "yacl3.config.zoomify.category.misc": "Прочее",
+  "zoomify.gui.preset.default": "По умолчанию",
   "zoomify.zoom_key_behaviour.hold": "Удерживать",
   "zoomify.zoom_key_behaviour.toggle": "Переключать"
 }
